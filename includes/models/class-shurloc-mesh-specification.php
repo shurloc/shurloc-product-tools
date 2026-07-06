@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Mesh specification.
  */
-class Shurloc_MeshSpecification {
+class Shurloc_Mesh_Specification {
 
 	/**
 	 * Original, unmodified variation string.
