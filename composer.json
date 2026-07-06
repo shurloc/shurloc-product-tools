@@ -1,7 +1,8 @@
 {
     "require-dev": {
         "wp-coding-standards/wpcs": "3.0",
-        "phpcompatibility/phpcompatibility-wp": "*"
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "phpunit/phpunit": "^13.2"
     },
     "config": {
         "allow-plugins": {
