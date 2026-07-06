@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function shurloc_product_tools_bootstrap(): void {
 
-	// Future module loading goes here.
-	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/products/mesh-specification.php';
+	// Module loading goes here.
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/products/class-shurloc-mesh-specification.php';
 }
 
 add_action( 'plugins_loaded', 'shurloc_product_tools_bootstrap' );
