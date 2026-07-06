@@ -63,13 +63,17 @@ class Shurloc_MeshSpecification {
 	public ?string $color = null;
 
 	/**
-	 * Price.
+	 * Price text.
 	 *
-	 * Stored as a float without the currency symbol.
+	 * Stored as the original price token extracted from the variation.
 	 *
-	 * @var float|null
+	 * Examples:
+	 * - $23.75
+	 * - ($98.55)
+	 *
+	 * @var string|null
 	 */
-	public ?float $price = null;
+	public ?string $price_text = null;
 
 	/**
 	 * Unknown tokens encountered during parsing.
