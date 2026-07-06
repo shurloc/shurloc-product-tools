@@ -19,6 +19,10 @@ class Shurloc_MeshSpecification {
 	/**
 	 * Original, unmodified variation string.
 	 *
+	 * Examples:
+	 * - "60/120 White $18.71"
+	 * - "350/30 (s) Yellow $35.27"
+	 *
 	 * @var string
 	 */
 	public string $raw = '';
@@ -26,7 +30,9 @@ class Shurloc_MeshSpecification {
 	/**
 	 * Pack size.
 	 *
-	 * Examples: "5 Pack", "10 Pack".
+	 * Examples:
+	 * - "5 Pack"
+	 * - "10 Pack".
 	 *
 	 * @var string|null
 	 */
@@ -35,12 +41,21 @@ class Shurloc_MeshSpecification {
 	/**
 	 * Mesh count.
 	 *
+	 * Examples:
+	 * - 60
+	 * - 110
+	 * - 350
+	 *
 	 * @var int|null
 	 */
 	public ?int $mesh_count = null;
 
 	/**
 	 * Thread diameter.
+	 *
+	 * Examples:
+	 * - 71
+	 * - 40
 	 *
 	 * @var int|null
 	 */
@@ -49,7 +64,10 @@ class Shurloc_MeshSpecification {
 	/**
 	 * Thread modifier.
 	 *
-	 * Examples: S, M, HD.
+	 * Examples:
+	 * - "S"
+	 * - "M"
+	 * - "HD"
 	 *
 	 * @var string|null
 	 */
@@ -57,6 +75,10 @@ class Shurloc_MeshSpecification {
 
 	/**
 	 * Mesh color.
+	 *
+	 * Examples:
+	 * - "Yellow"
+	 * - "White"
 	 *
 	 * @var string|null
 	 */
@@ -68,8 +90,8 @@ class Shurloc_MeshSpecification {
 	 * Stored as the original price token extracted from the variation.
 	 *
 	 * Examples:
-	 * - $23.75
-	 * - ($98.55)
+	 * - "$23.75"
+	 * - "($98.55)"
 	 *
 	 * @var string|null
 	 */
@@ -77,6 +99,9 @@ class Shurloc_MeshSpecification {
 
 	/**
 	 * Unknown tokens encountered during parsing.
+	 *
+	 * Example:
+	 * - ["Orange", "LD"]
 	 *
 	 * @var string[]
 	 */
