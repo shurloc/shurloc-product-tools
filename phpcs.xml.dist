@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="Shur-Loc Product Tools">
+
+	<description>
+		WordPress Coding Standards for the Shur-Loc Product Tools plugin.
+	</description>
+
+	<!-- Analyze code as PHP 8.1 -->
+	<config name="php_version" value="80100"/>
+
+	<!-- Files to scan -->
+	<file>includes</file>
+	<file>tests</file>
+	<file>shurloc-product-tools.php</file>
+
+	<!-- Ignore Composer dependencies -->
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<!-- WordPress Coding Standards -->
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+
+	<!-- PHP compatibility -->
+	<rule ref="PHPCompatibilityWP">
+		<properties>
+			<property name="testVersion" value="8.1-"/>
+		</properties>
+	</rule>
+
+</ruleset>
