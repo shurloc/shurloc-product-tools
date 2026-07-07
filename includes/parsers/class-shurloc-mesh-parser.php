@@ -72,7 +72,7 @@ class Shurloc_Mesh_Parser {
 			}
 
 			// Modifier.
-			if ( preg_match( '/^\((S|M|HD)\)$/i', $token, $matches ) ) {
+			if ( preg_match( '/^\s*\(?(S|M|HD)\)?\s*$/i', $token, $matches ) ) {
 				$spec->modifier = strtoupper( $matches[1] );
 				continue;
 			}
