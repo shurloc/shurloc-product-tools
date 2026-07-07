@@ -5,8 +5,8 @@
 		WordPress Coding Standards for the Shur-Loc Product Tools plugin.
 	</description>
 
-	<!-- Analyze code as PHP 8.1 -->
-	<config name="php_version" value="80100"/>
+	<!-- Analyze code as PHP 8.4 -->
+	<config name="php_version" value="80400"/>
 
 	<!-- Files to scan -->
 	<file>includes</file>
@@ -21,10 +21,19 @@
 	<rule ref="WordPress-Docs"/>
 	<rule ref="WordPress-Extra"/>
 
+	<!-- PHPUnit uses PSR-style names for test files/classes. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
 	<!-- PHP compatibility -->
 	<rule ref="PHPCompatibilityWP">
 		<properties>
-			<property name="testVersion" value="8.1-"/>
+			<property name="testVersion" value="8.4-"/>
 		</properties>
 	</rule>
 
