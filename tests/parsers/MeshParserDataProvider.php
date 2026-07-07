@@ -67,6 +67,19 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			'110/71 White (s)'       => array(
+				'110/71 White (s) $23.75',
+				self::spec(
+					raw: '110/71 White (s) $23.75',
+					mesh_count: 110,
+					thread_diameter: 71,
+					modifier: 'S',
+					color: 'White',
+					price_text: '$23.75',
+					unknown_tokens: array(),
+				),
+			),
+
 			'5 Pack - 110/80 Yellow' => array(
 				'5 Pack - 110/80 Yellow ($98.55)',
 				self::spec(
