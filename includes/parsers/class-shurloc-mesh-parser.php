@@ -66,8 +66,8 @@ class Shurloc_Mesh_Parser {
 			}
 
 			// Color.
-			if ( 'White' === $token || 'Yellow' === $token ) {
-				$spec->color = $token;
+			if ( 'white' === strtolower( $token ) || 'yellow' === strtolower( $token ) ) {
+				$spec->color = ucfirst( $token );
 				continue;
 			}
 

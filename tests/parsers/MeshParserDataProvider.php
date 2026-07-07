@@ -106,6 +106,20 @@ final class MeshParserDataProvider {
 					unknown_tokens: array(),
 				),
 			),
+
+			'5 Pack - 110/80 yellow' => array(
+				'5 Pack - 110/80 yellow ($98.55)',
+				self::spec(
+					raw: '5 Pack - 110/80 yellow ($98.55)',
+					mesh_count: 110,
+					thread_diameter: 80,
+					modifier: null,
+					color: 'Yellow',
+					pack_size: '5 Pack',
+					price_text: '($98.55)',
+					unknown_tokens: array(),
+				),
+			),
 		);
 	}
 
