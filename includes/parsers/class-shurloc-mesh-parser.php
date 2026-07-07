@@ -59,6 +59,12 @@ class Shurloc_Mesh_Parser {
 				continue;
 			}
 
+			// Modifier.
+			if ( preg_match( '/^\((S|M|HD)\)$/i', $token, $matches ) ) {
+				$spec->modifier = strtoupper( $matches[1] );
+				continue;
+			}
+
 			// Unknown tokens.
 			$spec->unknown_tokens[] = $token;
 		}
