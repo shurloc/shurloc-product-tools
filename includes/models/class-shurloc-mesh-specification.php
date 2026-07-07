@@ -102,4 +102,11 @@ class Shurloc_Mesh_Specification {
 	 * @var string[]
 	 */
 	public array $unknown_tokens = array();
+
+	/**
+	 * Check to see if this object is valid.
+	 */
+	public function is_valid(): bool {
+		return null !== $this->mesh_count;
+	}
 }
