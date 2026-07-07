@@ -6,6 +6,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 
 /**
  * Mesh parser tests.
@@ -26,6 +27,37 @@ class ShurlocMeshParserTest extends TestCase {
 		$this->assertSame(
 			'110/80 Yellow $23.75',
 			$spec->raw
+		);
+	}
+
+	/**
+	 * Verify that standard mesh specifications are parsed correctly.
+	 *
+	 * @param string                     $input The raw variation string.
+	 * @param Shurloc_Mesh_Specification $expected The expected spec after parsing.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'standard_mesh'
+	)]
+	public function test_parses_standard_mesh(
+		string $input,
+		Shurloc_Mesh_Specification $expected
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$actual = $parser->parse( $input );
+
+		/*
+		$this->assertTrue(
+			$expected->equals( $actual )
+		);
+		*/
+
+		$this->assertEquals(
+			$expected,
+			$actual
 		);
 	}
 }
