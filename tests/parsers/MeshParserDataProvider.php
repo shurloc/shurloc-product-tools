@@ -41,6 +41,18 @@ final class MeshParserDataProvider {
 					price_text: '$22.36',
 				),
 			),
+
+			'110/80 Orange' => array(
+				'110/180 Orange $23.75',
+				self::spec(
+					raw: '110/180 Orange $23.75',
+					mesh_count: 110,
+					thread_diameter: 180,
+					color: null,
+					price_text: '$23.75',
+					unknown_tokens: array( 'Orange' ),
+				),
+			),
 		);
 	}
 
@@ -54,6 +66,7 @@ final class MeshParserDataProvider {
 	 * @param string|null $color           Mesh color.
 	 * @param string|null $pack_size       Pack size.
 	 * @param string|null $price_text      Price.
+	 * @param string[]    $unknown_tokens Unknown tokens.
 	 * @return Shurloc_Mesh_Specification
 	 */
 	private static function spec(
@@ -63,7 +76,8 @@ final class MeshParserDataProvider {
 		?string $modifier = null,
 		?string $color = null,
 		?string $pack_size = null,
-		?string $price_text = null
+		?string $price_text = null,
+		?array $unknown_tokens = array()
 	): Shurloc_Mesh_Specification {
 
 		$spec = new Shurloc_Mesh_Specification();
@@ -75,6 +89,7 @@ final class MeshParserDataProvider {
 		$spec->color           = $color;
 		$spec->pack_size       = $pack_size;
 		$spec->price_text      = $price_text;
+		$spec->unknown_tokens  = $unknown_tokens;
 
 		return $spec;
 	}

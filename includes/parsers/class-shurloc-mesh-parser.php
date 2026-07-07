@@ -58,6 +58,9 @@ class Shurloc_Mesh_Parser {
 				$spec->color = $token;
 				continue;
 			}
+
+			// Unknown tokens.
+			$spec->unknown_tokens[] = $token;
 		}
 
 		return $spec;
