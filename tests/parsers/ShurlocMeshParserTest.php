@@ -5,8 +5,6 @@
  * @package ShurLocProductTools
  */
 
-echo "Test loaded\n";
-
 use PHPUnit\Framework\TestCase;
 
 /**
