@@ -109,4 +109,21 @@ class Shurloc_Mesh_Specification {
 	public function is_valid(): bool {
 		return null !== $this->mesh_count;
 	}
+
+	/**
+	 * Compare two specifications.
+	 *
+	 * @param Shurloc_Mesh_Specification $other The spec to compare against this object.
+	 * @return bool True if the specs are the same.
+	 */
+	public function equals( Shurloc_Mesh_Specification $other ): bool {
+
+		return $this->mesh_count === $other->mesh_count
+			&& $this->thread_diameter === $other->thread_diameter
+			&& $this->modifier === $other->modifier
+			&& $this->color === $other->color
+			&& $this->pack_size === $other->pack_size
+			&& $this->price_text === $other->price_text
+			&& $this->unknown_tokens === $other->unknown_tokens;
+	}
 }
