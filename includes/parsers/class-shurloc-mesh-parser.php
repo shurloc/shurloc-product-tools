@@ -25,13 +25,25 @@ class Shurloc_Mesh_Parser {
 		$remaining = trim( $text );
 
 		// Extract the trailing price.
-		if ( preg_match( '/(\$\d+\.\d{2})$/', $remaining, $matches ) ) {
+		if ( preg_match( '/(\(?\$\d+\.\d{2}\)?)$/', $remaining, $matches ) ) {
 			$spec->price_text = $matches[1];
 			$remaining        = trim(
 				substr(
 					$remaining,
 					0,
 					-strlen( $matches[1] )
+				)
+			);
+		}
+
+		// Extract the pack size.
+		if ( preg_match( '/^(\d+\s+Pack)(\s*\-\s*)/i', $remaining, $matches ) ) {
+			$spec->pack_size = $matches[1];
+			$remaining       = trim(
+				substr(
+					$remaining,
+					strlen( $matches[1] ) + strlen( $matches[2] ),
+					strlen( $remaining )
 				)
 			);
 		}

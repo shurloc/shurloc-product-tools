@@ -20,7 +20,7 @@ final class MeshParserDataProvider {
 	public static function standard_mesh(): array {
 
 		return array(
-			'110/80 Yellow'    => array(
+			'110/80 Yellow'          => array(
 				'110/80 Yellow $23.75',
 				self::spec(
 					raw: '110/80 Yellow $23.75',
@@ -31,7 +31,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'60/120 White'     => array(
+			'60/120 White'           => array(
 				'60/120 White $22.36',
 				self::spec(
 					raw: '60/120 White $22.36',
@@ -42,7 +42,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/80 Orange'    => array(
+			'110/80 Orange'          => array(
 				'110/180 Orange $23.75',
 				self::spec(
 					raw: '110/180 Orange $23.75',
@@ -54,7 +54,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/71 (S) White' => array(
+			'110/71 (S) White'       => array(
 				'110/71 (S) White $23.75',
 				self::spec(
 					raw: '110/71 (S) White $23.75',
@@ -63,6 +63,20 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'White',
 					price_text: '$23.75',
+					unknown_tokens: array(),
+				),
+			),
+
+			'5 Pack - 110/80 Yellow' => array(
+				'5 Pack - 110/80 Yellow ($98.55)',
+				self::spec(
+					raw: '5 Pack - 110/80 Yellow ($98.55)',
+					mesh_count: 110,
+					thread_diameter: 80,
+					modifier: null,
+					color: 'Yellow',
+					pack_size: '5 Pack',
+					price_text: '($98.55)',
 					unknown_tokens: array(),
 				),
 			),
