@@ -5,10 +5,6 @@
  * @package ShurLocProductTools
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Parses mesh specification strings.
  */

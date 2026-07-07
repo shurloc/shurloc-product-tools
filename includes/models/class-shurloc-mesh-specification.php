@@ -7,10 +7,6 @@
  * @package ShurLocProductTools
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Mesh specification.
  */
