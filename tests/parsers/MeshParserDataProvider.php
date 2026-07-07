@@ -23,6 +23,7 @@ final class MeshParserDataProvider {
 			'110/80 Yellow' => array(
 				'110/80 Yellow $23.75',
 				self::spec(
+					raw: '110/80 Yellow $23.75',
 					mesh_count: 110,
 					thread_diameter: 80,
 					color: 'Yellow',
@@ -33,6 +34,7 @@ final class MeshParserDataProvider {
 			'60/120 White'  => array(
 				'60/120 White $22.36',
 				self::spec(
+					raw: '60/120 White $22.36',
 					mesh_count: 60,
 					thread_diameter: 120,
 					color: 'White',
@@ -45,6 +47,7 @@ final class MeshParserDataProvider {
 	/**
 	 * Create a specification.
 	 *
+	 * @param string      $raw             Raw variation string.
 	 * @param int|null    $mesh_count      Mesh count.
 	 * @param int|null    $thread_diameter Thread diameter.
 	 * @param string|null $modifier        Modifier.
@@ -54,6 +57,7 @@ final class MeshParserDataProvider {
 	 * @return Shurloc_Mesh_Specification
 	 */
 	private static function spec(
+		string $raw,
 		?int $mesh_count = null,
 		?int $thread_diameter = null,
 		?string $modifier = null,
@@ -64,6 +68,7 @@ final class MeshParserDataProvider {
 
 		$spec = new Shurloc_Mesh_Specification();
 
+		$spec->raw             = $raw;
 		$spec->mesh_count      = $mesh_count;
 		$spec->thread_diameter = $thread_diameter;
 		$spec->modifier        = $modifier;
