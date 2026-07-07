@@ -49,12 +49,6 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$actual = $parser->parse( $input );
 
-		/*
-		$this->assertTrue(
-			$expected->equals( $actual )
-		);
-		*/
-
 		$this->assertEquals(
 			$expected,
 			$actual
