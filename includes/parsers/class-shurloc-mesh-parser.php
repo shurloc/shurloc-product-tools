@@ -21,20 +21,9 @@ class Shurloc_Mesh_Parser {
 		$spec      = new Shurloc_Mesh_Specification();
 		$spec->raw = $text;
 
-		// Don't mutate $test; normalize the string.
 		$remaining = $this->normalize( $text );
 
-		// Extract the trailing price.
-		if ( preg_match( '/(\(?\$\d+\.\d{2}\)?)$/', $remaining, $matches ) ) {
-			$spec->price_text = $matches[1];
-			$remaining        = trim(
-				substr(
-					$remaining,
-					0,
-					-strlen( $matches[1] )
-				)
-			);
-		}
+		$this->extract_price( $remaining, $spec );
 
 		// Extract the pack size.
 		if ( preg_match( '/^(\d+\s+Pack)(\s*\-\s*)/i', $remaining, $matches ) ) {
@@ -111,12 +100,29 @@ class Shurloc_Mesh_Parser {
 
 		return $text;
 	}
-	/*
+	/**
+	 * Extract price from specification string.
+	 *
+	 * @param string                     &$remaining The spec string from which to extract the price.
+	 * @param Shurloc_Mesh_Specification $spec The spec to update.
+	 */
 	private function extract_price(
 		string &$remaining,
 		Shurloc_Mesh_Specification $spec
-	): void;
-
+	): void {
+		// Extract the trailing price.
+		if ( preg_match( '/(\(?\$\d+\.\d{2}\)?)$/', $remaining, $matches ) ) {
+			$spec->price_text = $matches[1];
+			$remaining        = trim(
+				substr(
+					$remaining,
+					0,
+					-strlen( $matches[1] )
+				)
+			);
+		}
+	}
+	/*
 	private function extract_pack_size(
 		string &$remaining,
 		Shurloc_Mesh_Specification $spec
