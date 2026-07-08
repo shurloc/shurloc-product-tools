@@ -35,28 +35,7 @@ class Shurloc_Mesh_Parser {
 
 		// Process tokens.
 		foreach ( $tokens as $token ) {
-
-			// Mesh/thread token.
-			if ( preg_match( '/^(\d+)\/(\d+)$/', $token, $matches ) ) {
-				$spec->mesh_count      = (int) $matches[1];
-				$spec->thread_diameter = (int) $matches[2];
-				continue;
-			}
-
-			// Color.
-			if ( 'white' === strtolower( $token ) || 'yellow' === strtolower( $token ) ) {
-				$spec->color = ucfirst( $token );
-				continue;
-			}
-
-			// Modifier.
-			if ( preg_match( '/^\s*\(?(S|M|HD)\)?\s*$/i', $token, $matches ) ) {
-				$spec->modifier = strtoupper( $matches[1] );
-				continue;
-			}
-
-			// Unknown tokens.
-			$spec->unknown_tokens[] = $token;
+			$this->classify_token( $token, $spec );
 		}
 
 		return $spec;
@@ -134,10 +113,38 @@ class Shurloc_Mesh_Parser {
 			);
 		}
 	}
-	/*
+
+	/**
+	 * Classify a token from the specification string.
+	 *
+	 * @param string                     $token The spec string from which to extract the pack size.
+	 * @param Shurloc_Mesh_Specification $spec The spec to update.
+	 */
 	private function classify_token(
 		string $token,
 		Shurloc_Mesh_Specification $spec
-	): void;
-	*/
+	): void {
+
+		// Mesh/thread token.
+		if ( preg_match( '/^(\d+)\/(\d+)$/', $token, $matches ) ) {
+			$spec->mesh_count      = (int) $matches[1];
+			$spec->thread_diameter = (int) $matches[2];
+			return;
+		}
+
+		// Color.
+		if ( 'white' === strtolower( $token ) || 'yellow' === strtolower( $token ) ) {
+			$spec->color = ucfirst( $token );
+			return;
+		}
+
+		// Modifier.
+		if ( preg_match( '/^\s*\(?(S|M|HD)\)?\s*$/i', $token, $matches ) ) {
+			$spec->modifier = strtoupper( $matches[1] );
+			return;
+		}
+
+		// Unknown tokens.
+		$spec->unknown_tokens[] = $token;
+	}
 }
