@@ -24,18 +24,7 @@ class Shurloc_Mesh_Parser {
 		$remaining = $this->normalize( $text );
 
 		$this->extract_price( $remaining, $spec );
-
-		// Extract the pack size.
-		if ( preg_match( '/^(\d+\s+Pack)(\s*\-\s*)/i', $remaining, $matches ) ) {
-			$spec->pack_size = $matches[1];
-			$remaining       = trim(
-				substr(
-					$remaining,
-					strlen( $matches[1] ) + strlen( $matches[2] ),
-					strlen( $remaining )
-				)
-			);
-		}
+		$this->extract_pack_size( $remaining, $spec );
 
 		// Tokenize the rest of the string.
 		$tokens = preg_split( '/\s+/', $remaining );
@@ -122,12 +111,30 @@ class Shurloc_Mesh_Parser {
 			);
 		}
 	}
-	/*
+
+	/**
+	 * Extract pack size from specification string.
+	 *
+	 * @param string                     &$remaining The spec string from which to extract the pack size.
+	 * @param Shurloc_Mesh_Specification $spec The spec to update.
+	 */
 	private function extract_pack_size(
 		string &$remaining,
 		Shurloc_Mesh_Specification $spec
-	): void;
-
+	): void {
+		// Extract the pack size.
+		if ( preg_match( '/^(\d+\s+Pack)(\s*\-\s*)/i', $remaining, $matches ) ) {
+			$spec->pack_size = $matches[1];
+			$remaining       = trim(
+				substr(
+					$remaining,
+					strlen( $matches[1] ) + strlen( $matches[2] ),
+					strlen( $remaining )
+				)
+			);
+		}
+	}
+	/*
 	private function classify_token(
 		string $token,
 		Shurloc_Mesh_Specification $spec
