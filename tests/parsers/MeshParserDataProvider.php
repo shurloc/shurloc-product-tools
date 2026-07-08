@@ -129,7 +129,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			// "Thin Thread" case.
+			// Thin Thread case.
 			'230/40 Thin Thread Yellow' => array(
 				'230/40 Thin Thread Yellow $32.21',
 				self::spec(
