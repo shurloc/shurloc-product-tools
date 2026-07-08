@@ -7,7 +7,6 @@
 
 declare( strict_types=1 );
 
-use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,24 +15,55 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocMeshRecognitionTest extends TestCase {
 
 	/**
-	 * Catalog variations are parsed successfully.
+	 * Parse every variation in the exported catalog.
 	 *
-	 * @param string $variation Variation name.
+	 * This test exercises the parser against a real-world catalog snapshot.
+	 * It classifies every variation as recognized, unrecognized, or invalid.
 	 */
-	#[DataProviderExternal(
-		MeshCatalogDataProvider::class,
-		'catalog_variations'
-	)]
-	public function test_catalog_fixture_loads(
-		string $variation
-	): void {
-
-		$this->markTestSkipped( 'Recognition logic not implemented yet.' );
+	public function test_catalog_recognition(): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
-		$spec = $parser->parse( $variation );
+		$catalog = MeshCatalogDataProvider::catalog_variations();
 
-		$this->assertTrue( $spec->recognized );
+		$recognized   = array();
+		$unrecognized = array();
+		$invalid      = array();
+
+		foreach ( $catalog as $dataset ) {
+
+			$variation = $dataset[0];
+
+			$spec = $parser->parse( $variation );
+
+			if ( ! $spec->recognized ) {
+				$unrecognized[] = $variation;
+				continue;
+			}
+
+			$recognized[] = $variation;
+
+			if ( ! $spec->is_valid() ) {
+				$invalid[] = array(
+					'variation'      => $variation,
+					'unknown_tokens' => $spec->unknown_tokens,
+				);
+			}
+		}
+
+		// Sanity checks.
+		$this->assertNotEmpty(
+			$catalog,
+			'Catalog fixture appears to be empty.'
+		);
+
+		$this->assertNotEmpty(
+			$recognized,
+			'No catalog variations were recognized.'
+		);
+
+		// TODO:
+		// Export the recognized, unrecognized, and invalid arrays as a JSON
+		// report for inspection during parser development.
 	}
 }
