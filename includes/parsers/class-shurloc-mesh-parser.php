@@ -66,6 +66,13 @@ class Shurloc_Mesh_Parser {
 			$text
 		);
 
+		// Normalize spaces in mesh count token.
+		$text = preg_replace(
+			'/\s*\/\s*/i',
+			'/',
+			$text
+		);
+
 		return $text;
 	}
 

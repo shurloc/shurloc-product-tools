@@ -19,6 +19,7 @@ final class MeshParserDataProvider {
 	 */
 	public static function standard_mesh(): array {
 
+		// Base case.
 		return array(
 			'110/80 Yellow'             => array(
 				'110/80 Yellow $23.75',
@@ -31,6 +32,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Base case.
 			'60/120 White'              => array(
 				'60/120 White $22.36',
 				self::spec(
@@ -42,6 +44,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Unknown token.
 			'110/80 Orange'             => array(
 				'110/180 Orange $23.75',
 				self::spec(
@@ -54,6 +57,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Modifier.
 			'110/71 (S) White'          => array(
 				'110/71 (S) White $23.75',
 				self::spec(
@@ -67,6 +71,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Lower case, out of place modifier.
 			'110/71 White (s)'          => array(
 				'110/71 White (s) $23.75',
 				self::spec(
@@ -80,6 +85,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Out of place, no parentheses modifier.
 			'110/71 White HD'           => array(
 				'110/71 White HD $23.75',
 				self::spec(
@@ -93,6 +99,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Pack size.
 			'5 Pack - 110/80 Yellow'    => array(
 				'5 Pack - 110/80 Yellow ($98.55)',
 				self::spec(
@@ -107,6 +114,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// Lower case color.
 			'5 Pack - 110/80 yellow'    => array(
 				'5 Pack - 110/80 yellow ($98.55)',
 				self::spec(
@@ -121,6 +129,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
+			// "Thin Thread" case.
 			'230/40 Thin Thread Yellow' => array(
 				'230/40 Thin Thread Yellow $32.21',
 				self::spec(
@@ -130,6 +139,20 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'Yellow',
 					price_text: '$32.21',
+				),
+			),
+
+			// Spaces in the mesh count token.
+			'110/ 71 (S) White'         => array(
+				'110/ 71 (S) White $23.75',
+				self::spec(
+					raw: '110/ 71 (S) White $23.75',
+					mesh_count: 110,
+					thread_diameter: 71,
+					modifier: 'S',
+					color: 'White',
+					price_text: '$23.75',
+					unknown_tokens: array(),
 				),
 			),
 
