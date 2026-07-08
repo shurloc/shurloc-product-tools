@@ -21,22 +21,8 @@ class Shurloc_Mesh_Parser {
 		$spec      = new Shurloc_Mesh_Specification();
 		$spec->raw = $text;
 
-		// Don't mutate $test.
-		$remaining = trim( $text );
-
-		// Normalize spaces.
-		$remaining = preg_replace(
-			'/\s+/',
-			' ',
-			$remaining
-		);
-
-		// Normalize "Thin Thread".
-		$remaining = preg_replace(
-			'/Thin\s+Thread/i',
-			'(S)',
-			$remaining
-		);
+		// Don't mutate $test; normalize the string.
+		$remaining = $this->normalize( $text );
 
 		// Extract the trailing price.
 		if ( preg_match( '/(\(?\$\d+\.\d{2}\)?)$/', $remaining, $matches ) ) {
@@ -97,4 +83,48 @@ class Shurloc_Mesh_Parser {
 
 		return $spec;
 	}
+
+	/**
+	 * Normalize a mesh specification string.
+	 *
+	 * @param string $text Raw variation text.
+	 * @return string Normalized text.
+	 */
+	private function normalize( string $text ): string {
+
+		// Trim text.
+		$text = trim( $text );
+
+		// Normalize whitespace.
+		$text = preg_replace(
+			'/\s+/',
+			' ',
+			$text
+		);
+
+		// Normalize "Thin Thread".
+		$text = preg_replace(
+			'/Thin\s+Thread/i',
+			'(S)',
+			$text
+		);
+
+		return $text;
+	}
+	/*
+	private function extract_price(
+		string &$remaining,
+		Shurloc_Mesh_Specification $spec
+	): void;
+
+	private function extract_pack_size(
+		string &$remaining,
+		Shurloc_Mesh_Specification $spec
+	): void;
+
+	private function classify_token(
+		string $token,
+		Shurloc_Mesh_Specification $spec
+	): void;
+	*/
 }
