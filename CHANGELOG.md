@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0] - 2026-07-08
+
+### Added
+- Mesh specification parser
+- Mesh specification model
+- Unit testing infrastructure with PHPUnit
+- Parser data provider for reusable test cases
+
+### Changed
+- Refactored parser into helper methods for normalization and token extraction
+- Added parser normalization for whitespace, modifiers, and Thin Thread variants
+- Expanded parser support for pack sizes, modifiers, colors, and price formats
+
 ## [0.2.0] - 2026-07-07
 
 ### Added
