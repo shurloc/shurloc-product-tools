@@ -37,4 +37,13 @@
 		</properties>
 	</rule>
 
+	<!--
+		The Squiz @throws sniff does not recognize exceptions thrown by
+		internal PHP functions (e.g. json_decode() with JSON_THROW_ON_ERROR).
+		Disable it for the test suite.
+	-->
+	<rule ref="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
 </ruleset>

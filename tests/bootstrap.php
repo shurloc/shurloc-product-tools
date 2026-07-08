@@ -28,3 +28,4 @@ require_once dirname( __DIR__ ) . '/includes/parsers/class-shurloc-mesh-parser.p
 
 // Testing imports.
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';
+require_once dirname( __DIR__ ) . '/tests//integration/MeshCatalogDataProvider.php';
