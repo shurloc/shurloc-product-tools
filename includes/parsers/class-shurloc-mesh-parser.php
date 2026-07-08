@@ -24,6 +24,20 @@ class Shurloc_Mesh_Parser {
 		// Don't mutate $test.
 		$remaining = trim( $text );
 
+		// Normalize spaces.
+		$remaining = preg_replace(
+			'/\s+/',
+			' ',
+			$remaining
+		);
+
+		// Normalize "Thin Thread".
+		$remaining = preg_replace(
+			'/Thin\s+Thread/i',
+			'(S)',
+			$remaining
+		);
+
 		// Extract the trailing price.
 		if ( preg_match( '/(\(?\$\d+\.\d{2}\)?)$/', $remaining, $matches ) ) {
 			$spec->price_text = $matches[1];

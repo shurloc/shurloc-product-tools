@@ -20,7 +20,7 @@ final class MeshParserDataProvider {
 	public static function standard_mesh(): array {
 
 		return array(
-			'110/80 Yellow'          => array(
+			'110/80 Yellow'             => array(
 				'110/80 Yellow $23.75',
 				self::spec(
 					raw: '110/80 Yellow $23.75',
@@ -31,7 +31,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'60/120 White'           => array(
+			'60/120 White'              => array(
 				'60/120 White $22.36',
 				self::spec(
 					raw: '60/120 White $22.36',
@@ -42,7 +42,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/80 Orange'          => array(
+			'110/80 Orange'             => array(
 				'110/180 Orange $23.75',
 				self::spec(
 					raw: '110/180 Orange $23.75',
@@ -54,7 +54,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/71 (S) White'       => array(
+			'110/71 (S) White'          => array(
 				'110/71 (S) White $23.75',
 				self::spec(
 					raw: '110/71 (S) White $23.75',
@@ -67,7 +67,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/71 White (s)'       => array(
+			'110/71 White (s)'          => array(
 				'110/71 White (s) $23.75',
 				self::spec(
 					raw: '110/71 White (s) $23.75',
@@ -80,7 +80,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'110/71 White HD'        => array(
+			'110/71 White HD'           => array(
 				'110/71 White HD $23.75',
 				self::spec(
 					raw: '110/71 White HD $23.75',
@@ -93,7 +93,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'5 Pack - 110/80 Yellow' => array(
+			'5 Pack - 110/80 Yellow'    => array(
 				'5 Pack - 110/80 Yellow ($98.55)',
 				self::spec(
 					raw: '5 Pack - 110/80 Yellow ($98.55)',
@@ -107,7 +107,7 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			'5 Pack - 110/80 yellow' => array(
+			'5 Pack - 110/80 yellow'    => array(
 				'5 Pack - 110/80 yellow ($98.55)',
 				self::spec(
 					raw: '5 Pack - 110/80 yellow ($98.55)',
@@ -120,6 +120,19 @@ final class MeshParserDataProvider {
 					unknown_tokens: array(),
 				),
 			),
+
+			'230/40 Thin Thread Yellow' => array(
+				'230/40 Thin Thread Yellow $32.21',
+				self::spec(
+					raw: '230/40 Thin Thread Yellow $32.21',
+					mesh_count: 230,
+					thread_diameter: 40,
+					modifier: 'S',
+					color: 'Yellow',
+					price_text: '$32.21',
+				),
+			),
+
 		);
 	}
 
