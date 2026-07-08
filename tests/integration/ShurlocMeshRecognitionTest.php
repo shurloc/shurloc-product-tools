@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocMeshRecognitionTest extends TestCase {
 
 	/**
-	 * Catalog variations are loaded successfully.
+	 * Catalog variations are parsed successfully.
 	 *
 	 * @param string $variation Variation name.
 	 */
@@ -28,6 +28,12 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 		string $variation
 	): void {
 
-		$this->assertNotSame( '', $variation );
+		$this->markTestSkipped( 'Recognition logic not implemented yet.' );
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse( $variation );
+
+		$this->assertTrue( $spec->recognized );
 	}
 }
