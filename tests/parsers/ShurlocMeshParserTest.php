@@ -54,4 +54,44 @@ class ShurlocMeshParserTest extends TestCase {
 			$actual
 		);
 	}
+
+	/**
+	 * Verify that standard mesh specifications is recognized correctly.
+	 *
+	 * @param string $variation The raw variation string.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'recognized_mesh'
+	)]
+	public function test_recognizes_mesh_specifications(
+		string $variation
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse( $variation );
+
+		$this->assertTrue( $spec->recognized );
+	}
+
+	/**
+	 * Verify that non-standard specifications is unrecognized correctly.
+	 *
+	 * @param string $variation The raw variation string.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'unrecognized_variations'
+	)]
+	public function test_rejects_non_mesh_specifications(
+		string $variation
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse( $variation );
+
+		$this->assertFalse( $spec->recognized );
+	}
 }

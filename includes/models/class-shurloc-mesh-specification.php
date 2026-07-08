@@ -94,6 +94,13 @@ class Shurloc_Mesh_Specification {
 	public ?string $price_text = null;
 
 	/**
+	 * The spec string is recognized as a mesh variation.
+	 *
+	 * @var bool
+	 */
+	public bool $recognized = false;
+
+	/**
 	 * Unknown tokens encountered during parsing.
 	 *
 	 * Example:
@@ -102,13 +109,6 @@ class Shurloc_Mesh_Specification {
 	 * @var string[]
 	 */
 	public array $unknown_tokens = array();
-
-	/**
-	 * The spec string is recognized as a mesh variation.
-	 *
-	 * @var bool
-	 */
-	public bool $recognized = false;
 
 	/**
 	 * Determine whether this is a valid mesh specification.
@@ -145,6 +145,7 @@ class Shurloc_Mesh_Specification {
 			&& $this->color === $other->color
 			&& $this->pack_size === $other->pack_size
 			&& $this->price_text === $other->price_text
+			&& $this->recognized === $other->recognized
 			&& $this->unknown_tokens === $other->unknown_tokens;
 	}
 }

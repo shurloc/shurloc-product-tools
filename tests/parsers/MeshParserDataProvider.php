@@ -29,6 +29,7 @@ final class MeshParserDataProvider {
 					thread_diameter: 80,
 					color: 'Yellow',
 					price_text: '$23.75',
+					recognized: true,
 				),
 			),
 
@@ -41,6 +42,7 @@ final class MeshParserDataProvider {
 					thread_diameter: 120,
 					color: 'White',
 					price_text: '$22.36',
+					recognized: true,
 				),
 			),
 
@@ -54,6 +56,7 @@ final class MeshParserDataProvider {
 					color: null,
 					price_text: '$23.75',
 					unknown_tokens: array( 'Orange' ),
+					recognized: true,
 				),
 			),
 
@@ -68,6 +71,7 @@ final class MeshParserDataProvider {
 					color: 'White',
 					price_text: '$23.75',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
@@ -82,6 +86,7 @@ final class MeshParserDataProvider {
 					color: 'White',
 					price_text: '$23.75',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
@@ -96,6 +101,7 @@ final class MeshParserDataProvider {
 					color: 'White',
 					price_text: '$23.75',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
@@ -111,6 +117,7 @@ final class MeshParserDataProvider {
 					pack_size: '5 Pack',
 					price_text: '($98.55)',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
@@ -126,6 +133,7 @@ final class MeshParserDataProvider {
 					pack_size: '5 Pack',
 					price_text: '($98.55)',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
@@ -139,6 +147,7 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'Yellow',
 					price_text: '$32.21',
+					recognized: true,
 				),
 			),
 
@@ -153,9 +162,40 @@ final class MeshParserDataProvider {
 					color: 'White',
 					price_text: '$23.75',
 					unknown_tokens: array(),
+					recognized: true,
 				),
 			),
 
+		);
+	}
+
+	/**
+	 * Standard mesh specifications.
+	 *
+	 * @return array<string, array{string}>
+	 */
+	public static function recognized_mesh(): array {
+		return array(
+			'recognized' => array(
+				'110/80 Yellow $23.75',
+			),
+		);
+	}
+
+	/**
+	 * Standard mesh specifications.
+	 *
+	 * @return array<string, array{string}>
+	 */
+	public static function unrecognized_variations(): array {
+		return array(
+			'separator' => array(
+				'-----',
+			),
+
+			'gallon'    => array(
+				'1 Gallon ($92.00)',
+			),
 		);
 	}
 
@@ -169,7 +209,8 @@ final class MeshParserDataProvider {
 	 * @param string|null $color           Mesh color.
 	 * @param string|null $pack_size       Pack size.
 	 * @param string|null $price_text      Price.
-	 * @param string[]    $unknown_tokens Unknown tokens.
+	 * @param bool        $recognized      Recognized.
+	 * @param string[]    $unknown_tokens  Unknown tokens.
 	 * @return Shurloc_Mesh_Specification
 	 */
 	private static function spec(
@@ -180,6 +221,7 @@ final class MeshParserDataProvider {
 		?string $color = null,
 		?string $pack_size = null,
 		?string $price_text = null,
+		bool $recognized = false,
 		?array $unknown_tokens = array()
 	): Shurloc_Mesh_Specification {
 
@@ -193,6 +235,7 @@ final class MeshParserDataProvider {
 		$spec->pack_size       = $pack_size;
 		$spec->price_text      = $price_text;
 		$spec->unknown_tokens  = $unknown_tokens;
+		$spec->recognized      = $recognized;
 
 		return $spec;
 	}
