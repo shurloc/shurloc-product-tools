@@ -104,10 +104,31 @@ class Shurloc_Mesh_Specification {
 	public array $unknown_tokens = array();
 
 	/**
-	 * Check to see if this object is valid.
+	 * The spec string is recognized as a mesh variation.
+	 *
+	 * @var bool
+	 */
+	public bool $recognized = false;
+
+	/**
+	 * Determine whether this is a valid mesh specification.
+	 *
+	 * A specification is considered valid if it was recognized as a mesh
+	 * specification, all required fields were parsed successfully, and no
+	 * unknown tokens remain.
+	 *
+	 * @return bool True if the specification is valid; otherwise, false.
 	 */
 	public function is_valid(): bool {
-		return null !== $this->mesh_count;
+
+		return (
+			$this->recognized &&
+			null !== $this->mesh_count &&
+			null !== $this->thread_diameter &&
+			null !== $this->color &&
+			null !== $this->price_text &&
+			empty( $this->unknown_tokens )
+		);
 	}
 
 	/**
