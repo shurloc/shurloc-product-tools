@@ -68,6 +68,7 @@ class Shurloc_Mesh_Parser {
 
 		return $text;
 	}
+
 	/**
 	 * Extract price from specification string.
 	 *
