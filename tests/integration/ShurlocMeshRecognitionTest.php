@@ -24,15 +24,13 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 
 		$parser = new Shurloc_Mesh_Parser();
 
-		$catalog = MeshCatalogDataProvider::catalog_variations();
+		$catalog = MeshCatalogDataProvider::load_catalog();
 
 		$recognized   = array();
 		$unrecognized = array();
 		$invalid      = array();
 
-		foreach ( $catalog as $dataset ) {
-
-			$variation = $dataset[0];
+		foreach ( $catalog as $variation ) {
 
 			$spec = $parser->parse( $variation );
 
