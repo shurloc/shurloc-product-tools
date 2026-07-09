@@ -43,8 +43,14 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 
 			if ( ! $spec->is_valid() ) {
 				$invalid[] = array(
-					'variation'      => $variation,
-					'unknown_tokens' => $spec->unknown_tokens,
+					'variation'       => $variation,
+					'unknown_tokens'  => $spec->unknown_tokens,
+					'mesh_count'      => $spec->mesh_count,
+					'thread_diameter' => $spec->thread_diameter,
+					'modifier'        => $spec->modifier,
+					'color'           => $spec->color,
+					'pack_size'       => $spec->pack_size,
+					'price_text'      => $spec->price_text,
 				);
 			}
 		}
