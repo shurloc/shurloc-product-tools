@@ -23,6 +23,15 @@ class Shurloc_Mesh_Parser {
 
 		$remaining = $this->normalize( $text );
 
+		// Recognize a mesh variation, or not.
+		if ( preg_match(
+			'/\d+\/\d+/',
+			$remaining,
+			$matches
+		) ) {
+			$spec->recognized = true;
+		}
+
 		$this->extract_price( $remaining, $spec );
 		$this->extract_pack_size( $remaining, $spec );
 
