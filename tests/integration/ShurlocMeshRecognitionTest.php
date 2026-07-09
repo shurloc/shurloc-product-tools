@@ -18,42 +18,16 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 	 * Parse every variation in the exported catalog.
 	 *
 	 * This test exercises the parser against a real-world catalog snapshot.
-	 * It classifies every variation as recognized, unrecognized, or invalid.
 	 */
 	public function test_analyzes_catalog_fixture(): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
 		$catalog = MeshCatalogDataProvider::load_catalog();
 
-		$recognized   = array();
-		$unrecognized = array();
-		$invalid      = array();
+		$analyzer = new Shurloc_Catalog_Analyzer(
+			new Shurloc_Mesh_Parser()
+		);
 
-		foreach ( $catalog as $variation ) {
-
-			$spec = $parser->parse( $variation );
-
-			if ( ! $spec->recognized ) {
-				$unrecognized[] = $variation;
-				continue;
-			}
-
-			$recognized[] = $variation;
-
-			if ( ! $spec->is_valid() ) {
-				$invalid[] = array(
-					'variation'       => $variation,
-					'unknown_tokens'  => $spec->unknown_tokens,
-					'mesh_count'      => $spec->mesh_count,
-					'thread_diameter' => $spec->thread_diameter,
-					'modifier'        => $spec->modifier,
-					'color'           => $spec->color,
-					'pack_size'       => $spec->pack_size,
-					'price_text'      => $spec->price_text,
-				);
-			}
-		}
+		$report = $analyzer->analyze( $catalog );
 
 		// Sanity checks.
 		$this->assertNotEmpty(
@@ -62,12 +36,18 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 		);
 
 		$this->assertNotEmpty(
-			$recognized,
+			$report['recognized'],
 			'No catalog variations were recognized.'
 		);
 
+		$this->assertSame(
+			count( $catalog ),
+			count( $report['recognized'] ) +
+			count( $report['unrecognized'] ),
+			'Every catalog variation should be classified.'
+		);
+
 		// TODO:
-		// Export the recognized, unrecognized, and invalid arrays as a JSON
-		// report for inspection during parser development.
+		// Export $report as JSON for inspection during parser development.
 	}
 }
