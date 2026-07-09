@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0] - 2026-07-09
+
+### Added
+- Mesh recognition support
+- Catalog fixture loader for exported WooCommerce variations
+- Catalog analyzer for classifying recognized, unrecognized, and invalid mesh specifications
+- Integration tests using a real catalog snapshot
+
+### Changed
+- Refactored parser into reusable extraction methods
+- Added recognition state to parsed mesh specifications
+- Improved parser normalization and validation
+- Refactored catalog fixture handling to separate fixture loading from PHPUnit data providers
+
 ## [0.3.0] - 2026-07-08
 
 ### Added
