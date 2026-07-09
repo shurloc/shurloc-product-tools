@@ -15,17 +15,17 @@ declare( strict_types=1 );
 final class MeshCatalogDataProvider {
 
 	/**
-	 * Return every variation from the catalog fixture.
+	 * Load every variation from the catalog fixture.
 	 *
-	 * @return array<string, array{0:string}>
+	 * @return string[]
 	 * @throws JsonException    If the JSON fixture is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
-	public static function catalog_variations(): array {
+	public static function load_catalog(): array {
 
 		$filename = dirname( __DIR__ ) . '/data/catalog-variations.json';
 
-        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading a local test fixture.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading a local test fixture.
 		$json = file_get_contents( $filename );
 
 		if ( false === $json ) {
@@ -50,11 +50,26 @@ final class MeshCatalogDataProvider {
 		$data = array();
 
 		foreach ( $variations as $variation ) {
-
-			if ( ! is_string( $variation ) ) {
-				continue;
+			if ( is_string( $variation ) ) {
+				$data[] = $variation;
 			}
+		}
 
+		return $data;
+	}
+
+	/**
+	 * Return catalog variations as PHPUnit datasets.
+	 *
+	 * @return array<string, array{0:string}>
+	 * @throws JsonException    If the JSON fixture is invalid.
+	 * @throws RuntimeException If the fixture cannot be read.
+	 */
+	public static function catalog_variations(): array {
+
+		$data = array();
+
+		foreach ( self::load_catalog() as $variation ) {
 			$data[ $variation ] = array( $variation );
 		}
 
