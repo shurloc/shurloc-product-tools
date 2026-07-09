@@ -8,6 +8,7 @@
   - Update integration tests
   - Update any future report serializers
   - Reason: distinguish a variation name (string) from a WooCommerce variation object/ID.
+- Rename report methods from `add_*()` to `record_*()` to better reflect that the report records analysis results rather than managing a generic collection.
 
 ## Reporting
 
