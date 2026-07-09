@@ -101,4 +101,67 @@ final class Shurloc_Catalog_Report {
 			'spec'      => $spec,
 		);
 	}
+
+	/**
+	 * Return the total number of variations analyzed.
+	 *
+	 * @return int
+	 */
+	public function total_variations(): int {
+
+		return (
+			$this->recognized_specification_count() +
+			$this->unrecognized_variation_count()
+		);
+	}
+
+	/**
+	 * Return the number of recognized mesh specifications.
+	 *
+	 * @return int
+	 */
+	public function recognized_specification_count(): int {
+
+		return count( $this->recognized_specifications );
+	}
+
+	/**
+	 * Return the number of unrecognized variation names.
+	 *
+	 * @return int
+	 */
+	public function unrecognized_variation_count(): int {
+
+		return count( $this->unrecognized_variations );
+	}
+
+	/**
+	 * Return the number of invalid mesh specifications.
+	 *
+	 * @return int
+	 */
+	public function invalid_specification_count(): int {
+
+		return count( $this->invalid_specifications );
+	}
+
+	/**
+	 * Return a summary of the catalog analysis.
+	 *
+	 * @return array{
+	 *     total_variations: int,
+	 *     recognized_specifications: int,
+	 *     unrecognized_variations: int,
+	 *     invalid_specifications: int
+	 * }
+	 */
+	public function summary(): array {
+
+		return array(
+			'total_variations'          => $this->total_variations(),
+			'recognized_specifications' => $this->recognized_specification_count(),
+			'unrecognized_variations'   => $this->unrecognized_variation_count(),
+			'invalid_specifications'    => $this->invalid_specification_count(),
+		);
+	}
 }

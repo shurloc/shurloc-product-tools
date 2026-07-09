@@ -40,16 +40,16 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 			$report
 		);
 
-		$this->assertNotEmpty(
-			$report->recognized_specifications,
-			'No catalog variations were recognized.'
-		);
-
 		$this->assertSame(
 			count( $catalog ),
-			count( $report->recognized_specifications ) +
-			count( $report->unrecognized_variations ),
+			$report->total_variations(),
 			'Every catalog variation should be classified.'
+		);
+
+		$this->assertGreaterThan(
+			0,
+			$report->recognized_specification_count(),
+			'No catalog variations were recognized.'
 		);
 
 		// TODO:
