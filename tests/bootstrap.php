@@ -26,6 +26,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once dirname( __DIR__ ) . '/includes/models/class-shurloc-mesh-specification.php';
 require_once dirname( __DIR__ ) . '/includes/parsers/class-shurloc-mesh-parser.php';
 require_once dirname( __DIR__ ) . '/includes/analyzers/class-shurloc-catalog-analyzer.php';
+require_once dirname( __DIR__ ) . '/includes/reports/class-shurloc-catalog-report.php';
 
 // Testing imports.
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';

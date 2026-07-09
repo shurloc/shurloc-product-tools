@@ -43,46 +43,35 @@ final class Shurloc_Catalog_Analyzer {
 	 * - recognized but invalid mesh specifications
 	 *
 	 * @param string[] $variations Variation names.
-	 * @return array{
-	 *     recognized: array<int, array{
-	 *         variation: string,
-	 *         spec: Shurloc_Mesh_Specification
-	 *     }>,
-	 *     unrecognized: array<int, string>,
-	 *     invalid: array<int, array{
-	 *         variation: string,
-	 *         spec: Shurloc_Mesh_Specification
-	 *     }>
-	 * }
+	 * @return Shurloc_Catalog_Report
 	 */
 	public function analyze(
 		array $variations
-	): array {
+	): Shurloc_Catalog_Report {
 
-		$report = array(
-			'recognized'   => array(),
-			'unrecognized' => array(),
-			'invalid'      => array(),
-		);
+		$report = new Shurloc_Catalog_Report();
 
 		foreach ( $variations as $variation ) {
 
 			$spec = $this->parser->parse( $variation );
 
 			if ( ! $spec->recognized ) {
-				$report['unrecognized'][] = $variation;
+				$report->add_unrecognized_variation(
+					$variation
+				);
 				continue;
 			}
 
-			$entry = array(
-				'variation' => $variation,
-				'spec'      => $spec,
+			$report->add_recognized_specification(
+				$variation,
+				$spec
 			);
 
-			$report['recognized'][] = $entry;
-
 			if ( ! $spec->is_valid() ) {
-				$report['invalid'][] = $entry;
+				$report->add_invalid_specification(
+					$variation,
+					$spec
+				);
 			}
 		}
 

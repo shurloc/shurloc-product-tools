@@ -35,15 +35,20 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 			'Catalog fixture appears to be empty.'
 		);
 
+		$this->assertInstanceOf(
+			Shurloc_Catalog_Report::class,
+			$report
+		);
+
 		$this->assertNotEmpty(
-			$report['recognized'],
+			$report->recognized_specifications,
 			'No catalog variations were recognized.'
 		);
 
 		$this->assertSame(
 			count( $catalog ),
-			count( $report['recognized'] ) +
-			count( $report['unrecognized'] ),
+			count( $report->recognized_specifications ) +
+			count( $report->unrecognized_variations ),
 			'Every catalog variation should be classified.'
 		);
 
