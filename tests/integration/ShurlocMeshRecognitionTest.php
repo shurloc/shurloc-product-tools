@@ -37,7 +37,8 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 
 		$this->assertInstanceOf(
 			Shurloc_Catalog_Report::class,
-			$report
+			$report,
+			'The analyzer should return a catalog report.'
 		);
 
 		$this->assertSame(
@@ -50,6 +51,58 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 			0,
 			$report->recognized_specification_count(),
 			'No catalog variations were recognized.'
+		);
+
+		$summary = $report->summary();
+
+		$this->assertSame(
+			$report->total_variations(),
+			$summary['total_variations'],
+			'The summary should report the correct total variation count.'
+		);
+
+		$this->assertSame(
+			$report->recognized_specification_count(),
+			$summary['recognized_specifications'],
+			'The summary should report the recognized specification count.'
+		);
+
+		$this->assertSame(
+			$report->unrecognized_variation_count(),
+			$summary['unrecognized_variations'],
+			'The summary should report the unrecognized variation count.'
+		);
+
+		$this->assertSame(
+			$report->invalid_specification_count(),
+			$summary['invalid_specifications'],
+			'The summary should report the invalid specification count.'
+		);
+
+		$array = $report->to_array();
+
+		$this->assertSame(
+			$summary,
+			$array['summary'],
+			'The serialized report should include the computed summary.'
+		);
+
+		$this->assertCount(
+			$report->recognized_specification_count(),
+			$array['recognized_specifications'],
+			'The serialized report should include every recognized specification.'
+		);
+
+		$this->assertCount(
+			$report->unrecognized_variation_count(),
+			$array['unrecognized_variations'],
+			'The serialized report should include every unrecognized variation.'
+		);
+
+		$this->assertCount(
+			$report->invalid_specification_count(),
+			$array['invalid_specifications'],
+			'The serialized report should include every invalid specification.'
 		);
 
 		// TODO:

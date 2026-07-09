@@ -164,4 +164,75 @@ final class Shurloc_Catalog_Report {
 			'invalid_specifications'    => $this->invalid_specification_count(),
 		);
 	}
+
+	/**
+	 * Return the report as an associative array.
+	 *
+	 * @return array{
+	 *     summary: array{
+	 *         total_variations: int,
+	 *         recognized_specifications: int,
+	 *         unrecognized_variations: int,
+	 *         invalid_specifications: int
+	 *     },
+	 *     recognized_specifications: array<int, array{
+	 *         variation: string,
+	 *         spec: array{
+	 *             raw: string,
+	 *             mesh_count: int|null,
+	 *             thread_diameter: int|null,
+	 *             modifier: string|null,
+	 *             color: string|null,
+	 *             pack_size: string|null,
+	 *             price_text: string|null,
+	 *             recognized: bool,
+	 *             unknown_tokens: string[]
+	 *         }
+	 *     }>,
+	 *     unrecognized_variations: string[],
+	 *     invalid_specifications: array<int, array{
+	 *         variation: string,
+	 *         spec: array{
+	 *             raw: string,
+	 *             mesh_count: int|null,
+	 *             thread_diameter: int|null,
+	 *             modifier: string|null,
+	 *             color: string|null,
+	 *             pack_size: string|null,
+	 *             price_text: string|null,
+	 *             recognized: bool,
+	 *             unknown_tokens: string[]
+	 *         }
+	 *     }>
+	 * }
+	 */
+	public function to_array(): array {
+
+		$recognized = array();
+
+		foreach ( $this->recognized_specifications as $entry ) {
+
+			$recognized[] = array(
+				'variation' => $entry['variation'],
+				'spec'      => $entry['spec']->to_array(),
+			);
+		}
+
+		$invalid = array();
+
+		foreach ( $this->invalid_specifications as $entry ) {
+
+			$invalid[] = array(
+				'variation' => $entry['variation'],
+				'spec'      => $entry['spec']->to_array(),
+			);
+		}
+
+		return array(
+			'summary'                   => $this->summary(),
+			'recognized_specifications' => $recognized,
+			'unrecognized_variations'   => $this->unrecognized_variations,
+			'invalid_specifications'    => $invalid,
+		);
+	}
 }

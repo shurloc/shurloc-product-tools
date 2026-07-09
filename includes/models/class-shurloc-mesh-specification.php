@@ -148,4 +148,34 @@ class Shurloc_Mesh_Specification {
 			&& $this->recognized === $other->recognized
 			&& $this->unknown_tokens === $other->unknown_tokens;
 	}
+
+	/**
+	 * Return the specification as an associative array.
+	 *
+	 * @return array{
+	 *     raw:string,
+	 *     mesh_count:int|null,
+	 *     thread_diameter:int|null,
+	 *     modifier:string|null,
+	 *     color:string|null,
+	 *     pack_size:string|null,
+	 *     price_text:string|null,
+	 *     recognized:bool,
+	 *     unknown_tokens:string[]
+	 * }
+	 */
+	public function to_array(): array {
+
+		return array(
+			'raw'             => $this->raw,
+			'mesh_count'      => $this->mesh_count,
+			'thread_diameter' => $this->thread_diameter,
+			'modifier'        => $this->modifier,
+			'color'           => $this->color,
+			'pack_size'       => $this->pack_size,
+			'price_text'      => $this->price_text,
+			'recognized'      => $this->recognized,
+			'unknown_tokens'  => $this->unknown_tokens,
+		);
+	}
 }
