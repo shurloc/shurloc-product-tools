@@ -1,3 +1,14 @@
+#Requires -Modules @{ModuleName="Microsoft.PowerShell.Archive"; ModuleVersion="1.2.5"}
+
+# There is a known bug that casues ZIPs created using Microsoft.PowerShell.Archive to create
+# unix-incompatible ZIP archives.
+#   Solution: https://superuser.com/a/1933458
+# Install the updated Microsoft.PowerShell.Archive version using:
+#   Install-Module -Name Microsoft.PowerShell.Archive -Force
+# Verify the version using:
+#   Get-Module -Name Microsoft.PowerShell.Archive -ListAvailable | Select-Object Name, Version
+
+
 param(
     [string]$PluginName = "shurloc-product-tools"
 )
@@ -17,68 +28,103 @@ Write-Host ""
 #
 # Clean previous build.
 #
-if (Test-Path $PluginRoot) {
-    Remove-Item $PluginRoot -Recurse -Force
-}
-
-if (Test-Path $ZipFile) {
-    Remove-Item $ZipFile -Force
+if (Test-Path $BuildRoot) {
+    Remove-Item $BuildRoot -Recurse -Force
 }
 
 New-Item `
     -ItemType Directory `
     -Force `
-    -Path $PluginRoot | Out-Null
+    -Path $BuildRoot | Out-Null
 
 #
-# Copy plugin root PHP files.
+# Copy the project, excluding development files.
 #
-Copy-Item `
-    "$ProjectRoot\*.php" `
+$ExcludedDirectories = @(
+    ".git",
+    ".github",
+    ".vscode",
+    ".phpunit.cache",
+    "build",
+    "tests",
+    "vendor",
+    "bin"
+)
+
+$ExcludedFiles = @(
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    ".phpunit.result.cache",
+    "composer.json",
+    "composer.lock",
+    "phpcs.xml",
+    "phpcs.xml.dist",
+    "phpunit.xml",
+    "phpunit.xml.dist",
+    "README-development.md",
+    "TODO.md",
+    ".gitkeep",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE"
+)
+
+$RoboCopyArguments = @(
+    $ProjectRoot
     $PluginRoot
+    "/E"
+    "/R:2"
+    "/W:1"
+    "/NFL"
+    "/NDL"
+    "/NJH"
+    "/NJS"
+    "/NP"
+)
+
+if ($ExcludedDirectories.Count -gt 0) {
+    $RoboCopyArguments += "/XD"
+    $RoboCopyArguments += $ExcludedDirectories
+}
+
+if ($ExcludedFiles.Count -gt 0) {
+    $RoboCopyArguments += "/XF"
+    $RoboCopyArguments += $ExcludedFiles
+}
+
+& robocopy @RoboCopyArguments
 
 #
-# Ensure the plugin bootstrap file was copied.
+# Robocopy exit codes 0-7 indicate success.
+#
+if ($LASTEXITCODE -gt 7) {
+    throw "Robocopy failed with exit code $LASTEXITCODE."
+}
+
+#
+# Verify required plugin files.
 #
 if (-not (Test-Path "$PluginRoot\shurloc-product-tools.php")) {
     throw "Plugin bootstrap file 'shurloc-product-tools.php' was not copied."
 }
 
-#
-# Copy plugin directories.
-#
-$Directories = @(
-    "includes",
-    "assets",
-    "languages",
-    "templates"
-)
-
-foreach ($Directory in $Directories) {
-
-    $Source = Join-Path $ProjectRoot $Directory
-
-    if (Test-Path $Source) {
-
-        Copy-Item `
-            $Source `
-            $PluginRoot `
-            -Recurse
-    }
+if (-not (Test-Path "$PluginRoot\includes")) {
+    throw "The 'includes' directory was not copied."
 }
 
 #
-# Ensure the includes directory was copied.
+# Remove any previous ZIP.
 #
-if (-not (Test-Path "$PluginRoot\includes")) {
-    throw "The 'includes' directory was not copied."
+if (Test-Path $ZipFile) {
+    Remove-Item $ZipFile -Force
 }
 
 #
 # Create ZIP archive.
 #
 Compress-Archive `
-    -Path "$PluginRoot\*" `
+    -Path (Join-Path $BuildRoot $PluginName) `
     -DestinationPath $ZipFile `
     -Force
 
