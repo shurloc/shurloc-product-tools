@@ -20,7 +20,7 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 	 * This test exercises the parser against a real-world catalog snapshot.
 	 * It classifies every variation as recognized, unrecognized, or invalid.
 	 */
-	public function test_catalog_recognition(): void {
+	public function test_analyzes_catalog_fixture(): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
