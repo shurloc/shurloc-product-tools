@@ -65,9 +65,7 @@ $ExcludedFiles = @(
     "README-development.md",
     "TODO.md",
     ".gitkeep",
-    "CHANGELOG.md",
-    "README.md",
-    "LICENSE"
+    "CHANGELOG.md"
 )
 
 $RoboCopyArguments = @(
