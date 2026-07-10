@@ -129,6 +129,9 @@ Compress-Archive `
     -Force
 
 Write-Host ""
+Write-Host "Build package contents:"
+tar -tf $ZipFile
+Write-Host ""
 Write-Host "Build complete."
 Write-Host ""
 Write-Host "Folder:"
