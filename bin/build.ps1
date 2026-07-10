@@ -65,9 +65,7 @@ $ExcludedFiles = @(
     "README-development.md",
     "TODO.md",
     ".gitkeep",
-    "CHANGELOG.md",
-    "README.md",
-    "LICENSE"
+    "CHANGELOG.md"
 )
 
 $RoboCopyArguments = @(
@@ -128,6 +126,9 @@ Compress-Archive `
     -DestinationPath $ZipFile `
     -Force
 
+Write-Host ""
+Write-Host "Build package contents:"
+tar -tf $ZipFile
 Write-Host ""
 Write-Host "Build complete."
 Write-Host ""
