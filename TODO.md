@@ -13,12 +13,19 @@
 
 ## Reporting
 
-- Add summary statistics to `Shurloc_Catalog_Report`.
-- Add JSON serialization.
 - Generate catalog report from the WordPress Tools page.
+  - Add "Generate Catalog Report" admin action.
+  - Download catalog-report.json.
+  - Reuse the catalog analyzer and report classes.
+  - Add a reusable JSON download helper.
 
 ## Analysis
 
 - Detect duplicate mesh specifications.
 - Detect unexpected colors, modifiers, and pack sizes.
 - Add catalog statistics (mesh counts, colors, etc.).
+
+## Build
+
+- Add version stamping from the plugin header (optional).
+- Add a summary of the build: plugin name, files, directories, ZIP size, and output location.
