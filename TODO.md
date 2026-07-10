@@ -10,6 +10,11 @@
   - Reason: distinguish a variation name (string) from a WooCommerce variation object/ID.
 - Rename report methods from `add_*()` to `record_*()` to better reflect that the report records analysis results rather than managing a generic collection.
 - Extract catalog report generation into a dedicated service if a second consumer emerges (WP-CLI, scheduled task, REST API, etc.).
+- Evaluate replacing the catalog analyzer metadata callback with a `Shurloc_Catalog_Entry` value object.
+  - Encapsulate a variation and its associated metadata.
+  - Eliminate parallel collections and metadata callbacks.
+  - Preserve analyzer independence from WooCommerce.
+  - Implement only if additional catalog metadata or consumers justify the abstraction.
 
 ## Reporting
 
