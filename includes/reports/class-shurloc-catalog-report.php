@@ -58,30 +58,42 @@ final class Shurloc_Catalog_Report {
 	 *
 	 * @param string                     $variation Variation name.
 	 * @param Shurloc_Mesh_Specification $spec      Parsed specification.
+	 * @param array<string, mixed>       $metadata Optional report metadata.
 	 * @return void
 	 */
 	public function add_recognized_specification(
 		string $variation,
-		Shurloc_Mesh_Specification $spec
+		Shurloc_Mesh_Specification $spec,
+		array $metadata = array()
 	): void {
 
-		$this->recognized_specifications[] = array(
-			'variation' => $variation,
-			'spec'      => $spec,
+		$this->recognized_specifications[] = array_merge(
+			$metadata,
+			array(
+				'variation' => $variation,
+				'spec'      => $spec,
+			)
 		);
 	}
 
 	/**
 	 * Add an unrecognized variation name.
 	 *
-	 * @param string $variation Variation name.
+	 * @param string               $variation Variation name.
+	 * @param array<string, mixed> $metadata Optional report metadata.
 	 * @return void
 	 */
 	public function add_unrecognized_variation(
-		string $variation
+		string $variation,
+		array $metadata = array()
 	): void {
 
-		$this->unrecognized_variations[] = $variation;
+		$this->unrecognized_variations[] = array_merge(
+			$metadata,
+			array(
+				'variation' => $variation,
+			)
+		);
 	}
 
 	/**
@@ -89,16 +101,21 @@ final class Shurloc_Catalog_Report {
 	 *
 	 * @param string                     $variation Variation name.
 	 * @param Shurloc_Mesh_Specification $spec      Parsed specification.
+	 * @param array<string, mixed>       $metadata Optional report metadata.
 	 * @return void
 	 */
 	public function add_invalid_specification(
 		string $variation,
-		Shurloc_Mesh_Specification $spec
+		Shurloc_Mesh_Specification $spec,
+		array $metadata = array()
 	): void {
 
-		$this->invalid_specifications[] = array(
-			'variation' => $variation,
-			'spec'      => $spec,
+		$this->invalid_specifications[] = array_merge(
+			$metadata,
+			array(
+				'variation' => $variation,
+				'spec'      => $spec,
+			)
 		);
 	}
 
@@ -175,35 +192,9 @@ final class Shurloc_Catalog_Report {
 	 *         unrecognized_variations: int,
 	 *         invalid_specifications: int
 	 *     },
-	 *     recognized_specifications: array<int, array{
-	 *         variation: string,
-	 *         spec: array{
-	 *             raw: string,
-	 *             mesh_count: int|null,
-	 *             thread_diameter: int|null,
-	 *             modifier: string|null,
-	 *             color: string|null,
-	 *             pack_size: string|null,
-	 *             price_text: string|null,
-	 *             recognized: bool,
-	 *             unknown_tokens: string[]
-	 *         }
-	 *     }>,
-	 *     unrecognized_variations: string[],
-	 *     invalid_specifications: array<int, array{
-	 *         variation: string,
-	 *         spec: array{
-	 *             raw: string,
-	 *             mesh_count: int|null,
-	 *             thread_diameter: int|null,
-	 *             modifier: string|null,
-	 *             color: string|null,
-	 *             pack_size: string|null,
-	 *             price_text: string|null,
-	 *             recognized: bool,
-	 *             unknown_tokens: string[]
-	 *         }
-	 *     }>
+	 *     recognized_specifications: array<int, array<string, mixed>>,
+	 *     unrecognized_variations: array<int, array<string, mixed>>,
+	 *     invalid_specifications: array<int, array<string, mixed>>
 	 * }
 	 */
 	public function to_array(): array {
@@ -212,20 +203,22 @@ final class Shurloc_Catalog_Report {
 
 		foreach ( $this->recognized_specifications as $entry ) {
 
-			$recognized[] = array(
-				'variation' => $entry['variation'],
-				'spec'      => $entry['spec']->to_array(),
-			);
+			$item = $entry;
+
+			$item['spec'] = $item['spec']->to_array();
+
+			$recognized[] = $item;
 		}
 
 		$invalid = array();
 
 		foreach ( $this->invalid_specifications as $entry ) {
 
-			$invalid[] = array(
-				'variation' => $entry['variation'],
-				'spec'      => $entry['spec']->to_array(),
-			);
+			$item = $entry;
+
+			$item['spec'] = $item['spec']->to_array();
+
+			$invalid[] = $item;
 		}
 
 		return array(
