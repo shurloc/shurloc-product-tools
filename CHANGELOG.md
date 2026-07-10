@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.5.1] - 2026-07-10
+
+### Added
+
+- Added `LICENSE` to release packages.
+- Added `README.md` to release packages.
+
+## [0.5.0] - 2026-07-09
+
+### Added
+
+- Added `Shurloc_Catalog_Report` for recording catalog analysis results.
+- Added `Shurloc_Catalog_Analyzer` to analyze exported WooCommerce catalog variations.
+- Added report summary statistics.
+- Added JSON serialization for catalog reports.
+- Added `Shurloc_Mesh_Specification::to_array()`.
+- Added integration tests for catalog analysis and reporting.
+- Added behavioral invariant tests for report generation.
+- Added PowerShell build script for creating distributable plugin packages.
+
+### Changed
+
+- Refactored catalog analysis to return a `Shurloc_Catalog_Report` instance instead of a raw array.
+- Improved integration test coverage for catalog recognition and reporting.
+
 ## [0.4.0] - 2026-07-09
 
 ### Added
