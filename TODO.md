@@ -23,6 +23,10 @@
   - Preserve `equals()` and `to_array()`.
   - Add declare( strict_types=1 ).
   - Reason: align with newer model classes such as `Shurloc_Catalog_Variation_Entry`.
+- Adopt `declare( strict_types=1 );` across the plugin.
+  - Add to existing PHP files.
+  - Update test files.
+  - Verify no implicit scalar coercion assumptions exist.
 
 ## Reporting
 
