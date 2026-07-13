@@ -15,6 +15,18 @@
   - Eliminate parallel collections and metadata callbacks.
   - Preserve analyzer independence from WooCommerce.
   - Implement only if additional catalog metadata or consumers justify the abstraction.
+- Modernize `Shurloc_Mesh_Specification`.
+  - Make the class `final`.
+  - Initialize all properties in a constructor.
+  - Convert the model to an immutable value object.
+  - Remove property mutation from `Shurloc_Mesh_Parser`.
+  - Preserve `equals()` and `to_array()`.
+  - Add declare( strict_types=1 ).
+  - Reason: align with newer model classes such as `Shurloc_Catalog_Variation_Entry`.
+- Adopt `declare( strict_types=1 );` across the plugin.
+  - Add to existing PHP files.
+  - Update test files.
+  - Verify no implicit scalar coercion assumptions exist.
 
 ## Reporting
 

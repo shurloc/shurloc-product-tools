@@ -2,7 +2,8 @@
 /**
  * Catalog fixture data provider.
  *
- * Loads variation names exported from WooCommerce.
+ * Loads variation names exported from WooCommerce and converts them into
+ * catalog variation entries for analyzer tests.
  *
  * @package ShurLocProductTools
  */
@@ -15,9 +16,12 @@ declare( strict_types=1 );
 final class MeshCatalogDataProvider {
 
 	/**
-	 * Load every variation from the catalog fixture.
+	 * Load catalog variation entries from the catalog fixture.
 	 *
-	 * @return string[]
+	 * Converts exported variation names into catalog variation entries for
+	 * analyzer integration tests.
+	 *
+	 * @return Shurloc_Catalog_Variation_Entry[]
 	 * @throws JsonException    If the JSON fixture is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
@@ -47,21 +51,30 @@ final class MeshCatalogDataProvider {
 			);
 		}
 
-		$data = array();
+		$entries = array();
 
 		foreach ( $variations as $variation ) {
-			if ( is_string( $variation ) ) {
-				$data[] = $variation;
+
+			if ( ! is_string( $variation ) ) {
+				continue;
 			}
+
+			$entries[] = new Shurloc_Catalog_Variation_Entry(
+				$variation,
+				null,
+				0,
+				'Fixture Product',
+				''
+			);
 		}
 
-		return $data;
+		return $entries;
 	}
 
 	/**
 	 * Return catalog variations as PHPUnit datasets.
 	 *
-	 * @return array<string, array{0:string}>
+	 * @return array<string, array{0:Shurloc_Catalog_Variation_Entry}>
 	 * @throws JsonException    If the JSON fixture is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
@@ -69,8 +82,8 @@ final class MeshCatalogDataProvider {
 
 		$data = array();
 
-		foreach ( self::load_catalog() as $variation ) {
-			$data[ $variation ] = array( $variation );
+		foreach ( self::load_catalog() as $entry ) {
+			$data[ $entry->variation ] = array( $entry );
 		}
 
 		return $data;
