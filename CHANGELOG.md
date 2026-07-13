@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.6.1] - 2026-07-13
+
+### Changed
+
+- Refactored catalog processing to use `Shurloc_Catalog_Variation_Entry` objects.
+- Updated catalog analysis to pass complete catalog variation entries through the analyzer instead of separate variation strings and metadata callbacks.
+- Removed index-based metadata mapping between catalog variations and report entries.
+- Added catalog variation entry serialization support for reporting and future integrations.
+- Updated integration tests and catalog fixtures to use the new catalog entry data model.
+
+### Internal Improvements
+
+- Simplified data flow between WooCommerce catalog extraction, analysis, and reporting.
+- Reduced coupling between catalog collection and report generation.
+- Established a cleaner foundation for future structured product data generation and product-page presentation features.
+
+### Testing
+
+- Updated integration tests to validate catalog analysis using catalog variation entries.
+- Verified catalog reports and variation exports continue to generate successfully.
+- Confirmed linting and PHPUnit tests pass.
+
 ## [0.6.0] - 2026-07-10
 
 ### Added
