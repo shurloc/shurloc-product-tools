@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+error_log( 'catalog-report.php loaded' );
+
 /**
  * Bootstrap the plugin.
  */
@@ -22,6 +24,7 @@ function shurloc_product_tools_bootstrap(): void {
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/analyzers/class-shurloc-catalog-analyzer.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/reports/class-shurloc-catalog-report.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/models/class-shurloc-catalog-variation-entry.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/admin/catalog-report.php';
 }
 
 add_action( 'plugins_loaded', 'shurloc_product_tools_bootstrap' );
