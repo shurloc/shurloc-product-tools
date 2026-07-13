@@ -7,6 +7,8 @@
  * @package ShurLocProductTools
  */
 
+declare( strict_types=1 );
+
 /**
  * Mesh specification.
  */
