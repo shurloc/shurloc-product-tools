@@ -5,6 +5,8 @@
  * @package ShurLocProductTools
  */
 
+declare( strict_types=1 );
+
 /**
  * Parses mesh specification strings.
  */
