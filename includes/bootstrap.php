@@ -11,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-error_log( 'catalog-report.php loaded' );
-
 /**
  * Bootstrap the plugin.
  */
