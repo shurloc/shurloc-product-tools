@@ -132,12 +132,6 @@ function shurloc_generate_catalog_report(): void {
 
 	$entries = shurloc_get_catalog_entries();
 
-	$variations = array();
-
-	foreach ( $entries as $entry ) {
-		$variations[] = $entry->variation;
-	}
-
 	$parser = new Shurloc_Mesh_Parser();
 
 	$analyzer = new Shurloc_Catalog_Analyzer(
@@ -145,17 +139,7 @@ function shurloc_generate_catalog_report(): void {
 	);
 
 	$report = $analyzer->analyze(
-		$variations,
-		static function ( int $index ) use ( $entries ): array {
-
-			$entry = $entries[ $index ];
-
-			return array(
-				'product_id'   => $entry->product_id,
-				'product_name' => $entry->product_name,
-				'edit_url'     => $entry->edit_url,
-			);
-		}
+		$entries
 	);
 
 	shurloc_download_json(

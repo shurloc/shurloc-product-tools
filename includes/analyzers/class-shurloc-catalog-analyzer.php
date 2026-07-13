@@ -34,52 +34,48 @@ final class Shurloc_Catalog_Analyzer {
 	}
 
 	/**
-	 * Analyze a collection of variation names.
+	 * Analyze a collection of catalog variation entries.
 	 *
 	 * Returns three collections:
 	 *
 	 * - recognized mesh specifications
-	 * - unrecognized variation names
+	 * - unrecognized variations
 	 * - recognized but invalid mesh specifications
 	 *
-	 * @param string[]      $variations        Variation names.
-	 * @param callable|null $metadata_provider Optional metadata provider.
+	 * @param Shurloc_Catalog_Variation_Entry[] $entries Catalog variation entries.
 	 * @return Shurloc_Catalog_Report
 	 */
 	public function analyze(
-		array $variations,
-		?callable $metadata_provider = null
+		array $entries
 	): Shurloc_Catalog_Report {
 
 		$report = new Shurloc_Catalog_Report();
 
-		foreach ( $variations as $index => $variation ) {
+		foreach ( $entries as $entry ) {
 
-			$metadata = array();
+			$spec = $this->parser->parse(
+				$entry->variation
+			);
 
-			if ( null !== $metadata_provider ) {
-				$metadata = $metadata_provider( $index );
-			}
-
-			$spec = $this->parser->parse( $variation );
+			$metadata = $entry->to_array();
 
 			if ( ! $spec->recognized ) {
 				$report->add_unrecognized_variation(
-					$variation,
+					$entry->variation,
 					$metadata
 				);
 				continue;
 			}
 
 			$report->add_recognized_specification(
-				$variation,
+				$entry->variation,
 				$spec,
 				$metadata
 			);
 
 			if ( ! $spec->is_valid() ) {
 				$report->add_invalid_specification(
-					$variation,
+					$entry->variation,
 					$spec,
 					$metadata
 				);

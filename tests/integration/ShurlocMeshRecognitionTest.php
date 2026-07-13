@@ -15,9 +15,10 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocMeshRecognitionTest extends TestCase {
 
 	/**
-	 * Parse every variation in the exported catalog.
+	 * Analyze every catalog variation entry in the exported catalog.
 	 *
-	 * This test exercises the parser against a real-world catalog snapshot.
+	 * This test exercises the parser and analyzer against a real-world catalog
+	 * snapshot.
 	 */
 	public function test_analyzes_catalog_fixture(): void {
 

@@ -28,7 +28,6 @@ require_once dirname( __DIR__ ) . '/includes/parsers/class-shurloc-mesh-parser.p
 require_once dirname( __DIR__ ) . '/includes/analyzers/class-shurloc-catalog-analyzer.php';
 require_once dirname( __DIR__ ) . '/includes/reports/class-shurloc-catalog-report.php';
 require_once dirname( __DIR__ ) . '/includes/models/class-shurloc-catalog-variation-entry.php';
-require_once dirname( __DIR__ ) . '/includes/admin/catalog-report.php';
 
 // Testing imports.
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';
