@@ -30,6 +30,8 @@ require_once dirname( __DIR__ ) . '/includes/reports/class-shurloc-catalog-repor
 require_once dirname( __DIR__ ) . '/includes/models/class-shurloc-catalog-variation-entry.php';
 require_once dirname( __DIR__ ) . '/includes/models/class-shurloc-mesh-product-result.php';
 require_once dirname( __DIR__ ) . '/includes/analyzers/class-shurloc-mesh-product-analyzer.php';
+require_once dirname( __DIR__ ) . '/includes/services/class-shurloc-product-catalog-service.php';
+require_once dirname( __DIR__ ) . '/includes/generators/class-shurloc-product-schema-generator.php';
 
 // Testing imports.
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';
