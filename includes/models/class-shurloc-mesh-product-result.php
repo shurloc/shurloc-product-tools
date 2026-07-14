@@ -93,10 +93,22 @@ final class Shurloc_Mesh_Product_Result {
 	/**
 	 * Determine whether this represents a mesh product.
 	 *
-	 * @return bool
+	 * @return bool True if mesh variations were found.
 	 */
 	public function is_mesh_product(): bool {
 
 		return ! empty( $this->mesh_variations );
+	}
+
+	/**
+	 * Return the number of mesh variations.
+	 *
+	 * @return int Number of recognized mesh variations.
+	 */
+	public function mesh_variation_count(): int {
+
+		return count(
+			$this->mesh_variations
+		);
 	}
 }
