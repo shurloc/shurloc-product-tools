@@ -15,22 +15,32 @@ declare( strict_types=1 );
 final class Shurloc_Product_Schema_Output {
 
 	/**
+	 * Catalog service.
+	 *
+	 * @var Shurloc_Product_Catalog_Service
+	 */
+	private Shurloc_Product_Catalog_Service $catalog_service;
+
+	/**
 	 * Schema service.
 	 *
 	 * @var Shurloc_Mesh_Product_Schema_Service
 	 */
-	private Shurloc_Mesh_Product_Schema_Service $service;
+	private Shurloc_Mesh_Product_Schema_Service $schema_service;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Product_Schema_Service $service Schema service.
+	 * @param Shurloc_Product_Catalog_Service     $catalog_service Catalog service.
+	 * @param Shurloc_Mesh_Product_Schema_Service $schema_service Schema service.
 	 */
 	public function __construct(
-		Shurloc_Mesh_Product_Schema_Service $service
+		Shurloc_Product_Catalog_Service $catalog_service,
+		Shurloc_Mesh_Product_Schema_Service $schema_service
 	) {
 
-		$this->service = $service;
+		$this->catalog_service = $catalog_service;
+		$this->schema_service  = $schema_service;
 	}
 
 	/**
@@ -52,9 +62,7 @@ final class Shurloc_Product_Schema_Output {
 			return;
 		}
 
-		$catalog_service = new Shurloc_Product_Catalog_Service();
-
-		$entry = $catalog_service->get_product_entry(
+		$entry = $this->catalog_service->get_product_entry(
 			$product
 		);
 
@@ -62,7 +70,7 @@ final class Shurloc_Product_Schema_Output {
 			return;
 		}
 
-		$schema = $this->service->generate(
+		$schema = $this->schema_service->generate(
 			$entry
 		);
 
