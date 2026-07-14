@@ -20,7 +20,7 @@ final class Shurloc_Product_Catalog_Service {
 	 * @param WC_Product $product WooCommerce product.
 	 * @return Shurloc_Catalog_Variation_Entry[]
 	 */
-	public function get_variation_entries(
+	public function get_product_variation_entries(
 		WC_Product $product
 	): array {
 

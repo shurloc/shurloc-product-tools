@@ -203,6 +203,8 @@ function shurloc_get_catalog_entries(): array {
 
 	$entries = array();
 
+	$service = new Shurloc_Product_Catalog_Service();
+
 	$product_ids = get_posts(
 		array(
 			'post_type'      => 'product',
@@ -216,43 +218,16 @@ function shurloc_get_catalog_entries(): array {
 
 		$product = wc_get_product( $product_id );
 
-		if ( ! $product || ! $product->is_type( 'variable' ) ) {
+		if ( ! $product ) {
 			continue;
 		}
 
-		foreach ( $product->get_children() as $variation_id ) {
-
-			$variation = wc_get_product( $variation_id );
-
-			if ( ! $variation ) {
-				continue;
-			}
-
-			$attributes = $variation->get_variation_attributes();
-
-			if ( 1 !== count( $attributes ) ) {
-				continue;
-			}
-
-			$raw_price = $variation->get_price();
-
-			$price = (
-				'' === $raw_price
-					? null
-					: (float) $raw_price
-			);
-
-			$entries[] = new Shurloc_Catalog_Variation_Entry(
-				array_values( $attributes )[0],
-				$price,
-				$product_id,
-				$product->get_name(),
-				get_edit_post_link(
-					$product_id,
-					''
-				)
-			);
-		}
+		$entries = array_merge(
+			$entries,
+			$service->get_product_variation_entries(
+				$product
+			)
+		);
 	}
 
 	usort(
