@@ -2,7 +2,7 @@
 /**
  * Mesh product schema service.
  *
- * Coordinates mesh product detection and schema generation.
+ * Coordinates mesh product analysis and schema generation.
  *
  * @package ShurLocProductTools
  */
@@ -13,13 +13,6 @@ declare( strict_types=1 );
  * Mesh product schema service.
  */
 final class Shurloc_Mesh_Product_Schema_Service {
-
-	/**
-	 * Catalog service.
-	 *
-	 * @var Shurloc_Product_Catalog_Service
-	 */
-	private Shurloc_Product_Catalog_Service $catalog_service;
 
 	/**
 	 * Mesh analyzer.
@@ -38,39 +31,32 @@ final class Shurloc_Mesh_Product_Schema_Service {
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Product_Catalog_Service  $catalog_service Catalog service.
 	 * @param Shurloc_Mesh_Product_Analyzer    $analyzer Mesh analyzer.
 	 * @param Shurloc_Product_Schema_Generator $generator Schema generator.
 	 */
 	public function __construct(
-		Shurloc_Product_Catalog_Service $catalog_service,
 		Shurloc_Mesh_Product_Analyzer $analyzer,
 		Shurloc_Product_Schema_Generator $generator
 	) {
 
-		$this->catalog_service = $catalog_service;
-		$this->analyzer        = $analyzer;
-		$this->generator       = $generator;
+		$this->analyzer  = $analyzer;
+		$this->generator = $generator;
 	}
 
 	/**
-	 * Generate schema for a WooCommerce product.
+	 * Generate schema for a catalog product.
 	 *
 	 * Returns null when the product is not a mesh product.
 	 *
-	 * @param WC_Product $product WooCommerce product.
+	 * @param Shurloc_Catalog_Product_Entry $product Catalog product.
 	 * @return array<string,mixed>|null
 	 */
-	public function generate_for_product(
-		WC_Product $product
+	public function generate(
+		Shurloc_Catalog_Product_Entry $product
 	): ?array {
 
-		$entries = $this->catalog_service->get_product_variation_entries(
-			$product
-		);
-
 		$result = $this->analyzer->analyze(
-			$entries
+			$product->variations
 		);
 
 		if ( 0 === $result->mesh_variation_count() ) {
@@ -78,7 +64,7 @@ final class Shurloc_Mesh_Product_Schema_Service {
 		}
 
 		return $this->generator->generate(
-			$product->get_name(),
+			$product->product_name,
 			$result
 		);
 	}
