@@ -18,19 +18,15 @@ final class Shurloc_Product_Catalog_Service {
 	 * Collect a product catalog entry.
 	 *
 	 * @param WC_Product $product WooCommerce product.
-	 * @return Shurloc_Catalog_Product_Entry|null
+	 * @return Shurloc_Catalog_Product_Entry
 	 */
 	public function get_product_entry(
 		WC_Product $product
-	): ?Shurloc_Catalog_Product_Entry {
+	): Shurloc_Catalog_Product_Entry {
 
 		$variations = $this->get_product_variation_entries(
 			$product
 		);
-
-		if ( empty( $variations ) ) {
-			return null;
-		}
 
 		return new Shurloc_Catalog_Product_Entry(
 			(int) $product->get_id(),
@@ -44,6 +40,18 @@ final class Shurloc_Product_Catalog_Service {
 			),
 			(string) $product->get_sku(),
 			$this->get_product_image_url(
+				$product
+			),
+			$this->normalize_price(
+				$product->get_price()
+			),
+			$this->normalize_price(
+				$product->get_regular_price()
+			),
+			$this->normalize_price(
+				$product->get_sale_price()
+			),
+			$this->get_availability(
 				$product
 			),
 			$variations
@@ -137,6 +145,23 @@ final class Shurloc_Product_Catalog_Service {
 		}
 
 		return $image_url;
+	}
+
+	/**
+	 * Get product availability.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return string
+	 */
+	private function get_availability(
+		WC_Product $product
+	): string {
+
+		if ( $product->is_in_stock() ) {
+			return 'https://schema.org/InStock';
+		}
+
+		return 'https://schema.org/OutOfStock';
 	}
 
 	/**

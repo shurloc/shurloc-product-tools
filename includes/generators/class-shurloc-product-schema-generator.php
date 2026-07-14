@@ -2,8 +2,8 @@
 /**
  * Product schema generator.
  *
- * Generates Schema.org Product structured data from mesh product analysis
- * results.
+ * Generates Schema.org Product structured data from product catalog data
+ * and mesh product analysis results.
  *
  * @package ShurLocProductTools
  */
@@ -27,14 +27,14 @@ final class Shurloc_Product_Schema_Generator {
 		Shurloc_Mesh_Product_Result $result
 	): array {
 
-		$offers = array();
+		$mesh_offers = array();
 
 		foreach ( $result->mesh_variations as $variation ) {
 
 			$entry = $variation['entry'];
 			$spec  = $variation['spec'];
 
-			$offers[] = array(
+			$mesh_offers[] = array(
 				'@type'              => 'Offer',
 				'price'              => number_format(
 					$entry->price,
@@ -73,10 +73,16 @@ final class Shurloc_Product_Schema_Generator {
 			'url'      => $product->product_url,
 		);
 
-		if ( ! empty( $offers ) ) {
+		if ( ! empty( $mesh_offers ) ) {
 
 			$schema['offers'] = $this->build_aggregate_offer(
-				$offers
+				$mesh_offers
+			);
+
+		} elseif ( null !== $product->price ) {
+
+			$schema['offers'] = $this->build_product_offer(
+				$product
 			);
 		}
 
@@ -92,9 +98,31 @@ final class Shurloc_Product_Schema_Generator {
 	}
 
 	/**
-	 * Build aggregate offer data.
+	 * Build simple product offer data.
 	 *
-	 * This method assumes at least one offer exists.
+	 * @param Shurloc_Catalog_Product_Entry $product Product catalog entry.
+	 * @return array<string,mixed>
+	 */
+	private function build_product_offer(
+		Shurloc_Catalog_Product_Entry $product
+	): array {
+
+		return array(
+			'@type'         => 'Offer',
+			'price'         => number_format(
+				$product->price,
+				2,
+				'.',
+				''
+			),
+			'priceCurrency' => 'USD',
+			'availability'  => $product->availability,
+			'url'           => $product->product_url,
+		);
+	}
+
+	/**
+	 * Build aggregate offer data.
 	 *
 	 * @param array<int,array<string,mixed>> $offers Product offers.
 	 * @return array<string,mixed>
