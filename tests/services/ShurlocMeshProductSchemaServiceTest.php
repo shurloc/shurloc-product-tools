@@ -23,6 +23,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			123,
 			'Test Mesh Product',
 			'',
+			'https://example.com/product/test-mesh-product/',
+			'TEST-MESH-123',
+			'https://example.com/wp-content/uploads/test-mesh-product.jpg',
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -74,6 +77,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			456,
 			'Non Mesh Product',
 			'',
+			'https://example.com/product/non-mesh-product/',
+			'',
+			null,
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'Thin Thread',
@@ -110,6 +116,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			123,
 			'Test Mesh Product',
 			'',
+			'https://example.com/product/test-mesh-product/',
+			'TEST-MESH-123',
+			'https://example.com/wp-content/uploads/test-mesh-product.jpg',
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',

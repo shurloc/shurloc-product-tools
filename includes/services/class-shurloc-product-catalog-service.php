@@ -39,6 +39,13 @@ final class Shurloc_Product_Catalog_Service {
 				$product->get_id(),
 				''
 			),
+			(string) get_permalink(
+				$product->get_id()
+			),
+			(string) $product->get_sku(),
+			$this->get_product_image_url(
+				$product
+			),
 			$variations
 		);
 	}
@@ -102,6 +109,34 @@ final class Shurloc_Product_Catalog_Service {
 		);
 
 		return $entries;
+	}
+
+	/**
+	 * Get product image URL.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return string|null
+	 */
+	private function get_product_image_url(
+		WC_Product $product
+	): ?string {
+
+		$image_id = $product->get_image_id();
+
+		if ( ! $image_id ) {
+			return null;
+		}
+
+		$image_url = wp_get_attachment_image_url(
+			$image_id,
+			'full'
+		);
+
+		if ( false === $image_url ) {
+			return null;
+		}
+
+		return $image_url;
 	}
 
 	/**
