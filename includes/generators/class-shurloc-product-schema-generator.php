@@ -18,12 +18,12 @@ final class Shurloc_Product_Schema_Generator {
 	/**
 	 * Generate Product schema data.
 	 *
-	 * @param string                      $product_name Product name.
-	 * @param Shurloc_Mesh_Product_Result $result      Mesh analysis result.
+	 * @param Shurloc_Catalog_Product_Entry $product Product catalog entry.
+	 * @param Shurloc_Mesh_Product_Result   $result  Mesh analysis result.
 	 * @return array<string, mixed>
 	 */
 	public function generate(
-		string $product_name,
+		Shurloc_Catalog_Product_Entry $product,
 		Shurloc_Mesh_Product_Result $result
 	): array {
 
@@ -65,11 +65,23 @@ final class Shurloc_Product_Schema_Generator {
 			);
 		}
 
-		return array(
+		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
-			'name'     => $product_name,
+			'@id'      => $product->product_url . '#product',
+			'name'     => $product->product_name,
+			'url'      => $product->product_url,
 			'offers'   => $offers,
 		);
+
+		if ( '' !== $product->sku ) {
+			$schema['sku'] = $product->sku;
+		}
+
+		if ( null !== $product->image_url ) {
+			$schema['image'] = $product->image_url;
+		}
+
+		return $schema;
 	}
 }

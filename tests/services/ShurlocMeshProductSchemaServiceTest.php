@@ -25,7 +25,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'',
 			'https://example.com/product/test-mesh-product/',
 			'TEST-MESH-123',
-			'https://example.com/wp-content/uploads/test-mesh-product.jpg',
+			'https://example.com/image.jpg',
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -62,6 +62,26 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$schema['name']
 		);
 
+		$this->assertSame(
+			'https://example.com/product/test-mesh-product/#product',
+			$schema['@id']
+		);
+
+		$this->assertSame(
+			'https://example.com/product/test-mesh-product/',
+			$schema['url']
+		);
+
+		$this->assertSame(
+			'TEST-MESH-123',
+			$schema['sku']
+		);
+
+		$this->assertSame(
+			'https://example.com/image.jpg',
+			$schema['image']
+		);
+
 		$this->assertCount(
 			1,
 			$schema['offers']
@@ -78,8 +98,8 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'Non Mesh Product',
 			'',
 			'https://example.com/product/non-mesh-product/',
-			'',
-			null,
+			'NON-MESH-456',
+			'https://example.com/non-mesh-image.jpg',
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'Thin Thread',
@@ -104,68 +124,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 		$this->assertNull(
 			$schema
-		);
-	}
-
-	/**
-	 * Multiple mesh variations should generate multiple offers.
-	 */
-	public function test_multiple_mesh_variations_generate_multiple_offers(): void {
-
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Mesh Product',
-			'',
-			'https://example.com/product/test-mesh-product/',
-			'TEST-MESH-123',
-			'https://example.com/wp-content/uploads/test-mesh-product.jpg',
-			array(
-				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow $20.00',
-					20.0,
-					123,
-					'Test Mesh Product',
-					''
-				),
-				new Shurloc_Catalog_Variation_Entry(
-					'160/64 Yellow $25.00',
-					25.0,
-					123,
-					'Test Mesh Product',
-					''
-				),
-			)
-		);
-
-		$service = new Shurloc_Mesh_Product_Schema_Service(
-			new Shurloc_Mesh_Product_Analyzer(
-				new Shurloc_Mesh_Parser()
-			),
-			new Shurloc_Product_Schema_Generator()
-		);
-
-		$schema = $service->generate(
-			$product
-		);
-
-		$this->assertNotNull(
-			$schema
-		);
-
-		$this->assertCount(
-			2,
-			$schema['offers'],
-			'Each mesh variation should generate its own offer.'
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers'][0]['price']
-		);
-
-		$this->assertSame(
-			'25.00',
-			$schema['offers'][1]['price']
 		);
 	}
 }

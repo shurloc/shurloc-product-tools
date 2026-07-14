@@ -59,12 +59,12 @@ final class Shurloc_Mesh_Product_Schema_Service {
 			$product->variations
 		);
 
-		if ( 0 === $result->mesh_variation_count() ) {
+		if ( ! $result->is_mesh_product() ) {
 			return null;
 		}
 
 		return $this->generator->generate(
-			$product->product_name,
+			$product,
 			$result
 		);
 	}

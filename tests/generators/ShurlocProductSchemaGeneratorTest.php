@@ -51,10 +51,12 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			)
 		);
 
+		$product = $this->create_product_entry();
+
 		$generator = new Shurloc_Product_Schema_Generator();
 
 		$schema = $generator->generate(
-			'Test Mesh Product',
+			$product,
 			$result
 		);
 
@@ -73,12 +75,31 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$schema['name']
 		);
 
+		$this->assertSame(
+			'https://example.com/product/test-mesh-product/#product',
+			$schema['@id']
+		);
+
+		$this->assertSame(
+			'https://example.com/product/test-mesh-product/',
+			$schema['url']
+		);
+
+		$this->assertSame(
+			'TEST-MESH-123',
+			$schema['sku']
+		);
+
+		$this->assertSame(
+			'https://example.com/image.jpg',
+			$schema['image']
+		);
+
 		$this->assertCount(
 			2,
 			$schema['offers']
 		);
 	}
-
 
 	/**
 	 * Offers should contain variation pricing.
@@ -102,10 +123,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			)
 		);
 
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			'Test Mesh Product',
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
 			$result
 		);
 
@@ -126,7 +145,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$offer['priceCurrency']
 		);
 	}
-
 
 	/**
 	 * Mesh specifications should be included as properties.
@@ -150,10 +168,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			)
 		);
 
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			'Test Mesh Product',
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
 			$result
 		);
 
@@ -175,7 +191,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * An empty mesh result should generate no offers.
 	 */
@@ -183,10 +198,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$result = new Shurloc_Mesh_Product_Result();
 
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			'Test Mesh Product',
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
 			$result
 		);
 
@@ -203,9 +216,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Duplicate mesh specifications should remain separate offers.
-	 *
-	 * Duplicate specifications are valid when they represent separate
-	 * catalog variations with different prices.
 	 */
 	public function test_duplicate_specifications_generate_separate_offers(): void {
 
@@ -241,17 +251,14 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			)
 		);
 
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			'Test Mesh Product',
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
 			$result
 		);
 
 		$this->assertCount(
 			2,
-			$schema['offers'],
-			'Each catalog variation should generate its own offer.'
+			$schema['offers']
 		);
 
 		$this->assertSame(
@@ -262,6 +269,24 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		$this->assertSame(
 			'25.00',
 			$schema['offers'][1]['price']
+		);
+	}
+
+	/**
+	 * Create a product fixture.
+	 *
+	 * @return Shurloc_Catalog_Product_Entry
+	 */
+	private function create_product_entry(): Shurloc_Catalog_Product_Entry {
+
+		return new Shurloc_Catalog_Product_Entry(
+			123,
+			'Test Mesh Product',
+			'',
+			'https://example.com/product/test-mesh-product/',
+			'TEST-MESH-123',
+			'https://example.com/image.jpg',
+			array()
 		);
 	}
 
