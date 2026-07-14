@@ -81,7 +81,7 @@ final class Shurloc_Product_Schema_Output {
 		echo '<script type="application/ld+json">';
 		echo wp_json_encode(
 			$schema,
-			JSON_UNESCAPED_SLASHES
+			JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
 		);
 		echo '</script>';
 		echo "\n";
