@@ -60,7 +60,6 @@ function shurloc_product_tools_bootstrap(): void {
 	$schema_generator = new Shurloc_Product_Schema_Generator();
 
 	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
-		$catalog_service,
 		$mesh_analyzer,
 		$schema_generator
 	);
