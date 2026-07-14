@@ -15,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
-	 * A mesh product should generate an offer for each mesh variation.
+	 * A mesh product should generate an aggregate offer with multiple variations.
 	 */
-	public function test_generates_product_schema_with_multiple_offers(): void {
+	public function test_generates_product_schema_with_aggregate_offer(): void {
 
 		$result = new Shurloc_Mesh_Product_Result();
 
@@ -51,12 +51,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			)
 		);
 
-		$product = $this->create_product_entry();
-
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			$product,
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
 			$result
 		);
 
@@ -95,9 +91,99 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$schema['image']
 		);
 
+		$this->assertSame(
+			'AggregateOffer',
+			$schema['offers']['@type']
+		);
+
+		$this->assertSame(
+			'20.00',
+			$schema['offers']['lowPrice']
+		);
+
+		$this->assertSame(
+			'25.00',
+			$schema['offers']['highPrice']
+		);
+
+		$this->assertSame(
+			2,
+			$schema['offers']['offerCount']
+		);
+
 		$this->assertCount(
 			2,
-			$schema['offers']
+			$schema['offers']['offers']
+		);
+	}
+
+	/**
+	 * Aggregate offers should contain pricing range.
+	 */
+	public function test_aggregate_offer_contains_price_range(): void {
+
+		$result = new Shurloc_Mesh_Product_Result();
+
+		$result->add_mesh_variation(
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 Yellow $20.00',
+				20.0,
+				123,
+				'Test Mesh Product',
+				''
+			),
+			$this->create_spec(
+				110,
+				80,
+				'Yellow'
+			)
+		);
+
+		$result->add_mesh_variation(
+			new Shurloc_Catalog_Variation_Entry(
+				'160/64 White $25.00',
+				25.0,
+				123,
+				'Test Mesh Product',
+				''
+			),
+			$this->create_spec(
+				160,
+				64,
+				'White'
+			)
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$this->create_product_entry(),
+			$result
+		);
+
+		$offers = $schema['offers'];
+
+		$this->assertSame(
+			'AggregateOffer',
+			$offers['@type']
+		);
+
+		$this->assertSame(
+			'20.00',
+			$offers['lowPrice']
+		);
+
+		$this->assertSame(
+			'25.00',
+			$offers['highPrice']
+		);
+
+		$this->assertSame(
+			2,
+			$offers['offerCount']
+		);
+
+		$this->assertSame(
+			'USD',
+			$offers['priceCurrency']
 		);
 	}
 
@@ -128,7 +214,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$result
 		);
 
-		$offer = $schema['offers'][0];
+		$offer = $schema['offers']['offers'][0];
 
 		$this->assertSame(
 			'Offer',
@@ -173,7 +259,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$result
 		);
 
-		$properties = $schema['offers'][0]['additionalProperty'];
+		$properties = $schema['offers']['offers'][0]['additionalProperty'];
 
 		$this->assertSame(
 			'Mesh Count',
@@ -192,7 +278,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
-	 * An empty mesh result should generate no offers.
+	 * An empty mesh result should generate an empty aggregate offer.
 	 */
 	public function test_empty_result_generates_empty_offers(): void {
 
@@ -208,9 +294,14 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$schema
 		);
 
+		$this->assertSame(
+			'AggregateOffer',
+			$schema['offers']['@type']
+		);
+
 		$this->assertCount(
 			0,
-			$schema['offers']
+			$schema['offers']['offers']
 		);
 	}
 
@@ -258,17 +349,17 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$this->assertCount(
 			2,
-			$schema['offers']
+			$schema['offers']['offers']
 		);
 
 		$this->assertSame(
 			'20.00',
-			$schema['offers'][0]['price']
+			$schema['offers']['offers'][0]['price']
 		);
 
 		$this->assertSame(
 			'25.00',
-			$schema['offers'][1]['price']
+			$schema['offers']['offers'][1]['price']
 		);
 	}
 

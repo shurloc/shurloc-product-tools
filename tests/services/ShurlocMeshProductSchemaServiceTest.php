@@ -82,9 +82,34 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$schema['image']
 		);
 
+		$this->assertSame(
+			'AggregateOffer',
+			$schema['offers']['@type']
+		);
+
+		$this->assertSame(
+			'20.00',
+			$schema['offers']['lowPrice']
+		);
+
+		$this->assertSame(
+			'20.00',
+			$schema['offers']['highPrice']
+		);
+
+		$this->assertSame(
+			1,
+			$schema['offers']['offerCount']
+		);
+
+		$this->assertSame(
+			'USD',
+			$schema['offers']['priceCurrency']
+		);
+
 		$this->assertCount(
 			1,
-			$schema['offers']
+			$schema['offers']['offers']
 		);
 	}
 

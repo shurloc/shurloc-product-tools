@@ -71,7 +71,9 @@ final class Shurloc_Product_Schema_Generator {
 			'@id'      => $product->product_url . '#product',
 			'name'     => $product->product_name,
 			'url'      => $product->product_url,
-			'offers'   => $offers,
+			'offers'   => $this->build_aggregate_offer(
+				$offers
+			),
 		);
 
 		if ( '' !== $product->sku ) {
@@ -83,5 +85,50 @@ final class Shurloc_Product_Schema_Generator {
 		}
 
 		return $schema;
+	}
+
+	/**
+	 * Build aggregate offer data.
+	 *
+	 * @param array<int,array<string,mixed>> $offers Product offers.
+	 * @return array<string,mixed>
+	 */
+	private function build_aggregate_offer(
+		array $offers
+	): array {
+
+		$aggregate_offer = array(
+			'@type'         => 'AggregateOffer',
+			'offerCount'    => count( $offers ),
+			'priceCurrency' => 'USD',
+			'availability'  => 'https://schema.org/InStock',
+			'offers'        => $offers,
+		);
+
+		if ( ! empty( $offers ) ) {
+
+			$prices = array();
+
+			foreach ( $offers as $offer ) {
+
+				$prices[] = (float) $offer['price'];
+			}
+
+			$aggregate_offer['lowPrice'] = number_format(
+				min( $prices ),
+				2,
+				'.',
+				''
+			);
+
+			$aggregate_offer['highPrice'] = number_format(
+				max( $prices ),
+				2,
+				'.',
+				''
+			);
+		}
+
+		return $aggregate_offer;
 	}
 }
