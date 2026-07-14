@@ -57,8 +57,39 @@ require_once dirname( __DIR__ ) . '/includes/reports/class-shurloc-catalog-repor
  */
 require_once dirname( __DIR__ ) . '/includes/integrations/class-shurloc-product-schema-output.php';
 
+// Load renderers.
+require_once dirname( __DIR__ ) . '/includes/renderers/class-shurloc-product-schema-renderer.php';
+
+
 /*
  * Load test utilities.
  */
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';
 require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.php';
+
+/**
+ * Stub functions for WordPress.
+ */
+
+if ( ! function_exists( 'wp_json_encode' ) ) {
+	/**
+	 * WordPress JSON encode test stub.
+	 *
+	 * @param mixed $value   Value to encode.
+	 * @param int   $flags   JSON encode flags.
+	 * @param int   $depth   Maximum depth.
+	 * @return string|false
+	 */
+	function wp_json_encode(
+		$value,
+		int $flags = 0,
+		int $depth = 512
+	) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+		return json_encode(
+			$value,
+			$flags,
+			$depth
+		);
+	}
+}
