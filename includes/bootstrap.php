@@ -27,6 +27,8 @@ function shurloc_product_tools_bootstrap(): void {
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/models/class-shurloc-mesh-product-result.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/analyzers/class-shurloc-mesh-product-analyzer.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-product-catalog-service.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/generators/class-shurloc-product-schema-generator.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-mesh-product-schema-service.php';
 
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/admin/catalog-report.php';
 }
