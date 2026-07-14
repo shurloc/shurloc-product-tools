@@ -2,7 +2,7 @@
 /**
  * Product catalog service.
  *
- * Converts WooCommerce products into catalog variation entries.
+ * Converts WooCommerce products into catalog entries.
  *
  * @package ShurLocProductTools
  */
@@ -13,6 +13,35 @@ declare( strict_types=1 );
  * Product catalog service.
  */
 final class Shurloc_Product_Catalog_Service {
+
+	/**
+	 * Collect a product catalog entry.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return Shurloc_Catalog_Product_Entry|null
+	 */
+	public function get_product_entry(
+		WC_Product $product
+	): ?Shurloc_Catalog_Product_Entry {
+
+		$variations = $this->get_product_variation_entries(
+			$product
+		);
+
+		if ( empty( $variations ) ) {
+			return null;
+		}
+
+		return new Shurloc_Catalog_Product_Entry(
+			(int) $product->get_id(),
+			$product->get_name(),
+			(string) get_edit_post_link(
+				$product->get_id(),
+				''
+			),
+			$variations
+		);
+	}
 
 	/**
 	 * Collect variation entries for a variable product.
