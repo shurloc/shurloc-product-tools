@@ -84,5 +84,6 @@ final class Shurloc_Product_Schema_Output {
 			JSON_UNESCAPED_SLASHES
 		);
 		echo '</script>';
+		echo "\n";
 	}
 }
