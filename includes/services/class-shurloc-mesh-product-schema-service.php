@@ -2,7 +2,7 @@
 /**
  * Mesh product schema service.
  *
- * Coordinates mesh product analysis and schema generation.
+ * Coordinates mesh product analysis.
  *
  * @package ShurLocProductTools
  */
@@ -22,38 +22,28 @@ final class Shurloc_Mesh_Product_Schema_Service {
 	private Shurloc_Mesh_Product_Analyzer $analyzer;
 
 	/**
-	 * Schema generator.
-	 *
-	 * @var Shurloc_Product_Schema_Generator
-	 */
-	private Shurloc_Product_Schema_Generator $generator;
-
-	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Product_Analyzer    $analyzer Mesh analyzer.
-	 * @param Shurloc_Product_Schema_Generator $generator Schema generator.
+	 * @param Shurloc_Mesh_Product_Analyzer $analyzer Mesh analyzer.
 	 */
 	public function __construct(
-		Shurloc_Mesh_Product_Analyzer $analyzer,
-		Shurloc_Product_Schema_Generator $generator
+		Shurloc_Mesh_Product_Analyzer $analyzer
 	) {
 
-		$this->analyzer  = $analyzer;
-		$this->generator = $generator;
+		$this->analyzer = $analyzer;
 	}
 
 	/**
-	 * Generate schema for a catalog product.
+	 * Analyze a catalog product for mesh variations.
 	 *
 	 * Returns null when the product is not a mesh product.
 	 *
 	 * @param Shurloc_Catalog_Product_Entry $product Catalog product.
-	 * @return array<string,mixed>|null
+	 * @return Shurloc_Mesh_Product_Result|null
 	 */
-	public function generate(
+	public function analyze(
 		Shurloc_Catalog_Product_Entry $product
-	): ?array {
+	): ?Shurloc_Mesh_Product_Result {
 
 		$result = $this->analyzer->analyze(
 			$product->variations
@@ -63,9 +53,6 @@ final class Shurloc_Mesh_Product_Schema_Service {
 			return null;
 		}
 
-		return $this->generator->generate(
-			$product,
-			$result
-		);
+		return $result;
 	}
 }

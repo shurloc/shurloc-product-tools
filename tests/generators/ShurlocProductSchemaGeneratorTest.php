@@ -278,9 +278,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
-	 * An empty mesh result should generate an empty aggregate offer.
+	 * An empty mesh result should not generate offers.
 	 */
-	public function test_empty_result_generates_empty_offers(): void {
+	public function test_empty_result_does_not_generate_offers(): void {
 
 		$result = new Shurloc_Mesh_Product_Result();
 
@@ -289,19 +289,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			$result
 		);
 
-		$this->assertArrayHasKey(
+		$this->assertArrayNotHasKey(
 			'offers',
 			$schema
-		);
-
-		$this->assertSame(
-			'AggregateOffer',
-			$schema['offers']['@type']
-		);
-
-		$this->assertCount(
-			0,
-			$schema['offers']['offers']
 		);
 	}
 

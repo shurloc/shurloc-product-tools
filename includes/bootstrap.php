@@ -34,6 +34,7 @@ function shurloc_product_tools_bootstrap(): void {
 	// Load services.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-product-catalog-service.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-mesh-product-schema-service.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-product-schema-service.php';
 
 	// Load generators.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/generators/class-shurloc-product-schema-generator.php';
@@ -57,16 +58,20 @@ function shurloc_product_tools_bootstrap(): void {
 		new Shurloc_Mesh_Parser()
 	);
 
+	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
+		$mesh_analyzer
+	);
+
 	$schema_generator = new Shurloc_Product_Schema_Generator();
 
-	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
-		$mesh_analyzer,
-		$schema_generator
+	$product_schema_service = new Shurloc_Product_Schema_Service(
+		$schema_generator,
+		$mesh_schema_service
 	);
 
 	$product_schema_output = new Shurloc_Product_Schema_Output(
 		$catalog_service,
-		$mesh_schema_service
+		$product_schema_service
 	);
 
 	/*

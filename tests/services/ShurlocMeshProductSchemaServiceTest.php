@@ -10,14 +10,14 @@ declare( strict_types=1 );
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests mesh product schema generation.
+ * Tests mesh product schema enrichment.
  */
 final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
-	 * Mesh products should generate schema.
+	 * Mesh products should return mesh analysis results.
 	 */
-	public function test_generates_schema_for_mesh_product(): void {
+	public function test_mesh_products_return_mesh_result(): void {
 
 		$product = new Shurloc_Catalog_Product_Entry(
 			123,
@@ -44,77 +44,27 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			new Shurloc_Product_Schema_Generator()
 		);
 
-		$schema = $service->generate(
+		$result = $service->analyze(
 			$product
 		);
 
 		$this->assertNotNull(
-			$schema
+			$result
 		);
 
-		$this->assertSame(
-			'Product',
-			$schema['@type']
-		);
-
-		$this->assertSame(
-			'Test Mesh Product',
-			$schema['name']
-		);
-
-		$this->assertSame(
-			'https://example.com/product/test-mesh-product/#product',
-			$schema['@id']
-		);
-
-		$this->assertSame(
-			'https://example.com/product/test-mesh-product/',
-			$schema['url']
-		);
-
-		$this->assertSame(
-			'TEST-MESH-123',
-			$schema['sku']
-		);
-
-		$this->assertSame(
-			'https://example.com/image.jpg',
-			$schema['image']
-		);
-
-		$this->assertSame(
-			'AggregateOffer',
-			$schema['offers']['@type']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers']['lowPrice']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers']['highPrice']
+		$this->assertInstanceOf(
+			Shurloc_Mesh_Product_Result::class,
+			$result
 		);
 
 		$this->assertSame(
 			1,
-			$schema['offers']['offerCount']
-		);
-
-		$this->assertSame(
-			'USD',
-			$schema['offers']['priceCurrency']
-		);
-
-		$this->assertCount(
-			1,
-			$schema['offers']['offers']
+			$result->mesh_variation_count()
 		);
 	}
 
 	/**
-	 * Products without mesh variations should not generate schema.
+	 * Non-mesh products should return null.
 	 */
 	public function test_non_mesh_products_return_null(): void {
 
@@ -143,12 +93,83 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			new Shurloc_Product_Schema_Generator()
 		);
 
-		$schema = $service->generate(
+		$result = $service->analyze(
 			$product
 		);
 
 		$this->assertNull(
-			$schema
+			$result
+		);
+	}
+
+	/**
+	 * Mesh analysis should preserve variation data.
+	 */
+	public function test_mesh_analysis_preserves_variation_data(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Test Mesh Product',
+			'',
+			'https://example.com/product/test-mesh-product/',
+			'TEST-MESH-123',
+			'https://example.com/image.jpg',
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'160/64 White $25.00',
+					25.0,
+					123,
+					'Test Mesh Product',
+					''
+				),
+			)
+		);
+
+		$service = new Shurloc_Mesh_Product_Schema_Service(
+			new Shurloc_Mesh_Product_Analyzer(
+				new Shurloc_Mesh_Parser()
+			),
+			new Shurloc_Product_Schema_Generator()
+		);
+
+		$result = $service->analyze(
+			$product
+		);
+
+		$this->assertNotNull(
+			$result
+		);
+
+		$this->assertSame(
+			1,
+			$result->mesh_variation_count()
+		);
+
+		$variation = $result->mesh_variations[0];
+
+		$this->assertSame(
+			'160/64 White $25.00',
+			$variation['entry']->variation
+		);
+
+		$this->assertSame(
+			25.0,
+			$variation['entry']->price
+		);
+
+		$this->assertSame(
+			160,
+			$variation['spec']->mesh_count
+		);
+
+		$this->assertSame(
+			64,
+			$variation['spec']->thread_diameter
+		);
+
+		$this->assertSame(
+			'White',
+			$variation['spec']->color
 		);
 	}
 }

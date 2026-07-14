@@ -71,10 +71,14 @@ final class Shurloc_Product_Schema_Generator {
 			'@id'      => $product->product_url . '#product',
 			'name'     => $product->product_name,
 			'url'      => $product->product_url,
-			'offers'   => $this->build_aggregate_offer(
-				$offers
-			),
 		);
+
+		if ( ! empty( $offers ) ) {
+
+			$schema['offers'] = $this->build_aggregate_offer(
+				$offers
+			);
+		}
 
 		if ( '' !== $product->sku ) {
 			$schema['sku'] = $product->sku;
@@ -90,6 +94,8 @@ final class Shurloc_Product_Schema_Generator {
 	/**
 	 * Build aggregate offer data.
 	 *
+	 * This method assumes at least one offer exists.
+	 *
 	 * @param array<int,array<string,mixed>> $offers Product offers.
 	 * @return array<string,mixed>
 	 */
@@ -97,38 +103,31 @@ final class Shurloc_Product_Schema_Generator {
 		array $offers
 	): array {
 
-		$aggregate_offer = array(
+		$prices = array();
+
+		foreach ( $offers as $offer ) {
+
+			$prices[] = (float) $offer['price'];
+		}
+
+		return array(
 			'@type'         => 'AggregateOffer',
+			'lowPrice'      => number_format(
+				min( $prices ),
+				2,
+				'.',
+				''
+			),
+			'highPrice'     => number_format(
+				max( $prices ),
+				2,
+				'.',
+				''
+			),
 			'offerCount'    => count( $offers ),
 			'priceCurrency' => 'USD',
 			'availability'  => 'https://schema.org/InStock',
 			'offers'        => $offers,
 		);
-
-		if ( ! empty( $offers ) ) {
-
-			$prices = array();
-
-			foreach ( $offers as $offer ) {
-
-				$prices[] = (float) $offer['price'];
-			}
-
-			$aggregate_offer['lowPrice'] = number_format(
-				min( $prices ),
-				2,
-				'.',
-				''
-			);
-
-			$aggregate_offer['highPrice'] = number_format(
-				max( $prices ),
-				2,
-				'.',
-				''
-			);
-		}
-
-		return $aggregate_offer;
 	}
 }
