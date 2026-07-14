@@ -43,7 +43,10 @@ function shurloc_product_tools_bootstrap(): void {
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/reports/class-shurloc-catalog-report.php';
 
 	// Load integrations.
-	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-product-schema-output.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-product-schema-integration.php';
+
+	// Load renderers.
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/renderers/class-shurloc-product-schema-renderer.php';
 
 	// Load admin integrations.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/admin/catalog-report.php';
@@ -69,23 +72,19 @@ function shurloc_product_tools_bootstrap(): void {
 		$mesh_schema_service
 	);
 
-	$product_schema_output = new Shurloc_Product_Schema_Output(
+	$schema_renderer = new Shurloc_Product_Schema_Renderer();
+
+	$product_schema_integration = new Shurloc_Product_Schema_Integration(
 		$catalog_service,
-		$product_schema_service
+		$product_schema_service,
+		$schema_renderer
 	);
 
 	/*
 	 * Register frontend integrations.
 	 */
 
-	add_action(
-		'wp_head',
-		array(
-			$product_schema_output,
-			'output',
-		),
-		20
-	);
+	$product_schema_integration->register();
 }
 
 add_action(
