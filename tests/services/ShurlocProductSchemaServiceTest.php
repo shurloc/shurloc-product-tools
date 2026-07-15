@@ -159,18 +159,58 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	}
 
 	/**
+	 * Service should generate schema when mesh analysis returns null.
+	 */
+	public function test_generates_schema_when_mesh_analysis_returns_null(): void {
+
+		$product = $this->create_mesh_product_entry();
+
+		$mesh_schema_service = $this->createMock(
+			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		);
+
+		$mesh_schema_service
+			->expects( $this->once() )
+			->method( 'analyze' )
+			->with( $product )
+			->willReturn( null );
+
+		$schema = $this->create_service(
+			$mesh_schema_service
+		)->generate(
+			$product
+		);
+
+		$this->assertSame(
+			'Product',
+			$schema['@type']
+		);
+
+		$this->assertSame(
+			'Test Mesh Product',
+			$schema['name']
+		);
+	}
+
+	/**
 	 * Create product schema service.
 	 *
+	 * @param Shurloc_Mesh_Product_Schema_Service_Interface|null $mesh_schema_service Mesh schema service.
 	 * @return Shurloc_Product_Schema_Service
 	 */
-	private function create_service(): Shurloc_Product_Schema_Service {
+	private function create_service(
+		?Shurloc_Mesh_Product_Schema_Service_Interface $mesh_schema_service = null
+	): Shurloc_Product_Schema_Service {
 
-		$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
-			new Shurloc_Mesh_Product_Analyzer(
-				new Shurloc_Mesh_Parser()
-			),
-			new Shurloc_Product_Schema_Generator()
-		);
+		if ( null === $mesh_schema_service ) {
+
+			$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
+				new Shurloc_Mesh_Product_Analyzer(
+					new Shurloc_Mesh_Parser()
+				),
+				new Shurloc_Product_Schema_Generator()
+			);
+		}
 
 		return new Shurloc_Product_Schema_Service(
 			new Shurloc_Product_Schema_Generator(),
