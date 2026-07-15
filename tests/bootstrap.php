@@ -107,6 +107,8 @@ if ( ! function_exists( 'wp_json_encode' ) ) {
 	}
 }
 
+$GLOBALS['shurloc_test_is_product'] = true;
+
 if ( ! function_exists( 'is_product' ) ) {
 
 	/**
@@ -115,7 +117,7 @@ if ( ! function_exists( 'is_product' ) ) {
 	 * @return bool
 	 */
 	function is_product(): bool {
-		return true;
+		return $GLOBALS['shurloc_test_is_product'];
 	}
 }
 
