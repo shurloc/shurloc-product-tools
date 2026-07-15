@@ -17,6 +17,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 /*
+ * Load service interfaces.
+ */
+require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-product-schema-service.php';
+
+/*
+ * Load renderer interfaces.
+ */
+require_once dirname( __DIR__ ) . '/includes/renderers/interface-shurloc-product-schema-renderer.php';
+
+/*
  * Load models.
  */
 require_once dirname( __DIR__ ) . '/includes/models/class-shurloc-mesh-specification.php';

@@ -18,6 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function shurloc_product_tools_bootstrap(): void {
 
+	// Load service interfaces.
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/interface-shurloc-product-schema-service.php';
+
+	// Load renderer interfaces.
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/renderers/interface-shurloc-product-schema-renderer.php';
+
 	// Load models.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/models/class-shurloc-mesh-specification.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/models/class-shurloc-catalog-variation-entry.php';
