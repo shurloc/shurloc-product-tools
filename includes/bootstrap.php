@@ -52,6 +52,7 @@ function shurloc_product_tools_bootstrap(): void {
 
 	// Load integrations.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-product-schema-integration.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-yoast-schema.php';
 
 	// Load renderers.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/renderers/class-shurloc-product-schema-renderer.php';
