@@ -2,8 +2,7 @@
 /**
  * Product schema renderer.
  *
- * Converts generated product schema arrays into JSON-LD script output
- * suitable for embedding in a webpage head section.
+ * Renders generated product schema as Schema.org JSON-LD.
  *
  * @package ShurLocProductTools
  */
@@ -18,9 +17,7 @@ final class Shurloc_Product_Schema_Renderer {
 	/**
 	 * Render product schema as JSON-LD.
 	 *
-	 * Outputs a Schema.org JSON-LD script tag.
-	 *
-	 * @param array<string,mixed> $schema Product schema data.
+	 * @param array<string,mixed> $schema Product schema.
 	 * @return void
 	 */
 	public function render(

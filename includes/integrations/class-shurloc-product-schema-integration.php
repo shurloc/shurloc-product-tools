@@ -15,6 +15,20 @@ declare( strict_types=1 );
 final class Shurloc_Product_Schema_Integration {
 
 	/**
+	 * Catalog service.
+	 *
+	 * @var Shurloc_Product_Catalog_Service
+	 */
+	private Shurloc_Product_Catalog_Service $catalog_service;
+
+	/**
+	 * Product schema service.
+	 *
+	 * @var Shurloc_Product_Schema_Service
+	 */
+	private Shurloc_Product_Schema_Service $schema_service;
+
+	/**
 	 * Product schema renderer.
 	 *
 	 * @var Shurloc_Product_Schema_Renderer
@@ -24,13 +38,19 @@ final class Shurloc_Product_Schema_Integration {
 	/**
 	 * Constructor.
 	 *
+	 * @param Shurloc_Product_Catalog_Service $catalog_service Catalog service.
+	 * @param Shurloc_Product_Schema_Service  $schema_service Product schema service.
 	 * @param Shurloc_Product_Schema_Renderer $renderer Product schema renderer.
 	 */
 	public function __construct(
+		Shurloc_Product_Catalog_Service $catalog_service,
+		Shurloc_Product_Schema_Service $schema_service,
 		Shurloc_Product_Schema_Renderer $renderer
 	) {
 
-		$this->renderer = $renderer;
+		$this->catalog_service = $catalog_service;
+		$this->schema_service  = $schema_service;
+		$this->renderer        = $renderer;
 	}
 
 	/**
@@ -57,6 +77,32 @@ final class Shurloc_Product_Schema_Integration {
 	 */
 	public function render_product_schema(): void {
 
-		$this->renderer->render();
+		if ( ! is_product() ) {
+			return;
+		}
+
+		$product = wc_get_product(
+			get_the_ID()
+		);
+
+		if ( ! $product ) {
+			return;
+		}
+
+		$entry = $this->catalog_service->get_product_entry(
+			$product
+		);
+
+		if ( null === $entry ) {
+			return;
+		}
+
+		$schema = $this->schema_service->generate(
+			$entry
+		);
+
+		$this->renderer->render(
+			$schema
+		);
 	}
 }
