@@ -197,6 +197,160 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 	}
 
 	/**
+	 * Mesh products should render aggregate offer schema.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_product_outputs_aggregate_offer_schema(): void {
+
+		$catalog_entry = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Test Mesh Product',
+			'',
+			'https://example.com/product/test-mesh-product/',
+			'TEST-MESH-123',
+			'https://example.com/image.jpg',
+			null,
+			null,
+			null,
+			'https://schema.org/InStock',
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'110/80 Yellow $20.00',
+					20.0,
+					123,
+					'Test Mesh Product',
+					''
+				),
+				new Shurloc_Catalog_Variation_Entry(
+					'160/64 White $25.00',
+					25.0,
+					123,
+					'Test Mesh Product',
+					''
+				),
+			)
+		);
+
+		$schema = array(
+			'@context' => 'https://schema.org',
+			'@type'    => 'Product',
+			'name'     => 'Test Mesh Product',
+			'offers'   => array(
+				'@type'      => 'AggregateOffer',
+				'lowPrice'   => '20.00',
+				'highPrice'  => '25.00',
+				'offerCount' => 2,
+			),
+		);
+
+		$catalog_service = $this->createMock(
+			Shurloc_Product_Catalog_Service_Interface::class
+		);
+
+		$catalog_service
+		->expects( $this->once() )
+		->method( 'get_product_entry' )
+		->willReturn( $catalog_entry );
+
+		$schema_service = $this->createMock(
+			Shurloc_Product_Schema_Service_Interface::class
+		);
+
+		$schema_service
+		->expects( $this->once() )
+		->method( 'generate' )
+		->with( $catalog_entry )
+		->willReturn( $schema );
+
+		$renderer = $this->createMock(
+			Shurloc_Product_Schema_Renderer_Interface::class
+		);
+
+		$renderer
+		->expects( $this->once() )
+		->method( 'render' )
+		->with( $schema );
+
+		$integration = new Shurloc_Product_Schema_Integration(
+			$catalog_service,
+			$schema_service,
+			$renderer
+		);
+
+		$integration->render_product_schema();
+	}
+
+	/**
+	 * Non-mesh products should render standard offer schema.
+	 *
+	 * @return void
+	 */
+	public function test_non_mesh_product_outputs_standard_offer_schema(): void {
+
+		$catalog_entry = new Shurloc_Catalog_Product_Entry(
+			456,
+			'Non Mesh Product',
+			'',
+			'https://example.com/product/non-mesh-product/',
+			'NON-MESH-456',
+			'https://example.com/non-mesh-image.jpg',
+			15.0,
+			15.0,
+			null,
+			'https://schema.org/InStock',
+			array()
+		);
+
+		$schema = array(
+			'@context' => 'https://schema.org',
+			'@type'    => 'Product',
+			'name'     => 'Non Mesh Product',
+			'offers'   => array(
+				'@type'         => 'Offer',
+				'price'         => '15.00',
+				'priceCurrency' => 'USD',
+			),
+		);
+
+		$catalog_service = $this->createMock(
+			Shurloc_Product_Catalog_Service_Interface::class
+		);
+
+		$catalog_service
+		->expects( $this->once() )
+		->method( 'get_product_entry' )
+		->willReturn( $catalog_entry );
+
+		$schema_service = $this->createMock(
+			Shurloc_Product_Schema_Service_Interface::class
+		);
+
+		$schema_service
+		->expects( $this->once() )
+		->method( 'generate' )
+		->with( $catalog_entry )
+		->willReturn( $schema );
+
+		$renderer = $this->createMock(
+			Shurloc_Product_Schema_Renderer_Interface::class
+		);
+
+		$renderer
+		->expects( $this->once() )
+		->method( 'render' )
+		->with( $schema );
+
+		$integration = new Shurloc_Product_Schema_Integration(
+			$catalog_service,
+			$schema_service,
+			$renderer
+		);
+
+		$integration->render_product_schema();
+	}
+
+	/**
 	 * Create catalog product entry fixture.
 	 *
 	 * @return Shurloc_Catalog_Product_Entry
