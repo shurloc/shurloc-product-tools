@@ -108,6 +108,98 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 	}
 
 	/**
+	 * Multiple mesh variations should all be preserved.
+	 *
+	 * @return void
+	 */
+	public function test_multiple_mesh_variations_are_preserved(): void {
+
+		$service = $this->create_service();
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Multiple Mesh Product',
+			'',
+			'https://example.com/product/multiple-mesh-product/',
+			'MULTI-MESH-123',
+			'https://example.com/image.jpg',
+			null,
+			null,
+			null,
+			'https://schema.org/InStock',
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'110/80 Yellow $20.00',
+					20.0,
+					123,
+					'Multiple Mesh Product',
+					''
+				),
+				new Shurloc_Catalog_Variation_Entry(
+					'160/64 White $25.00',
+					25.0,
+					123,
+					'Multiple Mesh Product',
+					''
+				),
+			)
+		);
+
+		$result = $service->analyze(
+			$product
+		);
+
+		$this->assertNotNull(
+			$result
+		);
+
+		$this->assertSame(
+			2,
+			$result->mesh_variation_count()
+		);
+	}
+
+	/**
+	 * Invalid mesh variations should not create mesh results.
+	 *
+	 * @return void
+	 */
+	public function test_unrecognized_variations_return_null(): void {
+
+		$service = $this->create_service();
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			789,
+			'Invalid Mesh Product',
+			'',
+			'https://example.com/product/invalid-mesh-product/',
+			'INVALID-MESH-789',
+			null,
+			null,
+			null,
+			null,
+			'https://schema.org/InStock',
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'Standard Product Option',
+					10.0,
+					789,
+					'Invalid Mesh Product',
+					''
+				),
+			)
+		);
+
+		$result = $service->analyze(
+			$product
+		);
+
+		$this->assertNull(
+			$result
+		);
+	}
+
+	/**
 	 * Create mesh schema service.
 	 *
 	 * @return Shurloc_Mesh_Product_Schema_Service
