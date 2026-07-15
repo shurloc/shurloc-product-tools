@@ -20,6 +20,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
  * Load service interfaces.
  */
 require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-product-schema-service.php';
+require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-product-catalog-service.php';
 
 /*
  * Load renderer interfaces.
@@ -101,5 +102,44 @@ if ( ! function_exists( 'wp_json_encode' ) ) {
 			$flags,
 			$depth
 		);
+	}
+}
+
+if ( ! function_exists( 'is_product' ) ) {
+
+	/**
+	 * Determine whether current page is a product page.
+	 *
+	 * @return bool
+	 */
+	function is_product(): bool {
+		return true;
+	}
+}
+
+if ( ! function_exists( 'get_the_ID' ) ) {
+
+	/**
+	 * Get current post ID.
+	 *
+	 * @return int
+	 */
+	// phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid, Squiz.Commenting.FunctionComment.Missing
+	function get_the_ID(): int {
+		return 123;
+	}
+}
+
+if ( ! function_exists( 'wc_get_product' ) ) {
+
+	/**
+	 * Get WooCommerce product.
+	 *
+	 * @param int $id Product ID.
+	 * @return object|null
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
+	function wc_get_product( int $id ): ?object {
+		return new stdClass();
 	}
 }

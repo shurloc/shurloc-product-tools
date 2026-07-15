@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Product catalog service.
  */
-final class Shurloc_Product_Catalog_Service {
+final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_Service_Interface {
 
 	/**
 	 * Collect a product catalog entry.

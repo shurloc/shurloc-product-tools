@@ -20,6 +20,7 @@ function shurloc_product_tools_bootstrap(): void {
 
 	// Load service interfaces.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/interface-shurloc-product-schema-service.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/services/class-shurloc-product-catalog-service.php';
 
 	// Load renderer interfaces.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/renderers/interface-shurloc-product-schema-renderer.php';

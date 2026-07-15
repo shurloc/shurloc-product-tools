@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Product schema renderer.
  */
-final class Shurloc_Product_Schema_Renderer {
+final class Shurloc_Product_Schema_Renderer implements Shurloc_Product_Schema_Renderer_Interface {
 
 	/**
 	 * Render product schema as JSON-LD.

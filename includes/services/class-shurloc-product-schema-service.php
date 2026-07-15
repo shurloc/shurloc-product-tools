@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Product schema service.
  */
-final class Shurloc_Product_Schema_Service {
+final class Shurloc_Product_Schema_Service implements Shurloc_Product_Schema_Service_Interface {
 
 	/**
 	 * Schema generator.
