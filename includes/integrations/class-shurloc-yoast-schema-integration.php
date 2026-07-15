@@ -10,7 +10,7 @@ declare( strict_types=1 );
 /**
  * Yoast schema integration.
  */
-final class Shurloc_Yoast_Schema {
+final class Shurloc_Yoast_Schema_Integration {
 
 	/**
 	 * Register hooks.

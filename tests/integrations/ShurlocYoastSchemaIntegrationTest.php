@@ -35,7 +35,7 @@ final class ShurlocYoastSchemaIntegrationTest extends TestCase {
 			),
 		);
 
-		$result = ( new Shurloc_Yoast_Schema() )->remove_product_schema(
+		$result = ( new Shurloc_Yoast_Schema_Integration() )->remove_product_schema(
 			$schema
 		);
 
@@ -69,7 +69,7 @@ final class ShurlocYoastSchemaIntegrationTest extends TestCase {
 			),
 		);
 
-		$result = ( new Shurloc_Yoast_Schema() )->remove_product_schema(
+		$result = ( new Shurloc_Yoast_Schema_Integration() )->remove_product_schema(
 			$schema
 		);
 
