@@ -21,6 +21,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
  */
 require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-product-schema-service.php';
 require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-product-catalog-service.php';
+require_once dirname( __DIR__ ) . '/includes/services/interface-shurloc-mesh-product-schema-service.php';
 
 /*
  * Load renderer interfaces.

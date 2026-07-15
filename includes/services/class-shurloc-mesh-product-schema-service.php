@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Mesh product schema service.
  */
-final class Shurloc_Mesh_Product_Schema_Service {
+final class Shurloc_Mesh_Product_Schema_Service implements Shurloc_Mesh_Product_Schema_Service_Interface {
 
 	/**
 	 * Mesh analyzer.

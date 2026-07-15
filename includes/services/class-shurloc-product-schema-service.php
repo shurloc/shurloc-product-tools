@@ -24,19 +24,19 @@ final class Shurloc_Product_Schema_Service implements Shurloc_Product_Schema_Ser
 	/**
 	 * Mesh product schema service.
 	 *
-	 * @var Shurloc_Mesh_Product_Schema_Service
+	 * @var Shurloc_Mesh_Product_Schema_Service_Interface
 	 */
-	private Shurloc_Mesh_Product_Schema_Service $mesh_schema_service;
+	private Shurloc_Mesh_Product_Schema_Service_Interface $mesh_schema_service;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Product_Schema_Generator    $generator Schema generator.
-	 * @param Shurloc_Mesh_Product_Schema_Service $mesh_schema_service Mesh schema service.
+	 * @param Shurloc_Product_Schema_Generator              $generator           Schema generator.
+	 * @param Shurloc_Mesh_Product_Schema_Service_Interface $mesh_schema_service Mesh schema service.
 	 */
 	public function __construct(
 		Shurloc_Product_Schema_Generator $generator,
-		Shurloc_Mesh_Product_Schema_Service $mesh_schema_service
+		Shurloc_Mesh_Product_Schema_Service_Interface $mesh_schema_service
 	) {
 
 		$this->generator           = $generator;
