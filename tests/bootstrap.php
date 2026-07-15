@@ -82,6 +82,8 @@ require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.ph
  * Stub functions for WordPress.
  */
 
+require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product.php';
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 	/**
 	 * WordPress JSON encode test stub.
@@ -131,15 +133,16 @@ if ( ! function_exists( 'get_the_ID' ) ) {
 }
 
 if ( ! function_exists( 'wc_get_product' ) ) {
-
 	/**
-	 * Get WooCommerce product.
+	 * Get test WooCommerce product.
 	 *
 	 * @param int $id Product ID.
-	 * @return object|null
+	 * @return WC_Product Test product.
 	 */
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
-	function wc_get_product( int $id ): ?object {
-		return new stdClass();
+	function wc_get_product(
+		int $id
+	): WC_Product {
+
+		return new WC_Product( $id );
 	}
 }
