@@ -160,6 +160,120 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 	}
 
 	/**
+	 * Products without variations should return null.
+	 *
+	 * @return void
+	 */
+	public function test_products_without_variations_return_null(): void {
+
+		$service = $this->create_service();
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			999,
+			'Empty Product',
+			'',
+			'https://example.com/product/empty-product/',
+			'EMPTY-999',
+			null,
+			null,
+			null,
+			null,
+			'https://schema.org/InStock',
+			array()
+		);
+
+		$result = $service->analyze(
+			$product
+		);
+
+		$this->assertNull(
+			$result
+		);
+	}
+
+	/**
+	 * Mixed variations should preserve only recognized mesh variations.
+	 *
+	 * @return void
+	 */
+	public function test_mixed_variations_preserve_only_mesh_variations(): void {
+
+		$service = $this->create_service();
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Mixed Mesh Product',
+			'',
+			'https://example.com/product/mixed-mesh-product/',
+			'MIXED-123',
+			null,
+			null,
+			null,
+			null,
+			'https://schema.org/InStock',
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'110/80 Yellow $20.00',
+					20.0,
+					123,
+					'Mixed Mesh Product',
+					''
+				),
+				new Shurloc_Catalog_Variation_Entry(
+					'Thin Thread',
+					null,
+					123,
+					'Mixed Mesh Product',
+					''
+				),
+			)
+		);
+
+		$result = $service->analyze(
+			$product
+		);
+
+		$this->assertNotNull(
+			$result
+		);
+
+		$this->assertSame(
+			1,
+			$result->mesh_variation_count()
+		);
+	}
+
+	/**
+	 * Invalid mesh specifications should still return mesh results.
+	 *
+	 * @return void
+	 */
+	public function test_invalid_mesh_specifications_are_preserved(): void {
+
+		$service = $this->create_service();
+
+		$result = $service->analyze(
+			$this->create_mesh_product_entry(
+				'350/30 Orange $35.00',
+				35.0
+			)
+		);
+
+		$this->assertNotNull(
+			$result
+		);
+
+		$this->assertSame(
+			1,
+			$result->mesh_variation_count()
+		);
+
+		$this->assertFalse(
+			$result->mesh_variations[0]['spec']->is_valid()
+		);
+	}
+
+	/**
 	 * Invalid mesh variations should not create mesh results.
 	 *
 	 * @return void
