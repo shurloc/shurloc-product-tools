@@ -362,6 +362,135 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
+	 * Product schema should not include empty image values.
+	 *
+	 * @return void
+	 */
+	public function test_empty_image_is_not_added_to_schema(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'No Image Product',
+			'',
+			'https://example.com/product/no-image/',
+			'NO-IMAGE-123',
+			null,
+			25.0,
+			25.0,
+			null,
+			'https://schema.org/InStock',
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertArrayNotHasKey(
+			'image',
+			$schema
+		);
+	}
+
+	/**
+	 * Sale price should be used for simple product offers.
+	 */
+	public function test_sale_price_is_used_for_offer_price(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			100,
+			'Sale Product',
+			'',
+			'https://example.com/product/sale-product/',
+			'SALE-100',
+			null,
+			10.0,
+			20.0,
+			10.0,
+			'https://schema.org/InStock',
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertSame(
+			'Offer',
+			$schema['offers']['@type']
+		);
+
+		$this->assertSame(
+			'10.00',
+			$schema['offers']['price']
+		);
+	}
+
+	/**
+	 * Product availability should be included in generated offers.
+	 */
+	public function test_offer_preserves_product_availability(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			101,
+			'Availability Product',
+			'',
+			'https://example.com/product/availability-product/',
+			'AVAILABLE-101',
+			null,
+			25.0,
+			25.0,
+			null,
+			'https://schema.org/OutOfStock',
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertSame(
+			'https://schema.org/OutOfStock',
+			$schema['offers']['availability']
+		);
+	}
+
+	/**
+	 * Products with a current price should use that price for offers.
+	 *
+	 * @return void
+	 */
+	public function test_current_price_is_used_for_offer_price(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			789,
+			'Current Price Product',
+			'',
+			'https://example.com/product/current-price/',
+			'CURRENT-789',
+			null,
+			30.0,
+			40.0,
+			30.0,
+			'https://schema.org/InStock',
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertSame(
+			'30.00',
+			$schema['offers']['price']
+		);
+	}
+
+	/**
 	 * Create mesh result fixture.
 	 *
 	 * @return Shurloc_Mesh_Product_Result
