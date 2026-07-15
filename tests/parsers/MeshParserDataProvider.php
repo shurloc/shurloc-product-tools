@@ -239,4 +239,60 @@ final class MeshParserDataProvider {
 
 		return $spec;
 	}
+
+	/**
+	 * Price extraction test cases.
+	 *
+	 * @return array<string,array{string,string}>
+	 */
+	public static function prices(): array {
+
+		return array(
+			array(
+				'110/80 Yellow $23.75',
+				'$23.75',
+			),
+			array(
+				'160/64 White $100.00',
+				'$100.00',
+			),
+			array(
+				'200/55 Black $5.99',
+				'$5.99',
+			),
+		);
+	}
+
+	/**
+	 * Color extraction test cases.
+	 *
+	 * @return array<string,array{string,string}>
+	 */
+	public static function colors(): array {
+
+		return array(
+			array(
+				'110/80 Yellow $20.00',
+				'Yellow',
+			),
+			array(
+				'160/64 White $25.00',
+				'White',
+			),
+		);
+	}
+
+	/**
+	 * Suffix variation test cases.
+	 *
+	 * @return array<array{string}>
+	 */
+	public static function suffix_variations(): array {
+
+		return array(
+			array( '110/80 Yellow (HD) $20.00' ),
+			array( '110/80 Yellow (S) $20.00' ),
+			array( '110/80 Yellow (s) $20.00' ),
+		);
+	}
 }
