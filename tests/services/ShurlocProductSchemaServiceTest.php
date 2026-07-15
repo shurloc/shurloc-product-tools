@@ -159,6 +159,71 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	}
 
 	/**
+	 * Service should delegate mesh analysis to mesh schema service.
+	 */
+	public function test_delegates_mesh_analysis_to_mesh_schema_service(): void {
+
+		$product = $this->create_mesh_product_entry();
+
+		$mesh_result = new Shurloc_Mesh_Product_Result();
+
+		$mesh_schema_service = $this->createMock(
+			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		);
+
+		$mesh_schema_service
+		->expects( $this->once() )
+		->method( 'analyze' )
+		->with( $product )
+		->willReturn( $mesh_result );
+
+		$schema = $this->create_service(
+			$mesh_schema_service
+		)->generate(
+			$product
+		);
+
+		$this->assertSame(
+			'Product',
+			$schema['@type']
+		);
+	}
+
+	/**
+	 * Service should enrich schema when mesh analysis returns a result.
+	 */
+	public function test_uses_mesh_analysis_result_when_available(): void {
+
+		$product = $this->create_mesh_product_entry();
+
+		$mesh_result = new Shurloc_Mesh_Product_Result();
+
+		$mesh_schema_service = $this->createMock(
+			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		);
+
+		$mesh_schema_service
+		->expects( $this->once() )
+		->method( 'analyze' )
+		->willReturn( $mesh_result );
+
+		$schema = $this->create_service(
+			$mesh_schema_service
+		)->generate(
+			$product
+		);
+
+		$this->assertIsArray(
+			$schema
+		);
+
+		$this->assertSame(
+			'Product',
+			$schema['@type']
+		);
+	}
+
+	/**
 	 * Service should generate schema when mesh analysis returns null.
 	 */
 	public function test_generates_schema_when_mesh_analysis_returns_null(): void {
@@ -189,6 +254,11 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		$this->assertSame(
 			'Test Mesh Product',
 			$schema['name']
+		);
+
+		$this->assertArrayNotHasKey(
+			'offers',
+			$schema
 		);
 	}
 
