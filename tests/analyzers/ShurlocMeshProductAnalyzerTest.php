@@ -238,4 +238,144 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			$result->mesh_variations[0]['spec']->is_valid()
 		);
 	}
+
+	/**
+	 * Mixed variations should separate mesh, ignored, and unrecognized entries.
+	 */
+	public function test_mixed_variations_are_classified_correctly(): void {
+
+		$entries = array(
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 Yellow $20.00',
+				20.00,
+				123,
+				'Test Mesh Product',
+				''
+			),
+			new Shurloc_Catalog_Variation_Entry(
+				'Thin Thread',
+				null,
+				123,
+				'Test Mesh Product',
+				''
+			),
+			new Shurloc_Catalog_Variation_Entry(
+				'Premium Orange',
+				35.00,
+				123,
+				'Test Mesh Product',
+				''
+			),
+		);
+
+		$analyzer = new Shurloc_Mesh_Product_Analyzer(
+			new Shurloc_Mesh_Parser()
+		);
+
+		$result = $analyzer->analyze(
+			$entries
+		);
+
+		$this->assertTrue(
+			$result->is_mesh_product()
+		);
+
+		$this->assertCount(
+			1,
+			$result->mesh_variations
+		);
+
+		$this->assertCount(
+			1,
+			$result->ignored_variations
+		);
+
+		$this->assertCount(
+			1,
+			$result->unrecognized_variations
+		);
+	}
+
+	/**
+	 * Empty variation lists should return an empty result.
+	 */
+	public function test_empty_variation_list_returns_empty_result(): void {
+
+		$analyzer = new Shurloc_Mesh_Product_Analyzer(
+			new Shurloc_Mesh_Parser()
+		);
+
+		$result = $analyzer->analyze(
+			array()
+		);
+
+		$this->assertFalse(
+			$result->is_mesh_product()
+		);
+
+		$this->assertCount(
+			0,
+			$result->mesh_variations
+		);
+
+		$this->assertCount(
+			0,
+			$result->ignored_variations
+		);
+
+		$this->assertCount(
+			0,
+			$result->unrecognized_variations
+		);
+	}
+
+	/**
+	 * Duplicate mesh variations should remain separate entries.
+	 */
+	public function test_duplicate_mesh_variations_are_preserved(): void {
+
+		$entries = array(
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 Yellow $20.00',
+				20.00,
+				123,
+				'Test Mesh Product',
+				''
+			),
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 Yellow $25.00',
+				25.00,
+				123,
+				'Test Mesh Product',
+				''
+			),
+		);
+
+		$analyzer = new Shurloc_Mesh_Product_Analyzer(
+			new Shurloc_Mesh_Parser()
+		);
+
+		$result = $analyzer->analyze(
+			$entries
+		);
+
+		$this->assertTrue(
+			$result->is_mesh_product()
+		);
+
+		$this->assertCount(
+			2,
+			$result->mesh_variations
+		);
+
+		$this->assertSame(
+			20.00,
+			$result->mesh_variations[0]['entry']->price
+		);
+
+		$this->assertSame(
+			25.00,
+			$result->mesh_variations[1]['entry']->price
+		);
+	}
 }
