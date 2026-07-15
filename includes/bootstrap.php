@@ -89,11 +89,14 @@ function shurloc_product_tools_bootstrap(): void {
 		$schema_renderer
 	);
 
+	$yoast_schema_integration = new Shurloc_Yoast_Schema_Integration();
+
 	/*
 	 * Register frontend integrations.
 	 */
 
 	$product_schema_integration->register();
+	$yoast_schema_integration->register();
 }
 
 add_action(
