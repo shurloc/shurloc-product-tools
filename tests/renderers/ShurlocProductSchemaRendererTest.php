@@ -19,6 +19,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 	 */
 	public function test_renders_schema_as_json_ld_script(): void {
 
+		$renderer = new Shurloc_Product_Schema_Renderer();
+
 		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
@@ -27,7 +29,7 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		( new Shurloc_Product_Schema_Renderer() )->render(
+		$renderer->render(
 			$schema
 		);
 
@@ -64,6 +66,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 	 */
 	public function test_renders_special_characters_safely(): void {
 
+		$renderer = new Shurloc_Product_Schema_Renderer();
+
 		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
@@ -72,7 +76,7 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		( new Shurloc_Product_Schema_Renderer() )->render(
+		$renderer->render(
 			$schema
 		);
 
@@ -89,6 +93,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 	 */
 	public function test_renders_urls_without_escaping_slashes(): void {
 
+		$renderer = new Shurloc_Product_Schema_Renderer();
+
 		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
@@ -97,7 +103,7 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		( new Shurloc_Product_Schema_Renderer() )->render(
+		$renderer->render(
 			$schema
 		);
 
