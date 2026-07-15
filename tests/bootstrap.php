@@ -144,6 +144,7 @@ if ( ! function_exists( 'add_filter' ) ) {
 	 * @param int      $accepted_args Accepted arguments.
 	 * @return true
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
 	function add_filter(
 		string $hook,
 		$callback,
@@ -194,6 +195,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	 * @param int      $accepted_args Accepted arguments.
 	 * @return true
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
 	function add_action(
 		string $hook,
 		$callback,
