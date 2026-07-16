@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.8.0] - 2026-07-16
+
+### Added
+
+- Added a recursive plugin autoloader for Shur-Loc Product Tools.
+- Added automatic discovery of PHP classes, interfaces, and traits located
+  anywhere within the `includes/` directory.
+- Added support for interface and trait files without requiring the
+  `Interface` or `Trait` suffix in the filename.
+
+### Changed
+
+- Updated plugin initialization to use the new autoloader instead of relying
+  on manually ordered class includes.
+- Simplified dependency loading by allowing new plugin classes to be added
+  without modifying bootstrap include statements.
+- Updated bootstrap initialization to load application services through the
+  autoloader.
+
+### Developer Improvements
+
+- Added recursive autoloader tests covering:
+  - class loading
+  - interface loading
+  - trait loading
+  - nested include directories
+
+- Added plugin bootstrap tests covering:
+  - plugin entry point registration
+  - service initialization
+  - WordPress hook registration
+  - frontend and admin integration loading
+
+### Upgrade Notes
+
+This release changes the internal loading mechanism for plugin classes.
+No database changes or configuration updates are required.
+
+Developers adding new classes should place files within the appropriate
+`includes/` subdirectory and follow the existing filename conventions:
+
+```
+includes/
+├── services/
+│   └── class-shurloc-example-service.php
+├── interfaces/
+│   └── interface-shurloc-example.php
+└── traits/
+    └── trait-shurloc-example.php
+```
+
+The autoloader automatically discovers these files during plugin startup.
+
 ## [0.7.0] - 2026-07-16
 
 ### Added
