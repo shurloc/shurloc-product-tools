@@ -333,3 +333,20 @@ if ( ! function_exists( 'wp_get_attachment_image_url' ) ) {
 		return false;
 	}
 }
+
+if ( ! function_exists( 'is_wp_error' ) ) {
+
+	/**
+	 * Determine whether a value is a WP_Error object.
+	 *
+	 * @param mixed $thing Value to check.
+	 * @return bool
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
+	function is_wp_error(
+		$thing
+	): bool {
+
+		return false;
+	}
+}
