@@ -80,6 +80,41 @@ final class Shurloc_Product_Schema_Generator {
 			),
 		);
 
+		/*
+		 * Add brand information.
+		 */
+		if ( null !== $product->brand ) {
+
+			$schema['brand'] = array(
+				'@type' => 'Brand',
+				'name'  => $product->brand,
+			);
+		}
+
+		/*
+		 * Add manufacturer information.
+		 */
+		$schema['manufacturer'] = array(
+			'@type' => 'Organization',
+			'name'  => $product->manufacturer,
+		);
+
+		/*
+		 * Add aggregate rating when reviews exist.
+		 */
+		if ( null !== $product->aggregate_rating ) {
+
+			$schema['aggregateRating'] = $product->aggregate_rating;
+		}
+
+		/*
+		 * Add reviews when available.
+		 */
+		if ( ! empty( $product->reviews ) ) {
+
+			$schema['review'] = $product->reviews;
+		}
+
 		if ( ! empty( $mesh_offers ) ) {
 
 			$schema['offers'] = $this->build_aggregate_offer(

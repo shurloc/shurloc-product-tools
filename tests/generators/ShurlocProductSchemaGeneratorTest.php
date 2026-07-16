@@ -61,6 +61,51 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 
 		$this->assertSame(
+			'Brand',
+			$schema['brand']['@type']
+		);
+
+		$this->assertSame(
+			'Test Brand',
+			$schema['brand']['name']
+		);
+
+		$this->assertSame(
+			'Organization',
+			$schema['manufacturer']['@type']
+		);
+
+		$this->assertSame(
+			'Shur-loc',
+			$schema['manufacturer']['name']
+		);
+
+		$this->assertSame(
+			'AggregateRating',
+			$schema['aggregateRating']['@type']
+		);
+
+		$this->assertSame(
+			'5',
+			$schema['aggregateRating']['ratingValue']
+		);
+
+		$this->assertSame(
+			'12',
+			$schema['aggregateRating']['reviewCount']
+		);
+
+		$this->assertCount(
+			1,
+			$schema['review']
+		);
+
+		$this->assertSame(
+			'Review',
+			$schema['review'][0]['@type']
+		);
+
+		$this->assertSame(
 			'AggregateOffer',
 			$schema['offers']['@type']
 		);
@@ -200,6 +245,16 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 
 		$this->assertSame(
+			'Thread Diameter',
+			$properties[1]['name']
+		);
+
+		$this->assertSame(
+			80,
+			$properties[1]['value']
+		);
+
+		$this->assertSame(
 			'Yellow',
 			$properties[2]['value']
 		);
@@ -221,6 +276,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -302,6 +361,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			50.0,
 			null,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -347,6 +410,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			15.0,
 			null,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -379,6 +446,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			25.0,
 			null,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -409,6 +480,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			20.0,
 			10.0,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -444,6 +519,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			25.0,
 			null,
 			'https://schema.org/OutOfStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -476,6 +555,10 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			40.0,
 			30.0,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
 			array()
 		);
 
@@ -560,6 +643,30 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			array(
+				'@type'       => 'AggregateRating',
+				'ratingValue' => '5',
+				'reviewCount' => '12',
+				'bestRating'  => '5',
+				'worstRating' => '1',
+			),
+			array(
+				array(
+					'@type'        => 'Review',
+					'reviewRating' => array(
+						'@type'       => 'Rating',
+						'ratingValue' => '5',
+						'bestRating'  => '5',
+					),
+					'author'       => array(
+						'@type' => 'Person',
+						'name'  => 'Test Customer',
+					),
+					'reviewBody'   => 'Excellent product quality.',
+				),
+			),
 			array()
 		);
 	}

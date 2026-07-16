@@ -54,6 +54,16 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 			$this->get_availability(
 				$product
 			),
+			$this->get_brand(
+				$product
+			),
+			'Shur-loc®',
+			$this->get_aggregate_rating(
+				$product
+			),
+			$this->get_reviews(
+				$product
+			),
 			$variations
 		);
 	}
@@ -117,6 +127,103 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 		);
 
 		return $entries;
+	}
+
+	/**
+	 * Get WooCommerce product brand.
+	 *
+	 * Uses the product_brand taxonomy.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return string
+	 */
+	private function get_brand(
+		WC_Product $product
+	): string {
+
+		$brands = wp_get_post_terms(
+			$product->get_id(),
+			'product_brand',
+			array(
+				'fields' => 'names',
+			)
+		);
+
+		if (
+			is_wp_error( $brands )
+			|| empty( $brands )
+		) {
+			return 'Shur-loc®';
+		}
+
+		return (string) $brands[0];
+	}
+
+	/**
+	 * Get aggregate rating data.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return array<string,mixed>|null
+	 */
+	private function get_aggregate_rating(
+		WC_Product $product
+	): ?array {
+
+		$rating_count = $product->get_rating_count();
+
+		if ( 0 === $rating_count ) {
+			return null;
+		}
+
+		return array(
+			'@type'       => 'AggregateRating',
+			'ratingValue' => $product->get_average_rating(),
+			'reviewCount' => $rating_count,
+		);
+	}
+
+	/**
+	 * Get product reviews.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private function get_reviews(
+		WC_Product $product
+	): array {
+
+		$reviews = get_comments(
+			array(
+				'post_id' => $product->get_id(),
+				'status'  => 'approve',
+				'type'    => 'review',
+			)
+		);
+
+		$schema_reviews = array();
+
+		foreach ( $reviews as $review ) {
+
+			$schema_reviews[] = array(
+				'@type'         => 'Review',
+				'reviewRating'  => array(
+					'@type'       => 'Rating',
+					'ratingValue' => get_comment_meta(
+						$review->comment_ID,
+						'rating',
+						true
+					),
+				),
+				'author'        => array(
+					'@type' => 'Person',
+					'name'  => $review->comment_author,
+				),
+				'reviewBody'    => $review->comment_content,
+				'datePublished' => $review->comment_date,
+			);
+		}
+
+		return $schema_reviews;
 	}
 
 	/**
