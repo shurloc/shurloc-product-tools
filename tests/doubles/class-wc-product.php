@@ -102,6 +102,27 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private int $image_id = 0;
 
 		/**
+		 * Rating count.
+		 *
+		 * @var int
+		 */
+		private int $rating_count = 0;
+
+		/**
+		 * Average rating.
+		 *
+		 * @var string
+		 */
+		private string $average_rating = '0';
+
+		/**
+		 * Review count.
+		 *
+		 * @var int
+		 */
+		private int $review_count = 0;
+
+		/**
 		 * Constructor.
 		 *
 		 * @param int $id Product ID.
@@ -356,6 +377,75 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_image_id(): int {
 
 			return $this->image_id;
+		}
+
+		/**
+		 * Set rating count.
+		 *
+		 * @param int $count Rating count.
+		 * @return void
+		 */
+		public function set_rating_count(
+			int $count
+		): void {
+
+			$this->rating_count = $count;
+		}
+
+		/**
+		 * Get rating count.
+		 *
+		 * @return int Rating count.
+		 */
+		public function get_rating_count(): int {
+
+			return $this->rating_count;
+		}
+
+		/**
+		 * Set average rating.
+		 *
+		 * @param string $rating Average rating.
+		 * @return void
+		 */
+		public function set_average_rating(
+			string $rating
+		): void {
+
+			$this->average_rating = $rating;
+		}
+
+		/**
+		 * Get average rating.
+		 *
+		 * @return string Average rating.
+		 */
+		public function get_average_rating(): string {
+
+			return $this->average_rating;
+		}
+
+		/**
+		 * Set review count.
+		 *
+		 * @param int $count Review count.
+		 * @return void
+		 */
+		public function set_review_count(
+			int $count
+		): void {
+
+			$this->review_count = $count;
+		}
+
+		/**
+		 * Get review count.
+		 *
+		 * @return int Review count.
+		 */
+		public function get_review_count(): int {
+
+			return $this->review_count;
 		}
 	}
 }
