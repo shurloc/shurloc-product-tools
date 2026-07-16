@@ -70,11 +70,14 @@ final class Shurloc_Product_Schema_Generator {
 		}
 
 		$schema = array(
-			'@context' => 'https://schema.org',
-			'@type'    => 'Product',
-			'@id'      => $product->product_url . '#product',
-			'name'     => $product->product_name,
-			'url'      => $product->product_url,
+			'@context'         => 'https://schema.org',
+			'@type'            => 'Product',
+			'@id'              => $product->product_url . '#product',
+			'name'             => $product->product_name,
+			'url'              => $product->product_url,
+			'mainEntityOfPage' => array(
+				'@id' => $product->product_url,
+			),
 		);
 
 		if ( ! empty( $mesh_offers ) ) {

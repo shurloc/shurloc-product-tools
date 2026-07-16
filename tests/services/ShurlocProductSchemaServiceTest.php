@@ -156,6 +156,11 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			'https://example.com/image.jpg',
 			$schema['image']
 		);
+
+		$this->assertSame(
+			'https://example.com/product/test-mesh-product/',
+			$schema['mainEntityOfPage']['@id']
+		);
 	}
 
 	/**
