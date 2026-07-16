@@ -110,6 +110,10 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array()
 		);
 
@@ -177,10 +181,10 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 
 		$mesh_schema_service
-		->expects( $this->once() )
-		->method( 'analyze' )
-		->with( $product )
-		->willReturn( $mesh_result );
+			->expects( $this->once() )
+			->method( 'analyze' )
+			->with( $product )
+			->willReturn( $mesh_result );
 
 		$schema = $this->create_service(
 			$mesh_schema_service
@@ -208,9 +212,9 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 
 		$mesh_schema_service
-		->expects( $this->once() )
-		->method( 'analyze' )
-		->willReturn( $mesh_result );
+			->expects( $this->once() )
+			->method( 'analyze' )
+			->willReturn( $mesh_result );
 
 		$schema = $this->create_service(
 			$mesh_schema_service
@@ -311,6 +315,10 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -341,6 +349,10 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			15.0,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array()
 		);
 	}
