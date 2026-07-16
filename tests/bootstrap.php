@@ -62,3 +62,4 @@ require_once dirname( __DIR__ ) . '/tests/stubs/wordpress-functions.php';
 
 // Load WordPress test doubles.
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product-variation.php';
