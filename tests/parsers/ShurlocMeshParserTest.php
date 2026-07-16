@@ -96,4 +96,112 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$this->assertFalse( $spec->recognized );
 	}
+
+	/**
+	 * Verify that prices are extracted correctly.
+	 *
+	 * @param string $variation     The raw variation string.
+	 * @param string $expected_price The expected extracted price text.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'prices'
+	)]
+	public function test_extracts_prices(
+		string $variation,
+		string $expected_price
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse(
+			$variation
+		);
+
+		$this->assertSame(
+			$expected_price,
+			$spec->price_text
+		);
+	}
+
+	/**
+	 * Verify that colors are extracted correctly.
+	 *
+	 * @param string $variation     The raw variation string.
+	 * @param string $expected_color The expected extracted color text.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'colors'
+	)]
+	public function test_extracts_colors(
+		string $variation,
+		string $expected_color
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse(
+			$variation
+		);
+
+		$this->assertSame(
+			$expected_color,
+			$spec->color
+		);
+	}
+
+	/**
+	 * Invalid mesh specifications should still be recognized.
+	 */
+	public function test_invalid_mesh_values_are_recognized(): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse(
+			'350/30 Orange $35.00'
+		);
+
+		$this->assertTrue(
+			$spec->recognized
+		);
+
+		$this->assertFalse(
+			$spec->is_valid()
+		);
+
+		$this->assertSame(
+			350,
+			$spec->mesh_count
+		);
+
+		$this->assertSame(
+			30,
+			$spec->thread_diameter
+		);
+	}
+
+	/**
+	 * Mesh suffixes should not prevent recognition.
+	 *
+	 * @param string $variation     The raw variation string.
+	 */
+	#[DataProviderExternal(
+		MeshParserDataProvider::class,
+		'suffix_variations'
+	)]
+	public function test_recognizes_mesh_suffix_variations(
+		string $variation
+	): void {
+
+		$parser = new Shurloc_Mesh_Parser();
+
+		$spec = $parser->parse(
+			$variation
+		);
+
+		$this->assertTrue(
+			$spec->recognized
+		);
+	}
 }
