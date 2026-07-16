@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.7.0] - 2026-07-16
+
+### Added
+
+- Added mesh-specific structured data support for WooCommerce products.
+- Added product schema generation support for mesh products using `AggregateOffer` structured data.
+- Added mesh variation analysis to identify valid mesh specifications from product variations.
+- Added support for preserving mesh variation details including:
+  - Mesh count
+  - Thread diameter
+  - Mesh color
+  - Variation pricing
+- Added product catalog service support for:
+  - Product brand detection from taxonomy
+  - Manufacturer metadata
+  - Product availability
+  - Aggregate rating and review data preparation
+- Added integration coverage for generated Product schema output.
+- Added comprehensive PHPUnit coverage for:
+  - Product catalog generation
+  - Mesh product analysis
+  - Product schema generation
+  - Structured data integration rendering
+
+### Changed
+
+- Updated `Shurloc_Catalog_Product_Entry` to support structured product metadata:
+  - Brand
+  - Manufacturer
+  - Aggregate ratings
+  - Reviews
+  - Variations
+- Updated product schema generation to distinguish between:
+  - Mesh products requiring `AggregateOffer`
+  - Standard products using `Offer`
+- Updated test fixtures and test doubles to align with the expanded catalog product model.
+- Improved WooCommerce compatibility in catalog data extraction by normalizing missing product metadata.
+
+### Fixed
+
+- Fixed structured data generation failures caused by incomplete product metadata.
+- Fixed test failures related to WooCommerce product review methods not available in test doubles.
+- Fixed variation fixture handling after adding support for variation-aware product schema.
+- Fixed catalog entry constructor mismatches after expanding structured data fields.
+
+### Developer Notes
+
+- Added mesh structured data foundation for future AI search visibility improvements.
+- Structured data output now better represents shur-loc® mesh products and their selectable variations.
+- All PHPUnit tests pass after updates to product models, schema services, and integration tests.
+
 ## [0.6.1] - 2026-07-13
 
 ### Changed
