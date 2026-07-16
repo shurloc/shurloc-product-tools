@@ -42,6 +42,13 @@ $GLOBALS['shurloc_test_terms'] = array();
  */
 $GLOBALS['shurloc_test_comments'] = array();
 
+/**
+ * Registered WooCommerce test products.
+ *
+ * @var array<int,WC_Product>
+ */
+$GLOBALS['shurloc_test_products'] = array();
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
 	/**
@@ -103,11 +110,15 @@ if ( ! function_exists( 'wc_get_product' ) ) {
 	 * Get test WooCommerce product.
 	 *
 	 * @param int $id Product ID.
-	 * @return WC_Product Test product.
+	 * @return WC_Product|null Test product.
 	 */
 	function wc_get_product(
 		int $id
-	): WC_Product {
+	): ?WC_Product {
+
+		if ( isset( $GLOBALS['shurloc_test_products'][ $id ] ) ) {
+			return $GLOBALS['shurloc_test_products'][ $id ];
+		}
 
 		return new WC_Product( $id );
 	}
@@ -372,5 +383,21 @@ if ( ! function_exists( 'get_comments' ) ) {
 		$post_id = $args['post_id'] ?? 0;
 
 		return $GLOBALS['shurloc_test_comments'][ $post_id ] ?? array();
+	}
+}
+
+if ( ! function_exists( 'shurloc_register_test_product' ) ) {
+
+	/**
+	 * Register WooCommerce test product.
+	 *
+	 * @param WC_Product $product Product object.
+	 * @return void
+	 */
+	function shurloc_register_test_product(
+		WC_Product $product
+	): void {
+
+		$GLOBALS['shurloc_test_products'][ $product->get_id() ] = $product;
 	}
 }
