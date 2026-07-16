@@ -52,7 +52,6 @@ function shurloc_product_tools_bootstrap(): void {
 
 	// Load integrations.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-product-schema-integration.php';
-	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-yoast-schema-integration.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-woocommerce-schema-integration.php';
 
 	// Load renderers.
