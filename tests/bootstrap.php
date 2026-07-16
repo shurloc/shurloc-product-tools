@@ -49,6 +49,7 @@ require_once dirname( __DIR__ ) . '/includes/reports/class-shurloc-catalog-repor
 // Load integrations.
 require_once dirname( __DIR__ ) . '/includes/integrations/class-shurloc-product-schema-integration.php';
 require_once dirname( __DIR__ ) . '/includes/integrations/class-shurloc-yoast-schema-integration.php';
+require_once dirname( __DIR__ ) . '/includes/integrations/class-shurloc-woocommerce-schema-integration.php';
 
 // Load renderers.
 require_once dirname( __DIR__ ) . '/includes/renderers/class-shurloc-product-schema-renderer.php';

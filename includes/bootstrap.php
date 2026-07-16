@@ -53,6 +53,7 @@ function shurloc_product_tools_bootstrap(): void {
 	// Load integrations.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-product-schema-integration.php';
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-yoast-schema-integration.php';
+	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/integrations/class-shurloc-woocommerce-schema-integration.php';
 
 	// Load renderers.
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/renderers/class-shurloc-product-schema-renderer.php';
@@ -89,14 +90,26 @@ function shurloc_product_tools_bootstrap(): void {
 		$schema_renderer
 	);
 
-	$yoast_schema_integration = new Shurloc_Yoast_Schema_Integration();
+	$woocommerce_schema_integration = new Shurloc_WooCommerce_Schema_Integration();
 
 	/*
 	 * Register frontend integrations.
 	 */
 
 	$product_schema_integration->register();
-	$yoast_schema_integration->register();
+
+	add_action(
+		'init',
+		function () use ( $woocommerce_schema_integration ): void {
+
+			if ( class_exists( 'WooCommerce' ) ) {
+
+				$woocommerce_schema_integration->register();
+
+			}
+		},
+		20
+	);
 }
 
 add_action(
