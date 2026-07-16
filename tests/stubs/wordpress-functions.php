@@ -29,6 +29,13 @@ $GLOBALS['shurloc_test_filters'] = array();
 $GLOBALS['shurloc_test_actions'] = array();
 
 /**
+ * Registered test action metadata.
+ *
+ * @var array<string,array<int,array<string,int>>>
+ */
+$GLOBALS['shurloc_test_action_metadata'] = array();
+
+/**
  * Stored taxonomy terms.
  *
  * @var array<int,array<string,array<int,string>>>
@@ -197,7 +204,17 @@ if ( ! function_exists( 'add_action' ) ) {
 		int $accepted_args = 1
 	): bool {
 
+		if ( ! isset( $GLOBALS['shurloc_test_actions'] ) ) {
+
+			$GLOBALS['shurloc_test_actions'] = array();
+		}
+
 		$GLOBALS['shurloc_test_actions'][ $hook ][] = $callback;
+
+		$GLOBALS['shurloc_test_action_metadata'][ $hook ][] = array(
+			'priority'      => $priority,
+			'accepted_args' => $accepted_args,
+		);
 
 		return true;
 	}
@@ -399,5 +416,56 @@ if ( ! function_exists( 'shurloc_register_test_product' ) ) {
 	): void {
 
 		$GLOBALS['shurloc_test_products'][ $product->get_id() ] = $product;
+	}
+}
+
+if ( ! function_exists( 'plugin_dir_path' ) ) {
+
+	/**
+	 * Return plugin directory path stub.
+	 *
+	 * @param string $file Plugin file.
+	 * @return string
+	 */
+	function plugin_dir_path(
+		string $file
+	): string {
+
+		return defined( 'SHURLOC_PRODUCT_TOOLS_PATH' )
+			? SHURLOC_PRODUCT_TOOLS_PATH
+			: dirname( $file ) . DIRECTORY_SEPARATOR;
+	}
+}
+
+if ( ! function_exists( 'plugin_dir_url' ) ) {
+
+	/**
+	 * Return plugin URL stub.
+	 *
+	 * @param string $file Plugin file.
+	 * @return string
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
+	function plugin_dir_url(
+		string $file
+	): string {
+
+		return 'https://example.com/wp-content/plugins/shurloc-product-tools/';
+	}
+}
+
+if ( ! function_exists( 'plugin_dir_path' ) ) {
+
+	/**
+	 * Return plugin path stub.
+	 *
+	 * @param string $file Plugin file.
+	 * @return string
+	 */
+	function plugin_dir_path(
+		string $file
+	): string {
+
+		return dirname( $file ) . DIRECTORY_SEPARATOR;
 	}
 }
