@@ -8,7 +8,14 @@
 declare( strict_types=1 );
 
 /**
- * Minimal WooCommerce product test double.
+ * Registered WooCommerce products for tests.
+ *
+ * @var array<int,WC_Product>
+ */
+$GLOBALS['shurloc_test_products'] = array();
+
+/**
+ * WooCommerce product test double.
  */
 if ( ! class_exists( 'WC_Product' ) ) {
 
@@ -104,6 +111,8 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		) {
 
 			$this->id = $id;
+
+			$GLOBALS['shurloc_test_products'][ $id ] = $this;
 		}
 
 		/**
