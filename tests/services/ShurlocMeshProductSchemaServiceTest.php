@@ -25,9 +25,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$this->create_mesh_product_entry()
 		);
 
-		$this->assertNotNull(
-			$result
-		);
+		$this->assertNotNull( $result );
 
 		$this->assertInstanceOf(
 			Shurloc_Mesh_Product_Result::class,
@@ -51,9 +49,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$this->create_non_mesh_product_entry()
 		);
 
-		$this->assertNull(
-			$result
-		);
+		$this->assertNull( $result );
 	}
 
 	/**
@@ -70,9 +66,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$this->assertNotNull(
-			$result
-		);
+		$this->assertNotNull( $result );
 
 		$this->assertSame(
 			1,
@@ -127,6 +121,10 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -145,13 +143,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze(
-			$product
-		);
+		$result = $service->analyze( $product );
 
-		$this->assertNotNull(
-			$result
-		);
+		$this->assertNotNull( $result );
 
 		$this->assertSame(
 			2,
@@ -179,16 +173,16 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array()
 		);
 
-		$result = $service->analyze(
-			$product
-		);
+		$result = $service->analyze( $product );
 
-		$this->assertNull(
-			$result
-		);
+		$this->assertNull( $result );
 	}
 
 	/**
@@ -211,6 +205,10 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -229,13 +227,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze(
-			$product
-		);
+		$result = $service->analyze( $product );
 
-		$this->assertNotNull(
-			$result
-		);
+		$this->assertNotNull( $result );
 
 		$this->assertSame(
 			1,
@@ -259,9 +253,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$this->assertNotNull(
-			$result
-		);
+		$this->assertNotNull( $result );
 
 		$this->assertSame(
 			1,
@@ -293,6 +285,10 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'Standard Product Option',
@@ -304,13 +300,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze(
-			$product
-		);
+		$result = $service->analyze( $product );
 
-		$this->assertNull(
-			$result
-		);
+		$this->assertNull( $result );
 	}
 
 	/**
@@ -351,6 +343,10 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					$variation,
@@ -381,6 +377,10 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			15.0,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'Thin Thread',
