@@ -214,6 +214,10 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array(
 				new Shurloc_Catalog_Variation_Entry(
 					'110/80 Yellow $20.00',
@@ -299,6 +303,10 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 			15.0,
 			null,
 			'https://schema.org/InStock',
+			null,
+			'Shur-loc®',
+			null,
+			array(),
 			array()
 		);
 
@@ -368,6 +376,10 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 			null,
 			null,
 			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
 			array()
 		);
 	}
