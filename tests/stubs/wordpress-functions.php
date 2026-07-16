@@ -35,6 +35,12 @@ $GLOBALS['shurloc_test_actions'] = array();
  */
 $GLOBALS['shurloc_test_terms'] = array();
 
+/**
+ * Stored product comments.
+ *
+ * @var array<int,array<int,object>>
+ */
+$GLOBALS['shurloc_test_comments'] = array();
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -348,5 +354,23 @@ if ( ! function_exists( 'is_wp_error' ) ) {
 	): bool {
 
 		return false;
+	}
+}
+
+if ( ! function_exists( 'get_comments' ) ) {
+
+	/**
+	 * Get test comments.
+	 *
+	 * @param array<string,mixed> $args Comment query arguments.
+	 * @return array<int,object>
+	 */
+	function get_comments(
+		array $args = array()
+	): array {
+
+		$post_id = $args['post_id'] ?? 0;
+
+		return $GLOBALS['shurloc_test_comments'][ $post_id ] ?? array();
 	}
 }
