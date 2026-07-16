@@ -294,6 +294,26 @@ if ( ! function_exists( 'get_the_terms' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wp_get_post_terms' ) ) {
+
+	/**
+	 * Get post terms.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $taxonomy Taxonomy.
+	 * @param array  $args Arguments.
+	 * @return array<int,string>
+	 */
+    // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function wp_get_post_terms(
+		int $post_id,
+		string $taxonomy,
+		array $args = array()
+	): array {
+
+		return $GLOBALS['shurloc_test_terms'][ $post_id ][ $taxonomy ] ?? array();
+	}
+}
 
 if ( ! function_exists( 'wp_get_attachment_image_url' ) ) {
 
