@@ -132,6 +132,205 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
+	 * Product schema should include brand information.
+	 */
+	public function test_product_schema_includes_brand(): void {
+
+		$schema = $this->generate_schema(
+			$this->create_mesh_result()
+		);
+
+		$this->assertSame(
+			'Brand',
+			$schema['brand']['@type']
+		);
+
+		$this->assertSame(
+			'Test Brand',
+			$schema['brand']['name']
+		);
+	}
+
+	/**
+	 * Product schema should include manufacturer information.
+	 */
+	public function test_product_schema_includes_manufacturer(): void {
+
+		$schema = $this->generate_schema(
+			$this->create_mesh_result()
+		);
+
+		$this->assertSame(
+			'Organization',
+			$schema['manufacturer']['@type']
+		);
+
+		$this->assertSame(
+			'Shur-loc',
+			$schema['manufacturer']['name']
+		);
+	}
+
+	/**
+	 * Product schema should include aggregate rating when provided.
+	 */
+	public function test_product_schema_includes_aggregate_rating_when_present(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Rated Product',
+			'',
+			'https://example.com/product/rated-product/',
+			'RATED-123',
+			null,
+			25.0,
+			25.0,
+			null,
+			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			array(
+				'@type'       => 'AggregateRating',
+				'ratingValue' => '4.8',
+				'reviewCount' => 12,
+			),
+			array(),
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertArrayHasKey(
+			'aggregateRating',
+			$schema
+		);
+
+		$this->assertSame(
+			'AggregateRating',
+			$schema['aggregateRating']['@type']
+		);
+
+		$this->assertSame(
+			'4.8',
+			$schema['aggregateRating']['ratingValue']
+		);
+
+		$this->assertSame(
+			12,
+			$schema['aggregateRating']['reviewCount']
+		);
+	}
+
+	/**
+	 * Product schema should include reviews when provided.
+	 */
+	public function test_product_schema_includes_reviews_when_present(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Reviewed Product',
+			'',
+			'https://example.com/product/reviewed-product/',
+			'REVIEW-123',
+			null,
+			25.0,
+			25.0,
+			null,
+			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(
+				array(
+					'@type'        => 'Review',
+					'author'       => array(
+						'@type' => 'Person',
+						'name'  => 'John Smith',
+					),
+					'reviewRating' => array(
+						'@type'       => 'Rating',
+						'ratingValue' => '5',
+					),
+					'reviewBody'   => 'Excellent product quality.',
+				),
+			),
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertArrayHasKey(
+			'review',
+			$schema
+		);
+
+		$this->assertCount(
+			1,
+			$schema['review']
+		);
+
+		$this->assertSame(
+			'Review',
+			$schema['review'][0]['@type']
+		);
+
+		$this->assertSame(
+			'John Smith',
+			$schema['review'][0]['author']['name']
+		);
+
+		$this->assertSame(
+			'5',
+			$schema['review'][0]['reviewRating']['ratingValue']
+		);
+	}
+
+	/**
+	 * Product schema should not include rating or reviews when none exist.
+	 */
+	public function test_product_schema_excludes_rating_and_reviews_when_missing(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Unreviewed Product',
+			'',
+			'https://example.com/product/unreviewed-product/',
+			'UNREVIEWED-123',
+			null,
+			25.0,
+			25.0,
+			null,
+			'https://schema.org/InStock',
+			'Test Brand',
+			'Shur-loc',
+			null,
+			array(),
+			array()
+		);
+
+		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result()
+		);
+
+		$this->assertArrayNotHasKey(
+			'aggregateRating',
+			$schema
+		);
+
+		$this->assertArrayNotHasKey(
+			'review',
+			$schema
+		);
+	}
+
+	/**
 	 * Aggregate offers should contain pricing range.
 	 */
 	public function test_aggregate_offer_contains_price_range(): void {
