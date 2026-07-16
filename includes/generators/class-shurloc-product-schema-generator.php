@@ -34,14 +34,8 @@ final class Shurloc_Product_Schema_Generator {
 			$entry = $variation['entry'];
 			$spec  = $variation['spec'];
 
-			$mesh_offers[] = array(
+			$mesh_offer = array(
 				'@type'              => 'Offer',
-				'price'              => number_format(
-					$entry->price,
-					2,
-					'.',
-					''
-				),
 				'priceCurrency'      => 'USD',
 				'availability'       => 'https://schema.org/InStock',
 				'name'               => $entry->variation,
@@ -63,6 +57,16 @@ final class Shurloc_Product_Schema_Generator {
 					),
 				),
 			);
+
+			$price = $this->format_price(
+				$entry->price
+			);
+
+			if ( null !== $price ) {
+				$mesh_offer['price'] = $price;
+			}
+
+			$mesh_offers[] = $mesh_offer;
 		}
 
 		$schema = array(
@@ -107,18 +111,22 @@ final class Shurloc_Product_Schema_Generator {
 		Shurloc_Catalog_Product_Entry $product
 	): array {
 
-		return array(
+		$offer = array(
 			'@type'         => 'Offer',
-			'price'         => number_format(
-				$product->price,
-				2,
-				'.',
-				''
-			),
 			'priceCurrency' => 'USD',
 			'availability'  => $product->availability,
 			'url'           => $product->product_url,
 		);
+
+		$price = $this->format_price(
+			$product->price
+		);
+
+		if ( null !== $price ) {
+			$offer['price'] = $price;
+		}
+
+		return $offer;
 	}
 
 	/**
@@ -135,27 +143,55 @@ final class Shurloc_Product_Schema_Generator {
 
 		foreach ( $offers as $offer ) {
 
-			$prices[] = (float) $offer['price'];
+			if (
+				isset( $offer['price'] )
+				&& is_numeric( $offer['price'] )
+			) {
+				$prices[] = (float) $offer['price'];
+			}
 		}
 
-		return array(
+		$aggregate_offer = array(
 			'@type'         => 'AggregateOffer',
-			'lowPrice'      => number_format(
-				min( $prices ),
-				2,
-				'.',
-				''
-			),
-			'highPrice'     => number_format(
-				max( $prices ),
-				2,
-				'.',
-				''
-			),
 			'offerCount'    => count( $offers ),
 			'priceCurrency' => 'USD',
 			'availability'  => 'https://schema.org/InStock',
 			'offers'        => $offers,
+		);
+
+		if ( ! empty( $prices ) ) {
+
+			$aggregate_offer['lowPrice'] = $this->format_price(
+				min( $prices )
+			);
+
+			$aggregate_offer['highPrice'] = $this->format_price(
+				max( $prices )
+			);
+		}
+
+		return $aggregate_offer;
+	}
+
+	/**
+	 * Format a price for schema output.
+	 *
+	 * @param float|null $price Price value.
+	 * @return string|null
+	 */
+	private function format_price(
+		?float $price
+	): ?string {
+
+		if ( null === $price ) {
+			return null;
+		}
+
+		return number_format(
+			$price,
+			2,
+			'.',
+			''
 		);
 	}
 }
