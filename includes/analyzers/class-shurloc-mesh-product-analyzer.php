@@ -13,7 +13,7 @@ declare( strict_types=1 );
 /**
  * Mesh product analyzer.
  */
-final class Shurloc_Mesh_Product_Analyzer {
+final class Shurloc_Mesh_Product_Analyzer implements Shurloc_Mesh_Product_Analyzer_Interface {
 
 	/**
 	 * Mesh parser.

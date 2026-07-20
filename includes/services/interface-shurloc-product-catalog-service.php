@@ -2,7 +2,7 @@
 /**
  * Product catalog service interface.
  *
- * Defines catalog product entry retrieval behavior.
+ * Defines catalog product and variation retrieval behavior.
  *
  * @package ShurLocProductTools
  */
@@ -25,4 +25,17 @@ interface Shurloc_Product_Catalog_Service_Interface {
 	public function get_product_entry(
 		WC_Product $product
 	): ?Shurloc_Catalog_Product_Entry;
+
+	/**
+	 * Get catalog variation entries.
+	 *
+	 * Converts WooCommerce product variations into catalog variation
+	 * entries for mesh analysis and reporting.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return Shurloc_Catalog_Variation_Entry[] Variation entries.
+	 */
+	public function get_product_variation_entries(
+		WC_Product $product
+	): array;
 }
