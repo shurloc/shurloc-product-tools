@@ -1,5 +1,51 @@
 # Changelog
 
+## [0.10.0] - 2026-07-20
+
+### Added
+
+- Added `Shurloc_Mesh_Product_Data_Service` to provide a reusable service
+  for retrieving analyzed mesh product data.
+- Added service interfaces for:
+  - `Shurloc_Product_Catalog_Service_Interface`
+  - `Shurloc_Mesh_Product_Analyzer_Interface`
+- Added PHPUnit test doubles for:
+  - Product catalog service
+  - Mesh product analyzer
+- Added comprehensive unit tests covering mesh product data retrieval.
+- Added behavioral tests verifying:
+  - Catalog variations are passed to the analyzer
+  - Mesh product detection
+  - Analysis results are returned unchanged
+
+### Changed
+
+- Refactored `Shurloc_Product_Catalog_Service` to implement
+  `Shurloc_Product_Catalog_Service_Interface`.
+- Refactored `Shurloc_Mesh_Product_Analyzer` to implement
+  `Shurloc_Mesh_Product_Analyzer_Interface`.
+- Updated `Shurloc_Mesh_Product_Result` to encapsulate variation collections
+  behind accessor methods.
+- Reduced public mutable state within mesh analysis results in preparation
+  for future presentation services.
+
+### Internal Improvements
+
+- Established a dedicated service layer between WooCommerce catalog
+  extraction and frontend presentation.
+- Improved dependency inversion throughout the mesh analysis pipeline,
+  allowing services to be tested without concrete WooCommerce
+  implementations.
+- Expanded the plugin's test infrastructure with reusable service doubles
+  following the existing testing conventions.
+
+### Testing
+
+- Added unit tests for `Shurloc_Mesh_Product_Data_Service`.
+- Added unit tests for `Shurloc_Mesh_Product_Result`.
+- Added analyzer interaction tests verifying catalog variation flow.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.9.0] - 2026-07-20
 
 ### Added
