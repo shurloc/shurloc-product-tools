@@ -6,43 +6,83 @@
   - Update `Shurloc_Catalog_Report`
   - Update `Shurloc_Catalog_Analyzer`
   - Update integration tests
-  - Update any future report serializers
+  - Update report serializers
   - Reason: distinguish a variation name (string) from a WooCommerce variation object/ID.
-- Rename report methods from `add_*()` to `record_*()` to better reflect that the report records analysis results rather than managing a generic collection.
-- Extract catalog report generation into a dedicated service if a second consumer emerges (WP-CLI, scheduled task, REST API, etc.).
-- Evaluate replacing the catalog analyzer metadata callback with a `Shurloc_Catalog_Entry` value object.
-  - Encapsulate a variation and its associated metadata.
-  - Eliminate parallel collections and metadata callbacks.
-  - Preserve analyzer independence from WooCommerce.
-  - Implement only if additional catalog metadata or consumers justify the abstraction.
+
+- Rename report methods from `add_*()` to `record_*()`.
+  - Better reflects that reports record analysis results.
+
 - Modernize `Shurloc_Mesh_Specification`.
-  - Make the class `final`.
-  - Initialize all properties in a constructor.
-  - Convert the model to an immutable value object.
-  - Remove property mutation from `Shurloc_Mesh_Parser`.
+  - Make the class immutable.
+  - Initialize all properties in the constructor.
+  - Remove parser mutation.
   - Preserve `equals()` and `to_array()`.
-  - Add declare( strict_types=1 ).
-  - Reason: align with newer model classes such as `Shurloc_Catalog_Variation_Entry`.
-- Adopt `declare( strict_types=1 );` across the plugin.
-  - Add to existing PHP files.
-  - Update test files.
-  - Verify no implicit scalar coercion assumptions exist.
 
-## Reporting
+## Presentation
 
-- Generate catalog report from the WordPress Tools page.
-  - Add "Generate Catalog Report" admin action.
-  - Download catalog-report.json.
-  - Reuse the catalog analyzer and report classes.
-  - Add a reusable JSON download helper.
+- Build mesh specification table generator.
+  - Generate normalized rows from `Shurloc_Mesh_Product_Result`.
+  - Group by color.
+  - Preserve WooCommerce variation ordering where appropriate.
+  - Return presentation-ready DTOs rather than HTML.
+
+- Build frontend renderer.
+  - Render the mesh specification table.
+  - Keep HTML generation separate from data generation.
+
+- Integrate with WooCommerce product pages.
+  - Inject the table into the product template.
+  - Support Divi product templates.
+
+## Structured Data
+
+- Generate Product schema directly from `Shurloc_Mesh_Product_Result`.
+- Ensure structured data and visible table consume the same source.
+- Add integration tests confirming visible data and schema remain synchronized.
 
 ## Analysis
 
 - Detect duplicate mesh specifications.
-- Detect unexpected colors, modifiers, and pack sizes.
-- Add catalog statistics (mesh counts, colors, etc.).
+- Detect unexpected colors.
+- Detect unexpected modifiers.
+- Detect unexpected pack sizes.
+- Add catalog statistics.
+  - Mesh counts
+  - Colors
+  - Thread diameters
+  - Pack sizes
+  - Duplicate counts
+
+## Reporting
+
+- Add report version metadata.
+- Add plugin version metadata.
+- Add report generation timestamp.
+- Add analyzer version.
+- Optionally embed summary statistics in report header.
+
+## Testing
+
+- Add integration tests for mesh table generation.
+- Add renderer snapshot tests.
+- Add malformed variation fixture tests.
+- Add regression tests for known historical parsing bugs.
+- Expand catalog fixtures with edge cases.
 
 ## Build
 
-- Add version stamping from the plugin header (optional).
-- Add a summary of the build: plugin name, files, directories, ZIP size, and output location.
+- Add version stamping from plugin header (optional).
+- Add build summary.
+  - Plugin name
+  - Version
+  - Files
+  - Directories
+  - ZIP size
+  - Output location
+
+## Future
+
+- WP-CLI catalog analysis command.
+- Scheduled catalog audit.
+- REST endpoint for catalog reports.
+- Admin dashboard for catalog health.
