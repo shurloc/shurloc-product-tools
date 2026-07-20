@@ -60,6 +60,11 @@ function shurloc_product_tools_bootstrap(): void {
 
 	$woocommerce_schema_integration = new Shurloc_WooCommerce_Schema_Integration();
 
+	$catalog_report_controller =
+		new Shurloc_Catalog_Report_Controller(
+			$catalog_service
+		);
+
 	/*
 	 * Register frontend integrations.
 	 */
@@ -79,10 +84,7 @@ function shurloc_product_tools_bootstrap(): void {
 		20
 	);
 
-	/*
-	 * Load admin integrations.
-	 */
-	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/admin/catalog-report.php';
+	$catalog_report_controller->register();
 }
 
 add_action(
