@@ -469,3 +469,92 @@ if ( ! function_exists( 'plugin_dir_path' ) ) {
 		return dirname( $file ) . DIRECTORY_SEPARATOR;
 	}
 }
+
+if ( ! function_exists( 'check_admin_referer' ) ) {
+
+	/**
+	 * Test nonce verification.
+	 *
+	 * @param string $action Nonce action.
+	 * @return true
+	 */
+	function check_admin_referer( string $action ): bool {
+
+		$GLOBALS['shurloc_test_nonce_checks'][] = $action;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'sanitize_key' ) ) {
+
+	/**
+	 * Sanitize a key.
+	 *
+	 * @param string $key Key.
+	 * @return string
+	 */
+	function sanitize_key(
+		string $key
+	): string {
+
+		return strtolower(
+			preg_replace(
+				'/[^a-z0-9_\-]/',
+				'',
+				$key
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_unslash' ) ) {
+
+	/**
+	 * Remove slashes.
+	 *
+	 * @param mixed $value Value.
+	 * @return mixed
+	 */
+	function wp_unslash( $value ) {
+
+		return stripslashes_deep( $value );
+	}
+}
+
+if ( ! function_exists( 'stripslashes_deep' ) ) {
+
+	/**
+	 * Remove slashes recursively.
+	 *
+	 * @param mixed $value Value.
+	 * @return mixed
+	 */
+	function stripslashes_deep( $value ) {
+
+		if ( is_array( $value ) ) {
+
+			return array_map(
+				'stripslashes_deep',
+				$value
+			);
+		}
+
+		return stripslashes( $value );
+	}
+}
+
+if ( ! function_exists( 'current_user_can' ) ) {
+
+	/**
+	 * Capability check stub.
+	 *
+	 * @param string $capability Capability name.
+	 * @return bool
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
+	function current_user_can( string $capability ): bool {
+
+		return true;
+	}
+}

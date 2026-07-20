@@ -60,10 +60,13 @@ function shurloc_product_tools_bootstrap(): void {
 
 	$woocommerce_schema_integration = new Shurloc_WooCommerce_Schema_Integration();
 
-	$catalog_report_controller =
-		new Shurloc_Catalog_Report_Controller(
-			$catalog_service
-		);
+	$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
+		$catalog_service
+	);
+
+	$request_handler = new Shurloc_Catalog_Report_Request_Handler(
+		$catalog_report_controller
+	);
 
 	/*
 	 * Register frontend integrations.

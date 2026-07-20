@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Catalog report admin controller.
  */
-final class Shurloc_Catalog_Report_Controller {
+final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_Actions {
 
 	/**
 	 * Product catalog service.
@@ -20,6 +20,13 @@ final class Shurloc_Catalog_Report_Controller {
 	 * @var Shurloc_Product_Catalog_Service
 	 */
 	private Shurloc_Product_Catalog_Service $catalog_service;
+
+	/**
+	 * Request handler.
+	 *
+	 * @var Shurloc_Catalog_Report_Request_Handler
+	 */
+	private Shurloc_Catalog_Report_Request_Handler $request_handler;
 
 	/**
 	 * Constructor.
@@ -31,6 +38,10 @@ final class Shurloc_Catalog_Report_Controller {
 	) {
 
 		$this->catalog_service = $catalog_service;
+
+		$this->request_handler = new Shurloc_Catalog_Report_Request_Handler(
+			$this
+		);
 	}
 
 	/**
@@ -43,7 +54,7 @@ final class Shurloc_Catalog_Report_Controller {
 		add_action(
 			'admin_init',
 			array(
-				$this,
+				$this->request_handler,
 				'handle_request',
 			)
 		);
@@ -149,7 +160,7 @@ final class Shurloc_Catalog_Report_Controller {
 	 *
 	 * @return void
 	 */
-	private function export_variations(): void {
+	public function export_variations(): void {
 
 		$this->verify_permissions();
 
@@ -164,7 +175,7 @@ final class Shurloc_Catalog_Report_Controller {
 	 *
 	 * @return void
 	 */
-	private function generate_catalog_report(): void {
+	public function generate_catalog_report(): void {
 
 		$this->verify_permissions();
 
@@ -182,35 +193,6 @@ final class Shurloc_Catalog_Report_Controller {
 			'catalog-report.json',
 			$report->to_array()
 		);
-	}
-
-	/**
-	 * Handle tool requests.
-	 *
-	 * @return void
-	 */
-	public function handle_request(): void {
-
-		if ( ! isset( $_POST['shurloc_action'] ) ) {
-			return;
-		}
-
-		$action = sanitize_key(
-			wp_unslash( $_POST['shurloc_action'] )
-		);
-
-		switch ( $action ) {
-
-			case 'export_variations':
-				check_admin_referer( 'shurloc_export_variations' );
-				$this->export_variations();
-				break;
-
-			case 'generate_catalog_report':
-				check_admin_referer( 'shurloc_generate_catalog_report' );
-				$this->generate_catalog_report();
-				break;
-		}
 	}
 
 	/**
