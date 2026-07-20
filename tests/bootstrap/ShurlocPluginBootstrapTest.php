@@ -126,4 +126,20 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 		require_once dirname( __DIR__, 2 ) . '/shurloc-product-tools.php';
 	}
+
+	/**
+	 * Bootstrap should initialize the autoloader.
+	 *
+	 * @return void
+	 */
+	public function test_bootstrap_registers_autoloader(): void {
+
+		shurloc_product_tools_bootstrap();
+
+		$this->assertTrue(
+			class_exists(
+				Shurloc_Autoloader::class
+			)
+		);
+	}
 }

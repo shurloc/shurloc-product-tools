@@ -24,7 +24,7 @@ function shurloc_product_tools_bootstrap(): void {
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/class-shurloc-autoloader.php';
 
 	$autoloader = new Shurloc_Autoloader(
-		plugin_dir_path( __FILE__ ) . 'includes'
+		__DIR__
 	);
 
 	$autoloader->register();
