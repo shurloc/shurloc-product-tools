@@ -17,17 +17,17 @@ final class Shurloc_Mesh_Product_Schema_Service implements Shurloc_Mesh_Product_
 	/**
 	 * Mesh analyzer.
 	 *
-	 * @var Shurloc_Mesh_Product_Analyzer
+	 * @var Shurloc_Mesh_Product_Analyzer_Interface
 	 */
-	private Shurloc_Mesh_Product_Analyzer $analyzer;
+	private Shurloc_Mesh_Product_Analyzer_Interface $analyzer;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Product_Analyzer $analyzer Mesh analyzer.
+	 * @param Shurloc_Mesh_Product_Analyzer_Interface $analyzer Mesh analyzer.
 	 */
 	public function __construct(
-		Shurloc_Mesh_Product_Analyzer $analyzer
+		Shurloc_Mesh_Product_Analyzer_Interface $analyzer
 	) {
 
 		$this->analyzer = $analyzer;

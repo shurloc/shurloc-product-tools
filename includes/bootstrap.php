@@ -39,6 +39,11 @@ function shurloc_product_tools_bootstrap(): void {
 		new Shurloc_Mesh_Parser()
 	);
 
+	$mesh_data_service = new Shurloc_Mesh_Product_Data_Service(
+		$catalog_service,
+		$mesh_analyzer
+	);
+
 	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
 		$mesh_analyzer
 	);

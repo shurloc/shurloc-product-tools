@@ -91,6 +91,49 @@ final class Shurloc_Mesh_Product_Result {
 	}
 
 	/**
+	 * Return recognized mesh variations.
+	 *
+	 * Each variation contains the original catalog entry and the
+	 * successfully parsed mesh specification.
+	 *
+	 * @return array<int, array{
+	 *     entry: Shurloc_Catalog_Variation_Entry,
+	 *     spec: Shurloc_Mesh_Specification
+	 * }>
+	 */
+	public function get_mesh_variations(): array {
+
+		return $this->mesh_variations;
+	}
+
+	/**
+	 * Return ignored variations.
+	 *
+	 * Ignored variations are entries that are intentionally excluded from
+	 * mesh analysis results, such as non-purchasable separators or
+	 * variations without assigned pricing.
+	 *
+	 * @return Shurloc_Catalog_Variation_Entry[]
+	 */
+	public function get_ignored_variations(): array {
+
+		return $this->ignored_variations;
+	}
+
+	/**
+	 * Return unrecognized paid variations.
+	 *
+	 * These are purchasable catalog variations that were not recognized as
+	 * valid mesh specifications and may require review.
+	 *
+	 * @return Shurloc_Catalog_Variation_Entry[]
+	 */
+	public function get_unrecognized_variations(): array {
+
+		return $this->unrecognized_variations;
+	}
+
+	/**
 	 * Determine whether this represents a mesh product.
 	 *
 	 * @return bool True if mesh variations were found.
