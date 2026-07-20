@@ -1,0 +1,139 @@
+<?php
+/**
+ * Tests for catalog report request handling.
+ *
+ * @package ShurLocProductTools
+ */
+
+declare( strict_types=1 );
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Tests admin request routing.
+ *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
+final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
+
+	/**
+	 * Request handler.
+	 *
+	 * @var Shurloc_Catalog_Report_Request_Handler
+	 */
+	private Shurloc_Catalog_Report_Request_Handler $handler;
+
+	/**
+	 * Actions double.
+	 *
+	 * @var Shurloc_Catalog_Report_Actions_Double
+	 */
+	private Shurloc_Catalog_Report_Actions_Double $actions;
+
+	/**
+	 * Set up test environment.
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$GLOBALS['shurloc_test_actions']         = array();
+		$GLOBALS['shurloc_test_action_metadata'] = array();
+		$GLOBALS['shurloc_test_nonce_checks']    = array();
+
+		$_POST = array();
+
+		$this->actions = new Shurloc_Catalog_Report_Actions_Double();
+
+		$this->handler = new Shurloc_Catalog_Report_Request_Handler(
+			$this->actions
+		);
+
+		add_action(
+			'admin_init',
+			array(
+				$this->handler,
+				'handle_request',
+			)
+		);
+	}
+
+	/**
+	 * Request handler registers admin_init hook.
+	 *
+	 * @return void
+	 */
+	public function test_registers_admin_init_hook(): void {
+
+		$this->assertArrayHasKey(
+			'admin_init',
+			$GLOBALS['shurloc_test_actions']
+		);
+
+		$this->assertIsCallable(
+			$GLOBALS['shurloc_test_actions']['admin_init'][0]
+		);
+	}
+
+	/**
+	 * Request handler ignores missing action.
+	 *
+	 * @return void
+	 */
+	public function test_request_without_action_is_ignored(): void {
+
+		$_POST = array();
+
+		$this->handler->handle_request();
+
+		$this->assertSame(
+			array(),
+			$this->actions->get_calls()
+		);
+	}
+
+	/**
+	 * Export request routes correctly.
+	 *
+	 * @return void
+	 */
+	public function test_export_request_routes_to_export_handler(): void {
+
+		$_POST = array(
+			'shurloc_action' => 'export_variations',
+		);
+
+		$this->handler->handle_request();
+
+		$this->assertSame(
+			array(
+				'export_variations',
+			),
+			$this->actions->get_calls()
+		);
+	}
+
+	/**
+	 * Report request routes correctly.
+	 *
+	 * @return void
+	 */
+	public function test_report_request_routes_to_report_handler(): void {
+
+		$_POST = array(
+			'shurloc_action' => 'generate_catalog_report',
+		);
+
+		$this->handler->handle_request();
+
+		$this->assertSame(
+			array(
+				'generate_catalog_report',
+			),
+			$this->actions->get_calls()
+		);
+	}
+}

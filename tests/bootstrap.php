@@ -39,7 +39,13 @@ require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.ph
 require_once dirname( __DIR__ ) . '/tests/stubs/wordpress-functions.php';
 
 /*
+ * Load interfaces required by test doubles.
+ */
+require_once dirname( __DIR__ ) . '/includes/admin/interface-shurloc-catalog-report-actions.php';
+
+/*
  * Load WordPress test doubles.
  */
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product-variation.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-catalog-report-actions.php';
