@@ -1,5 +1,55 @@
 # Changelog
 
+## [0.9.0] - 2026-07-20
+
+### Added
+
+- Added `Shurloc_Catalog_Report_Controller` to manage catalog report admin tools.
+- Added `Shurloc_Catalog_Report_Request_Handler` to separate admin request
+  routing from catalog report generation.
+- Added catalog report action abstraction to improve testability and reduce
+  coupling between WordPress request handling and report execution.
+- Added integration coverage for catalog report generation using real catalog
+  fixtures.
+- Added integration tests covering:
+  - catalog report generation
+  - recognized mesh specification detection
+  - unknown variation handling
+
+### Changed
+
+- Refactored catalog report admin tools from procedural functions into a
+  controller-based architecture.
+- Updated catalog report initialization to use dependency injection for
+  catalog services.
+- Separated admin request handling from report generation logic.
+- Updated catalog report tests to use injected action doubles instead of
+  directly exercising WordPress-dependent behavior.
+- Improved separation between WooCommerce catalog collection, report analysis,
+  and admin presentation.
+
+### Developer Improvements
+
+- Added request handler tests covering:
+  - admin hook registration
+  - ignored requests without actions
+  - export request routing
+  - catalog report request routing
+
+- Added controller integration coverage to verify the complete catalog report
+  workflow from catalog entries through report generation.
+
+- Improved plugin architecture to support future admin tools without adding
+  additional procedural handlers.
+
+### Upgrade Notes
+
+This release changes the internal architecture of catalog reporting.
+No database changes or configuration updates are required.
+
+Developers extending catalog reporting should use the controller and request
+handler architecture rather than adding new procedural admin functions.
+
 ## [0.8.1] - 2026-07-20
 
 ### Fixed
