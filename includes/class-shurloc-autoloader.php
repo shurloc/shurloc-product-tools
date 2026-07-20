@@ -25,10 +25,17 @@ final class Shurloc_Autoloader {
 	 * Constructor.
 	 *
 	 * @param string $base_directory Base includes directory.
+	 * @throws UnexpectedValueException When the base directory does not exist.
 	 */
 	public function __construct(
 		string $base_directory
 	) {
+
+		if ( ! is_dir( $base_directory ) ) {
+			throw new UnexpectedValueException(
+				'Autoloader directory does not exist.'
+			);
+		}
 
 		$this->directories = $this->scan_directories(
 			$base_directory
