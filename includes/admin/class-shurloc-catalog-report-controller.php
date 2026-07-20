@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Catalog report admin controller.
  */
-final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_Actions {
+final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_Actions_Interface {
 
 	/**
 	 * Product catalog service.

@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Catalog report actions contract.
  */
-interface Shurloc_Catalog_Report_Actions {
+interface Shurloc_Catalog_Report_Actions_Interface {
 
 	/**
 	 * Export WooCommerce catalog variations.

@@ -17,17 +17,17 @@ final class Shurloc_Catalog_Report_Request_Handler {
 	/**
 	 * Catalog report actions.
 	 *
-	 * @var Shurloc_Catalog_Report_Actions
+	 * @var Shurloc_Catalog_Report_Actions_Interface
 	 */
-	private Shurloc_Catalog_Report_Actions $actions;
+	private Shurloc_Catalog_Report_Actions_Interface $actions;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Catalog_Report_Actions $actions Catalog report controller.
+	 * @param Shurloc_Catalog_Report_Actions_Interface $actions Catalog report controller.
 	 */
 	public function __construct(
-		Shurloc_Catalog_Report_Actions $actions
+		Shurloc_Catalog_Report_Actions_Interface $actions
 	) {
 
 		$this->actions = $actions;

@@ -10,7 +10,7 @@ declare( strict_types=1 );
 /**
  * Test double for catalog report actions.
  */
-final class Shurloc_Catalog_Report_Actions_Double implements Shurloc_Catalog_Report_Actions {
+final class Shurloc_Catalog_Report_Actions_Double implements Shurloc_Catalog_Report_Actions_Interface {
 
 	/**
 	 * Recorded action calls.

@@ -88,4 +88,18 @@ final class ShurlocAutoloaderTest extends TestCase {
 			)
 		);
 	}
+
+	/**
+	 * Interface files should autoload.
+	 *
+	 * @return void
+	 */
+	public function test_autoloader_loads_interfaces(): void {
+
+		$this->assertTrue(
+			interface_exists(
+				Shurloc_Catalog_Report_Actions_Interface::class
+			)
+		);
+	}
 }
