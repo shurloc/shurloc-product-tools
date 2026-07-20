@@ -23,6 +23,13 @@ final class Shurloc_Mesh_Product_Analyzer_Double implements Shurloc_Mesh_Product
 	private Shurloc_Mesh_Product_Result $result;
 
 	/**
+	 * Entries passed to analyze().
+	 *
+	 * @var Shurloc_Catalog_Variation_Entry[]
+	 */
+	private array $entries = array();
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Shurloc_Mesh_Product_Result $result Analysis result to return.
@@ -48,6 +55,18 @@ final class Shurloc_Mesh_Product_Analyzer_Double implements Shurloc_Mesh_Product
 		array $entries
 	): Shurloc_Mesh_Product_Result {
 
+		$this->entries = $entries;
+
 		return $this->result;
+	}
+
+	/**
+	 * Return the entries passed to analyze().
+	 *
+	 * @return Shurloc_Catalog_Variation_Entry[]
+	 */
+	public function get_entries(): array {
+
+		return $this->entries;
 	}
 }

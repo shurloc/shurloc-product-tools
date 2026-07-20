@@ -29,6 +29,13 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 	private Shurloc_Mesh_Product_Result $result;
 
 	/**
+	 * Analyzer double.
+	 *
+	 * @var Shurloc_Mesh_Product_Analyzer_Double
+	 */
+	private Shurloc_Mesh_Product_Analyzer_Double $analyzer;
+
+	/**
 	 * Set up test environment.
 	 *
 	 * @return void
@@ -51,13 +58,13 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 			array( $entry )
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer_Double(
+		$this->analyzer = new Shurloc_Mesh_Product_Analyzer_Double(
 			$this->result
 		);
 
 		$this->service = new Shurloc_Mesh_Product_Data_Service(
 			$catalog_service,
-			$analyzer
+			$this->analyzer
 		);
 	}
 
@@ -124,6 +131,39 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 			$this->service->is_mesh_product(
 				$product
 			)
+		);
+	}
+
+	/**
+	 * Catalog variations are passed to the analyzer.
+	 *
+	 * @return void
+	 */
+	public function test_analyze_product_passes_catalog_variations_to_analyzer(): void {
+
+		$product = new WC_Product(
+			1
+		);
+
+		$this->service->analyze_product(
+			$product
+		);
+
+		$entries = $this->analyzer->get_entries();
+
+		$this->assertCount(
+			1,
+			$entries
+		);
+
+		$this->assertSame(
+			'110/80 White ($12.99)',
+			$entries[0]->variation
+		);
+
+		$this->assertSame(
+			12.99,
+			$entries[0]->price
 		);
 	}
 }
