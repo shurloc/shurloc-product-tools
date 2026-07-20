@@ -61,10 +61,10 @@ final class Shurloc_Mesh_Product_Table_Renderer {
 				'</td>';
 
 			$html .= '<td>' .
-				esc_html(
-					$spec->color
-				) .
-				'</td>';
+			esc_html(
+				(string) $spec->color
+			) .
+			'</td>';
 
 			$html .= '<td>';
 
