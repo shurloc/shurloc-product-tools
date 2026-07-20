@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.1] - 2026-07-20
+
+### Fixed
+
+- Fixed include path for autoloader in plugin bootstrap.
+
 ## [0.8.0] - 2026-07-16
 
 ### Added
