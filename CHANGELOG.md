@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.11.0] - 2026-07-21
+
+### Added
+
+- Added `Shurloc_Mesh_Product_Table_Renderer` to generate customer-facing
+  mesh specification tables from analyzed product data.
+- Added `Shurloc_Mesh_Product_Table_Renderer_Interface` to define frontend
+  table rendering behavior.
+- Added `[shurloc_mesh_table]` shortcode for displaying mesh product tables
+  on WooCommerce product pages.
+- Added shortcode integration with:
+  - `Shurloc_Mesh_Product_Data_Service`
+  - `Shurloc_Mesh_Product_Table_Renderer`
+- Added PHPUnit test doubles for:
+  - Mesh product data service
+  - Mesh product table renderer
+- Added comprehensive shortcode and integration tests covering:
+  - Shortcode registration
+  - Empty output for products without mesh variations
+  - Rendering recognized mesh variations
+  - Rendering multiple mesh variation rows
+
+### Changed
+
+- Updated plugin bootstrap to initialize mesh product table dependencies.
+- Connected frontend presentation to the existing mesh product analysis
+  pipeline without introducing WooCommerce dependencies into rendering
+  classes.
+- Extended test infrastructure to support shortcode and frontend rendering
+  workflows.
+
+### Internal Improvements
+
+- Established the first presentation layer consuming mesh analysis results.
+- Maintained separation between:
+  - WooCommerce catalog extraction
+  - Mesh product analysis
+  - Customer-facing HTML rendering
+- Improved dependency injection throughout the mesh product workflow,
+  allowing rendering behavior to be tested independently from WordPress
+  and WooCommerce runtime behavior.
+- Expanded integration coverage from service-level analysis into complete
+  product data-to-output rendering flow.
+
+### Testing
+
+- Added unit tests for `Shurloc_Mesh_Product_Table_Renderer`.
+- Added unit tests for `Shurloc_Mesh_Product_Table_Shortcode`.
+- Added integration tests verifying the complete mesh product table flow.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.10.0] - 2026-07-20
 
 ### Added
