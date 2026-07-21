@@ -73,6 +73,13 @@ function shurloc_product_tools_bootstrap(): void {
 		$catalog_report_controller
 	);
 
+	$mesh_table_renderer = new Shurloc_Mesh_Product_Table_Renderer();
+
+	$mesh_table_shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
+		$mesh_data_service,
+		$mesh_table_renderer
+	);
+
 	/*
 	 * Register frontend integrations.
 	 */
@@ -93,6 +100,8 @@ function shurloc_product_tools_bootstrap(): void {
 	);
 
 	$catalog_report_controller->register();
+
+	$mesh_table_shortcode->register();
 }
 
 add_action(

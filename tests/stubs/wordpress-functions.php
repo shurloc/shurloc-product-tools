@@ -56,6 +56,20 @@ $GLOBALS['shurloc_test_comments'] = array();
  */
 $GLOBALS['shurloc_test_products'] = array();
 
+/**
+ * Stored shortcode registrations.
+ *
+ * @var array<string,array<string,callable>>
+ */
+$GLOBALS['wp_shortcodes'] = array();
+
+/**
+ * Stored product.
+ *
+ * @var string|null
+ */
+$GLOBALS['product'] = null;
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
 	/**
@@ -556,5 +570,62 @@ if ( ! function_exists( 'current_user_can' ) ) {
 	function current_user_can( string $capability ): bool {
 
 		return true;
+	}
+}
+
+if ( ! function_exists( 'esc_html' ) ) {
+	/**
+	 * Escape HTML output.
+	 *
+	 * @param string $text Text to escape.
+	 * @return string Escaped text.
+	 */
+	function esc_html(
+		string $text
+	): string {
+
+		return htmlspecialchars(
+			$text,
+			ENT_QUOTES | ENT_SUBSTITUTE,
+			'UTF-8'
+		);
+	}
+}
+
+if ( ! function_exists( 'add_shortcode' ) ) {
+	/**
+	 * Register a shortcode callback.
+	 *
+	 * @param string   $tag      Shortcode tag.
+	 * @param callable $callback Shortcode callback.
+	 * @return bool True when the shortcode is registered.
+	 */
+	function add_shortcode(
+		string $tag,
+		callable $callback
+	): bool {
+
+		if ( ! isset( $GLOBALS['wp_shortcodes'] ) ) {
+			$GLOBALS['wp_shortcodes'] = array();
+		}
+
+		$GLOBALS['wp_shortcodes'][ $tag ] = $callback;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wc_get_product' ) ) {
+	/**
+	 * Retrieve a WooCommerce product test double.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return WC_Product|null Product double or null.
+	 */
+	function wc_get_product(
+		int $product_id
+	): ?WC_Product {
+
+		return $GLOBALS['shurloc_test_products'][ $product_id ] ?? null;
 	}
 }
