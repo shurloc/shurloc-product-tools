@@ -60,7 +60,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 			'thread_diameter' => 80,
 			'modifier'        => null,
 			'color'           => 'White',
-			'pack_size'       => null,
+			'pack_size'       => '10 Pack',
 			'price_text'      => '$12.99',
 			'recognized'      => true,
 			'unknown_tokens'  => array(),

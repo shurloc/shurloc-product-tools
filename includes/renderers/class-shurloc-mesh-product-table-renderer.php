@@ -2,7 +2,7 @@
 /**
  * Mesh product table renderer.
  *
- * Renders a customer-facing HTML table from normalized mesh table data.
+ * Renders a customer-facing HTML table of mesh specifications.
  *
  * @package ShurLocProductTools
  */
@@ -17,28 +17,40 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 	/**
 	 * Render a mesh specification table.
 	 *
-	 * @param Shurloc_Mesh_Table_Data $data Mesh table data.
+	 * @param Shurloc_Mesh_Table_Data $data Presentation-ready table data.
 	 * @return string HTML table.
 	 */
 	public function render(
 		Shurloc_Mesh_Table_Data $data
 	): string {
 
-		$rows = $data->get_rows();
-
-		if ( empty( $rows ) ) {
+		if ( ! $data->has_rows() ) {
 			return '';
 		}
+
+		$rows = $data->get_rows();
 
 		$html  = '<table class="shurloc-mesh-specification-table">';
 		$html .= '<thead>';
 		$html .= '<tr>';
+
 		$html .= '<th>Mesh</th>';
 		$html .= '<th>Thread</th>';
-		$html .= '<th>Modifier</th>';
+
+		if ( $data->show_modifier_column() ) {
+
+			$html .= '<th>Modifier</th>';
+		}
+
 		$html .= '<th>Color</th>';
-		$html .= '<th>Pack Size</th>';
+
+		if ( $data->show_pack_size_column() ) {
+
+			$html .= '<th>Pack Size</th>';
+		}
+
 		$html .= '<th>Price</th>';
+
 		$html .= '</tr>';
 		$html .= '</thead>';
 		$html .= '<tbody>';
@@ -59,16 +71,19 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 				) .
 				'</td>';
 
-			$html .= '<td>';
+			if ( $data->show_modifier_column() ) {
 
-			if ( null !== $row->get_modifier() ) {
+				$html .= '<td>';
 
-				$html .= esc_html(
-					$row->get_modifier()
-				);
+				if ( null !== $row->get_modifier() ) {
+
+					$html .= esc_html(
+						$row->get_modifier()
+					);
+				}
+
+				$html .= '</td>';
 			}
-
-			$html .= '</td>';
 
 			$html .= '<td>' .
 				esc_html(
@@ -76,16 +91,19 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 				) .
 				'</td>';
 
-			$html .= '<td>';
+			if ( $data->show_pack_size_column() ) {
 
-			if ( null !== $row->get_pack_size() ) {
+				$html .= '<td>';
 
-				$html .= esc_html(
-					$row->get_pack_size()
-				);
+				if ( null !== $row->get_pack_size() ) {
+
+					$html .= esc_html(
+						$row->get_pack_size()
+					);
+				}
+
+				$html .= '</td>';
 			}
-
-			$html .= '</td>';
 
 			$html .= '<td>';
 
