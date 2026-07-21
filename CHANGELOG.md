@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.11.1] - 2026-07-21
+
+### Changed
+- Refactored `Shurloc_Mesh_Specification` into an immutable domain model using private readonly properties.
+- Updated mesh analyzers, schema generators, renderers, services, and test fixtures to use constructor-based specification creation.
+- Improved encapsulation by removing direct property mutation of mesh specification objects.
+- Updated mesh product handling to consistently use accessor methods and validated specification state.
+- Expanded and updated test coverage to support the new mesh specification architecture.
+
 ## [0.11.0] - 2026-07-21
 
 ### Added
