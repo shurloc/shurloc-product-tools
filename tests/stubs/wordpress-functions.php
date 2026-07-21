@@ -63,6 +63,13 @@ $GLOBALS['shurloc_test_products'] = array();
  */
 $GLOBALS['wp_shortcodes'] = array();
 
+/**
+ * Stored product.
+ *
+ * @var string|null
+ */
+$GLOBALS['product'] = null;
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
 	/**
