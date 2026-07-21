@@ -1,0 +1,107 @@
+<?php
+/**
+ * Tests for mesh table row DTO.
+ *
+ * @package ShurLocProductTools
+ */
+
+declare( strict_types=1 );
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Mesh table row tests.
+ */
+final class ShurlocMeshTableRowTest extends TestCase {
+
+	/**
+	 * Constructor populates all properties.
+	 *
+	 * @return void
+	 */
+	public function test_constructor_populates_all_fields(): void {
+
+		$row = new Shurloc_Mesh_Table_Row(
+			110,
+			80,
+			'White',
+			'S',
+			'10 Pack',
+			12.99
+		);
+
+		$this->assertSame(
+			110,
+			$row->get_mesh_count()
+		);
+
+		$this->assertSame(
+			80,
+			$row->get_thread_diameter()
+		);
+
+		$this->assertSame(
+			'White',
+			$row->get_color()
+		);
+
+		$this->assertSame(
+			'S',
+			$row->get_modifier()
+		);
+
+		$this->assertSame(
+			'10 Pack',
+			$row->get_pack_size()
+		);
+
+		$this->assertSame(
+			12.99,
+			$row->get_price()
+		);
+	}
+
+	/**
+	 * Nullable fields remain null.
+	 *
+	 * @return void
+	 */
+	public function test_nullable_fields_remain_null(): void {
+
+		$row = new Shurloc_Mesh_Table_Row(
+			230,
+			40,
+			'Yellow',
+			null,
+			null,
+			null
+		);
+
+		$this->assertSame(
+			230,
+			$row->get_mesh_count()
+		);
+
+		$this->assertSame(
+			40,
+			$row->get_thread_diameter()
+		);
+
+		$this->assertSame(
+			'Yellow',
+			$row->get_color()
+		);
+
+		$this->assertNull(
+			$row->get_modifier()
+		);
+
+		$this->assertNull(
+			$row->get_pack_size()
+		);
+
+		$this->assertNull(
+			$row->get_price()
+		);
+	}
+}
