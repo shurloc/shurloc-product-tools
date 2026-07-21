@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Mesh product table renderer.
  */
-final class Shurloc_Mesh_Product_Table_Renderer {
+final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_Table_Renderer_Interface {
 
 	/**
 	 * Render a mesh specification table.
