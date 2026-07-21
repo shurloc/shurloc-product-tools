@@ -559,19 +559,21 @@ if ( ! function_exists( 'current_user_can' ) ) {
 	}
 }
 
-/**
- * Escape HTML output.
- *
- * @param string $text Text to escape.
- * @return string Escaped text.
- */
-function esc_html(
-	string $text
-): string {
+if ( ! function_exists( 'esc_html' ) ) {
+	/**
+	 * Escape HTML output.
+	 *
+	 * @param string $text Text to escape.
+	 * @return string Escaped text.
+	 */
+	function esc_html(
+		string $text
+	): string {
 
-	return htmlspecialchars(
-		$text,
-		ENT_QUOTES | ENT_SUBSTITUTE,
-		'UTF-8'
-	);
+		return htmlspecialchars(
+			$text,
+			ENT_QUOTES | ENT_SUBSTITUTE,
+			'UTF-8'
+		);
+	}
 }
