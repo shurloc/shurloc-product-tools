@@ -146,6 +146,11 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$this->assertStringContainsString(
+			'Pack Size',
+			$html
+		);
+
+		$this->assertStringContainsString(
 			'$12.99',
 			$html
 		);
@@ -171,8 +176,9 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 			),
 			$this->create_mesh_specification(
 				array(
-					'modifier' => 'S',
-					'color'    => 'Yellow',
+					'modifier'  => 'S',
+					'color'     => 'Yellow',
+					'pack_size' => '10 Pack',
 				)
 			)
 		);
@@ -188,6 +194,16 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 		$this->assertStringContainsString(
 			'S',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'Pack Size',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'10 Pack',
 			$html
 		);
 	}
@@ -210,7 +226,11 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 				'Test Mesh Product',
 				''
 			),
-			$this->create_mesh_specification()
+			$this->create_mesh_specification(
+				array(
+					'pack_size' => '10 Pack',
+				)
+			)
 		);
 
 		$result->add_mesh_variation(
@@ -227,6 +247,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'mesh_count'      => 160,
 					'thread_diameter' => 64,
 					'color'           => 'Yellow',
+					'pack_size'       => '20 Pack',
 					'price_text'      => '$15.99',
 				)
 			)
@@ -248,6 +269,16 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 		$this->assertStringContainsString(
 			'Yellow',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'10 Pack',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'20 Pack',
 			$html
 		);
 	}

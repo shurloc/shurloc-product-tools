@@ -37,6 +37,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 		$html .= '<th>Thread</th>';
 		$html .= '<th>Modifier</th>';
 		$html .= '<th>Color</th>';
+		$html .= '<th>Pack Size</th>';
 		$html .= '<th>Price</th>';
 		$html .= '</tr>';
 		$html .= '</thead>';
@@ -74,6 +75,17 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 					$row->get_color()
 				) .
 				'</td>';
+
+			$html .= '<td>';
+
+			if ( null !== $row->get_pack_size() ) {
+
+				$html .= esc_html(
+					$row->get_pack_size()
+				);
+			}
+
+			$html .= '</td>';
 
 			$html .= '<td>';
 
