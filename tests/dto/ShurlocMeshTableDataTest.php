@@ -22,7 +22,9 @@ final class ShurlocMeshTableDataTest extends TestCase {
 	public function test_empty_table_data_has_no_rows(): void {
 
 		$data = new Shurloc_Mesh_Table_Data(
-			array()
+			array(),
+			false,
+			false
 		);
 
 		$this->assertFalse(
@@ -59,7 +61,9 @@ final class ShurlocMeshTableDataTest extends TestCase {
 		$data = new Shurloc_Mesh_Table_Data(
 			array(
 				$row,
-			)
+			),
+			false,
+			true
 		);
 
 		$this->assertTrue(
@@ -108,7 +112,9 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			array(
 				$first_row,
 				$second_row,
-			)
+			),
+			true,
+			true
 		);
 
 		$rows = $data->get_rows();
@@ -162,7 +168,9 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					null,
 					18.99
 				),
-			)
+			),
+			true,
+			false
 		);
 
 		$this->assertSame(

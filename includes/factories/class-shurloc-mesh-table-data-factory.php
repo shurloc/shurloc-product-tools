@@ -26,10 +26,23 @@ final class Shurloc_Mesh_Table_Data_Factory {
 
 		$rows = array();
 
+		$show_modifier_column  = false;
+		$show_pack_size_column = false;
+
 		foreach ( $result->get_mesh_variations() as $variation ) {
 
 			$entry = $variation['entry'];
 			$spec  = $variation['spec'];
+
+			if ( null !== $spec->get_modifier() ) {
+
+				$show_modifier_column = true;
+			}
+
+			if ( null !== $spec->get_pack_size() ) {
+
+				$show_pack_size_column = true;
+			}
 
 			$rows[] = new Shurloc_Mesh_Table_Row(
 				$spec->get_mesh_count(),
@@ -42,7 +55,9 @@ final class Shurloc_Mesh_Table_Data_Factory {
 		}
 
 		return new Shurloc_Mesh_Table_Data(
-			$rows
+			$rows,
+			$show_modifier_column,
+			$show_pack_size_column
 		);
 	}
 }
