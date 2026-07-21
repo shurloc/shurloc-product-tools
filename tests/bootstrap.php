@@ -39,6 +39,11 @@ require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.ph
 require_once dirname( __DIR__ ) . '/tests/stubs/wordpress-functions.php';
 
 /*
+ * Load helper functions.
+ */
+require_once dirname( __DIR__ ) . '/tests/stubs/shurloc-helpers.php';
+
+/*
  * Load interfaces required by test doubles.
  */
 require_once dirname( __DIR__ ) . '/includes/admin/interface-shurloc-catalog-report-actions.php';

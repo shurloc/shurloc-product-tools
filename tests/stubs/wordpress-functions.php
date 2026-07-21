@@ -614,3 +614,18 @@ if ( ! function_exists( 'add_shortcode' ) ) {
 		return true;
 	}
 }
+
+if ( ! function_exists( 'wc_get_product' ) ) {
+	/**
+	 * Retrieve a WooCommerce product test double.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return WC_Product|null Product double or null.
+	 */
+	function wc_get_product(
+		int $product_id
+	): ?WC_Product {
+
+		return $GLOBALS['shurloc_test_products'][ $product_id ] ?? null;
+	}
+}
