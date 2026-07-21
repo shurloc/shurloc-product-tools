@@ -12,6 +12,19 @@
 - Rename report methods from `add_*()` to `record_*()`.
   - Better reflects that reports record analysis results.
 
+- Refactor mesh table renderer tests to use DOMDocument/XPath assertions
+  - Replace brittle HTML string assertions in `ShurlocMeshProductTableRendererTest` and integration tests with DOM-based assertions.
+  - Parse rendered table HTML using `DOMDocument`.
+  - Use XPath queries to verify:
+    - Required table structure exists (`table`, `caption`, `thead`, `tbody`).
+    - Column headers exist by text content rather than exact HTML markup.
+    - Optional columns (`Modifier`, `Pack Size`) appear or disappear correctly.
+    - Column ordering is correct by inspecting the `<th>` node sequence.
+    - Table rows contain expected cell values.
+  - Keep CSS class assertions only where CSS hooks are part of the rendering contract, not for validating semantic content.
+
+  - **Goal:** Make renderer tests resilient to harmless HTML changes (attributes classes, formatting) while still validating the customer-facing table structure.
+
 ## Presentation
 
 - Build mesh specification table generator.
