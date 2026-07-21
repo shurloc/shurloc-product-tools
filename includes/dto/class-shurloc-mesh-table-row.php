@@ -15,6 +15,48 @@ declare( strict_types=1 );
 final class Shurloc_Mesh_Table_Row {
 
 	/**
+	 * Mesh count.
+	 *
+	 * @var int
+	 */
+	private int $mesh_count;
+
+	/**
+	 * Thread diameter.
+	 *
+	 * @var int
+	 */
+	private int $thread_diameter;
+
+	/**
+	 * Mesh color.
+	 *
+	 * @var string
+	 */
+	private string $color;
+
+	/**
+	 * Mesh modifier.
+	 *
+	 * @var string|null
+	 */
+	private ?string $modifier;
+
+	/**
+	 * Pack size.
+	 *
+	 * @var string|null
+	 */
+	private ?string $pack_size;
+
+	/**
+	 * Variation price.
+	 *
+	 * @var float|null
+	 */
+	private ?float $price;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param int         $mesh_count      Mesh count.
@@ -25,11 +67,79 @@ final class Shurloc_Mesh_Table_Row {
 	 * @param float|null  $price           Variation price.
 	 */
 	public function __construct(
-		public readonly int $mesh_count,
-		public readonly int $thread_diameter,
-		public readonly string $color,
-		public readonly ?string $modifier,
-		public readonly ?string $pack_size,
-		public readonly ?float $price
-	) {}
+		int $mesh_count,
+		int $thread_diameter,
+		string $color,
+		?string $modifier,
+		?string $pack_size,
+		?float $price
+	) {
+
+		$this->mesh_count      = $mesh_count;
+		$this->thread_diameter = $thread_diameter;
+		$this->color           = $color;
+		$this->modifier        = $modifier;
+		$this->pack_size       = $pack_size;
+		$this->price           = $price;
+	}
+
+	/**
+	 * Get mesh count.
+	 *
+	 * @return int Mesh count.
+	 */
+	public function get_mesh_count(): int {
+
+		return $this->mesh_count;
+	}
+
+	/**
+	 * Get thread diameter.
+	 *
+	 * @return int Thread diameter.
+	 */
+	public function get_thread_diameter(): int {
+
+		return $this->thread_diameter;
+	}
+
+	/**
+	 * Get color.
+	 *
+	 * @return string Mesh color.
+	 */
+	public function get_color(): string {
+
+		return $this->color;
+	}
+
+	/**
+	 * Get modifier.
+	 *
+	 * @return string|null Mesh modifier.
+	 */
+	public function get_modifier(): ?string {
+
+		return $this->modifier;
+	}
+
+	/**
+	 * Get pack size.
+	 *
+	 * @return string|null Pack size.
+	 */
+	public function get_pack_size(): ?string {
+
+		return $this->pack_size;
+	}
+
+	/**
+	 * Get price.
+	 *
+	 * @return float|null Variation price.
+	 */
+	public function get_price(): ?float {
+
+		return $this->price;
+	}
 }

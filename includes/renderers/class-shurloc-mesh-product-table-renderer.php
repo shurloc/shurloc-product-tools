@@ -2,7 +2,7 @@
 /**
  * Mesh product table renderer.
  *
- * Renders a customer-facing HTML table of recognized mesh variations.
+ * Renders a customer-facing HTML table from normalized mesh table data.
  *
  * @package ShurLocProductTools
  */
@@ -17,14 +17,14 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 	/**
 	 * Render a mesh specification table.
 	 *
-	 * @param Shurloc_Mesh_Product_Result $result Mesh product analysis result.
+	 * @param Shurloc_Mesh_Table_Data $data Mesh table data.
 	 * @return string HTML table.
 	 */
 	public function render(
-		Shurloc_Mesh_Product_Result $result
+		Shurloc_Mesh_Table_Data $data
 	): string {
 
-		$rows = $result->get_mesh_variations();
+		$rows = $data->get_rows();
 
 		if ( empty( $rows ) ) {
 			return '';
@@ -44,29 +44,26 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 		foreach ( $rows as $row ) {
 
-			$entry = $row['entry'];
-			$spec  = $row['spec'];
-
 			$html .= '<tr>';
 
 			$html .= '<td>' .
 				esc_html(
-					(string) $spec->get_mesh_count()
+					(string) $row->get_mesh_count()
 				) .
 				'</td>';
 
 			$html .= '<td>' .
 				esc_html(
-					(string) $spec->get_thread_diameter()
+					(string) $row->get_thread_diameter()
 				) .
 				'</td>';
 
 			$html .= '<td>';
 
-			if ( null !== $spec->get_modifier() ) {
+			if ( null !== $row->get_modifier() ) {
 
 				$html .= esc_html(
-					$spec->get_modifier()
+					$row->get_modifier()
 				);
 			}
 
@@ -74,18 +71,18 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			$html .= '<td>' .
 				esc_html(
-					(string) $spec->get_color()
+					$row->get_color()
 				) .
 				'</td>';
 
 			$html .= '<td>';
 
-			if ( null !== $entry->price ) {
+			if ( null !== $row->get_price() ) {
 
 				$html .= esc_html(
 					sprintf(
 						'$%.2f',
-						$entry->price
+						$row->get_price()
 					)
 				);
 			}
