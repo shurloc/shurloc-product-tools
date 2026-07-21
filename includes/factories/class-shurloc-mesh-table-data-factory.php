@@ -32,11 +32,11 @@ final class Shurloc_Mesh_Table_Data_Factory {
 			$spec  = $variation['spec'];
 
 			$rows[] = new Shurloc_Mesh_Table_Row(
-				$spec->mesh_count,
-				$spec->thread_diameter,
-				$spec->color,
-				$spec->modifier,
-				$spec->pack_size,
+				$spec->get_mesh_count(),
+				$spec->get_thread_diameter(),
+				$spec->get_color(),
+				$spec->get_modifier(),
+				$spec->get_pack_size(),
 				$entry->price
 			);
 		}

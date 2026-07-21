@@ -2,8 +2,6 @@
 /**
  * Mesh product table renderer interface.
  *
- * Defines customer-facing mesh table rendering behavior.
- *
  * @package ShurLocProductTools
  */
 
@@ -15,12 +13,12 @@ declare( strict_types=1 );
 interface Shurloc_Mesh_Product_Table_Renderer_Interface {
 
 	/**
-	 * Render a mesh specification table.
+	 * Render mesh specification table.
 	 *
-	 * @param Shurloc_Mesh_Product_Result $result Mesh product analysis result.
-	 * @return string HTML table.
+	 * @param Shurloc_Mesh_Table_Data $data Table data.
+	 * @return string HTML output.
 	 */
 	public function render(
-		Shurloc_Mesh_Product_Result $result
+		Shurloc_Mesh_Table_Data $data
 	): string;
 }

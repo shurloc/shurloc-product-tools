@@ -236,10 +236,13 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$analyzer
 		);
 
+		$table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
+
 		$renderer = new Shurloc_Mesh_Product_Table_Renderer();
 
 		$shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$data_service,
+			$table_data_factory,
 			$renderer
 		);
 

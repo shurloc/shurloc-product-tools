@@ -21,6 +21,13 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Table_Renderer $renderer;
 
+	/**
+	 * Table data factory.
+	 *
+	 * @var Shurloc_Mesh_Table_Data_Factory
+	 */
+	private Shurloc_Mesh_Table_Data_Factory $factory;
+
 
 	/**
 	 * Set up renderer.
@@ -32,6 +39,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		parent::setUp();
 
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer();
+
+		$this->factory = new Shurloc_Mesh_Table_Data_Factory();
 	}
 
 
@@ -77,6 +86,22 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 
 	/**
+	 * Convert analysis result into table data.
+	 *
+	 * @param Shurloc_Mesh_Product_Result $result Analysis result.
+	 * @return Shurloc_Mesh_Table_Data Table data.
+	 */
+	private function create_table_data(
+		Shurloc_Mesh_Product_Result $result
+	): Shurloc_Mesh_Table_Data {
+
+		return $this->factory->create(
+			$result
+		);
+	}
+
+
+	/**
 	 * Renders recognized mesh variations.
 	 *
 	 * @return void
@@ -85,21 +110,19 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 		$result = new Shurloc_Mesh_Product_Result();
 
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
-		);
-
 		$result->add_mesh_variation(
-			$entry,
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 White $12.99',
+				12.99,
+				1,
+				'Test Mesh Product',
+				''
+			),
 			$this->create_mesh_specification()
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$this->create_table_data( $result )
 		);
 
 		$this->assertStringContainsString(
@@ -138,16 +161,14 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 		$result = new Shurloc_Mesh_Product_Result();
 
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
-		);
-
 		$result->add_mesh_variation(
-			$entry,
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 White $12.99',
+				12.99,
+				1,
+				'Test Mesh Product',
+				''
+			),
 			$this->create_mesh_specification(
 				array(
 					'modifier' => 'S',
@@ -157,7 +178,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$this->create_table_data( $result )
 		);
 
 		$this->assertStringContainsString(
@@ -212,7 +233,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$this->create_table_data( $result )
 		);
 
 		$this->assertStringContainsString(
@@ -242,7 +263,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$html = $this->renderer->render(
-			$result
+			$this->create_table_data( $result )
 		);
 
 		$this->assertSame(
