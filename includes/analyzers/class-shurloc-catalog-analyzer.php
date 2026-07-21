@@ -59,11 +59,13 @@ final class Shurloc_Catalog_Analyzer {
 
 			$metadata = $entry->to_array();
 
-			if ( ! $spec->recognized ) {
+			if ( ! $spec->is_recognized() ) {
+
 				$report->add_unrecognized_variation(
 					$entry->variation,
 					$metadata
 				);
+
 				continue;
 			}
 
@@ -74,6 +76,7 @@ final class Shurloc_Catalog_Analyzer {
 			);
 
 			if ( ! $spec->is_valid() ) {
+
 				$report->add_invalid_specification(
 					$entry->variation,
 					$spec,

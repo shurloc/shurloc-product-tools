@@ -59,7 +59,7 @@ final class Shurloc_Mesh_Product_Analyzer implements Shurloc_Mesh_Product_Analyz
 				$entry->variation
 			);
 
-			if ( $spec->recognized ) {
+			if ( $spec->is_recognized() ) {
 
 				$result->add_mesh_variation(
 					$entry,

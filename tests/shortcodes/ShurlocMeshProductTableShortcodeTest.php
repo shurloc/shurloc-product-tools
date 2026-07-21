@@ -42,6 +42,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Data_Service_Double $data_service;
 
+
 	/**
 	 * Set up test environment.
 	 *
@@ -57,17 +58,16 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 			$this->result
 		);
 
-		$this->renderer =
-			new Shurloc_Mesh_Product_Table_Renderer_Double(
-				'<table>Mesh Table</table>'
-			);
+		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer_Double(
+			'<table>Mesh Table</table>'
+		);
 
-		$this->shortcode =
-		new Shurloc_Mesh_Product_Table_Shortcode(
+		$this->shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$this->data_service,
 			$this->renderer
 		);
 	}
+
 
 	/**
 	 * Clean up test globals.
@@ -81,6 +81,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 		parent::tearDown();
 	}
+
 
 	/**
 	 * Registers the shortcode.
@@ -97,6 +98,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Returns an empty string when no product exists.
 	 *
@@ -112,6 +114,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Returns an empty string for non-mesh products.
 	 *
@@ -126,6 +129,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 			$this->shortcode->render()
 		);
 	}
+
 
 	/**
 	 * Calls the renderer for mesh products.
@@ -144,11 +148,16 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 			''
 		);
 
-		$spec                  = new Shurloc_Mesh_Specification();
-		$spec->mesh_count      = 110;
-		$spec->thread_diameter = 80;
-		$spec->color           = 'White';
-		$spec->recognized      = true;
+		$spec = new Shurloc_Mesh_Specification(
+			'110/80 White',
+			110,
+			80,
+			null,
+			'White',
+			null,
+			'$12.99',
+			true
+		);
 
 		$this->result->add_mesh_variation(
 			$entry,
@@ -168,6 +177,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Passes the analysis result to the renderer.
 	 *
@@ -185,11 +195,16 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 			''
 		);
 
-		$spec                  = new Shurloc_Mesh_Specification();
-		$spec->mesh_count      = 110;
-		$spec->thread_diameter = 80;
-		$spec->color           = 'White';
-		$spec->recognized      = true;
+		$spec = new Shurloc_Mesh_Specification(
+			'110/80 White',
+			110,
+			80,
+			null,
+			'White',
+			null,
+			'$12.99',
+			true
+		);
 
 		$this->result->add_mesh_variation(
 			$entry,

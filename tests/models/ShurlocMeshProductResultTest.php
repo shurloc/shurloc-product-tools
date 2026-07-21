@@ -22,7 +22,7 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_get_mesh_variations_returns_recognized_variations(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White',
+			'110/80 White $12.99',
 			12.99,
 			1,
 			'Test Mesh Product',
@@ -30,9 +30,14 @@ final class ShurlocMeshProductResultTest extends TestCase {
 		);
 
 		$spec = new Shurloc_Mesh_Specification(
+			'110/80 White $12.99',
 			110,
 			80,
-			'White'
+			null,
+			'White',
+			null,
+			'$12.99',
+			true
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
@@ -50,7 +55,7 @@ final class ShurlocMeshProductResultTest extends TestCase {
 		);
 
 		$this->assertSame(
-			'110/80 White',
+			'110/80 White $12.99',
 			$variations[0]['entry']->variation
 		);
 
@@ -161,7 +166,7 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_is_mesh_product_returns_true_when_mesh_variations_exist(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White',
+			'110/80 White $12.99',
 			12.99,
 			1,
 			'Test Mesh Product',
@@ -169,9 +174,14 @@ final class ShurlocMeshProductResultTest extends TestCase {
 		);
 
 		$spec = new Shurloc_Mesh_Specification(
+			'110/80 White $12.99',
 			110,
 			80,
-			'White'
+			null,
+			'White',
+			null,
+			'$12.99',
+			true
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
@@ -211,31 +221,41 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 		$result->add_mesh_variation(
 			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White',
+				'110/80 White $12.99',
 				12.99,
 				1,
 				'Test Mesh Product',
 				''
 			),
 			new Shurloc_Mesh_Specification(
+				'110/80 White $12.99',
 				110,
 				80,
-				'White'
+				null,
+				'White',
+				null,
+				'$12.99',
+				true
 			)
 		);
 
 		$result->add_mesh_variation(
 			new Shurloc_Catalog_Variation_Entry(
-				'160/64 Yellow',
+				'160/64 Yellow $14.99',
 				14.99,
 				1,
 				'Test Mesh Product',
 				''
 			),
 			new Shurloc_Mesh_Specification(
+				'160/64 Yellow $14.99',
 				160,
 				64,
-				'Yellow'
+				null,
+				'Yellow',
+				null,
+				'$14.99',
+				true
 			)
 		);
 

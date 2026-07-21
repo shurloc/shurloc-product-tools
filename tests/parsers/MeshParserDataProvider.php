@@ -19,7 +19,6 @@ final class MeshParserDataProvider {
 	 */
 	public static function standard_mesh(): array {
 
-		// Base case.
 		return array(
 			'110/80 Yellow'             => array(
 				'110/80 Yellow $23.75',
@@ -33,7 +32,6 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			// Base case.
 			'60/120 White'              => array(
 				'60/120 White $22.36',
 				self::spec(
@@ -46,21 +44,18 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			// Unknown token.
 			'110/80 Orange'             => array(
 				'110/180 Orange $23.75',
 				self::spec(
 					raw: '110/180 Orange $23.75',
 					mesh_count: 110,
 					thread_diameter: 180,
-					color: null,
 					price_text: '$23.75',
 					unknown_tokens: array( 'Orange' ),
 					recognized: true,
 				),
 			),
 
-			// Modifier.
 			'110/71 (S) White'          => array(
 				'110/71 (S) White $23.75',
 				self::spec(
@@ -70,12 +65,10 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'White',
 					price_text: '$23.75',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
 
-			// Lower case, out of place modifier.
 			'110/71 White (s)'          => array(
 				'110/71 White (s) $23.75',
 				self::spec(
@@ -85,12 +78,10 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'White',
 					price_text: '$23.75',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
 
-			// Out of place, no parentheses modifier.
 			'110/71 White HD'           => array(
 				'110/71 White HD $23.75',
 				self::spec(
@@ -100,44 +91,36 @@ final class MeshParserDataProvider {
 					modifier: 'HD',
 					color: 'White',
 					price_text: '$23.75',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
 
-			// Pack size.
 			'5 Pack - 110/80 Yellow'    => array(
 				'5 Pack - 110/80 Yellow ($98.55)',
 				self::spec(
 					raw: '5 Pack - 110/80 Yellow ($98.55)',
 					mesh_count: 110,
 					thread_diameter: 80,
-					modifier: null,
 					color: 'Yellow',
 					pack_size: '5 Pack',
 					price_text: '($98.55)',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
 
-			// Lower case color.
 			'5 Pack - 110/80 yellow'    => array(
 				'5 Pack - 110/80 yellow ($98.55)',
 				self::spec(
 					raw: '5 Pack - 110/80 yellow ($98.55)',
 					mesh_count: 110,
 					thread_diameter: 80,
-					modifier: null,
 					color: 'Yellow',
 					pack_size: '5 Pack',
 					price_text: '($98.55)',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
 
-			// Thin Thread case.
 			'230/40 Thin Thread Yellow' => array(
 				'230/40 Thin Thread Yellow $32.21',
 				self::spec(
@@ -151,7 +134,6 @@ final class MeshParserDataProvider {
 				),
 			),
 
-			// Spaces in the mesh count token.
 			'110/ 71 (S) White'         => array(
 				'110/ 71 (S) White $23.75',
 				self::spec(
@@ -161,20 +143,19 @@ final class MeshParserDataProvider {
 					modifier: 'S',
 					color: 'White',
 					price_text: '$23.75',
-					unknown_tokens: array(),
 					recognized: true,
 				),
 			),
-
 		);
 	}
 
 	/**
-	 * Standard mesh specifications.
+	 * Recognized mesh specifications.
 	 *
 	 * @return array<string, array{string}>
 	 */
 	public static function recognized_mesh(): array {
+
 		return array(
 			'recognized' => array(
 				'110/80 Yellow $23.75',
@@ -183,11 +164,12 @@ final class MeshParserDataProvider {
 	}
 
 	/**
-	 * Standard mesh specifications.
+	 * Unrecognized variation specifications.
 	 *
 	 * @return array<string, array{string}>
 	 */
 	public static function unrecognized_variations(): array {
+
 		return array(
 			'separator' => array(
 				'-----',
@@ -200,7 +182,7 @@ final class MeshParserDataProvider {
 	}
 
 	/**
-	 * Create a specification.
+	 * Create a specification value object.
 	 *
 	 * @param string      $raw             Raw variation string.
 	 * @param int|null    $mesh_count      Mesh count.
@@ -208,8 +190,8 @@ final class MeshParserDataProvider {
 	 * @param string|null $modifier        Modifier.
 	 * @param string|null $color           Mesh color.
 	 * @param string|null $pack_size       Pack size.
-	 * @param string|null $price_text      Price.
-	 * @param bool        $recognized      Recognized.
+	 * @param string|null $price_text      Price token.
+	 * @param bool        $recognized      Whether specification is recognized.
 	 * @param string[]    $unknown_tokens  Unknown tokens.
 	 * @return Shurloc_Mesh_Specification
 	 */
@@ -222,22 +204,20 @@ final class MeshParserDataProvider {
 		?string $pack_size = null,
 		?string $price_text = null,
 		bool $recognized = false,
-		?array $unknown_tokens = array()
+		array $unknown_tokens = array()
 	): Shurloc_Mesh_Specification {
 
-		$spec = new Shurloc_Mesh_Specification();
-
-		$spec->raw             = $raw;
-		$spec->mesh_count      = $mesh_count;
-		$spec->thread_diameter = $thread_diameter;
-		$spec->modifier        = $modifier;
-		$spec->color           = $color;
-		$spec->pack_size       = $pack_size;
-		$spec->price_text      = $price_text;
-		$spec->unknown_tokens  = $unknown_tokens;
-		$spec->recognized      = $recognized;
-
-		return $spec;
+		return new Shurloc_Mesh_Specification(
+			$raw,
+			$mesh_count,
+			$thread_diameter,
+			$modifier,
+			$color,
+			$pack_size,
+			$price_text,
+			$recognized,
+			$unknown_tokens
+		);
 	}
 
 	/**
