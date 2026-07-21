@@ -13,7 +13,7 @@ declare( strict_types=1 );
 /**
  * Mesh product data service.
  */
-final class Shurloc_Mesh_Product_Data_Service {
+final class Shurloc_Mesh_Product_Data_Service implements Shurloc_Mesh_Product_Data_Service_Interface {
 
 	/**
 	 * Product catalog service.

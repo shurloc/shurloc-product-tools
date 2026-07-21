@@ -51,3 +51,5 @@ require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product-variation.php
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-catalog-report-actions.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-catalog-service.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-analyzer.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-table-renderer.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-data-service.php';

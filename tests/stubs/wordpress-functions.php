@@ -56,6 +56,13 @@ $GLOBALS['shurloc_test_comments'] = array();
  */
 $GLOBALS['shurloc_test_products'] = array();
 
+/**
+ * Stored shortcode registrations.
+ *
+ * @var array<string,array<string,callable>>
+ */
+$GLOBALS['wp_shortcodes'] = array();
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
 	/**
@@ -575,5 +582,28 @@ if ( ! function_exists( 'esc_html' ) ) {
 			ENT_QUOTES | ENT_SUBSTITUTE,
 			'UTF-8'
 		);
+	}
+}
+
+if ( ! function_exists( 'add_shortcode' ) ) {
+	/**
+	 * Register a shortcode callback.
+	 *
+	 * @param string   $tag      Shortcode tag.
+	 * @param callable $callback Shortcode callback.
+	 * @return bool True when the shortcode is registered.
+	 */
+	function add_shortcode(
+		string $tag,
+		callable $callback
+	): bool {
+
+		if ( ! isset( $GLOBALS['wp_shortcodes'] ) ) {
+			$GLOBALS['wp_shortcodes'] = array();
+		}
+
+		$GLOBALS['wp_shortcodes'][ $tag ] = $callback;
+
+		return true;
 	}
 }
