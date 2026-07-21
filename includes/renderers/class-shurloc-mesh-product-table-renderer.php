@@ -35,6 +35,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 		$html .= '<tr>';
 		$html .= '<th>Mesh</th>';
 		$html .= '<th>Thread</th>';
+		$html .= '<th>Modifier</th>';
 		$html .= '<th>Color</th>';
 		$html .= '<th>Price</th>';
 		$html .= '</tr>';
@@ -50,21 +51,32 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			$html .= '<td>' .
 				esc_html(
-					(string) $spec->mesh_count
+					(string) $spec->get_mesh_count()
 				) .
 				'</td>';
 
 			$html .= '<td>' .
 				esc_html(
-					(string) $spec->thread_diameter
+					(string) $spec->get_thread_diameter()
 				) .
 				'</td>';
 
+			$html .= '<td>';
+
+			if ( null !== $spec->get_modifier() ) {
+
+				$html .= esc_html(
+					$spec->get_modifier()
+				);
+			}
+
+			$html .= '</td>';
+
 			$html .= '<td>' .
-			esc_html(
-				(string) $spec->color
-			) .
-			'</td>';
+				esc_html(
+					(string) $spec->get_color()
+				) .
+				'</td>';
 
 			$html .= '<td>';
 

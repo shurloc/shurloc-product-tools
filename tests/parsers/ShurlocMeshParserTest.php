@@ -28,14 +28,15 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$this->assertSame(
 			'110/80 Yellow $23.75',
-			$spec->raw
+			$spec->get_raw()
 		);
 	}
+
 
 	/**
 	 * Verify that standard mesh specifications are parsed correctly.
 	 *
-	 * @param string                     $input The raw variation string.
+	 * @param string                     $input    The raw variation string.
 	 * @param Shurloc_Mesh_Specification $expected The expected spec after parsing.
 	 */
 	#[DataProviderExternal(
@@ -49,16 +50,20 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$parser = new Shurloc_Mesh_Parser();
 
-		$actual = $parser->parse( $input );
+		$actual = $parser->parse(
+			$input
+		);
 
-		$this->assertEquals(
-			$expected,
-			$actual
+		$this->assertTrue(
+			$actual->equals(
+				$expected
+			)
 		);
 	}
 
+
 	/**
-	 * Verify that standard mesh specifications is recognized correctly.
+	 * Verify that standard mesh specifications are recognized correctly.
 	 *
 	 * @param string $variation The raw variation string.
 	 */
@@ -72,13 +77,18 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$parser = new Shurloc_Mesh_Parser();
 
-		$spec = $parser->parse( $variation );
+		$spec = $parser->parse(
+			$variation
+		);
 
-		$this->assertTrue( $spec->recognized );
+		$this->assertTrue(
+			$spec->is_recognized()
+		);
 	}
 
+
 	/**
-	 * Verify that non-standard specifications is unrecognized correctly.
+	 * Verify that non-standard specifications are unrecognized correctly.
 	 *
 	 * @param string $variation The raw variation string.
 	 */
@@ -92,15 +102,20 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$parser = new Shurloc_Mesh_Parser();
 
-		$spec = $parser->parse( $variation );
+		$spec = $parser->parse(
+			$variation
+		);
 
-		$this->assertFalse( $spec->recognized );
+		$this->assertFalse(
+			$spec->is_recognized()
+		);
 	}
+
 
 	/**
 	 * Verify that prices are extracted correctly.
 	 *
-	 * @param string $variation     The raw variation string.
+	 * @param string $variation      The raw variation string.
 	 * @param string $expected_price The expected extracted price text.
 	 */
 	#[DataProviderExternal(
@@ -120,9 +135,10 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$this->assertSame(
 			$expected_price,
-			$spec->price_text
+			$spec->get_price_text()
 		);
 	}
+
 
 	/**
 	 * Verify that colors are extracted correctly.
@@ -147,9 +163,10 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$this->assertSame(
 			$expected_color,
-			$spec->color
+			$spec->get_color()
 		);
 	}
+
 
 	/**
 	 * Invalid mesh specifications should still be recognized.
@@ -163,7 +180,7 @@ class ShurlocMeshParserTest extends TestCase {
 		);
 
 		$this->assertTrue(
-			$spec->recognized
+			$spec->is_recognized()
 		);
 
 		$this->assertFalse(
@@ -172,19 +189,20 @@ class ShurlocMeshParserTest extends TestCase {
 
 		$this->assertSame(
 			350,
-			$spec->mesh_count
+			$spec->get_mesh_count()
 		);
 
 		$this->assertSame(
 			30,
-			$spec->thread_diameter
+			$spec->get_thread_diameter()
 		);
 	}
+
 
 	/**
 	 * Mesh suffixes should not prevent recognition.
 	 *
-	 * @param string $variation     The raw variation string.
+	 * @param string $variation The raw variation string.
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
@@ -201,7 +219,7 @@ class ShurlocMeshParserTest extends TestCase {
 		);
 
 		$this->assertTrue(
-			$spec->recognized
+			$spec->is_recognized()
 		);
 	}
 }

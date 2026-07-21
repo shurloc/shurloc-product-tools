@@ -35,6 +35,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Analyzer_Double $analyzer;
 
+
 	/**
 	 * Set up test environment.
 	 *
@@ -68,6 +69,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Analyze product returns mesh product result.
 	 *
@@ -87,6 +89,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Mesh product detection returns true when analyzer identifies mesh.
 	 *
@@ -103,9 +106,14 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 				''
 			),
 			new Shurloc_Mesh_Specification(
+				'110/80 White ($12.99)',
 				110,
 				80,
-				'White'
+				null,
+				'White',
+				null,
+				'$12.99',
+				true
 			)
 		);
 
@@ -117,6 +125,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 			)
 		);
 	}
+
 
 	/**
 	 * Mesh product detection returns false when analyzer finds no mesh.
@@ -133,6 +142,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 			)
 		);
 	}
+
 
 	/**
 	 * Catalog variations are passed to the analyzer.

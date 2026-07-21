@@ -12,10 +12,12 @@ declare( strict_types=1 );
 /**
  * Mesh specification.
  */
-class Shurloc_Mesh_Specification {
+final class Shurloc_Mesh_Specification {
 
 	/**
 	 * Original, unmodified variation string.
+	 *
+	 * Includes price token.
 	 *
 	 * Examples:
 	 * - "60/120 White $18.71"
@@ -23,7 +25,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string
 	 */
-	public string $raw = '';
+	private readonly string $raw;
 
 	/**
 	 * Pack size.
@@ -34,7 +36,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string|null
 	 */
-	public ?string $pack_size = null;
+	private readonly ?string $pack_size;
 
 	/**
 	 * Mesh count.
@@ -46,7 +48,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var int|null
 	 */
-	public ?int $mesh_count = null;
+	private readonly ?int $mesh_count;
 
 	/**
 	 * Thread diameter.
@@ -57,7 +59,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var int|null
 	 */
-	public ?int $thread_diameter = null;
+	private readonly ?int $thread_diameter;
 
 	/**
 	 * Thread modifier.
@@ -69,7 +71,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string|null
 	 */
-	public ?string $modifier = null;
+	private readonly ?string $modifier;
 
 	/**
 	 * Mesh color.
@@ -80,7 +82,7 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string|null
 	 */
-	public ?string $color = null;
+	private readonly ?string $color;
 
 	/**
 	 * Price text.
@@ -93,14 +95,14 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string|null
 	 */
-	public ?string $price_text = null;
+	private readonly ?string $price_text;
 
 	/**
 	 * The spec string is recognized as a mesh variation.
 	 *
 	 * @var bool
 	 */
-	public bool $recognized = false;
+	private readonly bool $recognized;
 
 	/**
 	 * Unknown tokens encountered during parsing.
@@ -110,7 +112,144 @@ class Shurloc_Mesh_Specification {
 	 *
 	 * @var string[]
 	 */
-	public array $unknown_tokens = array();
+	private readonly array $unknown_tokens;
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @param string      $raw              Original variation string.
+	 * @param int|null    $mesh_count       Mesh count.
+	 * @param int|null    $thread_diameter  Thread diameter.
+	 * @param string|null $modifier      Thread modifier.
+	 * @param string|null $color         Mesh color.
+	 * @param string|null $pack_size     Pack size.
+	 * @param string|null $price_text    Price token.
+	 * @param bool        $recognized       Whether specification was recognized.
+	 * @param string[]    $unknown_tokens   Unknown tokens.
+	 */
+	public function __construct(
+		string $raw,
+		?int $mesh_count,
+		?int $thread_diameter,
+		?string $modifier,
+		?string $color,
+		?string $pack_size,
+		?string $price_text,
+		bool $recognized,
+		array $unknown_tokens = array()
+	) {
+
+		$this->raw             = $raw;
+		$this->mesh_count      = $mesh_count;
+		$this->thread_diameter = $thread_diameter;
+		$this->modifier        = $modifier;
+		$this->color           = $color;
+		$this->pack_size       = $pack_size;
+		$this->price_text      = $price_text;
+		$this->recognized      = $recognized;
+		$this->unknown_tokens  = $unknown_tokens;
+	}
+
+
+	/**
+	 * Get original variation string.
+	 *
+	 * @return string Raw variation.
+	 */
+	public function get_raw(): string {
+
+		return $this->raw;
+	}
+
+
+	/**
+	 * Get pack size.
+	 *
+	 * @return string|null Pack size.
+	 */
+	public function get_pack_size(): ?string {
+
+		return $this->pack_size;
+	}
+
+
+	/**
+	 * Get mesh count.
+	 *
+	 * @return int|null Mesh count.
+	 */
+	public function get_mesh_count(): ?int {
+
+		return $this->mesh_count;
+	}
+
+
+	/**
+	 * Get thread diameter.
+	 *
+	 * @return int|null Thread diameter.
+	 */
+	public function get_thread_diameter(): ?int {
+
+		return $this->thread_diameter;
+	}
+
+
+	/**
+	 * Get modifier.
+	 *
+	 * @return string|null Modifier.
+	 */
+	public function get_modifier(): ?string {
+
+		return $this->modifier;
+	}
+
+
+	/**
+	 * Get color.
+	 *
+	 * @return string|null Color.
+	 */
+	public function get_color(): ?string {
+
+		return $this->color;
+	}
+
+
+	/**
+	 * Get price text.
+	 *
+	 * @return string|null Price token.
+	 */
+	public function get_price_text(): ?string {
+
+		return $this->price_text;
+	}
+
+
+	/**
+	 * Determine whether specification was recognized.
+	 *
+	 * @return bool True if recognized.
+	 */
+	public function is_recognized(): bool {
+
+		return $this->recognized;
+	}
+
+
+	/**
+	 * Get unknown tokens.
+	 *
+	 * @return string[] Unknown tokens.
+	 */
+	public function get_unknown_tokens(): array {
+
+		return $this->unknown_tokens;
+	}
+
 
 	/**
 	 * Determine whether this is a valid mesh specification.
@@ -133,23 +272,29 @@ class Shurloc_Mesh_Specification {
 		);
 	}
 
+
 	/**
 	 * Compare two specifications.
 	 *
 	 * @param Shurloc_Mesh_Specification $other The spec to compare against this object.
 	 * @return bool True if the specs are the same.
 	 */
-	public function equals( Shurloc_Mesh_Specification $other ): bool {
+	public function equals(
+		Shurloc_Mesh_Specification $other
+	): bool {
 
-		return $this->mesh_count === $other->mesh_count
-			&& $this->thread_diameter === $other->thread_diameter
-			&& $this->modifier === $other->modifier
-			&& $this->color === $other->color
-			&& $this->pack_size === $other->pack_size
-			&& $this->price_text === $other->price_text
-			&& $this->recognized === $other->recognized
-			&& $this->unknown_tokens === $other->unknown_tokens;
+		return (
+			$this->mesh_count === $other->mesh_count &&
+			$this->thread_diameter === $other->thread_diameter &&
+			$this->modifier === $other->modifier &&
+			$this->color === $other->color &&
+			$this->pack_size === $other->pack_size &&
+			$this->price_text === $other->price_text &&
+			$this->recognized === $other->recognized &&
+			$this->unknown_tokens === $other->unknown_tokens
+		);
 	}
+
 
 	/**
 	 * Return the specification as an associative array.

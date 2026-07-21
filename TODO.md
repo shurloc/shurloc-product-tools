@@ -12,12 +12,6 @@
 - Rename report methods from `add_*()` to `record_*()`.
   - Better reflects that reports record analysis results.
 
-- Modernize `Shurloc_Mesh_Specification`.
-  - Make the class immutable.
-  - Initialize all properties in the constructor.
-  - Remove parser mutation.
-  - Preserve `equals()` and `to_array()`.
-
 ## Presentation
 
 - Build mesh specification table generator.

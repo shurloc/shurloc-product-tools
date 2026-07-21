@@ -16,6 +16,8 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mesh products should return mesh analysis results.
+	 *
+	 * @return void
 	 */
 	public function test_mesh_products_return_mesh_result(): void {
 
@@ -25,7 +27,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$this->create_mesh_product_entry()
 		);
 
-		$this->assertNotNull( $result );
+		$this->assertNotNull(
+			$result
+		);
 
 		$this->assertInstanceOf(
 			Shurloc_Mesh_Product_Result::class,
@@ -38,8 +42,11 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Non-mesh products should return null.
+	 *
+	 * @return void
 	 */
 	public function test_non_mesh_products_return_null(): void {
 
@@ -49,11 +56,16 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$this->create_non_mesh_product_entry()
 		);
 
-		$this->assertNull( $result );
+		$this->assertNull(
+			$result
+		);
 	}
+
 
 	/**
 	 * Mesh analysis should preserve variation data.
+	 *
+	 * @return void
 	 */
 	public function test_mesh_analysis_preserves_variation_data(): void {
 
@@ -66,7 +78,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$this->assertNotNull( $result );
+		$this->assertNotNull(
+			$result
+		);
 
 		$this->assertSame(
 			1,
@@ -87,19 +101,20 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 		$this->assertSame(
 			160,
-			$variation['spec']->mesh_count
+			$variation['spec']->get_mesh_count()
 		);
 
 		$this->assertSame(
 			64,
-			$variation['spec']->thread_diameter
+			$variation['spec']->get_thread_diameter()
 		);
 
 		$this->assertSame(
 			'White',
-			$variation['spec']->color
+			$variation['spec']->get_color()
 		);
 	}
+
 
 	/**
 	 * Multiple mesh variations should all be preserved.
@@ -143,15 +158,20 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze( $product );
+		$result = $service->analyze(
+			$product
+		);
 
-		$this->assertNotNull( $result );
+		$this->assertNotNull(
+			$result
+		);
 
 		$this->assertSame(
 			2,
 			$result->mesh_variation_count()
 		);
 	}
+
 
 	/**
 	 * Products without variations should return null.
@@ -180,10 +200,15 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			array()
 		);
 
-		$result = $service->analyze( $product );
+		$result = $service->analyze(
+			$product
+		);
 
-		$this->assertNull( $result );
+		$this->assertNull(
+			$result
+		);
 	}
+
 
 	/**
 	 * Mixed variations should preserve only recognized mesh variations.
@@ -227,15 +252,20 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze( $product );
+		$result = $service->analyze(
+			$product
+		);
 
-		$this->assertNotNull( $result );
+		$this->assertNotNull(
+			$result
+		);
 
 		$this->assertSame(
 			1,
 			$result->mesh_variation_count()
 		);
 	}
+
 
 	/**
 	 * Invalid mesh specifications should still return mesh results.
@@ -253,7 +283,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$this->assertNotNull( $result );
+		$this->assertNotNull(
+			$result
+		);
 
 		$this->assertSame(
 			1,
@@ -265,8 +297,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
-	 * Invalid mesh variations should not create mesh results.
+	 * Unrecognized variations should return null.
 	 *
 	 * @return void
 	 */
@@ -300,10 +333,15 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 
-		$result = $service->analyze( $product );
+		$result = $service->analyze(
+			$product
+		);
 
-		$this->assertNull( $result );
+		$this->assertNull(
+			$result
+		);
 	}
+
 
 	/**
 	 * Create mesh schema service.
@@ -319,6 +357,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			new Shurloc_Product_Schema_Generator()
 		);
 	}
+
 
 	/**
 	 * Create mesh product fixture.
@@ -358,6 +397,7 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			)
 		);
 	}
+
 
 	/**
 	 * Create non-mesh product fixture.

@@ -16,6 +16,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * A product with recognized mesh variations should be identified as mesh.
+	 *
+	 * @return void
 	 */
 	public function test_recognized_mesh_variations_make_product_a_mesh_product(): void {
 
@@ -68,7 +70,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 	/**
 	 * Zero-price unrecognized variations should be ignored.
 	 *
-	 * This covers separators such as "Thin Thread".
+	 * @return void
 	 */
 	public function test_zero_price_unrecognized_variations_are_ignored(): void {
 
@@ -108,6 +110,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Null-price unrecognized variations should be ignored.
+	 *
+	 * @return void
 	 */
 	public function test_null_price_unrecognized_variations_are_ignored(): void {
 
@@ -138,6 +142,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Paid unrecognized variations should be reported.
+	 *
+	 * @return void
 	 */
 	public function test_paid_unrecognized_variations_are_reported(): void {
 
@@ -172,6 +178,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Recognized variations should retain parsed specification data.
+	 *
+	 * @return void
 	 */
 	public function test_mesh_variations_include_parsed_specifications(): void {
 
@@ -191,6 +199,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			array( $entry )
 		);
 
+		$spec = $result->mesh_variations[0]['spec'];
+
 		$this->assertSame(
 			$entry,
 			$result->mesh_variations[0]['entry']
@@ -198,12 +208,35 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 		$this->assertInstanceOf(
 			Shurloc_Mesh_Specification::class,
-			$result->mesh_variations[0]['spec']
+			$spec
+		);
+
+		$this->assertSame(
+			110,
+			$spec->get_mesh_count()
+		);
+
+		$this->assertSame(
+			80,
+			$spec->get_thread_diameter()
+		);
+
+		$this->assertSame(
+			'Yellow',
+			$spec->get_color()
+		);
+
+		$this->assertSame(
+			'$20.00',
+			$spec->get_price_text()
 		);
 	}
 
+
 	/**
 	 * Recognized but invalid mesh specifications are still mesh products.
+	 *
+	 * @return void
 	 */
 	public function test_invalid_mesh_specifications_are_mesh_products(): void {
 
@@ -225,6 +258,8 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			$entries
 		);
 
+		$spec = $result->mesh_variations[0]['spec'];
+
 		$this->assertTrue(
 			$result->is_mesh_product()
 		);
@@ -235,12 +270,20 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$this->assertFalse(
-			$result->mesh_variations[0]['spec']->is_valid()
+			$spec->is_valid()
+		);
+
+		$this->assertSame(
+			array( 'Orange' ),
+			$spec->get_unknown_tokens()
 		);
 	}
 
+
 	/**
 	 * Mixed variations should separate mesh, ignored, and unrecognized entries.
+	 *
+	 * @return void
 	 */
 	public function test_mixed_variations_are_classified_correctly(): void {
 
@@ -296,8 +339,11 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Empty variation lists should return an empty result.
+	 *
+	 * @return void
 	 */
 	public function test_empty_variation_list_returns_empty_result(): void {
 
@@ -329,8 +375,11 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Duplicate mesh variations should remain separate entries.
+	 *
+	 * @return void
 	 */
 	public function test_duplicate_mesh_variations_are_preserved(): void {
 

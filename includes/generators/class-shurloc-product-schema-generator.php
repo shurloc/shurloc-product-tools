@@ -34,28 +34,40 @@ final class Shurloc_Product_Schema_Generator {
 			$entry = $variation['entry'];
 			$spec  = $variation['spec'];
 
+			$properties = array(
+				array(
+					'@type' => 'PropertyValue',
+					'name'  => 'Mesh Count',
+					'value' => $spec->get_mesh_count(),
+				),
+				array(
+					'@type' => 'PropertyValue',
+					'name'  => 'Thread Diameter',
+					'value' => $spec->get_thread_diameter(),
+				),
+			);
+
+			if ( null !== $spec->get_modifier() ) {
+
+				$properties[] = array(
+					'@type' => 'PropertyValue',
+					'name'  => 'Modifier',
+					'value' => $spec->get_modifier(),
+				);
+			}
+
+			$properties[] = array(
+				'@type' => 'PropertyValue',
+				'name'  => 'Color',
+				'value' => $spec->get_color(),
+			);
+
 			$mesh_offer = array(
 				'@type'              => 'Offer',
 				'priceCurrency'      => 'USD',
 				'availability'       => 'https://schema.org/InStock',
 				'name'               => $entry->variation,
-				'additionalProperty' => array(
-					array(
-						'@type' => 'PropertyValue',
-						'name'  => 'Mesh Count',
-						'value' => $spec->mesh_count,
-					),
-					array(
-						'@type' => 'PropertyValue',
-						'name'  => 'Thread Diameter',
-						'value' => $spec->thread_diameter,
-					),
-					array(
-						'@type' => 'PropertyValue',
-						'name'  => 'Color',
-						'value' => $spec->color,
-					),
-				),
+				'additionalProperty' => $properties,
 			);
 
 			$price = $this->format_price(
