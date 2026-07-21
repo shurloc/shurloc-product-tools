@@ -20,18 +20,12 @@
   - Preserve WooCommerce variation ordering where appropriate.
   - Return presentation-ready DTOs rather than HTML.
 
-- Build frontend renderer.
-  - Render the mesh specification table.
-  - Keep HTML generation separate from data generation.
-
 - Integrate with WooCommerce product pages.
   - Inject the table into the product template.
   - Support Divi product templates.
 
 ## Structured Data
 
-- Generate Product schema directly from `Shurloc_Mesh_Product_Result`.
-- Ensure structured data and visible table consume the same source.
 - Add integration tests confirming visible data and schema remain synchronized.
 
 ## Analysis
