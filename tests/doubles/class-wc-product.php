@@ -449,3 +449,30 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 	}
 }
+
+if ( ! function_exists( 'wc_get_product' ) ) {
+	/**
+	 * Retrieve a WooCommerce product test double.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return WC_Product|null Product double or null.
+	 */
+	function wc_get_product(
+		int $product_id
+	): ?WC_Product {
+
+		return $GLOBALS['shurloc_test_products'][ $product_id ] ?? null;
+	}
+}
+
+if ( ! function_exists( 'shurloc_reset_test_products' ) ) {
+	/**
+	 * Reset registered WooCommerce products.
+	 *
+	 * @return void
+	 */
+	function shurloc_reset_test_products(): void {
+
+		$GLOBALS['shurloc_test_products'] = array();
+	}
+}
