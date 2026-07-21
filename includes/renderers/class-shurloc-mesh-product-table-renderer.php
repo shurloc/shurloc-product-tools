@@ -2,7 +2,7 @@
 /**
  * Mesh product table renderer.
  *
- * Renders a customer-facing HTML table of mesh specifications.
+ * Renders a customer-facing HTML table of recognized mesh variations.
  *
  * @package ShurLocProductTools
  */
@@ -30,50 +30,98 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 		$rows = $data->get_rows();
 
-		$html  = '<table class="shurloc-mesh-specification-table">';
+		$has_modifier  = false;
+		$has_pack_size = false;
+
+		foreach ( $rows as $row ) {
+
+			if ( null !== $row->get_modifier() ) {
+				$has_modifier = true;
+			}
+
+			if ( null !== $row->get_pack_size() ) {
+				$has_pack_size = true;
+			}
+		}
+
+		$html  = '<div class="shurloc-mesh-table-wrapper">';
+		$html .= '<table class="shurloc-mesh-specification-table">';
+
+		$html .= '<caption>';
+		$html .= esc_html(
+			'Available Mesh Specifications'
+		);
+		$html .= '</caption>';
+
 		$html .= '<thead>';
 		$html .= '<tr>';
 
-		$html .= '<th>Mesh</th>';
-		$html .= '<th>Thread</th>';
+		$html .= '<th scope="col" class="shurloc-mesh-table-mesh">';
+		$html .= esc_html(
+			'Mesh'
+		);
+		$html .= '</th>';
 
-		if ( $data->show_modifier_column() ) {
+		$html .= '<th scope="col" class="shurloc-mesh-table-thread">';
+		$html .= esc_html(
+			'Thread'
+		);
+		$html .= '</th>';
 
-			$html .= '<th>Modifier</th>';
+		if ( $has_modifier ) {
+
+			$html .= '<th scope="col" class="shurloc-mesh-table-modifier">';
+			$html .= esc_html(
+				'Modifier'
+			);
+			$html .= '</th>';
 		}
 
-		$html .= '<th>Color</th>';
+		$html .= '<th scope="col" class="shurloc-mesh-table-color">';
+		$html .= esc_html(
+			'Color'
+		);
+		$html .= '</th>';
 
-		if ( $data->show_pack_size_column() ) {
+		if ( $has_pack_size ) {
 
-			$html .= '<th>Pack Size</th>';
+			$html .= '<th scope="col" class="shurloc-mesh-table-pack-size">';
+			$html .= esc_html(
+				'Pack Size'
+			);
+			$html .= '</th>';
 		}
 
-		$html .= '<th>Price</th>';
+		$html .= '<th scope="col" class="shurloc-mesh-table-price">';
+		$html .= esc_html(
+			'Price'
+		);
+		$html .= '</th>';
 
 		$html .= '</tr>';
 		$html .= '</thead>';
+
 		$html .= '<tbody>';
 
 		foreach ( $rows as $row ) {
 
 			$html .= '<tr>';
 
-			$html .= '<td>' .
-				esc_html(
-					(string) $row->get_mesh_count()
-				) .
-				'</td>';
+			$html .= '<td data-label="Mesh" class="shurloc-mesh-table-mesh">';
+			$html .= esc_html(
+				(string) $row->get_mesh_count()
+			);
+			$html .= '</td>';
 
-			$html .= '<td>' .
-				esc_html(
-					(string) $row->get_thread_diameter()
-				) .
-				'</td>';
+			$html .= '<td data-label="Thread" class="shurloc-mesh-table-thread">';
+			$html .= esc_html(
+				(string) $row->get_thread_diameter()
+			);
+			$html .= '</td>';
 
-			if ( $data->show_modifier_column() ) {
+			if ( $has_modifier ) {
 
-				$html .= '<td>';
+				$html .= '<td data-label="Modifier" class="shurloc-mesh-table-modifier">';
 
 				if ( null !== $row->get_modifier() ) {
 
@@ -85,15 +133,15 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 				$html .= '</td>';
 			}
 
-			$html .= '<td>' .
-				esc_html(
-					$row->get_color()
-				) .
-				'</td>';
+			$html .= '<td data-label="Color" class="shurloc-mesh-table-color">';
+			$html .= esc_html(
+				$row->get_color()
+			);
+			$html .= '</td>';
 
-			if ( $data->show_pack_size_column() ) {
+			if ( $has_pack_size ) {
 
-				$html .= '<td>';
+				$html .= '<td data-label="Pack Size" class="shurloc-mesh-table-pack-size">';
 
 				if ( null !== $row->get_pack_size() ) {
 
@@ -105,7 +153,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 				$html .= '</td>';
 			}
 
-			$html .= '<td>';
+			$html .= '<td data-label="Price" class="shurloc-mesh-table-price">';
 
 			if ( null !== $row->get_price() ) {
 
@@ -124,6 +172,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 		$html .= '</tbody>';
 		$html .= '</table>';
+		$html .= '</div>';
 
 		return $html;
 	}

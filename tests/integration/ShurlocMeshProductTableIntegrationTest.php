@@ -325,12 +325,12 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$this->assertStringContainsString(
-			'<th>Modifier</th>',
+			'class="shurloc-mesh-table-modifier"',
 			$html
 		);
 
 		$this->assertStringContainsString(
-			'<th>Pack Size</th>',
+			'class="shurloc-mesh-table-pack-size"',
 			$html
 		);
 	}

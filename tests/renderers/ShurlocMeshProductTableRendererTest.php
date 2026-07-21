@@ -224,7 +224,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$this->assertStringContainsString(
-			'<th>Modifier</th>',
+			'class="shurloc-mesh-table-modifier"',
 			$html
 		);
 
@@ -260,7 +260,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$this->assertStringContainsString(
-			'<th>Pack Size</th>',
+			'class="shurloc-mesh-table-pack-size"',
 			$html
 		);
 
@@ -295,12 +295,35 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 			$data
 		);
 
-		$mesh_position     = strpos( $html, '<th>Mesh</th>' );
-		$thread_position   = strpos( $html, '<th>Thread</th>' );
-		$modifier_position = strpos( $html, '<th>Modifier</th>' );
-		$color_position    = strpos( $html, '<th>Color</th>' );
-		$pack_position     = strpos( $html, '<th>Pack Size</th>' );
-		$price_position    = strpos( $html, '<th>Price</th>' );
+		$mesh_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-mesh"'
+		);
+
+		$thread_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-thread"'
+		);
+
+		$modifier_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-modifier"'
+		);
+
+		$color_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-color"'
+		);
+
+		$pack_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-pack-size"'
+		);
+
+		$price_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-price"'
+		);
 
 		$this->assertLessThan(
 			$thread_position,
