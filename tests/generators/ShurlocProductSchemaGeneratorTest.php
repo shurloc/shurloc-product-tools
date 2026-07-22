@@ -908,6 +908,57 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
+	 * Variable product schema includes description.
+	 *
+	 * @return void
+	 */
+	public function test_variable_product_schema_includes_description(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Variable Mesh Product',
+			'https://shurloc.test/wp-admin/post.php?post=123',
+			'https://shurloc.test/product/variable-mesh-product/',
+			'VAR-123',
+			null,
+			'Short description.',
+			'This is a variable product description.',
+			'Screen Printing',
+			25.00,
+			30.00,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'110/80 Yellow',
+					25.00,
+					123,
+					'Variable Mesh Product',
+					'https://shurloc.test/wp-admin/post.php?post=123'
+				),
+			)
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result(
+				array()
+			)
+		);
+
+		$this->assertSame(
+			'This is a variable product description.',
+			$schema['description']
+		);
+	}
+
+	/**
 	 * Create mesh result fixture.
 	 *
 	 * @return Shurloc_Mesh_Product_Result
