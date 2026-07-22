@@ -335,4 +335,222 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			$entry->variations
 		);
 	}
+
+	/**
+	 * Product descriptions should remove HTML tags.
+	 *
+	 * @return void
+	 */
+	public function test_product_descriptions_are_stripped_of_html(): void {
+
+		$product = new WC_Product( 400 );
+
+		$product->set_name(
+			'HTML Product'
+		);
+
+		$product->set_short_description(
+			'<p>Short <strong>description</strong></p>'
+		);
+
+		$product->set_description(
+			'<div>Full <em>description</em></div>'
+		);
+
+		$entry = $this->service->get_product_entry(
+			$product
+		);
+
+		$this->assertSame(
+			'Short description',
+			$entry->short_description
+		);
+
+		$this->assertSame(
+			'Full description',
+			$entry->description
+		);
+	}
+
+	/**
+	 * Mesh variation data should survive catalog conversion.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_variation_data_survives_catalog_conversion(): void {
+
+		$product = new WC_Product( 500 );
+
+		$product->set_name(
+			'Mesh Product'
+		);
+
+		$product->set_type(
+			'variable'
+		);
+
+		$product->set_children(
+			array(
+				501,
+			)
+		);
+
+		$variation = new WC_Product_Variation( 501 );
+
+		$variation->set_variation_attributes(
+			array(
+				'attribute_select-mesh-count' => '160/64 White',
+			)
+		);
+
+		$variation->set_price(
+			'25.00'
+		);
+
+		$GLOBALS['shurloc_test_products'][501] = $variation;
+
+		$entry = $this->service->get_product_entry(
+			$product
+		);
+
+		$this->assertSame(
+			'160/64 White',
+			$entry->variations[0]->variation
+		);
+
+		$this->assertSame(
+			25.0,
+			$entry->variations[0]->price
+		);
+	}
+
+	/**
+	 * Mesh variation attribute values are preserved.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_variation_attribute_value_is_preserved(): void {
+
+		$product = new WC_Product( 300 );
+
+		$product->set_name(
+			'Mesh Product'
+		);
+
+		$product->set_type(
+			'variable'
+		);
+
+		$product->set_children(
+			array(
+				301,
+			)
+		);
+
+		$variation = new WC_Product_Variation( 301 );
+
+		$variation->set_variation_attributes(
+			array(
+				'attribute_select-mesh-count' => '160/64 White',
+			)
+		);
+
+		$GLOBALS['shurloc_test_products'][301] = $variation;
+
+		$entry = $this->service->get_product_entry(
+			$product
+		);
+
+		$this->assertSame(
+			'160/64 White',
+			$entry->variations[0]->variation
+		);
+	}
+
+	/**
+	 * Variations without attributes are ignored.
+	 *
+	 * @return void
+	 */
+	public function test_variations_without_attributes_are_ignored(): void {
+
+		$product = new WC_Product( 400 );
+
+		$product->set_type(
+			'variable'
+		);
+
+		$product->set_children(
+			array(
+				401,
+			)
+		);
+
+		$variation = new WC_Product_Variation( 401 );
+
+		$GLOBALS['shurloc_test_products'][401] = $variation;
+
+		$entry = $this->service->get_product_entry(
+			$product
+		);
+
+		$this->assertCount(
+			0,
+			$entry->variations
+		);
+	}
+
+	/**
+	 * Variations are sorted naturally.
+	 *
+	 * @return void
+	 */
+	public function test_variations_are_sorted_naturally(): void {
+
+		$product = new WC_Product( 500 );
+
+		$product->set_type(
+			'variable'
+		);
+
+		$product->set_children(
+			array(
+				501,
+				502,
+			)
+		);
+
+		$first = new WC_Product_Variation( 501 );
+
+		$first->set_variation_attributes(
+			array(
+				'attribute_select-mesh-count' => '160/64 White',
+			)
+		);
+
+		$second = new WC_Product_Variation( 502 );
+
+		$second->set_variation_attributes(
+			array(
+				'attribute_select-mesh-count' => '110/80 Yellow',
+			)
+		);
+
+		$GLOBALS['shurloc_test_products'][501] = $first;
+		$GLOBALS['shurloc_test_products'][502] = $second;
+
+		$entry = $this->service->get_product_entry(
+			$product
+		);
+
+		$this->assertSame(
+			'110/80 Yellow',
+			$entry->variations[0]->variation
+		);
+
+		$this->assertSame(
+			'160/64 White',
+			$entry->variations[1]->variation
+		);
+	}
 }
