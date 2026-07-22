@@ -15,6 +15,34 @@ declare( strict_types=1 );
 final class Shurloc_Mesh_Product_Table_Assets {
 
 	/**
+	 * Asset URL.
+	 *
+	 * @var string
+	 */
+	private string $asset_url;
+
+	/**
+	 * Asset version.
+	 *
+	 * @var string
+	 */
+	private string $asset_version;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param string $asset_url     Base asset URL.
+	 * @param string $asset_version Asset version.
+	 */
+	public function __construct(
+		string $asset_url,
+		string $asset_version
+	) {
+		$this->asset_url     = $asset_url;
+		$this->asset_version = $asset_version;
+	}
+
+	/**
 	 * Register frontend hooks.
 	 *
 	 * @return void
@@ -56,9 +84,9 @@ final class Shurloc_Mesh_Product_Table_Assets {
 
 		wp_enqueue_style(
 			'shurloc-mesh-product-table',
-			SHURLOC_PRODUCT_TOOLS_URL . 'assets/css/shurloc-mesh-product-table.css',
+			$this->asset_url . 'assets/css/shurloc-mesh-product-table.css',
 			array(),
-			SHURLOC_PRODUCT_TOOLS_VERSION
+			$this->asset_version
 		);
 	}
 }

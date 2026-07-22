@@ -87,7 +87,10 @@ function shurloc_product_tools_bootstrap(): void {
 		$mesh_table_renderer
 	);
 
-	$mesh_table_assets = new Shurloc_Mesh_Product_Table_Assets();
+	$mesh_table_assets = new Shurloc_Mesh_Product_Table_Assets(
+		SHURLOC_PRODUCT_TOOLS_URL,
+		SHURLOC_PRODUCT_TOOLS_VERSION
+	);
 
 	/*
 	 * Register frontend integrations.

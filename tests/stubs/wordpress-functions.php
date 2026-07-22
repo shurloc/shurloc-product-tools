@@ -59,7 +59,7 @@ $GLOBALS['shurloc_test_products'] = array();
 /**
  * Stored shortcode registrations.
  *
- * @var array<string,array<string,callable>>
+ * @var array<string,callable>
  */
 $GLOBALS['wp_shortcodes'] = array();
 
@@ -69,6 +69,21 @@ $GLOBALS['wp_shortcodes'] = array();
  * @var string|null
  */
 $GLOBALS['product'] = null;
+
+/**
+ * Stored styles.
+ *
+ * @var array<string,array<string,mixed>>
+ */
+$GLOBALS['shurloc_test_styles'] = array();
+
+/**
+ * Recorded nonce verification checks.
+ *
+ * @var array<int,string>
+ */
+$GLOBALS['shurloc_test_nonce_checks'] = array();
+
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -121,27 +136,6 @@ if ( ! function_exists( 'get_the_ID' ) ) {
 	function get_the_ID(): int {
 
 		return 123;
-	}
-}
-
-
-if ( ! function_exists( 'wc_get_product' ) ) {
-
-	/**
-	 * Get test WooCommerce product.
-	 *
-	 * @param int $id Product ID.
-	 * @return WC_Product|null Test product.
-	 */
-	function wc_get_product(
-		int $id
-	): ?WC_Product {
-
-		if ( isset( $GLOBALS['shurloc_test_products'][ $id ] ) ) {
-			return $GLOBALS['shurloc_test_products'][ $id ];
-		}
-
-		return new WC_Product( $id );
 	}
 }
 
@@ -231,6 +225,48 @@ if ( ! function_exists( 'add_action' ) ) {
 		);
 
 		return true;
+	}
+}
+
+
+if ( ! function_exists( 'has_action' ) ) {
+
+	/**
+	 * Check whether an action is registered.
+	 *
+	 * @param string   $hook Hook name.
+	 * @param callable $callback Optional callback.
+	 * @return int|false Priority or false.
+	 */
+	function has_action(
+		string $hook,
+		$callback = null
+	) {
+
+		if (
+			empty(
+				$GLOBALS['shurloc_test_actions'][ $hook ]
+			)
+		) {
+			return false;
+		}
+
+		if ( null === $callback ) {
+			return true;
+		}
+
+		foreach (
+			$GLOBALS['shurloc_test_actions'][ $hook ]
+			as $registered
+		) {
+
+			if ( $registered === $callback ) {
+
+				return 10;
+			}
+		}
+
+		return false;
 	}
 }
 
@@ -468,22 +504,6 @@ if ( ! function_exists( 'plugin_dir_url' ) ) {
 	}
 }
 
-if ( ! function_exists( 'plugin_dir_path' ) ) {
-
-	/**
-	 * Return plugin path stub.
-	 *
-	 * @param string $file Plugin file.
-	 * @return string
-	 */
-	function plugin_dir_path(
-		string $file
-	): string {
-
-		return dirname( $file ) . DIRECTORY_SEPARATOR;
-	}
-}
-
 if ( ! function_exists( 'check_admin_referer' ) ) {
 
 	/**
@@ -616,17 +636,28 @@ if ( ! function_exists( 'add_shortcode' ) ) {
 }
 
 if ( ! function_exists( 'wc_get_product' ) ) {
+
 	/**
 	 * Retrieve a WooCommerce product test double.
 	 *
+	 * Returns a registered test product when available. Otherwise creates
+	 * a default WooCommerce product double.
+	 *
 	 * @param int $product_id Product ID.
-	 * @return WC_Product|null Product double or null.
+	 * @return WC_Product|null Product double.
 	 */
 	function wc_get_product(
 		int $product_id
 	): ?WC_Product {
 
-		return $GLOBALS['shurloc_test_products'][ $product_id ] ?? null;
+		if ( isset( $GLOBALS['shurloc_test_products'][ $product_id ] ) ) {
+
+			return $GLOBALS['shurloc_test_products'][ $product_id ];
+		}
+
+		return new WC_Product(
+			$product_id
+		);
 	}
 }
 
@@ -645,6 +676,97 @@ if ( ! function_exists( 'wp_strip_all_tags' ) ) {
 		return trim(
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
 			strip_tags( $text )
+		);
+	}
+}
+
+if ( ! function_exists( 'is_singular' ) ) {
+
+	/**
+	 * Determine whether current request is singular.
+	 *
+	 * @return bool
+	 */
+	function is_singular(): bool {
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'has_shortcode' ) ) {
+
+	/**
+	 * Determine whether content contains a shortcode.
+	 *
+	 * @param string $content Content to search.
+	 * @param string $tag     Shortcode tag.
+	 * @return bool
+	 */
+	function has_shortcode(
+		string $content,
+		string $tag
+	): bool {
+
+		return str_contains(
+			$content,
+			'[' . $tag
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_style' ) ) {
+
+	/**
+	 * Register a test stylesheet enqueue.
+	 *
+	 * @param string            $handle Stylesheet handle.
+	 * @param string|false      $src    Stylesheet source.
+	 * @param array<int,string> $deps  Dependencies.
+	 * @param string|false      $ver    Version.
+	 * @param string            $media  Media type.
+	 * @return void
+	 */
+	function wp_enqueue_style(
+		string $handle,
+		$src = false,
+		array $deps = array(),
+		$ver = false,
+		string $media = 'all'
+	): void {
+
+		if ( ! isset( $GLOBALS['shurloc_test_styles'] ) ) {
+			$GLOBALS['shurloc_test_styles'] = array();
+		}
+
+		$GLOBALS['shurloc_test_styles'][ $handle ] = array(
+			'src'   => $src,
+			'deps'  => $deps,
+			'ver'   => $ver,
+			'media' => $media,
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_style_is' ) ) {
+
+	/**
+	 * Determine whether a test stylesheet has been enqueued.
+	 *
+	 * @param string $handle Stylesheet handle.
+	 * @param string $status Status query.
+	 * @return bool
+	 */
+	function wp_style_is(
+		string $handle,
+		string $status = 'enqueued'
+	): bool {
+
+		if ( 'enqueued' !== $status ) {
+			return false;
+		}
+
+		return isset(
+			$GLOBALS['shurloc_test_styles'][ $handle ]
 		);
 	}
 }
