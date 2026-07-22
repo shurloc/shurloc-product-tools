@@ -21,6 +21,13 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Table_Renderer $renderer;
 
+	/**
+	 * Table data factory.
+	 *
+	 * @var Shurloc_Mesh_Table_Data_Factory
+	 */
+	private Shurloc_Mesh_Table_Data_Factory $factory;
+
 
 	/**
 	 * Set up renderer.
@@ -32,46 +39,39 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		parent::setUp();
 
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer();
+
+		$this->factory = new Shurloc_Mesh_Table_Data_Factory();
 	}
 
 
 	/**
-	 * Create mesh specification fixture.
+	 * Create table data fixture.
 	 *
-	 * @param array<string,mixed> $values Specification overrides.
-	 * @return Shurloc_Mesh_Specification Mesh specification.
+	 * @param Shurloc_Mesh_Table_Row[] $rows Table rows.
+	 * @return Shurloc_Mesh_Table_Data Table data.
 	 */
-	private function create_mesh_specification(
-		array $values = array()
-	): Shurloc_Mesh_Specification {
+	private function create_table_data(
+		array $rows
+	): Shurloc_Mesh_Table_Data {
 
-		$defaults = array(
-			'raw'             => '110/80 White $12.99',
-			'mesh_count'      => 110,
-			'thread_diameter' => 80,
-			'modifier'        => null,
-			'color'           => 'White',
-			'pack_size'       => null,
-			'price_text'      => '$12.99',
-			'recognized'      => true,
-			'unknown_tokens'  => array(),
-		);
+		$has_modifier  = false;
+		$has_pack_size = false;
 
-		$values = array_merge(
-			$defaults,
-			$values
-		);
+		foreach ( $rows as $row ) {
 
-		return new Shurloc_Mesh_Specification(
-			$values['raw'],
-			$values['mesh_count'],
-			$values['thread_diameter'],
-			$values['modifier'],
-			$values['color'],
-			$values['pack_size'],
-			$values['price_text'],
-			$values['recognized'],
-			$values['unknown_tokens']
+			if ( null !== $row->get_modifier() ) {
+				$has_modifier = true;
+			}
+
+			if ( null !== $row->get_pack_size() ) {
+				$has_pack_size = true;
+			}
+		}
+
+		return new Shurloc_Mesh_Table_Data(
+			$rows,
+			$has_modifier,
+			$has_pack_size
 		);
 	}
 
@@ -83,23 +83,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	 */
 	public function test_renders_mesh_variations(): void {
 
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
-		);
-
-		$result->add_mesh_variation(
-			$entry,
-			$this->create_mesh_specification()
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					null,
+					'10 Pack',
+					12.99
+				),
+			)
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$data
 		);
 
 		$this->assertStringContainsString(
@@ -123,6 +121,16 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		);
 
 		$this->assertStringContainsString(
+			'Pack Size',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'10 Pack',
+			$html
+		);
+
+		$this->assertStringContainsString(
 			'$12.99',
 			$html
 		);
@@ -130,124 +138,216 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 
 	/**
-	 * Renders modifier column when modifier exists.
+	 * Hides modifier column when no modifiers exist.
 	 *
 	 * @return void
 	 */
-	public function test_renders_modifier_column(): void {
+	public function test_hides_modifier_column_when_no_modifiers_exist(): void {
 
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
-		);
-
-		$result->add_mesh_variation(
-			$entry,
-			$this->create_mesh_specification(
-				array(
-					'modifier' => 'S',
-					'color'    => 'Yellow',
-				)
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					null,
+					'10 Pack',
+					12.99
+				),
 			)
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$data
 		);
 
-		$this->assertStringContainsString(
-			'Modifier',
-			$html
-		);
-
-		$this->assertStringContainsString(
-			'S',
+		$this->assertStringNotContainsString(
+			'<th>Modifier</th>',
 			$html
 		);
 	}
 
 
 	/**
-	 * Renders multiple mesh variations.
+	 * Hides pack size column when no pack sizes exist.
 	 *
 	 * @return void
 	 */
-	public function test_renders_multiple_mesh_variations(): void {
+	public function test_hides_pack_size_column_when_no_pack_sizes_exist(): void {
 
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Mesh Product',
-				''
-			),
-			$this->create_mesh_specification()
-		);
-
-		$result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'160/64 Yellow $15.99',
-				15.99,
-				1,
-				'Test Product',
-				''
-			),
-			$this->create_mesh_specification(
-				array(
-					'raw'             => '160/64 Yellow $15.99',
-					'mesh_count'      => 160,
-					'thread_diameter' => 64,
-					'color'           => 'Yellow',
-					'price_text'      => '$15.99',
-				)
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					null,
+					null,
+					12.99
+				),
 			)
 		);
 
 		$html = $this->renderer->render(
-			$result
+			$data
 		);
 
-		$this->assertStringContainsString(
-			'110',
-			$html
-		);
-
-		$this->assertStringContainsString(
-			'160',
-			$html
-		);
-
-		$this->assertStringContainsString(
-			'Yellow',
+		$this->assertStringNotContainsString(
+			'<th>Pack Size</th>',
 			$html
 		);
 	}
 
 
 	/**
-	 * Does not render when no mesh variations exist.
+	 * Shows modifier column when modifiers exist.
 	 *
 	 * @return void
 	 */
-	public function test_returns_empty_string_without_mesh_variations(): void {
+	public function test_shows_modifier_column_when_modifier_exists(): void {
 
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$html = $this->renderer->render(
-			$result
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					'HD',
+					null,
+					12.99
+				),
+			)
 		);
 
-		$this->assertSame(
-			'',
+		$html = $this->renderer->render(
+			$data
+		);
+
+		$this->assertStringContainsString(
+			'class="shurloc-mesh-table-modifier"',
 			$html
+		);
+
+		$this->assertStringContainsString(
+			'HD',
+			$html
+		);
+	}
+
+
+	/**
+	 * Shows pack size column when pack sizes exist.
+	 *
+	 * @return void
+	 */
+	public function test_shows_pack_size_column_when_pack_size_exists(): void {
+
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					null,
+					'10 Pack',
+					12.99
+				),
+			)
+		);
+
+		$html = $this->renderer->render(
+			$data
+		);
+
+		$this->assertStringContainsString(
+			'class="shurloc-mesh-table-pack-size"',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'10 Pack',
+			$html
+		);
+	}
+
+
+	/**
+	 * Maintains expected column order.
+	 *
+	 * @return void
+	 */
+	public function test_renders_columns_in_expected_order(): void {
+
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					110,
+					80,
+					'White',
+					'HD',
+					'10 Pack',
+					12.99
+				),
+			)
+		);
+
+		$html = $this->renderer->render(
+			$data
+		);
+
+		$mesh_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-mesh"'
+		);
+
+		$thread_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-thread"'
+		);
+
+		$modifier_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-modifier"'
+		);
+
+		$color_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-color"'
+		);
+
+		$pack_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-pack-size"'
+		);
+
+		$price_position = strpos(
+			$html,
+			'class="shurloc-mesh-table-price"'
+		);
+
+		$this->assertLessThan(
+			$thread_position,
+			$mesh_position
+		);
+
+		$this->assertLessThan(
+			$modifier_position,
+			$thread_position
+		);
+
+		$this->assertLessThan(
+			$color_position,
+			$modifier_position
+		);
+
+		$this->assertLessThan(
+			$pack_position,
+			$color_position
+		);
+
+		$this->assertLessThan(
+			$price_position,
+			$pack_position
 		);
 	}
 }

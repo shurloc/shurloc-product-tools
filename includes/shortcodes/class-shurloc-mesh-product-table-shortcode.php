@@ -22,6 +22,13 @@ final class Shurloc_Mesh_Product_Table_Shortcode {
 	private Shurloc_Mesh_Product_Data_Service_Interface $data_service;
 
 	/**
+	 * Mesh table data factory.
+	 *
+	 * @var Shurloc_Mesh_Table_Data_Factory
+	 */
+	private Shurloc_Mesh_Table_Data_Factory $table_data_factory;
+
+	/**
 	 * Mesh product table renderer.
 	 *
 	 * @var Shurloc_Mesh_Product_Table_Renderer_Interface
@@ -31,16 +38,19 @@ final class Shurloc_Mesh_Product_Table_Shortcode {
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Product_Data_Service_Interface   $data_service Mesh product data service.
-	 * @param Shurloc_Mesh_Product_Table_Renderer_Interface $renderer     Table renderer.
+	 * @param Shurloc_Mesh_Product_Data_Service_Interface   $data_service       Mesh product data service.
+	 * @param Shurloc_Mesh_Table_Data_Factory               $table_data_factory Mesh table data factory.
+	 * @param Shurloc_Mesh_Product_Table_Renderer_Interface $renderer           Table renderer.
 	 */
 	public function __construct(
 		Shurloc_Mesh_Product_Data_Service_Interface $data_service,
+		Shurloc_Mesh_Table_Data_Factory $table_data_factory,
 		Shurloc_Mesh_Product_Table_Renderer_Interface $renderer
 	) {
 
-		$this->data_service = $data_service;
-		$this->renderer     = $renderer;
+		$this->data_service       = $data_service;
+		$this->table_data_factory = $table_data_factory;
+		$this->renderer           = $renderer;
 	}
 
 	/**
@@ -65,7 +75,7 @@ final class Shurloc_Mesh_Product_Table_Shortcode {
 	 * @param array<string,mixed> $attributes Shortcode attributes.
 	 * @return string
 	 */
-    // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, Squiz.Commenting.FunctionComment.Missing
 	public function render(
 		array $attributes = array()
 	): string {
@@ -80,12 +90,20 @@ final class Shurloc_Mesh_Product_Table_Shortcode {
 			$product
 		);
 
-		if ( ! $result->is_mesh_product() ) {
+		if ( null === $result || ! $result->is_mesh_product() ) {
+			return '';
+		}
+
+		$data = $this->table_data_factory->create(
+			$result
+		);
+
+		if ( ! $data->has_rows() ) {
 			return '';
 		}
 
 		return $this->renderer->render(
-			$result
+			$data
 		);
 	}
 }

@@ -42,6 +42,13 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Data_Service_Double $data_service;
 
+	/**
+	 * Mesh table data factory.
+	 *
+	 * @var Shurloc_Mesh_Table_Data_Factory
+	 */
+	private Shurloc_Mesh_Table_Data_Factory $table_data_factory;
+
 
 	/**
 	 * Set up test environment.
@@ -58,12 +65,15 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 			$this->result
 		);
 
+		$this->table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
+
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer_Double(
 			'<table>Mesh Table</table>'
 		);
 
 		$this->shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$this->data_service,
+			$this->table_data_factory,
 			$this->renderer
 		);
 	}
@@ -140,28 +150,24 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 		$GLOBALS['product'] = new WC_Product( 1 );
 
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White',
-			12.99,
-			1,
-			'Test Product',
-			''
-		);
-
-		$spec = new Shurloc_Mesh_Specification(
-			'110/80 White',
-			110,
-			80,
-			null,
-			'White',
-			null,
-			'$12.99',
-			true
-		);
-
 		$this->result->add_mesh_variation(
-			$entry,
-			$spec
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 White $12.99',
+				12.99,
+				1,
+				'Test Product',
+				''
+			),
+			new Shurloc_Mesh_Specification(
+				'110/80 White $12.99',
+				110,
+				80,
+				null,
+				'White',
+				null,
+				'$12.99',
+				true
+			)
 		);
 
 		$html = $this->shortcode->render();
@@ -179,43 +185,50 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 
 	/**
-	 * Passes the analysis result to the renderer.
+	 * Passes table data to the renderer.
 	 *
 	 * @return void
 	 */
-	public function test_render_passes_analysis_result_to_renderer(): void {
+	public function test_render_passes_table_data_to_renderer(): void {
 
 		$GLOBALS['product'] = new WC_Product( 1 );
 
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White',
-			12.99,
-			1,
-			'Test Product',
-			''
-		);
-
-		$spec = new Shurloc_Mesh_Specification(
-			'110/80 White',
-			110,
-			80,
-			null,
-			'White',
-			null,
-			'$12.99',
-			true
-		);
-
 		$this->result->add_mesh_variation(
-			$entry,
-			$spec
+			new Shurloc_Catalog_Variation_Entry(
+				'110/80 White $12.99',
+				12.99,
+				1,
+				'Test Product',
+				''
+			),
+			new Shurloc_Mesh_Specification(
+				'110/80 White $12.99',
+				110,
+				80,
+				null,
+				'White',
+				null,
+				'$12.99',
+				true
+			)
 		);
 
 		$this->shortcode->render();
 
+		$rendered_data = $this->renderer->get_calls()[0];
+
+		$this->assertInstanceOf(
+			Shurloc_Mesh_Table_Data::class,
+			$rendered_data
+		);
+
+		$this->assertTrue(
+			$rendered_data->has_rows()
+		);
+
 		$this->assertSame(
-			$this->result,
-			$this->renderer->get_calls()[0]
+			1,
+			$rendered_data->count()
 		);
 	}
 }

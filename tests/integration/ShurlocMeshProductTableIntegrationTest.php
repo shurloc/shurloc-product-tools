@@ -236,13 +236,102 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$analyzer
 		);
 
+		$table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
+
 		$renderer = new Shurloc_Mesh_Product_Table_Renderer();
 
 		$shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$data_service,
+			$table_data_factory,
 			$renderer
 		);
 
 		return $shortcode->render();
+	}
+
+	/**
+	 * Mesh table hides modifier column when no modifiers exist.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_table_hides_modifier_column_when_no_modifiers_exist(): void {
+
+		$product = $this->create_mesh_product(
+			array(
+				array(
+					'id'    => 101,
+					'value' => '110/80 White',
+					'price' => '12.99',
+				),
+			)
+		);
+
+		$html = $this->render_mesh_table(
+			$product
+		);
+
+		$this->assertStringNotContainsString(
+			'<th>Modifier</th>',
+			$html
+		);
+	}
+
+	/**
+	 * Mesh table hides pack size column when no pack sizes exist.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_table_hides_pack_size_column_when_no_pack_sizes_exist(): void {
+
+		$product = $this->create_mesh_product(
+			array(
+				array(
+					'id'    => 101,
+					'value' => '110/80 White',
+					'price' => '12.99',
+				),
+			)
+		);
+
+		$html = $this->render_mesh_table(
+			$product
+		);
+
+		$this->assertStringNotContainsString(
+			'<th>Pack Size</th>',
+			$html
+		);
+	}
+
+	/**
+	 * Mesh table shows optional columns when data exists.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_table_shows_optional_columns_when_data_exists(): void {
+
+		$product = $this->create_mesh_product(
+			array(
+				array(
+					'id'    => 101,
+					'value' => '10 Pack - 110/80 HD White',
+					'price' => '12.99',
+				),
+			)
+		);
+
+		$html = $this->render_mesh_table(
+			$product
+		);
+
+		$this->assertStringContainsString(
+			'class="shurloc-mesh-table-modifier"',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'class="shurloc-mesh-table-pack-size"',
+			$html
+		);
 	}
 }

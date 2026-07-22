@@ -1,0 +1,171 @@
+/**
+ * Shur-Loc Mesh Product Table Styles
+ *
+ * @package ShurLocProductTools
+ */
+
+
+/*
+ * Table wrapper.
+ */
+
+.shurloc-mesh-table-wrapper {
+	width: 100%;
+	overflow-x: auto;
+	margin: 1.5rem 0;
+}
+
+
+/*
+ * Main table.
+ */
+
+.shurloc-mesh-specification-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+	background-color: #ffffff;
+}
+
+
+/*
+ * Caption.
+ */
+
+.shurloc-mesh-specification-table caption {
+	caption-side: top;
+	text-align: left;
+	font-size: 1.1rem;
+	font-weight: 600;
+	padding: 0 0 0.75rem;
+}
+
+
+/*
+ * Header row.
+ */
+
+.shurloc-mesh-specification-table thead th {
+	text-align: left;
+	font-weight: 600;
+	background-color: #f5f5f5;
+	border-bottom: 2px solid #dcdcdc;
+	padding: 0.75rem 1rem;
+	white-space: nowrap;
+}
+
+
+/*
+ * Body cells.
+ */
+
+.shurloc-mesh-specification-table tbody td {
+	padding: 0.75rem 1rem;
+	border-bottom: 1px solid #e5e5e5;
+	vertical-align: middle;
+}
+
+
+/*
+ * Zebra striping.
+ */
+
+.shurloc-mesh-specification-table tbody tr:nth-child(even) {
+	background-color: #fafafa;
+}
+
+
+/*
+ * Hover state.
+ */
+
+.shurloc-mesh-specification-table tbody tr:hover {
+	background-color: #f1f7fb;
+}
+
+
+/*
+ * Numeric columns.
+ */
+
+.shurloc-mesh-table-mesh,
+.shurloc-mesh-table-thread,
+.shurloc-mesh-table-price {
+	white-space: nowrap;
+}
+
+
+/*
+ * Price emphasis.
+ */
+
+.shurloc-mesh-table-price {
+	font-weight: 600;
+}
+
+
+/*
+ * Optional columns.
+ */
+
+.shurloc-mesh-table-modifier,
+.shurloc-mesh-table-pack-size {
+	white-space: nowrap;
+}
+
+
+/*
+ * Mobile table layout.
+ *
+ * Converts rows into stacked cards.
+ */
+
+@media screen and (max-width: 700px) {
+
+	.shurloc-mesh-specification-table {
+		border: 0;
+	}
+
+	.shurloc-mesh-specification-table thead {
+		display: none;
+	}
+
+	.shurloc-mesh-specification-table tbody,
+	.shurloc-mesh-specification-table tr,
+	.shurloc-mesh-specification-table td {
+		display: block;
+		width: 100%;
+	}
+
+	.shurloc-mesh-specification-table tr {
+		margin-bottom: 1rem;
+		border: 1px solid #e5e5e5;
+		border-radius: 4px;
+		padding: 0.5rem 0;
+		background-color: #ffffff;
+	}
+
+	.shurloc-mesh-specification-table tbody td {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5rem 1rem;
+		border-bottom: 0;
+		text-align: right;
+	}
+
+	.shurloc-mesh-specification-table tbody td::before {
+		content: attr(data-label);
+		font-weight: 600;
+		text-align: left;
+		margin-right: 1rem;
+	}
+
+	.shurloc-mesh-specification-table tbody tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+
+	.shurloc-mesh-specification-table tbody tr:hover {
+		background-color: #ffffff;
+	}
+}

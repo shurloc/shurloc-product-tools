@@ -73,11 +73,23 @@ function shurloc_product_tools_bootstrap(): void {
 		$catalog_report_controller
 	);
 
+	/*
+	 * Mesh table presentation pipeline.
+	 */
+
+	$mesh_table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
+
 	$mesh_table_renderer = new Shurloc_Mesh_Product_Table_Renderer();
 
 	$mesh_table_shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 		$mesh_data_service,
+		$mesh_table_data_factory,
 		$mesh_table_renderer
+	);
+
+	$mesh_table_assets = new Shurloc_Mesh_Product_Table_Assets(
+		SHURLOC_PRODUCT_TOOLS_URL,
+		SHURLOC_PRODUCT_TOOLS_VERSION
 	);
 
 	/*
@@ -102,6 +114,8 @@ function shurloc_product_tools_bootstrap(): void {
 	$catalog_report_controller->register();
 
 	$mesh_table_shortcode->register();
+
+	$mesh_table_assets->register();
 }
 
 add_action(
