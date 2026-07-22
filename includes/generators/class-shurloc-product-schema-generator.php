@@ -93,17 +93,27 @@ final class Shurloc_Product_Schema_Generator {
 		);
 
 		/*
+		 * Add SKU when available.
+		 */
+		if ( '' !== trim( $product->sku ) ) {
+
+			$schema['sku'] = $product->sku;
+		}
+
+		/*
 		 * Add product description when available.
 		 */
-		if ( '' !== $product->description ) {
-
-			$schema['description'] = trim(
-				html_entity_decode(
-					wp_strip_all_tags(
-						$product->description
-					)
+		$description = trim(
+			html_entity_decode(
+				wp_strip_all_tags(
+					$product->description
 				)
-			);
+			)
+		);
+
+		if ( '' !== $description ) {
+
+			$schema['description'] = $description;
 		}
 
 		/*
@@ -155,16 +165,10 @@ final class Shurloc_Product_Schema_Generator {
 		}
 
 		/*
-		 * Add SKU when available.
-		 */
-		if ( '' !== $product->sku ) {
-			$schema['sku'] = $product->sku;
-		}
-
-		/*
 		 * Add product image when available.
 		 */
 		if ( null !== $product->image_url ) {
+
 			$schema['image'] = $product->image_url;
 		}
 

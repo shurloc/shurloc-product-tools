@@ -808,6 +808,106 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
+	 * Simple product schema includes SKU and description.
+	 *
+	 * @return void
+	 */
+	public function test_simple_product_schema_includes_sku_and_description(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Test Product',
+			'https://example.com/edit',
+			'https://example.com/product/test-product/',
+			'TEST-123',
+			null,
+			'This is a short description.',
+			'This is a test product description.',
+			'Screen Printing',
+			25.00,
+			30.00,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array()
+		);
+
+		$result = new Shurloc_Mesh_Product_Result(
+			array()
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			$result
+		);
+
+		$this->assertSame(
+			'TEST-123',
+			$schema['sku']
+		);
+
+		$this->assertSame(
+			'This is a test product description.',
+			$schema['description']
+		);
+	}
+
+	/**
+	 * Empty SKU and description are omitted from schema.
+	 *
+	 * @return void
+	 */
+	public function test_empty_sku_and_description_are_not_added_to_schema(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			456,
+			'Empty Product',
+			'https://example.com/edit',
+			'https://example.com/product/empty-product/',
+			'',
+			null,
+			'',
+			'',
+			'Screen Printing',
+			25.00,
+			null,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array()
+		);
+
+		$result = new Shurloc_Mesh_Product_Result(
+			array()
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			$result
+		);
+
+		$this->assertArrayNotHasKey(
+			'sku',
+			$schema
+		);
+
+		$this->assertArrayNotHasKey(
+			'description',
+			$schema
+		);
+	}
+
+	/**
 	 * Create mesh result fixture.
 	 *
 	 * @return Shurloc_Mesh_Product_Result
