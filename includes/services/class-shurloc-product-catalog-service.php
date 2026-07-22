@@ -42,6 +42,15 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 			$this->get_product_image_url(
 				$product
 			),
+			wp_strip_all_tags(
+				$product->get_short_description()
+			),
+			wp_strip_all_tags(
+				$product->get_description()
+			),
+			$this->get_category(
+				$product
+			),
 			$this->normalize_price(
 				$product->get_price()
 			),
@@ -157,6 +166,36 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 		}
 
 		return (string) $brands[0];
+	}
+
+	/**
+	 * Get WooCommerce product category.
+	 *
+	 * Uses the product_cat taxonomy.
+	 *
+	 * @param WC_Product $product WooCommerce product.
+	 * @return string|null
+	 */
+	private function get_category(
+		WC_Product $product
+	): ?string {
+
+		$categories = wp_get_post_terms(
+			$product->get_id(),
+			'product_cat',
+			array(
+				'fields' => 'names',
+			)
+		);
+
+		if (
+			is_wp_error( $categories )
+			|| empty( $categories )
+		) {
+			return null;
+		}
+
+		return (string) $categories[0];
 	}
 
 	/**

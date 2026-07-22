@@ -42,7 +42,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Non-mesh products should return null.
 	 *
@@ -60,7 +59,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			$result
 		);
 	}
-
 
 	/**
 	 * Mesh analysis should preserve variation data.
@@ -115,7 +113,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Multiple mesh variations should all be preserved.
 	 *
@@ -132,6 +129,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'https://example.com/product/multiple-mesh-product/',
 			'MULTI-MESH-123',
 			'https://example.com/image.jpg',
+			'',
+			'',
+			null,
 			null,
 			null,
 			null,
@@ -172,7 +172,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Products without variations should return null.
 	 *
@@ -188,6 +187,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'',
 			'https://example.com/product/empty-product/',
 			'EMPTY-999',
+			null,
+			'',
+			'',
 			null,
 			null,
 			null,
@@ -225,6 +227,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'',
 			'https://example.com/product/mixed-mesh-product/',
 			'MIXED-123',
+			null,
+			'',
+			'',
 			null,
 			null,
 			null,
@@ -266,7 +271,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Invalid mesh specifications should still return mesh results.
 	 *
@@ -297,7 +301,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Unrecognized variations should return null.
 	 *
@@ -313,6 +316,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'',
 			'https://example.com/product/invalid-mesh-product/',
 			'INVALID-MESH-789',
+			null,
+			'',
+			'',
 			null,
 			null,
 			null,
@@ -342,7 +348,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Create mesh schema service.
 	 *
@@ -357,7 +362,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			new Shurloc_Product_Schema_Generator()
 		);
 	}
-
 
 	/**
 	 * Create mesh product fixture.
@@ -378,11 +382,14 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'https://example.com/product/test-mesh-product/',
 			'TEST-MESH-123',
 			'https://example.com/image.jpg',
+			'',
+			'',
 			null,
-			null,
+			20.0,
+			20.0,
 			null,
 			'https://schema.org/InStock',
-			null,
+			'Shur-loc®',
 			'Shur-loc®',
 			null,
 			array(),
@@ -398,7 +405,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Create non-mesh product fixture.
 	 *
@@ -413,6 +419,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 			'https://example.com/product/non-mesh-product/',
 			'NON-MESH-456',
 			'https://example.com/non-mesh-image.jpg',
+			'',
+			'',
+			null,
 			15.0,
 			15.0,
 			null,

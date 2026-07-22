@@ -61,6 +61,11 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 
 		$this->assertSame(
+			'This is the long product description.',
+			$schema['description']
+		);
+
+		$this->assertSame(
 			'Brand',
 			$schema['brand']['@type']
 		);
@@ -183,6 +188,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/rated-product/',
 			'RATED-123',
 			null,
+			'Short product description.',
+			'Long product description.',
+			null,
 			25.0,
 			25.0,
 			null,
@@ -235,6 +243,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'',
 			'https://example.com/product/reviewed-product/',
 			'REVIEW-123',
+			null,
+			'Short product description.',
+			'This is the long product description.',
 			null,
 			25.0,
 			25.0,
@@ -302,6 +313,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'',
 			'https://example.com/product/unreviewed-product/',
 			'UNREVIEWED-123',
+			null,
+			'Short product description.',
+			'This is the long product description.',
 			null,
 			25.0,
 			25.0,
@@ -471,6 +485,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/empty-product/',
 			'EMPTY-123',
 			null,
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			null,
 			null,
 			null,
@@ -555,6 +572,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'',
 			'https://example.com/product/non-mesh-product/',
 			'NON-MESH-456',
+			null,
+			'Short product description.',
+			'This is the long product description.',
 			'https://example.com/non-mesh-image.jpg',
 			50.0,
 			50.0,
@@ -605,6 +625,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/simple-product/',
 			'SIMPLE-789',
 			null,
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			15.0,
 			15.0,
 			null,
@@ -641,6 +664,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/no-image/',
 			'NO-IMAGE-123',
 			null,
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			25.0,
 			25.0,
 			null,
@@ -674,6 +700,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'',
 			'https://example.com/product/sale-product/',
 			'SALE-100',
+			null,
+			'Short product description.',
+			'This is the long product description.',
 			null,
 			10.0,
 			20.0,
@@ -714,6 +743,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/availability-product/',
 			'AVAILABLE-101',
 			null,
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			25.0,
 			25.0,
 			null,
@@ -750,6 +782,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/current-price/',
 			'CURRENT-789',
 			null,
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			30.0,
 			40.0,
 			30.0,
@@ -769,6 +804,157 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		$this->assertSame(
 			'30.00',
 			$schema['offers']['price']
+		);
+	}
+
+	/**
+	 * Simple product schema includes SKU and description.
+	 *
+	 * @return void
+	 */
+	public function test_simple_product_schema_includes_sku_and_description(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Test Product',
+			'https://example.com/edit',
+			'https://example.com/product/test-product/',
+			'TEST-123',
+			null,
+			'This is a short description.',
+			'This is a test product description.',
+			'Screen Printing',
+			25.00,
+			30.00,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array()
+		);
+
+		$result = new Shurloc_Mesh_Product_Result(
+			array()
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			$result
+		);
+
+		$this->assertSame(
+			'TEST-123',
+			$schema['sku']
+		);
+
+		$this->assertSame(
+			'This is a test product description.',
+			$schema['description']
+		);
+	}
+
+	/**
+	 * Empty SKU and description are omitted from schema.
+	 *
+	 * @return void
+	 */
+	public function test_empty_sku_and_description_are_not_added_to_schema(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			456,
+			'Empty Product',
+			'https://example.com/edit',
+			'https://example.com/product/empty-product/',
+			'',
+			null,
+			'',
+			'',
+			'Screen Printing',
+			25.00,
+			null,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array()
+		);
+
+		$result = new Shurloc_Mesh_Product_Result(
+			array()
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			$result
+		);
+
+		$this->assertArrayNotHasKey(
+			'sku',
+			$schema
+		);
+
+		$this->assertArrayNotHasKey(
+			'description',
+			$schema
+		);
+	}
+
+	/**
+	 * Variable product schema includes description.
+	 *
+	 * @return void
+	 */
+	public function test_variable_product_schema_includes_description(): void {
+
+		$product = new Shurloc_Catalog_Product_Entry(
+			123,
+			'Variable Mesh Product',
+			'https://shurloc.test/wp-admin/post.php?post=123',
+			'https://shurloc.test/product/variable-mesh-product/',
+			'VAR-123',
+			null,
+			'Short description.',
+			'This is a variable product description.',
+			'Screen Printing',
+			25.00,
+			30.00,
+			null,
+			'https://schema.org/InStock',
+			'Shur-loc®',
+			'Shur-loc®',
+			null,
+			array(),
+			array(
+				new Shurloc_Catalog_Variation_Entry(
+					'110/80 Yellow',
+					25.00,
+					123,
+					'Variable Mesh Product',
+					'https://shurloc.test/wp-admin/post.php?post=123'
+				),
+			)
+		);
+
+		$generator = new Shurloc_Product_Schema_Generator();
+
+		$schema = $generator->generate(
+			$product,
+			new Shurloc_Mesh_Product_Result(
+				array()
+			)
+		);
+
+		$this->assertSame(
+			'This is a variable product description.',
+			$schema['description']
 		);
 	}
 
@@ -838,6 +1024,9 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			'https://example.com/product/test-mesh-product/',
 			'TEST-MESH-123',
 			'https://example.com/image.jpg',
+			'Short product description.',
+			'This is the long product description.',
+			null,
 			null,
 			null,
 			null,
