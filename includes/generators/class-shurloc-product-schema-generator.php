@@ -93,6 +93,20 @@ final class Shurloc_Product_Schema_Generator {
 		);
 
 		/*
+		 * Add product description when available.
+		 */
+		if ( '' !== $product->description ) {
+
+			$schema['description'] = trim(
+				html_entity_decode(
+					strip_tags(
+						$product->description
+					)
+				)
+			);
+		}
+
+		/*
 		 * Add brand information.
 		 */
 		if ( null !== $product->brand ) {
@@ -140,10 +154,16 @@ final class Shurloc_Product_Schema_Generator {
 			);
 		}
 
+		/*
+		 * Add SKU when available.
+		 */
 		if ( '' !== $product->sku ) {
 			$schema['sku'] = $product->sku;
 		}
 
+		/*
+		 * Add product image when available.
+		 */
 		if ( null !== $product->image_url ) {
 			$schema['image'] = $product->image_url;
 		}

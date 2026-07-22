@@ -629,3 +629,21 @@ if ( ! function_exists( 'wc_get_product' ) ) {
 		return $GLOBALS['shurloc_test_products'][ $product_id ] ?? null;
 	}
 }
+
+if ( ! function_exists( 'wp_strip_all_tags' ) ) {
+
+	/**
+	 * Stub WordPress wp_strip_all_tags().
+	 *
+	 * @param string $text Text to sanitize.
+	 * @return string
+	 */
+	function wp_strip_all_tags(
+		string $text
+	): string {
+
+		return trim(
+			strip_tags( $text )
+		);
+	}
+}

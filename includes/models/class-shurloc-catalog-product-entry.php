@@ -59,6 +59,29 @@ final class Shurloc_Catalog_Product_Entry {
 	public ?string $image_url;
 
 	/**
+	 * Product short description.
+	 *
+	 * @var string
+	 */
+	public string $short_description;
+
+	/**
+	 * Product description.
+	 *
+	 * HTML stripped.
+	 *
+	 * @var string
+	 */
+	public string $description;
+
+	/**
+	 * Product category.
+	 *
+	 * @var string|null
+	 */
+	public ?string $category;
+
+	/**
 	 * Product current price.
 	 *
 	 * @var float|null
@@ -136,6 +159,9 @@ final class Shurloc_Catalog_Product_Entry {
 	 * @param string                            $product_url Public product URL.
 	 * @param string                            $sku Product SKU.
 	 * @param string|null                       $image_url Product image URL.
+	 * @param string                            $short_description Product short description.
+	 * @param string                            $description Product description (HTML stripped).
+	 * @param string|null                       $category Product category.
 	 * @param float|null                        $price Product current price.
 	 * @param float|null                        $regular_price Product regular price.
 	 * @param float|null                        $sale_price Product sale price.
@@ -153,6 +179,9 @@ final class Shurloc_Catalog_Product_Entry {
 		string $product_url,
 		string $sku,
 		?string $image_url,
+		string $short_description,
+		string $description,
+		?string $category,
 		?float $price,
 		?float $regular_price,
 		?float $sale_price,
@@ -164,20 +193,23 @@ final class Shurloc_Catalog_Product_Entry {
 		array $variations
 	) {
 
-		$this->product_id       = $product_id;
-		$this->product_name     = $product_name;
-		$this->edit_url         = $edit_url;
-		$this->product_url      = $product_url;
-		$this->sku              = $sku;
-		$this->image_url        = $image_url;
-		$this->price            = $price;
-		$this->regular_price    = $regular_price;
-		$this->sale_price       = $sale_price;
-		$this->availability     = $availability;
-		$this->brand            = $brand;
-		$this->manufacturer     = $manufacturer;
-		$this->aggregate_rating = $aggregate_rating;
-		$this->reviews          = $reviews;
-		$this->variations       = $variations;
+		$this->product_id        = $product_id;
+		$this->product_name      = $product_name;
+		$this->edit_url          = $edit_url;
+		$this->product_url       = $product_url;
+		$this->sku               = $sku;
+		$this->image_url         = $image_url;
+		$this->short_description = $short_description;
+		$this->description       = $description;
+		$this->category          = $category;
+		$this->price             = $price;
+		$this->regular_price     = $regular_price;
+		$this->sale_price        = $sale_price;
+		$this->availability      = $availability;
+		$this->brand             = $brand;
+		$this->manufacturer      = $manufacturer;
+		$this->aggregate_rating  = $aggregate_rating;
+		$this->reviews           = $reviews;
+		$this->variations        = $variations;
 	}
 }

@@ -39,6 +39,27 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private string $name = '';
 
 		/**
+		 * Short description.
+		 *
+		 * @var string
+		 */
+		private string $short_description = '';
+
+		/**
+		 * Product description.
+		 *
+		 * @var string
+		 */
+		private string $description = '';
+
+		/**
+		 * Product category.
+		 *
+		 * @var string
+		 */
+		private string $category = '';
+
+		/**
 		 * Product SKU.
 		 *
 		 * @var string
@@ -167,6 +188,75 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_name(): string {
 
 			return $this->name;
+		}
+
+		/**
+		 * Set short description.
+		 *
+		 * @param string $description Short description.
+		 * @return void
+		 */
+		public function set_short_description(
+			string $description
+		): void {
+
+			$this->short_description = $description;
+		}
+
+		/**
+		 * Get short description.
+		 *
+		 * @return string Short description.
+		 */
+		public function get_short_description(): string {
+
+			return $this->short_description;
+		}
+
+		/**
+		 * Set description.
+		 *
+		 * @param string $description Product description.
+		 * @return void
+		 */
+		public function set_description(
+			string $description
+		): void {
+
+			$this->description = $description;
+		}
+
+		/**
+		 * Get description.
+		 *
+		 * @return string Product description.
+		 */
+		public function get_description(): string {
+
+			return $this->description;
+		}
+
+		/**
+		 * Set product category.
+		 *
+		 * @param string $category Product category.
+		 * @return void
+		 */
+		public function set_category(
+			string $category
+		): void {
+
+			$this->category = $category;
+		}
+
+		/**
+		 * Get product category.
+		 *
+		 * @return string Product category.
+		 */
+		public function get_category(): string {
+
+			return $this->category;
 		}
 
 		/**

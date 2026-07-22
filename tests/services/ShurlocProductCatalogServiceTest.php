@@ -48,6 +48,18 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			'TEST-123'
 		);
 
+		$product->set_short_description(
+			'Test short description.'
+		);
+
+		$product->set_description(
+			'Test full description.'
+		);
+
+		$product->set_category(
+			'Screen Printing'
+		);
+
 		$product->set_price(
 			'25.00'
 		);
@@ -62,6 +74,12 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 		$product->set_stock_status(
 			'instock'
+		);
+
+		wp_set_object_terms(
+			123,
+			array( 'Screen Printing' ),
+			'product_cat'
 		);
 
 		$entry = $this->service->get_product_entry(
@@ -86,6 +104,21 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$this->assertSame(
 			'TEST-123',
 			$entry->sku
+		);
+
+		$this->assertSame(
+			'Test short description.',
+			$entry->short_description
+		);
+
+		$this->assertSame(
+			'Test full description.',
+			$entry->description
+		);
+
+		$this->assertSame(
+			'Screen Printing',
+			$entry->category
 		);
 
 		$this->assertSame(
@@ -133,11 +166,11 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	}
 
 	/**
-	 * Product brand taxonomy should populate brand.
+	 * Product brand should be loaded from product data.
 	 *
 	 * @return void
 	 */
-	public function test_product_brand_is_loaded_from_taxonomy(): void {
+	public function test_product_brand_is_loaded(): void {
 
 		$product = new WC_Product( 789 );
 
@@ -291,10 +324,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			)
 		);
 
-		/*
-		 * Register the variation so wc_get_product()
-		 * can return it.
-		 */
 		$GLOBALS['shurloc_test_products'][201] = $variation;
 
 		$entry = $this->service->get_product_entry(
