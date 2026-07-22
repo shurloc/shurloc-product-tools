@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.11.2] - 2026-07-22
+
+### Added
+
+- Added product description support to the product catalog service.
+- Added product SKU support to Product schema output.
+- Added product category extraction to catalog entries.
+- Added schema output for product descriptions when available.
+- Added test coverage for SKU and description structured data output.
+- Added additional WooCommerce product test double support for:
+  - Short descriptions
+  - Full descriptions
+  - Product metadata used by catalog generation
+
+### Changed
+
+- Updated the product catalog service to collect additional product-level data required for structured data generation.
+- Updated Product schema generation to include SKU and description fields for simple and variable products.
+- Updated schema generation to omit empty optional fields instead of emitting invalid or empty schema values.
+- Improved product catalog and schema generation test coverage.
+- Kept product catalog services focused on data transformation rather than unnecessary WordPress dependencies.
+
+### Fixed
+
+- Fixed missing description data in generated Product schema.
+- Fixed missing SKU output for simple products.
+- Fixed test failures caused by incomplete WooCommerce product test doubles.
+- Fixed schema output consistency between simple products and variable products.
+
+### Tests
+
+- Added and updated PHPUnit coverage for:
+  - Product catalog entry generation
+  - Product descriptions
+  - SKU output
+  - Product brand handling
+  - Variable product schema behavior
+  - WooCommerce product test doubles
+
 ## [0.11.1] - 2026-07-21
 
 ### Changed
