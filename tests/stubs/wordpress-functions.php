@@ -643,6 +643,7 @@ if ( ! function_exists( 'wp_strip_all_tags' ) ) {
 	): string {
 
 		return trim(
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
 			strip_tags( $text )
 		);
 	}
