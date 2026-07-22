@@ -69,6 +69,14 @@
 - Add malformed variation fixture tests.
 - Add regression tests for known historical parsing bugs.
 - Expand catalog fixtures with edge cases.
+- Improve asset registration tests
+  - Add a WordPress-aware testing framework (WordPress test suite or Brain Monkey).
+  - Replace the current asset registration test with assertions that:
+    - `register()` attaches `enqueue_styles()` to `wp_enqueue_scripts`.
+    - The callback is registered at priority `10`.
+  - Add integration tests verifying:
+    - CSS is enqueued when `[shurloc_mesh_table]` is present.
+    - CSS is not enqueued when the shortcode is absent
 
 ## Build
 
