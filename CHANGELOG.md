@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.12.0] - 2026-07-22
+
+### Added
+
+- Added `Shurloc_Mesh_Product_Table_Assets` to automatically register frontend assets for the mesh product table.
+- Added automatic stylesheet loading for pages containing the `[shurloc_mesh_table]` shortcode.
+- Added PHPUnit coverage for frontend asset registration and conditional stylesheet loading.
+- Added WordPress test doubles for frontend asset management including:
+  - `is_singular()`
+  - `has_shortcode()`
+  - `wp_enqueue_style()`
+  - `wp_style_is()`
+
+### Changed
+
+- Updated plugin bootstrap to initialize mesh product table asset registration.
+- Refined frontend loading so mesh table styles are only loaded when required.
+- Expanded the WordPress testing framework to support frontend asset and shortcode behavior.
+
+### Internal Improvements
+
+- Separated frontend asset management from shortcode rendering responsibilities.
+- Improved plugin architecture by introducing a dedicated asset loader for presentation resources.
+- Extended the testing infrastructure with reusable WordPress frontend function stubs and enqueue tracking.
+
+### Testing
+
+- Added PHPUnit tests covering:
+  - Asset hook registration
+  - Conditional stylesheet loading
+  - Shortcode detection behavior
+  - Stylesheet enqueue behavior
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.11.2] - 2026-07-22
 
 ### Added
