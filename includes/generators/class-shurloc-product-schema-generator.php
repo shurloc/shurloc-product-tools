@@ -99,7 +99,7 @@ final class Shurloc_Product_Schema_Generator {
 
 			$schema['description'] = trim(
 				html_entity_decode(
-					strip_tags(
+					wp_strip_all_tags(
 						$product->description
 					)
 				)
