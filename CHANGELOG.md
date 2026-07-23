@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.12.1] - 2026-07-23
+
+### Added
+
+- Added `Shurloc_Mesh_Product_Table_Assets` to register frontend assets for the mesh product table.
+
+### Changed
+
+- Refactored mesh table asset loading to register styles globally and enqueue them only when the mesh table shortcode renders.
+- Removed shortcode detection from asset loading, improving compatibility with Divi Theme Builder and dynamically rendered content.
+- Updated WordPress test doubles to distinguish between registered and enqueued styles.
+- Expanded PHPUnit coverage for frontend asset registration.
+
 ## [0.12.0] - 2026-07-22
 
 ### Added
