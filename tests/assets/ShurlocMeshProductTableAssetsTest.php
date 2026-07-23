@@ -25,7 +25,7 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 		$GLOBALS['post'] = null;
 
-		$GLOBALS['shurloc_test_styles'] = array();
+		$GLOBALS['shurloc_test_registered_styles'] = array();
 	}
 
 	/**
@@ -33,7 +33,7 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function test_registers_enqueue_hook(): void {
+	public function test_registers_register_styles_hook(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
 			'https://example.com/plugins/shurloc-product-tools/',
@@ -47,65 +47,47 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 				'wp_enqueue_scripts',
 				array(
 					$assets,
-					'enqueue_styles',
+					'register_styles',
 				)
 			)
 		);
 	}
 
 	/**
-	 * Does not enqueue stylesheet without mesh table shortcode.
+	 * Test that the stylesheet gets registered.
 	 *
 	 * @return void
 	 */
-	public function test_does_not_enqueue_without_mesh_table_shortcode(): void {
-
-		$post = new WP_Post();
-
-		$post->post_content = 'Regular product content.';
-
-		$GLOBALS['post'] = $post;
-
+	public function test_registers_stylesheet(): void {
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugins/shurloc-product-tools/',
-			'1.0.0'
+			'https://example.com/plugin/',
+			'1.2.3'
 		);
 
-		$assets->enqueue_styles();
-
-		$this->assertFalse(
-			wp_style_is(
-				'shurloc-mesh-product-table',
-				'enqueued'
-			)
-		);
-	}
-
-	/**
-	 * Enqueues stylesheet when mesh table shortcode exists.
-	 *
-	 * @return void
-	 */
-	public function test_enqueues_with_mesh_table_shortcode(): void {
-
-		$post = new WP_Post();
-
-		$post->post_content = '[shurloc_mesh_table]';
-
-		$GLOBALS['post'] = $post;
-
-		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugins/shurloc-product-tools/',
-			'1.0.0'
-		);
-
-		$assets->enqueue_styles();
+		$assets->register_styles();
 
 		$this->assertTrue(
 			wp_style_is(
-				'shurloc-mesh-product-table',
-				'enqueued'
+				Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE,
+				'registered'
 			)
+		);
+
+		$this->assertArrayHasKey(
+			Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE,
+			$GLOBALS['shurloc_test_registered_styles']
+		);
+
+		$style = $GLOBALS['shurloc_test_registered_styles'][ Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE ];
+
+		$this->assertSame(
+			'https://example.com/plugin/assets/css/shurloc-mesh-product-table.css',
+			$style['src']
+		);
+
+		$this->assertSame(
+			'1.2.3',
+			$style['ver']
 		);
 	}
 }

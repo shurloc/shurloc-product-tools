@@ -71,11 +71,11 @@ $GLOBALS['wp_shortcodes'] = array();
 $GLOBALS['product'] = null;
 
 /**
- * Stored styles.
+ * Enqueued styles.
  *
  * @var array<string,array<string,mixed>>
  */
-$GLOBALS['shurloc_test_styles'] = array();
+$GLOBALS['shurloc_test_enqueued_styles'] = array();
 
 /**
  * Recorded nonce verification checks.
@@ -84,6 +84,12 @@ $GLOBALS['shurloc_test_styles'] = array();
  */
 $GLOBALS['shurloc_test_nonce_checks'] = array();
 
+/**
+ * Registered styles.
+ *
+ * @var array<string<int,string>>
+ */
+$GLOBALS['shurloc_test_registered_styles'] = array();
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -761,12 +767,49 @@ if ( ! function_exists( 'wp_style_is' ) ) {
 		string $status = 'enqueued'
 	): bool {
 
-		if ( 'enqueued' !== $status ) {
-			return false;
-		}
+		switch ( $status ) {
 
-		return isset(
-			$GLOBALS['shurloc_test_styles'][ $handle ]
+			case 'registered':
+				return isset(
+					$GLOBALS['shurloc_test_registered_styles'][ $handle ]
+				);
+
+			case 'enqueued':
+				return isset(
+					$GLOBALS['shurloc_test_enqueued_styles'][ $handle ]
+				);
+
+			default:
+				return false;
+		}
+	}
+}
+
+if ( ! function_exists( 'wp_register_style' ) ) {
+
+	/**
+	 * Register a stylesheet.
+	 *
+	 * @param string            $handle Stylesheet handle.
+	 * @param string|false      $src    Stylesheet source.
+	 * @param array<int,string> $deps   Dependencies.
+	 * @param string|false      $ver    Version.
+	 * @param string            $media  Media type.
+	 * @return void
+	 */
+	function wp_register_style(
+		string $handle,
+		$src = false,
+		array $deps = array(),
+		$ver = false,
+		string $media = 'all'
+	): void {
+
+		$GLOBALS['shurloc_test_registered_styles'][ $handle ] = array(
+			'src'   => $src,
+			'deps'  => $deps,
+			'ver'   => $ver,
+			'media' => $media,
 		);
 	}
 }
