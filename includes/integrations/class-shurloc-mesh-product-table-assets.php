@@ -2,7 +2,7 @@
 /**
  * Mesh product table assets.
  *
- * Registers and enqueues frontend assets for the mesh product table.
+ * Registers frontend assets for the mesh product table.
  *
  * @package ShurLocProductTools
  */
@@ -13,6 +13,11 @@ declare( strict_types=1 );
  * Mesh product table assets.
  */
 final class Shurloc_Mesh_Product_Table_Assets {
+
+	/**
+	 * Stylesheet handle.
+	 */
+	public const STYLE_HANDLE = 'shurloc-mesh-product-table';
 
 	/**
 	 * Asset URL.
@@ -38,6 +43,7 @@ final class Shurloc_Mesh_Product_Table_Assets {
 		string $asset_url,
 		string $asset_version
 	) {
+
 		$this->asset_url     = $asset_url;
 		$this->asset_version = $asset_version;
 	}
@@ -53,37 +59,23 @@ final class Shurloc_Mesh_Product_Table_Assets {
 			'wp_enqueue_scripts',
 			array(
 				$this,
-				'enqueue_styles',
+				'register_styles',
 			)
 		);
 	}
 
 	/**
-	 * Enqueue mesh product table stylesheet.
+	 * Register frontend stylesheet.
+	 *
+	 * The stylesheet is registered globally and only enqueued by the
+	 * shortcode when a mesh specification table is actually rendered.
 	 *
 	 * @return void
 	 */
-	public function enqueue_styles(): void {
+	public function register_styles(): void {
 
-		if ( ! is_singular() ) {
-			return;
-		}
-
-		global $post;
-
-		if ( ! $post instanceof WP_Post ) {
-			return;
-		}
-
-		if ( ! has_shortcode(
-			$post->post_content,
-			'shurloc_mesh_table'
-		) ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'shurloc-mesh-product-table',
+		wp_register_style(
+			self::STYLE_HANDLE,
 			$this->asset_url . 'assets/css/shurloc-mesh-product-table.css',
 			array(),
 			$this->asset_version

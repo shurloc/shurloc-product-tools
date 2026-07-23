@@ -102,6 +102,10 @@ final class Shurloc_Mesh_Product_Table_Shortcode {
 			return '';
 		}
 
+		wp_enqueue_style(
+			Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE
+		);
+
 		return $this->renderer->render(
 			$data
 		);
