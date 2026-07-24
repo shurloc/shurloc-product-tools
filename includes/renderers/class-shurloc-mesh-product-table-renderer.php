@@ -17,6 +17,8 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 	/**
 	 * Render a mesh specification table.
 	 *
+	 * Returns fully escaped HTML suitable for direct output.
+	 *
 	 * @param Shurloc_Mesh_Table_Data $data Presentation-ready table data.
 	 * @return string HTML table.
 	 */
