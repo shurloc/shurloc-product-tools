@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.12.2] - 2026-07-24
+
+### Changed
+
+- Removed offers nested under aggregateOffer in product schema.
+
 ## [0.12.1] - 2026-07-23
 
 ### Added
