@@ -11,8 +11,9 @@
 
 .shurloc-mesh-table-wrapper {
 	width: 100%;
-	overflow-x: auto;
 	margin: 1.5rem 0;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 
@@ -21,10 +22,12 @@
  */
 
 .shurloc-mesh-specification-table {
-	width: 100%;
+	width: max-content;
+	min-width: 100%;
 	border-collapse: collapse;
+	border: 1px solid #d9d9d9;
+	background: #ffffff;
 	font-size: 0.95rem;
-	background-color: #ffffff;
 }
 
 
@@ -35,8 +38,9 @@
 .shurloc-mesh-specification-table caption {
 	caption-side: top;
 	text-align: left;
-	font-size: 1.1rem;
-	font-weight: 600;
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: #000000;
 	padding: 0 0 0.75rem;
 }
 
@@ -46,12 +50,20 @@
  */
 
 .shurloc-mesh-specification-table thead th {
-	text-align: left;
-	font-weight: 600;
-	background-color: #f5f5f5;
-	border-bottom: 2px solid #dcdcdc;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+
 	padding: 0.75rem 1rem;
+
+	background: #F4DB23;
+	color: #000000;
+
+	font-weight: 600;
+	text-align: left;
 	white-space: nowrap;
+
+	border-bottom: 2px solid #F4DB23;
 }
 
 
@@ -60,8 +72,8 @@
  */
 
 .shurloc-mesh-specification-table tbody td {
-	padding: 0.75rem 1rem;
-	border-bottom: 1px solid #e5e5e5;
+	padding: 0.65rem 1rem;
+	border-bottom: 1px solid #e6e6e6;
 	vertical-align: middle;
 }
 
@@ -71,7 +83,7 @@
  */
 
 .shurloc-mesh-specification-table tbody tr:nth-child(even) {
-	background-color: #fafafa;
+	background: #f8fbfd;
 }
 
 
@@ -80,7 +92,7 @@
  */
 
 .shurloc-mesh-specification-table tbody tr:hover {
-	background-color: #f1f7fb;
+	background: #eef6fb;
 }
 
 
@@ -89,17 +101,30 @@
  */
 
 .shurloc-mesh-table-mesh,
-.shurloc-mesh-table-thread,
-.shurloc-mesh-table-price {
+.shurloc-mesh-table-thread {
+	width: 1%;
+	text-align: center;
 	white-space: nowrap;
 }
 
 
 /*
- * Price emphasis.
+ * Color column.
+ */
+
+.shurloc-mesh-table-color {
+	text-align: left;
+}
+
+
+/*
+ * Price column.
  */
 
 .shurloc-mesh-table-price {
+	width: 1%;
+	text-align: right;
+	white-space: nowrap;
 	font-weight: 600;
 }
 
@@ -115,57 +140,17 @@
 
 
 /*
- * Mobile table layout.
- *
- * Converts rows into stacked cards.
+ * Mobile adjustments.
  */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 
 	.shurloc-mesh-specification-table {
-		border: 0;
+		font-size: 0.9rem;
 	}
 
-	.shurloc-mesh-specification-table thead {
-		display: none;
-	}
-
-	.shurloc-mesh-specification-table tbody,
-	.shurloc-mesh-specification-table tr,
-	.shurloc-mesh-specification-table td {
-		display: block;
-		width: 100%;
-	}
-
-	.shurloc-mesh-specification-table tr {
-		margin-bottom: 1rem;
-		border: 1px solid #e5e5e5;
-		border-radius: 4px;
-		padding: 0.5rem 0;
-		background-color: #ffffff;
-	}
-
+	.shurloc-mesh-specification-table thead th,
 	.shurloc-mesh-specification-table tbody td {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0.5rem 1rem;
-		border-bottom: 0;
-		text-align: right;
-	}
-
-	.shurloc-mesh-specification-table tbody td::before {
-		content: attr(data-label);
-		font-weight: 600;
-		text-align: left;
-		margin-right: 1rem;
-	}
-
-	.shurloc-mesh-specification-table tbody tr:nth-child(even) {
-		background-color: #ffffff;
-	}
-
-	.shurloc-mesh-specification-table tbody tr:hover {
-		background-color: #ffffff;
+		padding: 0.5rem 0.6rem;
 	}
 }
