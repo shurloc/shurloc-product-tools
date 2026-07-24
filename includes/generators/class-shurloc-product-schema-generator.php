@@ -230,7 +230,6 @@ final class Shurloc_Product_Schema_Generator {
 			'offerCount'    => count( $offers ),
 			'priceCurrency' => 'USD',
 			'availability'  => 'https://schema.org/InStock',
-			'offers'        => $offers,
 		);
 
 		if ( ! empty( $prices ) ) {
