@@ -28,8 +28,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 		$GLOBALS['shurloc_test_actions']         = array();
 		$GLOBALS['shurloc_test_action_metadata'] = array();
-
-		$this->load_controller();
 	}
 
 	/**
@@ -90,23 +88,5 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_menu'][0]
 		);
-	}
-
-	/**
-	 * Load controller class.
-	 *
-	 * @return void
-	 */
-	private function load_controller(): void {
-
-		if (
-			! class_exists(
-				'Shurloc_Catalog_Report_Controller'
-			)
-		) {
-
-			require_once dirname( __DIR__, 2 )
-				. '/includes/admin/class-shurloc-catalog-report-controller.php';
-		}
 	}
 }
