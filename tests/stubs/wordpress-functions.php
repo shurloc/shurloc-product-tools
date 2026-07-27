@@ -91,6 +91,13 @@ $GLOBALS['shurloc_test_nonce_checks'] = array();
  */
 $GLOBALS['shurloc_test_registered_styles'] = array();
 
+/**
+ * Registered scripts.
+ *
+ * @var array<string<int,string>>
+ */
+$GLOBALS['shurloc_test_registered_scripts'] = array();
+
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
 	/**
@@ -944,6 +951,85 @@ if ( ! function_exists( 'esc_attr' ) ) {
 			(string) $text,
 			ENT_QUOTES | ENT_SUBSTITUTE,
 			'UTF-8'
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_register_style' ) ) {
+
+	/**
+	 * Register a stylesheet for tests.
+	 *
+	 * @param string           $handle Handle.
+	 * @param string           $src    Source URL.
+	 * @param string[]         $deps   Dependencies.
+	 * @param string|bool|null $ver    Version.
+	 * @return void
+	 */
+	function wp_register_style(
+		string $handle,
+		string $src,
+		array $deps = array(),
+		$ver = false
+	): void {
+
+		$GLOBALS['shurloc_test_registered_styles'][ $handle ] = array(
+			'src'  => $src,
+			'deps' => $deps,
+			'ver'  => $ver,
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_register_script' ) ) {
+
+	/**
+	 * Register a script for tests.
+	 *
+	 * @param string           $handle    Handle.
+	 * @param string           $src       Source URL.
+	 * @param string[]         $deps      Dependencies.
+	 * @param string|bool|null $ver       Version.
+	 * @param bool             $in_footer Whether to load in the footer.
+	 * @return void
+	 */
+	function wp_register_script(
+		string $handle,
+		string $src,
+		array $deps = array(),
+		$ver = false,
+		bool $in_footer = false
+	): void {
+
+		$GLOBALS['shurloc_test_registered_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_script_is' ) ) {
+
+	/**
+	 * Check whether a script is registered.
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $status Status to check.
+	 * @return bool
+	 */
+	function wp_script_is(
+		string $handle,
+		string $status
+	): bool {
+
+		if ( 'registered' !== $status ) {
+			return false;
+		}
+
+		return isset(
+			$GLOBALS['shurloc_test_registered_scripts'][ $handle ]
 		);
 	}
 }

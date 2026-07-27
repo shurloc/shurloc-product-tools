@@ -20,6 +20,11 @@ final class Shurloc_Mesh_Product_Table_Assets {
 	public const STYLE_HANDLE = 'shurloc-mesh-product-table';
 
 	/**
+	 * Script handle.
+	 */
+	public const SCRIPT_HANDLE = 'shurloc-mesh-product-table';
+
+	/**
 	 * Asset URL.
 	 *
 	 * @var string
@@ -59,26 +64,34 @@ final class Shurloc_Mesh_Product_Table_Assets {
 			'wp_enqueue_scripts',
 			array(
 				$this,
-				'register_styles',
+				'register_assets',
 			)
 		);
 	}
 
 	/**
-	 * Register frontend stylesheet.
+	 * Register frontend assets.
 	 *
-	 * The stylesheet is registered globally and only enqueued by the
-	 * shortcode when a mesh specification table is actually rendered.
+	 * The assets are registered globally and only enqueued by the shortcode
+	 * when a mesh specification table is actually rendered.
 	 *
 	 * @return void
 	 */
-	public function register_styles(): void {
+	public function register_assets(): void {
 
 		wp_register_style(
 			self::STYLE_HANDLE,
 			$this->asset_url . 'assets/css/shurloc-mesh-product-table.css',
 			array(),
 			$this->asset_version
+		);
+
+		wp_register_script(
+			self::SCRIPT_HANDLE,
+			$this->asset_url . 'assets/js/shurloc-mesh-product-table.js',
+			array(),
+			$this->asset_version,
+			true
 		);
 	}
 }
