@@ -61,16 +61,17 @@
 		const rows = table.querySelectorAll(rowSelector);
 
 		rows.forEach(function (row) {
-			const isSelected =
-				variationValue !== '' &&
-				row.dataset.variationValue === variationValue;
+            const isSelected =
+                variationValue !== '' &&
+                row.dataset.variationValue === variationValue;
 
-			row.classList.toggle(selectedClass, isSelected);
-			row.setAttribute(
-				'aria-pressed',
-				isSelected ? 'true' : 'false'
-			);
-		});
+            row.classList.toggle(selectedClass, isSelected);
+
+            row.setAttribute(
+                'aria-selected',
+                isSelected ? 'true' : 'false'
+            );
+        });
 	}
 
 	/**
@@ -128,7 +129,7 @@
 		const rows = table.querySelectorAll(rowSelector);
 
 		rows.forEach(function (row) {
-			row.setAttribute('aria-pressed', 'false');
+			row.setAttribute('aria-selected', 'false');
 
 			row.addEventListener('click', function () {
 				selectVariationFromRow(row, select, table);
