@@ -372,4 +372,52 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$html
 		);
 	}
+
+
+	/**
+	 * Mesh products can render variations without a color.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_product_renders_variation_without_color(): void {
+
+		$product = $this->create_mesh_product(
+			array(
+				array(
+					'id'    => 101,
+					'value' => '120/48 (S)',
+					'price' => '24.10',
+				),
+			)
+		);
+
+		$html = $this->render_mesh_table(
+			$product
+		);
+
+		$this->assertStringContainsString(
+			'<table',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'120',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'48',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'S',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'$24.10',
+			$html
+		);
+	}
 }

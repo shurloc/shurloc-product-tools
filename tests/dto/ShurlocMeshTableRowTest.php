@@ -118,7 +118,7 @@ final class ShurlocMeshTableRowTest extends TestCase {
 	}
 
 	/**
-	 * Returns variation value..
+	 * Returns variation value.
 	 *
 	 * @return void
 	 */
@@ -137,6 +137,29 @@ final class ShurlocMeshTableRowTest extends TestCase {
 		$this->assertSame(
 			'110/80 Yellow $18.17',
 			$row->get_variation_value()
+		);
+	}
+
+
+	/**
+	 * Table rows permit a missing mesh color.
+	 *
+	 * @return void
+	 */
+	public function test_color_can_be_null(): void {
+
+		$row = new Shurloc_Mesh_Table_Row(
+			mesh_count: 120,
+			thread_diameter: 48,
+			color: null,
+			modifier: 'S',
+			pack_size: null,
+			price: 24.10,
+			variation_value: '120/48 (S) $24.10',
+		);
+
+		$this->assertNull(
+			$row->get_color()
 		);
 	}
 }

@@ -356,4 +356,60 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 			$pack_position
 		);
 	}
+
+	/**
+	 * Renders row without color.
+	 *
+	 * @return void
+	 */
+	public function test_renders_row_without_color(): void {
+
+		$data = $this->create_table_data(
+			array(
+				new Shurloc_Mesh_Table_Row(
+					mesh_count: 120,
+					thread_diameter: 48,
+					color: null,
+					modifier: 'S',
+					pack_size: null,
+					price: 24.10,
+					variation_value: '120/48 (S) $24.10',
+				),
+			)
+		);
+
+		$html = $this->renderer->render(
+			$data
+		);
+
+		$this->assertStringContainsString(
+			'class="shurloc-mesh-table-color"',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'120',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'48',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'S',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'$24.10',
+			$html
+		);
+
+		$this->assertStringContainsString(
+			'—',
+			$html
+		);
+	}
 }
