@@ -78,6 +78,13 @@ $GLOBALS['product'] = null;
 $GLOBALS['shurloc_test_enqueued_styles'] = array();
 
 /**
+ * Enqueued scripts.
+ *
+ * @var array<string,array<string,mixed>>
+ */
+$GLOBALS['shurloc_test_enqueued_scripts'] = array();
+
+/**
  * Recorded nonce verification checks.
  *
  * @var array<int,string>
@@ -1030,6 +1037,39 @@ if ( ! function_exists( 'wp_script_is' ) ) {
 
 		return isset(
 			$GLOBALS['shurloc_test_registered_scripts'][ $handle ]
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_script' ) ) {
+
+	/**
+	 * Register a test script enqueue.
+	 *
+	 * @param string            $handle    Script handle.
+	 * @param string|false      $src       Script source.
+	 * @param array<int,string> $deps      Dependencies.
+	 * @param string|false      $ver       Version.
+	 * @param bool              $in_footer Whether to enqueue in the footer.
+	 * @return void
+	 */
+	function wp_enqueue_script(
+		string $handle,
+		$src = false,
+		array $deps = array(),
+		$ver = false,
+		bool $in_footer = false
+	): void {
+
+		if ( ! isset( $GLOBALS['shurloc_test_scripts'] ) ) {
+			$GLOBALS['shurloc_test_scripts'] = array();
+		}
+
+		$GLOBALS['shurloc_test_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
 		);
 	}
 }
