@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.2] - 2026-07-27
+
+### Changed
+
+- Removed sorting of variations so the selection dropdown matches the table order.
+
 ## [0.13.1] - 2026-07-27
 
 ### Changed
