@@ -6,6 +6,27 @@
 
 
 /*
+ * Theme variables.
+ */
+
+:root {
+	--shurloc-table-background: #ffffff;
+	--shurloc-table-border: #d9d9d9;
+	--shurloc-table-row-border: #e6e6e6;
+
+	--shurloc-table-header-background: #f4db23;
+	--shurloc-table-header-text: #000000;
+
+	--shurloc-table-caption-text: #000000;
+	--shurloc-table-zebra-background: #f8fbfd;
+	--shurloc-table-hover-background: #eef6fb;
+	--shurloc-table-selected-background: #dff3ff;
+
+	--shurloc-table-focus-outline: #0b6ab3;
+}
+
+
+/*
  * Table wrapper.
  */
 
@@ -25,8 +46,8 @@
 	width: max-content;
 	min-width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #d9d9d9;
-	background: #ffffff;
+	border: 1px solid var(--shurloc-table-border);
+	background: var(--shurloc-table-background);
 	font-size: 0.95rem;
 }
 
@@ -37,11 +58,11 @@
 
 .shurloc-mesh-specification-table caption {
 	caption-side: top;
-	text-align: left;
+	padding: 0 0 0.75rem;
+	color: var(--shurloc-table-caption-text);
 	font-size: 1.15rem;
 	font-weight: 700;
-	color: #000000;
-	padding: 0 0 0.75rem;
+	text-align: left;
 }
 
 
@@ -52,18 +73,18 @@
 .shurloc-mesh-specification-table thead th {
 	position: sticky;
 	top: 0;
-	z-index: 1;
+	z-index: 2;
 
 	padding: 0.75rem 1rem;
 
-	background: #F4DB23;
-	color: #000000;
+	border-bottom: 2px solid var(--shurloc-table-header-background);
+
+	background: var(--shurloc-table-header-background);
+	color: var(--shurloc-table-header-text);
 
 	font-weight: 600;
 	text-align: left;
 	white-space: nowrap;
-
-	border-bottom: 2px solid #F4DB23;
 }
 
 
@@ -73,8 +94,18 @@
 
 .shurloc-mesh-specification-table tbody td {
 	padding: 0.65rem 1rem;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid var(--shurloc-table-row-border);
 	vertical-align: middle;
+}
+
+
+/*
+ * Interactive rows.
+ */
+
+.shurloc-mesh-table-row {
+	cursor: pointer;
+	transition: background-color 0.15s ease;
 }
 
 
@@ -83,7 +114,7 @@
  */
 
 .shurloc-mesh-specification-table tbody tr:nth-child(even) {
-	background: #f8fbfd;
+	background: var(--shurloc-table-zebra-background);
 }
 
 
@@ -92,7 +123,47 @@
  */
 
 .shurloc-mesh-specification-table tbody tr:hover {
-	background: #eef6fb;
+	background: var(--shurloc-table-hover-background);
+}
+
+
+/*
+ * Selected row.
+ */
+
+.shurloc-mesh-table-row-selected,
+.shurloc-mesh-table-row[aria-selected="true"] {
+	background: var(--shurloc-table-selected-background) !important;
+	font-weight: 600;
+}
+
+
+/*
+ * Keep the selected background while hovering.
+ */
+
+.shurloc-mesh-table-row-selected:hover,
+.shurloc-mesh-table-row[aria-selected="true"]:hover {
+	background: var(--shurloc-table-selected-background) !important;
+}
+
+
+/*
+ * Keyboard focus.
+ */
+
+.shurloc-mesh-table-row:focus-visible {
+	outline: 2px solid var(--shurloc-table-focus-outline);
+	outline-offset: -2px;
+}
+
+
+/*
+ * Fallback for browsers without :focus-visible support.
+ */
+
+.shurloc-mesh-table-row:focus:not(:focus-visible) {
+	outline: none;
 }
 
 
@@ -123,9 +194,9 @@
 
 .shurloc-mesh-table-price {
 	width: 1%;
+	font-weight: 600;
 	text-align: right;
 	white-space: nowrap;
-	font-weight: 600;
 }
 
 
