@@ -57,6 +57,16 @@ final class Shurloc_Mesh_Table_Row {
 	private ?float $price;
 
 	/**
+	 * Variation selection value.
+	 *
+	 * This value matches the corresponding WooCommerce variation
+	 * dropdown option value.
+	 *
+	 * @var string
+	 */
+	private string $variation_value;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param int         $mesh_count      Mesh count.
@@ -65,6 +75,7 @@ final class Shurloc_Mesh_Table_Row {
 	 * @param string|null $modifier        Mesh modifier.
 	 * @param string|null $pack_size       Pack size.
 	 * @param float|null  $price           Variation price.
+	 * @param string      $variation_value Variation selection value.
 	 */
 	public function __construct(
 		int $mesh_count,
@@ -72,7 +83,8 @@ final class Shurloc_Mesh_Table_Row {
 		string $color,
 		?string $modifier,
 		?string $pack_size,
-		?float $price
+		?float $price,
+		string $variation_value
 	) {
 
 		$this->mesh_count      = $mesh_count;
@@ -81,6 +93,7 @@ final class Shurloc_Mesh_Table_Row {
 		$this->modifier        = $modifier;
 		$this->pack_size       = $pack_size;
 		$this->price           = $price;
+		$this->variation_value = $variation_value;
 	}
 
 	/**
@@ -141,5 +154,15 @@ final class Shurloc_Mesh_Table_Row {
 	public function get_price(): ?float {
 
 		return $this->price;
+	}
+
+	/**
+	 * Get the variation selection value.
+	 *
+	 * @return string Variation selection value.
+	 */
+	public function get_variation_value(): string {
+
+		return $this->variation_value;
 	}
 }

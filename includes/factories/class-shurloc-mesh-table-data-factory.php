@@ -50,7 +50,8 @@ final class Shurloc_Mesh_Table_Data_Factory {
 				$spec->get_color(),
 				$spec->get_modifier(),
 				$spec->get_pack_size(),
-				$entry->price
+				$entry->price,
+				$spec->get_raw()
 			);
 		}
 

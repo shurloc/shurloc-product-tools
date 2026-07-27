@@ -23,6 +23,8 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 		unset( $GLOBALS['product'] );
 		shurloc_reset_test_products();
+		unset( $GLOBALS['shurloc_test_styles'] );
+		unset( $GLOBALS['shurloc_test_scripts'] );
 
 		parent::tearDown();
 	}
@@ -72,6 +74,42 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		$this->assertStringContainsString(
 			'$12.99',
 			$html
+		);
+	}
+
+
+	/**
+	 * Rendering the shortcode enqueues its frontend assets.
+	 *
+	 * @return void
+	 */
+	public function test_mesh_product_enqueues_assets(): void {
+
+		$GLOBALS['shurloc_test_styles']  = array();
+		$GLOBALS['shurloc_test_scripts'] = array();
+
+		$product = $this->create_mesh_product(
+			array(
+				array(
+					'id'    => 101,
+					'value' => '110/80 White',
+					'price' => '12.99',
+				),
+			)
+		);
+
+		$this->render_mesh_table(
+			$product
+		);
+
+		$this->assertArrayHasKey(
+			Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE,
+			$GLOBALS['shurloc_test_styles']
+		);
+
+		$this->assertArrayHasKey(
+			Shurloc_Mesh_Product_Table_Assets::SCRIPT_HANDLE,
+			$GLOBALS['shurloc_test_scripts']
 		);
 	}
 

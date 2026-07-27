@@ -92,6 +92,10 @@ function shurloc_product_tools_bootstrap(): void {
 		SHURLOC_PRODUCT_TOOLS_VERSION
 	);
 
+	$mesh_table_tab = new Shurloc_Mesh_Product_Table_Tab(
+		$mesh_table_shortcode
+	);
+
 	/*
 	 * Register frontend integrations.
 	 */
@@ -116,6 +120,8 @@ function shurloc_product_tools_bootstrap(): void {
 	$mesh_table_shortcode->register();
 
 	$mesh_table_assets->register();
+
+	$mesh_table_tab->register();
 }
 
 add_action(

@@ -78,6 +78,13 @@ $GLOBALS['product'] = null;
 $GLOBALS['shurloc_test_enqueued_styles'] = array();
 
 /**
+ * Enqueued scripts.
+ *
+ * @var array<string,array<string,mixed>>
+ */
+$GLOBALS['shurloc_test_enqueued_scripts'] = array();
+
+/**
  * Recorded nonce verification checks.
  *
  * @var array<int,string>
@@ -90,6 +97,13 @@ $GLOBALS['shurloc_test_nonce_checks'] = array();
  * @var array<string<int,string>>
  */
 $GLOBALS['shurloc_test_registered_styles'] = array();
+
+/**
+ * Registered scripts.
+ *
+ * @var array<string<int,string>>
+ */
+$GLOBALS['shurloc_test_registered_scripts'] = array();
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -168,6 +182,44 @@ if ( ! function_exists( 'add_filter' ) ) {
 		$GLOBALS['shurloc_test_filters'][ $hook ][] = $callback;
 
 		return true;
+	}
+}
+
+
+if ( ! function_exists( 'has_filter' ) ) {
+
+	/**
+	 * Check whether a filter is registered.
+	 *
+	 * @param string        $hook     Hook name.
+	 * @param callable|null $callback Optional callback.
+	 * @return int|false Priority if found, true if callbacks exist and no callback
+	 *                   was specified, otherwise false.
+	 */
+	function has_filter(
+		string $hook,
+		$callback = null
+	) {
+
+		if ( empty( $GLOBALS['shurloc_test_filters'][ $hook ] ) ) {
+			return false;
+		}
+
+		if ( null === $callback ) {
+			return true;
+		}
+
+		foreach (
+			$GLOBALS['shurloc_test_filters'][ $hook ]
+			as $registered
+		) {
+
+			if ( $registered === $callback ) {
+				return 10;
+			}
+		}
+
+		return false;
 	}
 }
 
@@ -810,6 +862,214 @@ if ( ! function_exists( 'wp_register_style' ) ) {
 			'deps'  => $deps,
 			'ver'   => $ver,
 			'media' => $media,
+		);
+	}
+}
+
+if ( ! function_exists( '__' ) ) {
+
+	/**
+	 * Translate text.
+	 *
+	 * Test stub that returns the original string.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return string
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function __(
+		string $text,
+		string $domain = 'default'
+	): string {
+
+		return $text;
+	}
+}
+
+if ( ! function_exists( '_e' ) ) {
+
+	/**
+	 * Echo translated text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return void
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function _e(
+		string $text,
+		string $domain = 'default'
+	): void {
+
+		echo esc_html( $text );
+	}
+}
+
+if ( ! function_exists( 'esc_html__' ) ) {
+
+	/**
+	 * Translate and escape text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return string
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function esc_html__(
+		string $text,
+		string $domain = 'default'
+	): string {
+
+		return esc_html( $text );
+	}
+}
+
+if ( ! function_exists( 'esc_html_e' ) ) {
+
+	/**
+	 * Translate, escape, and echo text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return void
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function esc_html_e(
+		string $text,
+		string $domain = 'default'
+	): void {
+
+		echo esc_html( $text );
+	}
+}
+
+if ( ! function_exists( 'esc_attr' ) ) {
+
+	/**
+	 * Escape an HTML attribute for tests.
+	 *
+	 * @param mixed $text Attribute value.
+	 * @return string
+	 */
+	function esc_attr( $text ): string {
+
+		return htmlspecialchars(
+			(string) $text,
+			ENT_QUOTES | ENT_SUBSTITUTE,
+			'UTF-8'
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_register_style' ) ) {
+
+	/**
+	 * Register a stylesheet for tests.
+	 *
+	 * @param string           $handle Handle.
+	 * @param string           $src    Source URL.
+	 * @param string[]         $deps   Dependencies.
+	 * @param string|bool|null $ver    Version.
+	 * @return void
+	 */
+	function wp_register_style(
+		string $handle,
+		string $src,
+		array $deps = array(),
+		$ver = false
+	): void {
+
+		$GLOBALS['shurloc_test_registered_styles'][ $handle ] = array(
+			'src'  => $src,
+			'deps' => $deps,
+			'ver'  => $ver,
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_register_script' ) ) {
+
+	/**
+	 * Register a script for tests.
+	 *
+	 * @param string           $handle    Handle.
+	 * @param string           $src       Source URL.
+	 * @param string[]         $deps      Dependencies.
+	 * @param string|bool|null $ver       Version.
+	 * @param bool             $in_footer Whether to load in the footer.
+	 * @return void
+	 */
+	function wp_register_script(
+		string $handle,
+		string $src,
+		array $deps = array(),
+		$ver = false,
+		bool $in_footer = false
+	): void {
+
+		$GLOBALS['shurloc_test_registered_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_script_is' ) ) {
+
+	/**
+	 * Check whether a script is registered.
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $status Status to check.
+	 * @return bool
+	 */
+	function wp_script_is(
+		string $handle,
+		string $status
+	): bool {
+
+		if ( 'registered' !== $status ) {
+			return false;
+		}
+
+		return isset(
+			$GLOBALS['shurloc_test_registered_scripts'][ $handle ]
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_script' ) ) {
+
+	/**
+	 * Register a test script enqueue.
+	 *
+	 * @param string            $handle    Script handle.
+	 * @param string|false      $src       Script source.
+	 * @param array<int,string> $deps      Dependencies.
+	 * @param string|false      $ver       Version.
+	 * @param bool              $in_footer Whether to enqueue in the footer.
+	 * @return void
+	 */
+	function wp_enqueue_script(
+		string $handle,
+		$src = false,
+		array $deps = array(),
+		$ver = false,
+		bool $in_footer = false
+	): void {
+
+		if ( ! isset( $GLOBALS['shurloc_test_scripts'] ) ) {
+			$GLOBALS['shurloc_test_scripts'] = array();
+		}
+
+		$GLOBALS['shurloc_test_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
 		);
 	}
 }

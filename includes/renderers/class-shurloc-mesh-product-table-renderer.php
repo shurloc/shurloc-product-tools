@@ -17,6 +17,8 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 	/**
 	 * Render a mesh specification table.
 	 *
+	 * Returns fully escaped HTML suitable for direct output.
+	 *
 	 * @param Shurloc_Mesh_Table_Data $data Presentation-ready table data.
 	 * @return string HTML table.
 	 */
@@ -72,7 +74,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			$html .= '<th scope="col" class="shurloc-mesh-table-modifier">';
 			$html .= esc_html(
-				'Modifier'
+				'Type'
 			);
 			$html .= '</th>';
 		}
@@ -105,7 +107,16 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 		foreach ( $rows as $row ) {
 
-			$html .= '<tr>';
+			$html .= '<tr';
+			$html .= ' class="shurloc-mesh-table-row"';
+			$html .= ' data-variation-value="';
+			$html .= esc_attr(
+				$row->get_variation_value()
+			);
+			$html .= '"';
+			$html .= ' tabindex="0"';
+			$html .= ' role="button"';
+			$html .= '>';
 
 			$html .= '<td data-label="Mesh" class="shurloc-mesh-table-mesh">';
 			$html .= esc_html(
@@ -121,7 +132,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			if ( $has_modifier ) {
 
-				$html .= '<td data-label="Modifier" class="shurloc-mesh-table-modifier">';
+				$html .= '<td data-label="Type" class="shurloc-mesh-table-modifier">';
 
 				if ( null !== $row->get_modifier() ) {
 

@@ -27,7 +27,8 @@ final class ShurlocMeshTableRowTest extends TestCase {
 			'White',
 			'S',
 			'10 Pack',
-			12.99
+			12.99,
+			'110/80 S White $12.99'
 		);
 
 		$this->assertSame(
@@ -59,6 +60,11 @@ final class ShurlocMeshTableRowTest extends TestCase {
 			12.99,
 			$row->get_price()
 		);
+
+		$this->assertSame(
+			'110/80 S White $12.99',
+			$row->get_variation_value()
+		);
 	}
 
 	/**
@@ -74,7 +80,8 @@ final class ShurlocMeshTableRowTest extends TestCase {
 			'Yellow',
 			null,
 			null,
-			null
+			null,
+			'230/40 Yellow'
 		);
 
 		$this->assertSame(
@@ -102,6 +109,34 @@ final class ShurlocMeshTableRowTest extends TestCase {
 
 		$this->assertNull(
 			$row->get_price()
+		);
+
+		$this->assertSame(
+			'230/40 Yellow',
+			$row->get_variation_value()
+		);
+	}
+
+	/**
+	 * Returns variation value..
+	 *
+	 * @return void
+	 */
+	public function test_returns_variation_value(): void {
+
+		$row = new Shurloc_Mesh_Table_Row(
+			110,
+			80,
+			'Yellow',
+			null,
+			null,
+			18.17,
+			'110/80 Yellow $18.17'
+		);
+
+		$this->assertSame(
+			'110/80 Yellow $18.17',
+			$row->get_variation_value()
 		);
 	}
 }
