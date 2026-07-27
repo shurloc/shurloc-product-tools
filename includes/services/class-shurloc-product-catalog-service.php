@@ -121,20 +121,6 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 			);
 		}
 
-		usort(
-			$entries,
-			static function (
-				Shurloc_Catalog_Variation_Entry $left,
-				Shurloc_Catalog_Variation_Entry $right
-			): int {
-
-				return strnatcasecmp(
-					$left->variation,
-					$right->variation
-				);
-			}
-		);
-
 		return $entries;
 	}
 

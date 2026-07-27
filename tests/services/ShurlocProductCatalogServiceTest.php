@@ -32,6 +32,18 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	}
 
 	/**
+	 * Teardown tests.
+	 *
+	 * @return void
+	 */
+	protected function tearDown(): void {
+
+		$GLOBALS['shurloc_test_products'] = array();
+
+		parent::tearDown();
+	}
+
+	/**
 	 * Simple product should create catalog entry.
 	 *
 	 * @return void
@@ -501,13 +513,17 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	}
 
 	/**
-	 * Variations are sorted naturally.
+	 * Preserves WooCommerce variation order.
 	 *
 	 * @return void
 	 */
-	public function test_variations_are_sorted_naturally(): void {
+	public function test_preserves_product_variation_order(): void {
 
-		$product = new WC_Product( 500 );
+		$product = new WC_Product( 600 );
+
+		$product->set_name(
+			'Variation Order Product'
+		);
 
 		$product->set_type(
 			'variable'
@@ -515,42 +531,62 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 		$product->set_children(
 			array(
-				501,
-				502,
+				601,
+				602,
+				603,
 			)
 		);
 
-		$first = new WC_Product_Variation( 501 );
+		$first_variation = new WC_Product_Variation( 601 );
 
-		$first->set_variation_attributes(
+		$first_variation->set_variation_attributes(
 			array(
-				'attribute_select-mesh-count' => '160/64 White',
+				'attribute_select-mesh-count' => '230/40 Yellow $30.00',
 			)
 		);
 
-		$second = new WC_Product_Variation( 502 );
+		$second_variation = new WC_Product_Variation( 602 );
 
-		$second->set_variation_attributes(
+		$second_variation->set_variation_attributes(
 			array(
-				'attribute_select-mesh-count' => '110/80 Yellow',
+				'attribute_select-mesh-count' => '110/80 White $20.00',
 			)
 		);
 
-		$GLOBALS['shurloc_test_products'][501] = $first;
-		$GLOBALS['shurloc_test_products'][502] = $second;
+		$third_variation = new WC_Product_Variation( 603 );
 
-		$entry = $this->service->get_product_entry(
-			$product
+		$third_variation->set_variation_attributes(
+			array(
+				'attribute_select-mesh-count' => '156/64 Yellow $25.00',
+			)
+		);
+
+		$GLOBALS['shurloc_test_products'][601] = $first_variation;
+		$GLOBALS['shurloc_test_products'][602] = $second_variation;
+		$GLOBALS['shurloc_test_products'][603] = $third_variation;
+
+		$entries = $this->service->get_product_variation_entries(
+			product: $product,
+		);
+
+		$this->assertCount(
+			3,
+			$entries
 		);
 
 		$this->assertSame(
-			'110/80 Yellow',
-			$entry->variations[0]->variation
+			'230/40 Yellow $30.00',
+			$entries[0]->variation
 		);
 
 		$this->assertSame(
-			'160/64 White',
-			$entry->variations[1]->variation
+			'110/80 White $20.00',
+			$entries[1]->variation
+		);
+
+		$this->assertSame(
+			'156/64 Yellow $25.00',
+			$entries[2]->variation
 		);
 	}
 }
