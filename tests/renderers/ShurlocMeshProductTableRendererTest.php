@@ -91,7 +91,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					null,
 					'10 Pack',
-					12.99
+					12.99,
+					'110/80 White $12.99'
 				),
 			)
 		);
@@ -152,7 +153,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					null,
 					'10 Pack',
-					12.99
+					12.99,
+					'110/80 White $12.99'
 				),
 			)
 		);
@@ -183,7 +185,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					null,
 					null,
-					12.99
+					12.99,
+					'110/80 White $12.99'
 				),
 			)
 		);
@@ -214,7 +217,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					'HD',
 					null,
-					12.99
+					12.99,
+					'110/80 HD White $12.99'
 				),
 			)
 		);
@@ -250,7 +254,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					null,
 					'10 Pack',
-					12.99
+					12.99,
+					'110/80 White $12.99'
 				),
 			)
 		);
@@ -286,7 +291,8 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					'White',
 					'HD',
 					'10 Pack',
-					12.99
+					12.99,
+					'110/80 HD White $12.99'
 				),
 			)
 		);

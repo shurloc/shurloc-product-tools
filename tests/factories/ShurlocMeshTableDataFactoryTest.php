@@ -217,6 +217,16 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 			15.99,
 			$rows[1]->get_price()
 		);
+
+		$this->assertSame(
+			'110/80 White',
+			$rows[0]->get_variation_value()
+		);
+
+		$this->assertSame(
+			'160/64 Yellow',
+			$rows[1]->get_variation_value()
+		);
 	}
 
 	/**

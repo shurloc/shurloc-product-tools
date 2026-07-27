@@ -55,7 +55,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			'White',
 			null,
 			'10 Pack',
-			12.99
+			12.99,
+			'110/80 White $12.99'
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
@@ -96,7 +97,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			'White',
 			null,
 			'10 Pack',
-			12.99
+			12.99,
+			'110/80 White $12.99'
 		);
 
 		$second_row = new Shurloc_Mesh_Table_Row(
@@ -105,7 +107,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			'Yellow',
 			'HD',
 			'20 Pack',
-			25.00
+			25.00,
+			'160/64 HD Yellow $25.00'
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
@@ -150,7 +153,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					'White',
 					null,
 					null,
-					12.99
+					12.99,
+					'110/80 White $12.99'
 				),
 				new Shurloc_Mesh_Table_Row(
 					160,
@@ -158,7 +162,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					'Yellow',
 					null,
 					null,
-					15.99
+					15.99,
+					'160/64 Yellow $15.99'
 				),
 				new Shurloc_Mesh_Table_Row(
 					230,
@@ -166,7 +171,8 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					'White',
 					'S',
 					null,
-					18.99
+					18.99,
+					'230/48 S White $18.99'
 				),
 			),
 			true,
