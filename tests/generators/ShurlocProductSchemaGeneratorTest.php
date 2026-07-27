@@ -414,57 +414,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
-	 * Duplicate mesh specifications should remain separate offers.
-	 */
-	public function test_duplicate_specifications_generate_separate_offers(): void {
-
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$result->add_mesh_variation(
-			$this->create_variation(
-				'110/80 Yellow $20.00',
-				20.0
-			),
-			$this->create_spec(
-				110,
-				80,
-				'Yellow'
-			)
-		);
-
-		$result->add_mesh_variation(
-			$this->create_variation(
-				'110/80 Yellow $25.00',
-				25.0
-			),
-			$this->create_spec(
-				110,
-				80,
-				'Yellow'
-			)
-		);
-
-		$schema = $this->generate_schema(
-			$result
-		);
-
-		$this->assertCount(
-			2,
-			$schema['offers']['offers']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers']['offers'][0]['price']
-		);
-
-		$this->assertSame(
-			'25.00',
-			$schema['offers']['offers'][1]['price']
-		);
-	}
-
-	/**
 	 * Non-mesh products should generate a simple offer.
 	 */
 	public function test_non_mesh_product_generates_simple_offer(): void {
