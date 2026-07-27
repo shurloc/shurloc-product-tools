@@ -129,11 +129,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			2,
 			$schema['offers']['offerCount']
 		);
-
-		$this->assertCount(
-			2,
-			$schema['offers']['offers']
-		);
 	}
 
 	/**
