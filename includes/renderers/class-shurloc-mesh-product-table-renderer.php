@@ -146,7 +146,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			$html .= '<td data-label="Color" class="shurloc-mesh-table-color">';
 			$html .= esc_html(
-				$row->get_color()
+				$row->get_color() ?? '—'
 			);
 			$html .= '</td>';
 

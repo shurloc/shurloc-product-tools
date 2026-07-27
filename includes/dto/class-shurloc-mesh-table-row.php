@@ -31,9 +31,9 @@ final class Shurloc_Mesh_Table_Row {
 	/**
 	 * Mesh color.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	private string $color;
+	private ?string $color;
 
 	/**
 	 * Mesh modifier.
@@ -71,7 +71,7 @@ final class Shurloc_Mesh_Table_Row {
 	 *
 	 * @param int         $mesh_count      Mesh count.
 	 * @param int         $thread_diameter Thread diameter.
-	 * @param string      $color           Mesh color.
+	 * @param string|null $color           Mesh color.
 	 * @param string|null $modifier        Mesh modifier.
 	 * @param string|null $pack_size       Pack size.
 	 * @param float|null  $price           Variation price.
@@ -80,7 +80,7 @@ final class Shurloc_Mesh_Table_Row {
 	public function __construct(
 		int $mesh_count,
 		int $thread_diameter,
-		string $color,
+		?string $color,
 		?string $modifier,
 		?string $pack_size,
 		?float $price,
@@ -121,7 +121,7 @@ final class Shurloc_Mesh_Table_Row {
 	 *
 	 * @return string Mesh color.
 	 */
-	public function get_color(): string {
+	public function get_color(): ?string {
 
 		return $this->color;
 	}
