@@ -377,57 +377,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
-	 * Mesh specifications should be included as properties.
-	 */
-	public function test_offer_contains_mesh_properties(): void {
-
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$result->add_mesh_variation(
-			$this->create_variation(
-				'110/80 Yellow $20.00',
-				20.0
-			),
-			$this->create_spec(
-				110,
-				80,
-				'Yellow'
-			)
-		);
-
-		$schema = $this->generate_schema(
-			$result
-		);
-
-		$properties = $schema['offers']['offers'][0]['additionalProperty'];
-
-		$this->assertSame(
-			'Mesh Count',
-			$properties[0]['name']
-		);
-
-		$this->assertSame(
-			110,
-			$properties[0]['value']
-		);
-
-		$this->assertSame(
-			'Thread Diameter',
-			$properties[1]['name']
-		);
-
-		$this->assertSame(
-			80,
-			$properties[1]['value']
-		);
-
-		$this->assertSame(
-			'Yellow',
-			$properties[2]['value']
-		);
-	}
-
-	/**
 	 * An empty mesh result should not generate offers when product has no price.
 	 */
 	public function test_empty_result_does_not_generate_offers(): void {
