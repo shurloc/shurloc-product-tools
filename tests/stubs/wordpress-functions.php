@@ -929,3 +929,21 @@ if ( ! function_exists( 'esc_html_e' ) ) {
 		echo esc_html( $text );
 	}
 }
+
+if ( ! function_exists( 'esc_attr' ) ) {
+
+	/**
+	 * Escape an HTML attribute for tests.
+	 *
+	 * @param mixed $text Attribute value.
+	 * @return string
+	 */
+	function esc_attr( $text ): string {
+
+		return htmlspecialchars(
+			(string) $text,
+			ENT_QUOTES | ENT_SUBSTITUTE,
+			'UTF-8'
+		);
+	}
+}
