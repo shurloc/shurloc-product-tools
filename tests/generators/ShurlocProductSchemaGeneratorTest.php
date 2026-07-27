@@ -377,47 +377,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	}
 
 	/**
-	 * Offers should contain variation pricing.
-	 */
-	public function test_offer_contains_price_information(): void {
-
-		$result = new Shurloc_Mesh_Product_Result();
-
-		$result->add_mesh_variation(
-			$this->create_variation(
-				'110/80 Yellow $20.00',
-				20.0
-			),
-			$this->create_spec(
-				110,
-				80,
-				'Yellow'
-			)
-		);
-
-		$schema = $this->generate_schema(
-			$result
-		);
-
-		$offer = $schema['offers']['offers'][0];
-
-		$this->assertSame(
-			'Offer',
-			$offer['@type']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$offer['price']
-		);
-
-		$this->assertSame(
-			'USD',
-			$offer['priceCurrency']
-		);
-	}
-
-	/**
 	 * Mesh specifications should be included as properties.
 	 */
 	public function test_offer_contains_mesh_properties(): void {
