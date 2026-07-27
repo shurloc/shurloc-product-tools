@@ -12,7 +12,7 @@ declare( strict_types=1 );
 /**
  * Mesh product table shortcode.
  */
-final class Shurloc_Mesh_Product_Table_Shortcode {
+final class Shurloc_Mesh_Product_Table_Shortcode implements Shurloc_Mesh_Product_Table_Shortcode_Interface {
 
 	/**
 	 * Mesh product data service.

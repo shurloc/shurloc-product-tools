@@ -17,17 +17,17 @@ final class Shurloc_Mesh_Product_Table_Tab {
 	/**
 	 * Mesh product table shortcode.
 	 *
-	 * @var Shurloc_Mesh_Product_Table_Shortcode
+	 * @var Shurloc_Mesh_Product_Table_Shortcode_Interface
 	 */
-	private Shurloc_Mesh_Product_Table_Shortcode $shortcode;
+	private Shurloc_Mesh_Product_Table_Shortcode_Interface $shortcode;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Product_Table_Shortcode $shortcode Mesh table shortcode.
+	 * @param Shurloc_Mesh_Product_Table_Shortcode_Interface $shortcode Mesh table shortcode.
 	 */
 	public function __construct(
-		Shurloc_Mesh_Product_Table_Shortcode $shortcode
+		Shurloc_Mesh_Product_Table_Shortcode_Interface $shortcode
 	) {
 		$this->shortcode = $shortcode;
 	}
@@ -61,11 +61,6 @@ final class Shurloc_Mesh_Product_Table_Tab {
 		global $product;
 
 		if ( ! $product instanceof WC_Product ) {
-			return $tabs;
-		}
-
-		// TODO: Remove before release.
-		if ( 266141 !== $product->get_id() ) {
 			return $tabs;
 		}
 
