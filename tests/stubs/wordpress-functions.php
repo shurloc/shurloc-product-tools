@@ -172,6 +172,44 @@ if ( ! function_exists( 'add_filter' ) ) {
 }
 
 
+if ( ! function_exists( 'has_filter' ) ) {
+
+	/**
+	 * Check whether a filter is registered.
+	 *
+	 * @param string        $hook     Hook name.
+	 * @param callable|null $callback Optional callback.
+	 * @return int|false Priority if found, true if callbacks exist and no callback
+	 *                   was specified, otherwise false.
+	 */
+	function has_filter(
+		string $hook,
+		$callback = null
+	) {
+
+		if ( empty( $GLOBALS['shurloc_test_filters'][ $hook ] ) ) {
+			return false;
+		}
+
+		if ( null === $callback ) {
+			return true;
+		}
+
+		foreach (
+			$GLOBALS['shurloc_test_filters'][ $hook ]
+			as $registered
+		) {
+
+			if ( $registered === $callback ) {
+				return 10;
+			}
+		}
+
+		return false;
+	}
+}
+
+
 if ( ! function_exists( 'apply_filters' ) ) {
 
 	/**
@@ -811,5 +849,83 @@ if ( ! function_exists( 'wp_register_style' ) ) {
 			'ver'   => $ver,
 			'media' => $media,
 		);
+	}
+}
+
+if ( ! function_exists( '__' ) ) {
+
+	/**
+	 * Translate text.
+	 *
+	 * Test stub that returns the original string.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return string
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function __(
+		string $text,
+		string $domain = 'default'
+	): string {
+
+		return $text;
+	}
+}
+
+if ( ! function_exists( '_e' ) ) {
+
+	/**
+	 * Echo translated text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return void
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function _e(
+		string $text,
+		string $domain = 'default'
+	): void {
+
+		echo esc_html( $text );
+	}
+}
+
+if ( ! function_exists( 'esc_html__' ) ) {
+
+	/**
+	 * Translate and escape text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return string
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function esc_html__(
+		string $text,
+		string $domain = 'default'
+	): string {
+
+		return esc_html( $text );
+	}
+}
+
+if ( ! function_exists( 'esc_html_e' ) ) {
+
+	/**
+	 * Translate, escape, and echo text.
+	 *
+	 * @param string $text   Text to translate.
+	 * @param string $domain Text domain.
+	 * @return void
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
+	function esc_html_e(
+		string $text,
+		string $domain = 'default'
+	): void {
+
+		echo esc_html( $text );
 	}
 }
