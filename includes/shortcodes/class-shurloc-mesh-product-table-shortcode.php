@@ -106,6 +106,10 @@ final class Shurloc_Mesh_Product_Table_Shortcode implements Shurloc_Mesh_Product
 			Shurloc_Mesh_Product_Table_Assets::STYLE_HANDLE
 		);
 
+		wp_enqueue_script(
+			Shurloc_Mesh_Product_Table_Assets::SCRIPT_HANDLE
+		);
+
 		return $this->renderer->render(
 			$data
 		);
