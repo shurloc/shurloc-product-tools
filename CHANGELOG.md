@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.1] - 2026-07-27
+
+### Changed
+
+- Made color nullable through render layer.
+
 ## [0.13.0] - 2026-07-27
 
 ### Added
