@@ -74,7 +74,7 @@ final class Shurloc_Mesh_Product_Table_Renderer implements Shurloc_Mesh_Product_
 
 			$html .= '<th scope="col" class="shurloc-mesh-table-modifier">';
 			$html .= esc_html(
-				'Modifier'
+				'Type'
 			);
 			$html .= '</th>';
 		}
