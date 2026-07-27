@@ -1,5 +1,50 @@
 # Changelog
 
+## [0.13.0] - 2026-07-27
+
+### Added
+
+- Added interactive mesh product table row selection.
+- Added frontend JavaScript to synchronize mesh table row selection with the WooCommerce variation dropdown.
+- Added keyboard accessibility for mesh table rows, including Enter and Space activation.
+- Added selected-row highlighting and keyboard focus styling.
+- Added responsive and interactive styling for the mesh product table.
+- Added frontend script registration and conditional loading.
+- Added renderer support for embedding raw WooCommerce variation values as row metadata.
+- Added PHPUnit coverage for:
+  - Frontend script registration
+  - Frontend asset enqueueing
+  - Renderer variation metadata output
+  - Asset integration behavior
+
+### Changed
+
+- Updated `Shurloc_Mesh_Product_Table_Assets` to register both stylesheet and JavaScript assets.
+- Updated mesh product table rendering to emit variation metadata for frontend interaction.
+- Renamed the **Modifier** column to **Type**.
+- Improved table styling with:
+  - Theme color variables
+  - Selected row highlighting
+  - Hover state preservation
+  - Keyboard focus indicators
+  - Interactive cursor and transitions
+- Updated the mesh product table shortcode to enqueue both frontend assets only when rendered.
+
+### Internal Improvements
+
+- Extended `Shurloc_Mesh_Table_Row` to preserve the original WooCommerce variation value.
+- Updated the table data factory to propagate original variation values from parsed mesh specifications.
+- Expanded the WordPress testing framework with frontend script registration and enqueue test doubles.
+- Improved separation between frontend presentation, asset management, and client-side interaction.
+
+### Testing
+
+- Added PHPUnit coverage for JavaScript asset registration and enqueueing.
+- Added integration tests verifying frontend assets are enqueued when rendering the mesh product table.
+- Expanded renderer and table row tests for variation metadata support.
+- Added manual testing and release checklists to the project documentation.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.12.2] - 2026-07-24
 
 ### Changed
