@@ -15,6 +15,26 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
+	 * Set up test environment.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$GLOBALS['shurloc_test_is_product'] = true;
+	}
+
+	/**
+	 * Tear down test environment.
+	 */
+	protected function tearDown(): void {
+
+		$GLOBALS['shurloc_test_is_product'] = true;
+
+		parent::tearDown();
+	}
+
+	/**
 	 * Integration should generate and render product schema.
 	 */
 	public function test_renders_generated_product_schema(): void {
@@ -78,39 +98,31 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 		$GLOBALS['shurloc_test_is_product'] = false;
 
-		$catalog_service = $this->createMock(
-			Shurloc_Product_Catalog_Service_Interface::class
-		);
+		$catalog_service = new Shurloc_Product_Catalog_Service_Double();
 
-		$catalog_service
-			->expects( $this->never() )
-			->method( 'get_product_entry' );
+		$schema_service = new Shurloc_Product_Schema_Service_Double();
 
-		$schema_service = $this->createMock(
-			Shurloc_Product_Schema_Service_Interface::class
-		);
-
-		$schema_service
-			->expects( $this->never() )
-			->method( 'generate' );
-
-		$renderer = $this->createMock(
-			Shurloc_Product_Schema_Renderer_Interface::class
-		);
-
-		$renderer
-			->expects( $this->never() )
-			->method( 'render' );
+		$renderer = new Shurloc_Product_Schema_Renderer_Double();
 
 		$integration = new Shurloc_Product_Schema_Integration(
-			$catalog_service,
-			$schema_service,
-			$renderer
+			catalog_service: $catalog_service,
+			schema_service: $schema_service,
+			renderer: $renderer,
 		);
 
 		$integration->render_product_schema();
 
-		$GLOBALS['shurloc_test_is_product'] = true;
+		$this->assertEmpty(
+			$catalog_service->get_product_entry_calls()
+		);
+
+		$this->assertEmpty(
+			$schema_service->get_calls()
+		);
+
+		$this->assertEmpty(
+			$renderer->get_calls()
+		);
 	}
 
 	/**
