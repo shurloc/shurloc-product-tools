@@ -35,7 +35,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			mesh_count: 160
+			mesh_count: 160,
 		);
 
 		$this->assertFalse(
@@ -51,7 +51,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			thread_diameter: 64
+			thread_diameter: 64,
 		);
 
 		$this->assertFalse(
@@ -67,7 +67,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			modifier: 'HD'
+			modifier: 'HD',
 		);
 
 		$this->assertFalse(
@@ -83,7 +83,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			color: 'White'
+			color: 'White',
 		);
 
 		$this->assertFalse(
@@ -99,7 +99,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			pack_size: '20 Pack'
+			pack_size: '20 Pack',
 		);
 
 		$this->assertFalse(
@@ -115,7 +115,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_a = $this->create_spec();
 
 		$spec_b = $this->create_spec(
-			price_text: '$25.00'
+			price_text: '$25.00',
 		);
 
 		$this->assertFalse(
@@ -133,7 +133,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		$spec_b = $this->create_spec(
 			unknown_tokens: array(
 				'Thin Thread',
-			)
+			),
 		);
 
 		$this->assertFalse(
@@ -159,7 +159,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 	public function test_is_valid_returns_false_for_missing_mesh_count(): void {
 
 		$spec = $this->create_spec(
-			mesh_count: null
+			mesh_count: null,
 		);
 
 		$this->assertFalse(
@@ -173,7 +173,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 	public function test_is_valid_returns_false_for_missing_thread_diameter(): void {
 
 		$spec = $this->create_spec(
-			thread_diameter: null
+			thread_diameter: null,
 		);
 
 		$this->assertFalse(
@@ -202,7 +202,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 		?string $pack_size = '10 Pack',
 		?string $price_text = '$20.00',
 		bool $recognized = true,
-		array $unknown_tokens = array()
+		array $unknown_tokens = array(),
 	): Shurloc_Mesh_Specification {
 
 		return new Shurloc_Mesh_Specification(
@@ -214,7 +214,7 @@ final class ShurlocMeshSpecificationTest extends TestCase {
 			$pack_size,
 			$price_text,
 			$recognized,
-			$unknown_tokens
+			$unknown_tokens,
 		);
 	}
 }
