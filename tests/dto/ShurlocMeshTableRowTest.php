@@ -22,13 +22,13 @@ final class ShurlocMeshTableRowTest extends TestCase {
 	public function test_constructor_populates_all_fields(): void {
 
 		$row = new Shurloc_Mesh_Table_Row(
-			110,
-			80,
-			'White',
-			'S',
-			'10 Pack',
-			12.99,
-			'110/80 S White $12.99'
+			mesh_count: 110,
+			thread_diameter: 80,
+			color: 'White',
+			modifier: 'S',
+			pack_size: '10 Pack',
+			price: 12.99,
+			variation_value: '110/80 S White $12.99',
 		);
 
 		$this->assertSame(
@@ -75,13 +75,13 @@ final class ShurlocMeshTableRowTest extends TestCase {
 	public function test_nullable_fields_remain_null(): void {
 
 		$row = new Shurloc_Mesh_Table_Row(
-			230,
-			40,
-			'Yellow',
-			null,
-			null,
-			null,
-			'230/40 Yellow'
+			mesh_count: 230,
+			thread_diameter: 40,
+			color: 'Yellow',
+			modifier: null,
+			pack_size: null,
+			price: null,
+			variation_value: '230/40 Yellow',
 		);
 
 		$this->assertSame(
@@ -125,13 +125,13 @@ final class ShurlocMeshTableRowTest extends TestCase {
 	public function test_returns_variation_value(): void {
 
 		$row = new Shurloc_Mesh_Table_Row(
-			110,
-			80,
-			'Yellow',
-			null,
-			null,
-			18.17,
-			'110/80 Yellow $18.17'
+			mesh_count: 110,
+			thread_diameter: 80,
+			color: 'Yellow',
+			modifier: null,
+			pack_size: null,
+			price: 18.17,
+			variation_value: '110/80 Yellow $18.17',
 		);
 
 		$this->assertSame(
