@@ -22,7 +22,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 		$data = new Shurloc_Mesh_Table_Data(
 			rows: array(),
 			show_modifier_column: false,
-			show_pack_size_column: false
+			show_pack_size_column: false,
 		);
 
 		$this->assertFalse(
@@ -52,7 +52,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			modifier: null,
 			pack_size: '10 Pack',
 			price: 12.99,
-			variation_value: '110/80 White $12.99'
+			variation_value: '110/80 White $12.99',
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
@@ -60,7 +60,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 				$row,
 			),
 			show_modifier_column: false,
-			show_pack_size_column: true
+			show_pack_size_column: true,
 		);
 
 		$this->assertTrue(
@@ -92,7 +92,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			modifier: null,
 			pack_size: '10 Pack',
 			price: 12.99,
-			variation_value: '110/80 White $12.99'
+			variation_value: '110/80 White $12.99',
 		);
 
 		$second_row = new Shurloc_Mesh_Table_Row(
@@ -102,7 +102,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 			modifier: 'HD',
 			pack_size: '20 Pack',
 			price: 25.00,
-			variation_value: '160/64 HD Yellow $25.00'
+			variation_value: '160/64 HD Yellow $25.00',
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
@@ -111,7 +111,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 				$second_row,
 			),
 			show_modifier_column: true,
-			show_pack_size_column: true
+			show_pack_size_column: true,
 		);
 
 		$rows = $data->get_rows();
@@ -146,7 +146,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					modifier: null,
 					pack_size: null,
 					price: 12.99,
-					variation_value: '110/80 White $12.99'
+					variation_value: '110/80 White $12.99',
 				),
 				new Shurloc_Mesh_Table_Row(
 					mesh_count: 160,
@@ -155,7 +155,7 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					modifier: null,
 					pack_size: null,
 					price: 15.99,
-					variation_value: '160/64 Yellow $15.99'
+					variation_value: '160/64 Yellow $15.99',
 				),
 				new Shurloc_Mesh_Table_Row(
 					mesh_count: 230,
@@ -164,11 +164,11 @@ final class ShurlocMeshTableDataTest extends TestCase {
 					modifier: 'S',
 					pack_size: null,
 					price: 18.99,
-					variation_value: '230/48 S White $18.99'
+					variation_value: '230/48 S White $18.99',
 				),
 			),
 			show_modifier_column: true,
-			show_pack_size_column: false
+			show_pack_size_column: false,
 		);
 
 		$this->assertSame(
