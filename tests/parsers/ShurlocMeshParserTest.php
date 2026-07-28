@@ -16,13 +16,29 @@ use PHPUnit\Framework\Attributes\DataProviderExternal;
 class ShurlocMeshParserTest extends TestCase {
 
 	/**
+	 * Mesh parser under test.
+	 *
+	 * @var Shurloc_Mesh_Parser
+	 */
+	private Shurloc_Mesh_Parser $parser;
+
+
+	/**
+	 * Set up test fixtures.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->parser = new Shurloc_Mesh_Parser();
+	}
+
+	/**
 	 * Verify the raw input string is preserved.
 	 */
 	public function test_raw_string_is_preserved(): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: '110/80 Yellow $23.75',
 		);
 
@@ -48,9 +64,7 @@ class ShurlocMeshParserTest extends TestCase {
 		Shurloc_Mesh_Specification $expected,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$actual = $parser->parse(
+		$actual = $this->parser->parse(
 			text: $input,
 		);
 
@@ -75,9 +89,7 @@ class ShurlocMeshParserTest extends TestCase {
 		string $variation,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: $variation,
 		);
 
@@ -100,9 +112,7 @@ class ShurlocMeshParserTest extends TestCase {
 		string $variation,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: $variation,
 		);
 
@@ -127,9 +137,7 @@ class ShurlocMeshParserTest extends TestCase {
 		string $expected_price,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: $variation,
 		);
 
@@ -155,9 +163,7 @@ class ShurlocMeshParserTest extends TestCase {
 		string $expected_color,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: $variation,
 		);
 
@@ -173,9 +179,7 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	public function test_invalid_mesh_values_are_recognized(): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: '350/30 Orange $35.00',
 		);
 
@@ -212,9 +216,7 @@ class ShurlocMeshParserTest extends TestCase {
 		string $variation,
 	): void {
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$spec = $parser->parse(
+		$spec = $this->parser->parse(
 			text: $variation,
 		);
 
