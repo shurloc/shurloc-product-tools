@@ -15,6 +15,27 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
+	 * Mesh product analyzer.
+	 *
+	 * @var Shurloc_Mesh_Product_Analyzer
+	 */
+	private Shurloc_Mesh_Product_Analyzer $analyzer;
+
+	/**
+	 * Set up tests.
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->analyzer = new Shurloc_Mesh_Product_Analyzer(
+			parser: new Shurloc_Mesh_Parser(),
+		);
+	}
+
+	/**
 	 * A product with recognized mesh variations should be identified as mesh.
 	 *
 	 * @return void
@@ -32,11 +53,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -75,11 +92,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -113,11 +126,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -142,11 +151,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -173,11 +178,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			price: 20.00,
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			array( $entry )
 		);
 
@@ -229,11 +230,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -281,11 +278,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
@@ -317,11 +310,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 	 */
 	public function test_empty_variation_list_returns_empty_result(): void {
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			array()
 		);
 
@@ -364,11 +353,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
+		$result = $this->analyzer->analyze(
 			$entries
 		);
 
