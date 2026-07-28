@@ -43,38 +43,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 
 	/**
-	 * Create table data fixture.
-	 *
-	 * @param Shurloc_Mesh_Table_Row[] $rows Table rows.
-	 * @return Shurloc_Mesh_Table_Data Table data.
-	 */
-	private function create_table_data(
-		array $rows
-	): Shurloc_Mesh_Table_Data {
-
-		$has_modifier  = false;
-		$has_pack_size = false;
-
-		foreach ( $rows as $row ) {
-
-			if ( null !== $row->get_modifier() ) {
-				$has_modifier = true;
-			}
-
-			if ( null !== $row->get_pack_size() ) {
-				$has_pack_size = true;
-			}
-		}
-
-		return new Shurloc_Mesh_Table_Data(
-			rows: $rows,
-			show_modifier_column: $has_modifier,
-			show_pack_size_column: $has_pack_size,
-		);
-	}
-
-
-	/**
 	 * Renders recognized mesh variations.
 	 */
 	public function test_renders_mesh_variations(): void {
@@ -394,6 +362,37 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		$this->assertStringContainsString(
 			'—',
 			$html
+		);
+	}
+
+	/**
+	 * Create table data fixture.
+	 *
+	 * @param Shurloc_Mesh_Table_Row[] $rows Table rows.
+	 * @return Shurloc_Mesh_Table_Data Table data.
+	 */
+	private function create_table_data(
+		array $rows
+	): Shurloc_Mesh_Table_Data {
+
+		$has_modifier  = false;
+		$has_pack_size = false;
+
+		foreach ( $rows as $row ) {
+
+			if ( null !== $row->get_modifier() ) {
+				$has_modifier = true;
+			}
+
+			if ( null !== $row->get_pack_size() ) {
+				$has_pack_size = true;
+			}
+		}
+
+		return new Shurloc_Mesh_Table_Data(
+			rows: $rows,
+			show_modifier_column: $has_modifier,
+			show_pack_size_column: $has_pack_size,
 		);
 	}
 }
