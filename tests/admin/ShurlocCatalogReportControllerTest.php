@@ -18,6 +18,13 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
+	 * Catalog report controller.
+	 *
+	 * @var Shurloc_Catalog_Report_Controller
+	 */
+	private Shurloc_Catalog_Report_Controller $controller;
+
+	/**
 	 * Set up test environment.
 	 *
 	 * @return void
@@ -28,6 +35,10 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 		$GLOBALS['shurloc_test_actions']         = array();
 		$GLOBALS['shurloc_test_action_metadata'] = array();
+
+		$this->controller = new Shurloc_Catalog_Report_Controller(
+			catalog_service: new Shurloc_Product_Catalog_Service(),
+		);
 	}
 
 	/**
@@ -37,11 +48,7 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 	 */
 	public function test_controller_registers_admin_hooks(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertArrayHasKey(
 			'admin_init',
@@ -61,11 +68,7 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 	 */
 	public function test_admin_init_callback_is_registered(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_init'][0]
@@ -79,11 +82,7 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 	 */
 	public function test_admin_menu_callback_is_registered(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_menu'][0]
