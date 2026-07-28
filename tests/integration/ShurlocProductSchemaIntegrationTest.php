@@ -130,38 +130,34 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 	 */
 	public function test_does_not_render_when_catalog_entry_is_null(): void {
 
-		$catalog_service = $this->createMock(
-			Shurloc_Product_Catalog_Service_Interface::class
+		$catalog_service = new Shurloc_Product_Catalog_Service_Double(
+			return_null_product_entry: true,
 		);
 
-		$catalog_service
-			->expects( $this->once() )
-			->method( 'get_product_entry' )
-			->willReturn( null );
+		$schema_service = new Shurloc_Product_Schema_Service_Double();
 
-		$schema_service = $this->createMock(
-			Shurloc_Product_Schema_Service_Interface::class
-		);
-
-		$schema_service
-			->expects( $this->never() )
-			->method( 'generate' );
-
-		$renderer = $this->createMock(
-			Shurloc_Product_Schema_Renderer_Interface::class
-		);
-
-		$renderer
-			->expects( $this->never() )
-			->method( 'render' );
+		$renderer = new Shurloc_Product_Schema_Renderer_Double();
 
 		$integration = new Shurloc_Product_Schema_Integration(
-			$catalog_service,
-			$schema_service,
-			$renderer
+			catalog_service: $catalog_service,
+			schema_service: $schema_service,
+			renderer: $renderer,
 		);
 
 		$integration->render_product_schema();
+
+		$this->assertCount(
+			1,
+			$catalog_service->get_product_entry_calls()
+		);
+
+		$this->assertEmpty(
+			$schema_service->get_calls()
+		);
+
+		$this->assertEmpty(
+			$renderer->get_calls()
+		);
 	}
 
 	/**
