@@ -44,21 +44,21 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 		$result->add_mesh_variation(
 			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White',
-				12.99,
-				1,
-				'Test Product',
-				''
+				variation: '110/80 White',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: ''
 			),
 			new Shurloc_Mesh_Specification(
-				'110/80 White',
-				110,
-				80,
-				null,
-				'White',
-				'10 Pack',
-				'$12.99',
-				true
+				raw: '110/80 White',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: '10 Pack',
+				price_text: '$12.99',
+				recognized: true
 			)
 		);
 
@@ -130,41 +130,41 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 		$result->add_mesh_variation(
 			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White',
-				12.99,
-				1,
-				'Test Product',
-				''
+				variation: '110/80 White',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: ''
 			),
 			new Shurloc_Mesh_Specification(
-				'110/80 White',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
+				raw: '110/80 White',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true
 			)
 		);
 
 		$result->add_mesh_variation(
 			new Shurloc_Catalog_Variation_Entry(
-				'160/64 Yellow',
-				15.99,
-				1,
-				'Test Product',
-				''
+				variation: '160/64 Yellow',
+				price: 15.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: ''
 			),
 			new Shurloc_Mesh_Specification(
-				'160/64 Yellow',
-				160,
-				64,
-				null,
-				'Yellow',
-				null,
-				'$15.99',
-				true
+				raw: '160/64 Yellow',
+				mesh_count: 160,
+				thread_diameter: 64,
+				modifier: null,
+				color: 'Yellow',
+				pack_size: null,
+				price_text: '$15.99',
+				recognized: true
 			)
 		);
 
