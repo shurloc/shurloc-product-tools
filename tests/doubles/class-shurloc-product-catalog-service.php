@@ -23,6 +23,20 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	private array $variation_entries;
 
 	/**
+	 * Calls to get_product_entry().
+	 *
+	 * @var WC_Product[]
+	 */
+	private array $product_entry_calls = array();
+
+	/**
+	 * Calls to get_product_variation_entries().
+	 *
+	 * @var WC_Product[]
+	 */
+	private array $variation_entry_calls = array();
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Shurloc_Catalog_Variation_Entry[] $variation_entries Variation entries.
@@ -44,25 +58,30 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	 * @return Shurloc_Catalog_Product_Entry Product entry.
 	 */
 	public function get_product_entry(
-		WC_Product $product
+		WC_Product $product,
 	): Shurloc_Catalog_Product_Entry {
 
+		$this->product_entry_calls[] = $product;
+
 		return new Shurloc_Catalog_Product_Entry(
-			(int) $product->get_id(),
-			$product->get_name(),
-			'',
-			'',
-			'',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			$this->variation_entries
+			product_id: (int) $product->get_id(),
+			product_name: $product->get_name(),
+			edit_url: '',
+			product_url: '',
+			sku: '',
+			image_url: null,
+			short_description: null,
+			description: null,
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: $this->variation_entries,
 		);
 	}
 
@@ -75,9 +94,31 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	 * @return Shurloc_Catalog_Variation_Entry[] Variation entries.
 	 */
 	public function get_product_variation_entries(
-		WC_Product $product
+		WC_Product $product,
 	): array {
 
+		$this->variation_entry_calls[] = $product;
+
 		return $this->variation_entries;
+	}
+
+	/**
+	 * Get calls to get_product_entry().
+	 *
+	 * @return WC_Product[] Products passed to get_product_entry().
+	 */
+	public function get_product_entry_calls(): array {
+
+		return $this->product_entry_calls;
+	}
+
+	/**
+	 * Get calls to get_product_variation_entries().
+	 *
+	 * @return WC_Product[] Products passed to get_product_variation_entries().
+	 */
+	public function get_product_variation_entry_calls(): array {
+
+		return $this->variation_entry_calls;
 	}
 }
