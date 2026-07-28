@@ -299,7 +299,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Non-mesh products should generate a simple offer.
 	 */
-	public function test_non_mesh_product_generates_simple_offer(): void {
+	public function test_non_mesh_product_generates_offer_with_product_metadata(): void {
 
 		$product = $this->create_product(
 			product_id: 456,
@@ -340,7 +340,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Products without variations should still generate an offer.
 	 */
-	public function test_product_without_variations_can_generate_offer(): void {
+	public function test_product_without_variations_uses_current_price(): void {
 
 		$product = $this->create_product(
 			product_id: 789,
@@ -389,7 +389,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Sale price should be used for simple product offers.
 	 */
-	public function test_sale_price_is_used_for_offer_price(): void {
+	public function test_sale_product_uses_current_sale_price(): void {
 
 		$product = $this->create_product(
 			product_id: 100,
@@ -446,7 +446,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function test_current_price_is_used_for_offer_price(): void {
+	public function test_current_price_takes_precedence_over_regular_price(): void {
 
 		$product = $this->create_product(
 			product_id: 789,
