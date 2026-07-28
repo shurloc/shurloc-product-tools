@@ -60,19 +60,19 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		$this->result = new Shurloc_Mesh_Product_Result();
 
 		$this->data_service = new Shurloc_Mesh_Product_Data_Service_Double(
-			$this->result
+			result: $this->result,
 		);
 
 		$this->table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
 
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer_Double(
-			'<table>Mesh Table</table>'
+			output: '<table>Mesh Table</table>',
 		);
 
 		$this->shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$this->data_service,
 			$this->table_data_factory,
-			$this->renderer
+			$this->renderer,
 		);
 	}
 
@@ -139,23 +139,24 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		$GLOBALS['product'] = new WC_Product( 1 );
 
 		$this->result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White $12.99',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White $12.99',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White $12.99',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$html = $this->shortcode->render();
@@ -180,23 +181,24 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		$GLOBALS['product'] = new WC_Product( 1 );
 
 		$this->result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White $12.99',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White $12.99',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White $12.99',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$this->shortcode->render();
