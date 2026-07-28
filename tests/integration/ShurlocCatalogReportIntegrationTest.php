@@ -47,7 +47,7 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 		$entries = MeshCatalogDataProvider::load_catalog();
 
 		$report = $this->analyzer->analyze(
-			$entries,
+			entries: $entries,
 		);
 
 		$this->assertInstanceOf(
@@ -106,7 +106,7 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 		$entries = MeshCatalogDataProvider::load_catalog();
 
 		$report = $this->analyzer->analyze(
-			$entries,
+			entries: $entries,
 		);
 
 		$data = $report->to_array();
@@ -133,15 +133,15 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 		$entries = MeshCatalogDataProvider::load_catalog();
 
 		$entries[] = new Shurloc_Catalog_Variation_Entry(
-			'Custom Promotional Product',
-			null,
-			999999,
-			'Fixture Product',
-			''
+			variation: 'Custom Promotional Product',
+			price: null,
+			product_id: 999999,
+			product_name: 'Fixture Product',
+			edit_url: '',
 		);
 
 		$report = $this->analyzer->analyze(
-			$entries,
+			entries: $entries,
 		);
 
 		$data = $report->to_array();
