@@ -18,6 +18,25 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocCatalogReportIntegrationTest extends TestCase {
 
 	/**
+	 * Catalog analyzer.
+	 *
+	 * @var Shurloc_Catalog_Analyzer
+	 */
+	private Shurloc_Catalog_Analyzer $analyzer;
+
+	/**
+	 * Set up test environment.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->analyzer = new Shurloc_Catalog_Analyzer(
+			parser: new Shurloc_Mesh_Parser(),
+		);
+	}
+
+	/**
 	 * Test catalog report generation from fixture data.
 	 *
 	 * @throws JsonException    If the fixture JSON is invalid.
@@ -27,14 +46,8 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 
 		$entries = MeshCatalogDataProvider::load_catalog();
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$analyzer = new Shurloc_Catalog_Analyzer(
-			$parser
-		);
-
-		$report = $analyzer->analyze(
-			$entries
+		$report = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertInstanceOf(
@@ -78,7 +91,7 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 
 		$this->assertContainsOnlyInstancesOf(
 			Shurloc_Catalog_Variation_Entry::class,
-			$entries
+			$entries,
 		);
 	}
 
@@ -92,14 +105,8 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 
 		$entries = MeshCatalogDataProvider::load_catalog();
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$analyzer = new Shurloc_Catalog_Analyzer(
-			$parser
-		);
-
-		$report = $analyzer->analyze(
-			$entries
+		$report = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$data = $report->to_array();
@@ -133,14 +140,8 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 			''
 		);
 
-		$parser = new Shurloc_Mesh_Parser();
-
-		$analyzer = new Shurloc_Catalog_Analyzer(
-			$parser
-		);
-
-		$report = $analyzer->analyze(
-			$entries
+		$report = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$data = $report->to_array();
