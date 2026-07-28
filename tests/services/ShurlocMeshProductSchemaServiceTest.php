@@ -16,8 +16,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mesh products should return mesh analysis results.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_products_return_mesh_result(): void {
 
@@ -44,8 +42,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Non-mesh products should return null.
-	 *
-	 * @return void
 	 */
 	public function test_non_mesh_products_return_null(): void {
 
@@ -62,8 +58,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mesh analysis should preserve variation data.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_analysis_preserves_variation_data(): void {
 
@@ -115,8 +109,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Multiple mesh variations should all be preserved.
-	 *
-	 * @return void
 	 */
 	public function test_multiple_mesh_variations_are_preserved(): void {
 
@@ -174,8 +166,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Products without variations should return null.
-	 *
-	 * @return void
 	 */
 	public function test_products_without_variations_return_null(): void {
 
@@ -214,8 +204,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mixed variations should preserve only recognized mesh variations.
-	 *
-	 * @return void
 	 */
 	public function test_mixed_variations_preserve_only_mesh_variations(): void {
 
@@ -273,8 +261,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Invalid mesh specifications should still return mesh results.
-	 *
-	 * @return void
 	 */
 	public function test_invalid_mesh_specifications_are_preserved(): void {
 
@@ -303,8 +289,6 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Unrecognized variations should return null.
-	 *
-	 * @return void
 	 */
 	public function test_unrecognized_variations_return_null(): void {
 
