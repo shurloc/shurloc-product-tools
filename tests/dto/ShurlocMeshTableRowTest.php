@@ -134,7 +134,6 @@ final class ShurlocMeshTableRowTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Table rows permit a missing mesh color.
 	 */
