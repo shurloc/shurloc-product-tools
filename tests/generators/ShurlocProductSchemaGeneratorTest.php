@@ -15,6 +15,25 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
+	 * Schema generator.
+	 *
+	 * @var Shurloc_Product_Schema_Generator
+	 */
+	private Shurloc_Product_Schema_Generator $generator;
+
+	/**
+	 * Set up test environment.
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->generator = new Shurloc_Product_Schema_Generator();
+	}
+
+	/**
 	 * A mesh product should generate an aggregate offer with multiple variations.
 	 */
 	public function test_generates_product_schema_with_aggregate_offer(): void {
@@ -199,7 +218,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -264,7 +283,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -321,7 +340,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -400,7 +419,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -437,7 +456,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -489,7 +508,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -528,7 +547,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -565,7 +584,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -607,7 +626,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -646,7 +665,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result()
 		);
@@ -685,7 +704,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result( array() )
 		);
@@ -729,7 +748,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			variations: array(),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result( array() )
 		);
@@ -781,7 +800,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			),
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
+		$schema = $this->generator->generate(
 			product: $product,
 			result: new Shurloc_Mesh_Product_Result( array() )
 		);
@@ -838,7 +857,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		Shurloc_Mesh_Product_Result $result
 	): array {
 
-		return ( new Shurloc_Product_Schema_Generator() )->generate(
+		return $this->generator->generate(
 			product: $this->create_product_entry(),
 			result: $result
 		);
