@@ -39,7 +39,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_generates_product_schema_with_aggregate_offer(): void {
 
 		$schema = $this->generate_schema(
-			result: $this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -154,7 +154,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_brand(): void {
 
 		$schema = $this->generate_schema(
-			result: $this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -174,7 +174,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_manufacturer(): void {
 
 		$schema = $this->generate_schema(
-			result: $this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -207,7 +207,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayHasKey(
@@ -258,7 +258,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayHasKey(
@@ -300,7 +300,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -320,7 +320,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_aggregate_offer_contains_price_range(): void {
 
 		$schema = $this->generate_schema(
-			result: $this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$offers = $schema['offers'];
@@ -367,7 +367,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -393,7 +393,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -433,7 +433,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -457,7 +457,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -483,7 +483,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -512,7 +512,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -540,7 +540,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -568,7 +568,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -605,7 +605,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -650,7 +650,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result()
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -677,7 +677,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 				mesh_count: 110,
 				thread_diameter: 80,
 				color: 'Yellow',
-			)
+			),
 		);
 
 		$result->add_mesh_variation(
@@ -689,7 +689,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 				mesh_count: 160,
 				thread_diameter: 64,
 				color: 'White',
-			)
+			),
 		);
 
 		return $result;
@@ -702,12 +702,12 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 * @return array<string,mixed>
 	 */
 	private function generate_schema(
-		Shurloc_Mesh_Product_Result $result
+		Shurloc_Mesh_Product_Result $result,
 	): array {
 
 		return $this->generator->generate(
 			product: $this->create_product_entry(),
-			result: $result
+			result: $result,
 		);
 	}
 
@@ -759,7 +759,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	private function create_variation(
 		string $variation,
-		float $price
+		float $price,
 	): Shurloc_Catalog_Variation_Entry {
 
 		return new Shurloc_Catalog_Variation_Entry(
@@ -767,7 +767,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			price: $price,
 			product_id: 123,
 			product_name: 'Test Mesh Product',
-			edit_url: ''
+			edit_url: '',
 		);
 	}
 
@@ -788,7 +788,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		string $color,
 		?string $modifier = null,
 		?string $pack_size = null,
-		string $price_text = '$20.00'
+		string $price_text = '$20.00',
 	): Shurloc_Mesh_Specification {
 
 		return new Shurloc_Mesh_Specification(
@@ -800,7 +800,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			pack_size: $pack_size,
 			price_text: $price_text,
 			recognized: true,
-			unknown_tokens: array()
+			unknown_tokens: array(),
 		);
 	}
 
@@ -845,7 +845,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		string $manufacturer = 'Shur-loc',
 		?array $aggregate_rating = null,
 		array $reviews = array(),
-		array $variations = array()
+		array $variations = array(),
 	): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
@@ -866,7 +866,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			manufacturer: $manufacturer,
 			aggregate_rating: $aggregate_rating,
 			reviews: $reviews,
-			variations: $variations
+			variations: $variations,
 		);
 	}
 }
