@@ -23,8 +23,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Setup tests.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -33,8 +31,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Teardown tests.
-	 *
-	 * @return void
 	 */
 	protected function tearDown(): void {
 
@@ -45,8 +41,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Simple product should create catalog entry.
-	 *
-	 * @return void
 	 */
 	public function test_simple_product_creates_catalog_entry(): void {
 
@@ -156,8 +150,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Product should default manufacturer to Shur-loc.
-	 *
-	 * @return void
 	 */
 	public function test_product_manufacturer_defaults_to_shurloc(): void {
 
@@ -179,8 +171,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Product brand should be loaded from product data.
-	 *
-	 * @return void
 	 */
 	public function test_product_brand_is_loaded(): void {
 
@@ -208,8 +198,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Product without brand should default to Shur-loc.
-	 *
-	 * @return void
 	 */
 	public function test_product_without_brand_defaults_to_shurloc(): void {
 
@@ -231,8 +219,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Product without reviews should have no aggregate rating.
-	 *
-	 * @return void
 	 */
 	public function test_product_without_reviews_has_no_rating_data(): void {
 
@@ -258,8 +244,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Out of stock products should preserve availability.
-	 *
-	 * @return void
 	 */
 	public function test_out_of_stock_product_sets_availability(): void {
 
@@ -281,8 +265,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Empty WooCommerce prices should normalize to null.
-	 *
-	 * @return void
 	 */
 	public function test_empty_prices_are_normalized_to_null(): void {
 
@@ -307,8 +289,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Variable product returns variations.
-	 *
-	 * @return void
 	 */
 	public function test_variable_product_returns_variations(): void {
 
@@ -350,8 +330,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Product descriptions should remove HTML tags.
-	 *
-	 * @return void
 	 */
 	public function test_product_descriptions_are_stripped_of_html(): void {
 
@@ -386,8 +364,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Mesh variation data should survive catalog conversion.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_variation_data_survives_catalog_conversion(): void {
 
@@ -438,8 +414,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Mesh variation attribute values are preserved.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_variation_attribute_value_is_preserved(): void {
 
@@ -481,8 +455,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Variations without attributes are ignored.
-	 *
-	 * @return void
 	 */
 	public function test_variations_without_attributes_are_ignored(): void {
 
@@ -514,8 +486,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 
 	/**
 	 * Preserves WooCommerce variation order.
-	 *
-	 * @return void
 	 */
 	public function test_preserves_product_variation_order(): void {
 
