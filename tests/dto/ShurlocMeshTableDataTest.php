@@ -22,9 +22,9 @@ final class ShurlocMeshTableDataTest extends TestCase {
 	public function test_empty_table_data_has_no_rows(): void {
 
 		$data = new Shurloc_Mesh_Table_Data(
-			array(),
-			false,
-			false
+			rows: array(),
+			show_modifier_column: false,
+			show_pack_size_column: false
 		);
 
 		$this->assertFalse(
@@ -50,21 +50,21 @@ final class ShurlocMeshTableDataTest extends TestCase {
 	public function test_table_data_returns_rows(): void {
 
 		$row = new Shurloc_Mesh_Table_Row(
-			110,
-			80,
-			'White',
-			null,
-			'10 Pack',
-			12.99,
-			'110/80 White $12.99'
+			mesh_count: 110,
+			thread_diameter: 80,
+			color: 'White',
+			modifier: null,
+			pack_size: '10 Pack',
+			price: 12.99,
+			variation_value: '110/80 White $12.99'
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
-			array(
+			rows: array(
 				$row,
 			),
-			false,
-			true
+			show_modifier_column: false,
+			show_pack_size_column: true
 		);
 
 		$this->assertTrue(
@@ -92,32 +92,32 @@ final class ShurlocMeshTableDataTest extends TestCase {
 	public function test_multiple_rows_are_preserved_in_order(): void {
 
 		$first_row = new Shurloc_Mesh_Table_Row(
-			110,
-			80,
-			'White',
-			null,
-			'10 Pack',
-			12.99,
-			'110/80 White $12.99'
+			mesh_count: 110,
+			thread_diameter: 80,
+			color: 'White',
+			modifier: null,
+			pack_size: '10 Pack',
+			price: 12.99,
+			variation_value: '110/80 White $12.99'
 		);
 
 		$second_row = new Shurloc_Mesh_Table_Row(
-			160,
-			64,
-			'Yellow',
-			'HD',
-			'20 Pack',
-			25.00,
-			'160/64 HD Yellow $25.00'
+			mesh_count: 160,
+			thread_diameter: 64,
+			color: 'Yellow',
+			modifier: 'HD',
+			pack_size: '20 Pack',
+			price: 25.00,
+			variation_value: '160/64 HD Yellow $25.00'
 		);
 
 		$data = new Shurloc_Mesh_Table_Data(
-			array(
+			rows: array(
 				$first_row,
 				$second_row,
 			),
-			true,
-			true
+			show_modifier_column: true,
+			show_pack_size_column: true
 		);
 
 		$rows = $data->get_rows();
@@ -146,37 +146,37 @@ final class ShurlocMeshTableDataTest extends TestCase {
 	public function test_count_returns_number_of_rows(): void {
 
 		$data = new Shurloc_Mesh_Table_Data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					null,
-					null,
-					12.99,
-					'110/80 White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: null,
+					pack_size: null,
+					price: 12.99,
+					variation_value: '110/80 White $12.99'
 				),
 				new Shurloc_Mesh_Table_Row(
-					160,
-					64,
-					'Yellow',
-					null,
-					null,
-					15.99,
-					'160/64 Yellow $15.99'
+					mesh_count: 160,
+					thread_diameter: 64,
+					color: 'Yellow',
+					modifier: null,
+					pack_size: null,
+					price: 15.99,
+					variation_value: '160/64 Yellow $15.99'
 				),
 				new Shurloc_Mesh_Table_Row(
-					230,
-					48,
-					'White',
-					'S',
-					null,
-					18.99,
-					'230/48 S White $18.99'
+					mesh_count: 230,
+					thread_diameter: 48,
+					color: 'White',
+					modifier: 'S',
+					pack_size: null,
+					price: 18.99,
+					variation_value: '230/48 S White $18.99'
 				),
 			),
-			true,
-			false
+			show_modifier_column: true,
+			show_pack_size_column: false
 		);
 
 		$this->assertSame(
