@@ -50,7 +50,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -87,7 +87,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertFalse(
@@ -119,7 +119,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertCount(
@@ -142,7 +142,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertFalse(
@@ -167,7 +167,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			array( $entry )
+			array( $entry ),
 		);
 
 		$spec = $result->mesh_variations[0]['spec'];
@@ -217,7 +217,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$spec = $result->mesh_variations[0]['spec'];
@@ -263,7 +263,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -293,7 +293,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 	public function test_empty_variation_list_returns_empty_result(): void {
 
 		$result = $this->analyzer->analyze(
-			array()
+			array(),
 		);
 
 		$this->assertFalse(
@@ -334,7 +334,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		);
 
 		$result = $this->analyzer->analyze(
-			$entries
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -366,7 +366,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 	 */
 	private function create_variation_entry(
 		string $variation,
-		?float $price
+		?float $price,
 	): Shurloc_Catalog_Variation_Entry {
 
 		return new Shurloc_Catalog_Variation_Entry(
