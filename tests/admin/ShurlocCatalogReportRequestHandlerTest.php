@@ -33,8 +33,6 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -63,8 +61,6 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 
 	/**
 	 * Request handler registers admin_init hook.
-	 *
-	 * @return void
 	 */
 	public function test_registers_admin_init_hook(): void {
 
@@ -80,8 +76,6 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 
 	/**
 	 * Request handler ignores missing action.
-	 *
-	 * @return void
 	 */
 	public function test_request_without_action_is_ignored(): void {
 
@@ -97,8 +91,6 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 
 	/**
 	 * Export request routes correctly.
-	 *
-	 * @return void
 	 */
 	public function test_export_request_routes_to_export_handler(): void {
 
@@ -118,8 +110,6 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 
 	/**
 	 * Report request routes correctly.
-	 *
-	 * @return void
 	 */
 	public function test_report_request_routes_to_report_handler(): void {
 
