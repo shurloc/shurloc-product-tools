@@ -37,8 +37,8 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 	public function test_registers_register_assets_hook(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugins/shurloc-product-tools/',
-			'1.0.0'
+			asset_url: 'https://example.com/plugins/shurloc-product-tools/',
+			asset_version: '1.0.0'
 		);
 
 		$assets->register();
@@ -62,8 +62,8 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 	public function test_registers_stylesheet(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugin/',
-			'1.2.3'
+			asset_url: 'https://example.com/plugin/',
+			asset_version: '1.2.3'
 		);
 
 		$assets->register_assets();
@@ -106,8 +106,8 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 	public function test_registers_script(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugin/',
-			'1.2.3'
+			asset_url: 'https://example.com/plugin/',
+			asset_version: '1.2.3'
 		);
 
 		$assets->register_assets();
