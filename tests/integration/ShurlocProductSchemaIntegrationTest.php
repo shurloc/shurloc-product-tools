@@ -360,24 +360,24 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 	private function create_catalog_entry(): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Product',
-			'',
-			'https://example.com/product/test-product/',
-			'TEST-123',
-			null,
-			'Short product description.',
-			'This is the product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+			product_id: 123,
+			product_name: 'Test Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/test-product/',
+			sku: 'TEST-123',
+			image_url: null,
+			short_description: 'Short product description.',
+			description: 'This is the product description.',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(),
 		);
 	}
 }
