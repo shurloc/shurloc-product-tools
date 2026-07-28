@@ -16,6 +16,16 @@ declare( strict_types=1 );
 final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Catalog_Service_Interface {
 
 	/**
+	 * Catalog product entry to return.
+	 *
+	 * When null, the double creates an entry from the supplied WooCommerce
+	 * product to preserve its original behavior.
+	 *
+	 * @var Shurloc_Catalog_Product_Entry|null
+	 */
+	private ?Shurloc_Catalog_Product_Entry $product_entry;
+
+	/**
 	 * Catalog variation entries to return.
 	 *
 	 * @var Shurloc_Catalog_Variation_Entry[]
@@ -39,20 +49,23 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Catalog_Variation_Entry[] $variation_entries Variation entries.
+	 * @param Shurloc_Catalog_Variation_Entry[]  $variation_entries Variation entries.
+	 * @param Shurloc_Catalog_Product_Entry|null $product_entry     Product entry to return.
 	 */
 	public function __construct(
-		array $variation_entries = array()
+		array $variation_entries = array(),
+		?Shurloc_Catalog_Product_Entry $product_entry = null,
 	) {
 
 		$this->variation_entries = $variation_entries;
+		$this->product_entry     = $product_entry;
 	}
 
 	/**
 	 * Get catalog product entry.
 	 *
-	 * This method is included to satisfy the interface contract. Tests should
-	 * provide this behavior only when a consumer requires product entries.
+	 * Returns the configured product entry when supplied. Otherwise, creates
+	 * a catalog entry from the WooCommerce product.
 	 *
 	 * @param WC_Product $product WooCommerce product.
 	 * @return Shurloc_Catalog_Product_Entry Product entry.
@@ -63,6 +76,10 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 
 		$this->product_entry_calls[] = $product;
 
+		if ( null !== $this->product_entry ) {
+			return $this->product_entry;
+		}
+
 		return new Shurloc_Catalog_Product_Entry(
 			product_id: (int) $product->get_id(),
 			product_name: $product->get_name(),
@@ -70,8 +87,8 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 			product_url: '',
 			sku: '',
 			image_url: null,
-			short_description: null,
-			description: null,
+			short_description: 'Short description of product.',
+			description: 'Description of product.',
 			category: null,
 			price: null,
 			regular_price: null,
