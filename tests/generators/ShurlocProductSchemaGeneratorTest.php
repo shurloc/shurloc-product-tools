@@ -935,15 +935,15 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	): Shurloc_Mesh_Specification {
 
 		return new Shurloc_Mesh_Specification(
-			$mesh_count . '/' . $thread_diameter . ' ' . $color . ' ' . $price_text,
-			$mesh_count,
-			$thread_diameter,
-			$modifier,
-			$color,
-			$pack_size,
-			$price_text,
-			true,
-			array()
+			raw: $mesh_count . '/' . $thread_diameter . ' ' . $color . ' ' . $price_text,
+			mesh_count: $mesh_count,
+			thread_diameter: $thread_diameter,
+			modifier: $modifier,
+			color: $color,
+			pack_size: $pack_size,
+			price_text: $price_text,
+			recognized: true,
+			unknown_tokens: array()
 		);
 	}
 }
