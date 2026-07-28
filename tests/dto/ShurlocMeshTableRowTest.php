@@ -16,8 +16,6 @@ final class ShurlocMeshTableRowTest extends TestCase {
 
 	/**
 	 * Constructor populates all properties.
-	 *
-	 * @return void
 	 */
 	public function test_constructor_populates_all_fields(): void {
 
@@ -69,8 +67,6 @@ final class ShurlocMeshTableRowTest extends TestCase {
 
 	/**
 	 * Nullable fields remain null.
-	 *
-	 * @return void
 	 */
 	public function test_nullable_fields_remain_null(): void {
 
@@ -119,8 +115,6 @@ final class ShurlocMeshTableRowTest extends TestCase {
 
 	/**
 	 * Returns variation value.
-	 *
-	 * @return void
 	 */
 	public function test_returns_variation_value(): void {
 
@@ -143,8 +137,6 @@ final class ShurlocMeshTableRowTest extends TestCase {
 
 	/**
 	 * Table rows permit a missing mesh color.
-	 *
-	 * @return void
 	 */
 	public function test_color_can_be_null(): void {
 
