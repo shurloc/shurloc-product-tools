@@ -67,9 +67,9 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		}
 
 		return new Shurloc_Mesh_Table_Data(
-			$rows,
-			$has_modifier,
-			$has_pack_size
+			rows: $rows,
+			show_modifier_column: $has_modifier,
+			show_pack_size_column: $has_pack_size,
 		);
 	}
 
@@ -80,21 +80,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_renders_mesh_variations(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					null,
-					'10 Pack',
-					12.99,
-					'110/80 White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: null,
+					pack_size: '10 Pack',
+					price: 12.99,
+					variation_value: '110/80 White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringContainsString(
@@ -140,21 +140,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_hides_modifier_column_when_no_modifiers_exist(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					null,
-					'10 Pack',
-					12.99,
-					'110/80 White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: null,
+					pack_size: '10 Pack',
+					price: 12.99,
+					variation_value: '110/80 White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringNotContainsString(
@@ -170,21 +170,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_hides_pack_size_column_when_no_pack_sizes_exist(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					null,
-					null,
-					12.99,
-					'110/80 White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: null,
+					pack_size: null,
+					price: 12.99,
+					variation_value: '110/80 White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringNotContainsString(
@@ -200,21 +200,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_shows_modifier_column_when_modifier_exists(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					'HD',
-					null,
-					12.99,
-					'110/80 HD White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: 'HD',
+					pack_size: null,
+					price: 12.99,
+					variation_value: '110/80 HD White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringContainsString(
@@ -235,21 +235,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_shows_pack_size_column_when_pack_size_exists(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					null,
-					'10 Pack',
-					12.99,
-					'110/80 White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: null,
+					pack_size: '10 Pack',
+					price: 12.99,
+					variation_value: '110/80 White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringContainsString(
@@ -270,21 +270,21 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_renders_columns_in_expected_order(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
-					110,
-					80,
-					'White',
-					'HD',
-					'10 Pack',
-					12.99,
-					'110/80 HD White $12.99'
+					mesh_count: 110,
+					thread_diameter: 80,
+					color: 'White',
+					modifier: 'HD',
+					pack_size: '10 Pack',
+					price: 12.99,
+					variation_value: '110/80 HD White $12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$mesh_position = strpos(
@@ -349,7 +349,7 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	public function test_renders_row_without_color(): void {
 
 		$data = $this->create_table_data(
-			array(
+			rows: array(
 				new Shurloc_Mesh_Table_Row(
 					mesh_count: 120,
 					thread_diameter: 48,
@@ -359,11 +359,11 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 					price: 24.10,
 					variation_value: '120/48 (S) $24.10',
 				),
-			)
+			),
 		);
 
 		$html = $this->renderer->render(
-			$data
+			data: $data,
 		);
 
 		$this->assertStringContainsString(
