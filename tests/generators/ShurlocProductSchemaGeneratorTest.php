@@ -774,12 +774,12 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Create mesh specification fixture.
 	 *
-	 * @param int    $mesh_count       Mesh count.
-	 * @param int    $thread_diameter  Thread diameter.
-	 * @param string $color            Color.
-	 * @param string $modifier         Optional modifier.
-	 * @param string $pack_size        Optional pack size.
-	 * @param string $price_text       Price text.
+	 * @param int         $mesh_count       Mesh count.
+	 * @param int         $thread_diameter  Thread diameter.
+	 * @param string      $color            Color.
+	 * @param string|null $modifier         Optional modifier.
+	 * @param string|null $pack_size        Optional pack size.
+	 * @param string      $price_text       Price text.
 	 * @return Shurloc_Mesh_Specification
 	 */
 	private function create_spec(
