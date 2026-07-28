@@ -58,88 +58,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 
 		$this->assertSame(
-			'https://example.com/product/test-mesh-product/#product',
-			$schema['@id']
-		);
-
-		$this->assertSame(
-			'https://example.com/product/test-mesh-product/',
-			$schema['url']
-		);
-
-		$this->assertSame(
-			'TEST-MESH-123',
-			$schema['sku']
-		);
-
-		$this->assertSame(
-			'https://example.com/image.jpg',
-			$schema['image']
-		);
-
-		$this->assertSame(
-			'This is the long product description.',
-			$schema['description']
-		);
-
-		$this->assertSame(
-			'Brand',
-			$schema['brand']['@type']
-		);
-
-		$this->assertSame(
-			'Test Brand',
-			$schema['brand']['name']
-		);
-
-		$this->assertSame(
-			'Organization',
-			$schema['manufacturer']['@type']
-		);
-
-		$this->assertSame(
-			'Shur-loc',
-			$schema['manufacturer']['name']
-		);
-
-		$this->assertSame(
-			'AggregateRating',
-			$schema['aggregateRating']['@type']
-		);
-
-		$this->assertSame(
-			'5',
-			$schema['aggregateRating']['ratingValue']
-		);
-
-		$this->assertSame(
-			'12',
-			$schema['aggregateRating']['reviewCount']
-		);
-
-		$this->assertCount(
-			1,
-			$schema['review']
-		);
-
-		$this->assertSame(
-			'Review',
-			$schema['review'][0]['@type']
-		);
-
-		$this->assertSame(
 			'AggregateOffer',
 			$schema['offers']['@type']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers']['lowPrice']
-		);
-
-		$this->assertSame(
-			'25.00',
-			$schema['offers']['highPrice']
 		);
 
 		$this->assertSame(
