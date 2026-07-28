@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version.
  */
-define( 'SHURLOC_PRODUCT_TOOLS_VERSION', '0.13.2' );
+define( 'SHURLOC_PRODUCT_TOOLS_VERSION', '0.14.0' );
 
 /**
  * Plugin directory path.

@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.14.0] - 2026-07-28
+
+### Changed
+
+- Standardized PHPUnit tests to use named arguments for constructors and method invocations.
+- Consolidated repeated test setup into shared `setUp()` methods where appropriate.
+- Improved consistency and readability of test fixtures throughout the project.
+
+### Internal Improvements
+
+- Replaced PHPUnit mocks with reusable test doubles across the test suite.
+- Added configurable test doubles with call recording for service integration testing.
+- Expanded use of interfaces to improve testability and reduce coupling.
+- Simplified integration tests by replacing mock expectations with explicit state verification.
+- Standardized test fixture construction and helper methods across PHPUnit tests.
+- Improved maintainability and consistency of the project's testing infrastructure.
+
+### Testing
+
+- Refactored PHPUnit tests to use reusable test doubles instead of mock objects.
+- Expanded integration test coverage for service interactions using call-recording test doubles.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.13.2] - 2026-07-27
 
 ### Changed
