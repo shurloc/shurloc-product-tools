@@ -23,8 +23,6 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 	/**
 	 * Set up factory.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -35,8 +33,6 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 	/**
 	 * Factory creates rows from mesh results.
-	 *
-	 * @return void
 	 */
 	public function test_creates_table_rows_from_mesh_result(): void {
 
@@ -121,8 +117,6 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 	/**
 	 * Factory preserves multiple rows.
-	 *
-	 * @return void
 	 */
 	public function test_creates_multiple_rows(): void {
 
@@ -231,8 +225,6 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 
 	/**
 	 * Empty result creates empty table data.
-	 *
-	 * @return void
 	 */
 	public function test_empty_result_creates_empty_table_data(): void {
 
