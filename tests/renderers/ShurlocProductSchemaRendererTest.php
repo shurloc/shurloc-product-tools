@@ -15,11 +15,26 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocProductSchemaRendererTest extends TestCase {
 
 	/**
+	 * Schema renderer.
+	 *
+	 * @var Shurloc_Product_Schema_Renderer
+	 */
+	private Shurloc_Product_Schema_Renderer $renderer;
+
+	/**
+	 * Set up test environment.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->renderer = new Shurloc_Product_Schema_Renderer();
+	}
+
+	/**
 	 * Renderer should output JSON-LD script markup.
 	 */
 	public function test_renders_schema_as_json_ld_script(): void {
-
-		$renderer = new Shurloc_Product_Schema_Renderer();
 
 		$schema = array(
 			'@context' => 'https://schema.org',
@@ -29,8 +44,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		$renderer->render(
-			$schema
+		$this->renderer->render(
+			schema: $schema,
 		);
 
 		$output = ob_get_clean();
@@ -66,8 +81,6 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 	 */
 	public function test_renders_special_characters_safely(): void {
 
-		$renderer = new Shurloc_Product_Schema_Renderer();
-
 		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
@@ -76,8 +89,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		$renderer->render(
-			$schema
+		$this->renderer->render(
+			schema: $schema,
 		);
 
 		$output = ob_get_clean();
@@ -93,8 +106,6 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 	 */
 	public function test_renders_urls_without_escaping_slashes(): void {
 
-		$renderer = new Shurloc_Product_Schema_Renderer();
-
 		$schema = array(
 			'@context' => 'https://schema.org',
 			'@type'    => 'Product',
@@ -103,8 +114,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		ob_start();
 
-		$renderer->render(
-			$schema
+		$this->renderer->render(
+			schema: $schema,
 		);
 
 		$output = ob_get_clean();

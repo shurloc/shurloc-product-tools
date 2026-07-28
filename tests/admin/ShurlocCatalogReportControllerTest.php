@@ -11,16 +11,18 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests catalog report admin controller.
- *
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
  */
 final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
-	 * Set up test environment.
+	 * Catalog report controller.
 	 *
-	 * @return void
+	 * @var Shurloc_Catalog_Report_Controller
+	 */
+	private Shurloc_Catalog_Report_Controller $controller;
+
+	/**
+	 * Set up test environment.
 	 */
 	protected function setUp(): void {
 
@@ -29,21 +31,17 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 		$GLOBALS['shurloc_test_actions']         = array();
 		$GLOBALS['shurloc_test_action_metadata'] = array();
 
-		$this->load_controller();
+		$this->controller = new Shurloc_Catalog_Report_Controller(
+			catalog_service: new Shurloc_Product_Catalog_Service(),
+		);
 	}
 
 	/**
 	 * Controller should register admin hooks.
-	 *
-	 * @return void
 	 */
 	public function test_controller_registers_admin_hooks(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertArrayHasKey(
 			'admin_init',
@@ -58,16 +56,10 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Admin init callback should be callable.
-	 *
-	 * @return void
 	 */
 	public function test_admin_init_callback_is_registered(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_init'][0]
@@ -76,37 +68,13 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Admin menu callback should be callable.
-	 *
-	 * @return void
 	 */
 	public function test_admin_menu_callback_is_registered(): void {
 
-		$controller = new Shurloc_Catalog_Report_Controller(
-			new Shurloc_Product_Catalog_Service()
-		);
-
-		$controller->register();
+		$this->controller->register();
 
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_menu'][0]
 		);
-	}
-
-	/**
-	 * Load controller class.
-	 *
-	 * @return void
-	 */
-	private function load_controller(): void {
-
-		if (
-			! class_exists(
-				'Shurloc_Catalog_Report_Controller'
-			)
-		) {
-
-			require_once dirname( __DIR__, 2 )
-				. '/includes/admin/class-shurloc-catalog-report-controller.php';
-		}
 	}
 }

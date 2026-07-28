@@ -16,8 +16,6 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test setup.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -31,14 +29,12 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Registers frontend enqueue hook.
-	 *
-	 * @return void
 	 */
 	public function test_registers_register_assets_hook(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugins/shurloc-product-tools/',
-			'1.0.0'
+			asset_url: 'https://example.com/plugins/shurloc-product-tools/',
+			asset_version: '1.0.0',
 		);
 
 		$assets->register();
@@ -56,14 +52,12 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test that the stylesheet gets registered.
-	 *
-	 * @return void
 	 */
 	public function test_registers_stylesheet(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugin/',
-			'1.2.3'
+			asset_url: 'https://example.com/plugin/',
+			asset_version: '1.2.3',
 		);
 
 		$assets->register_assets();
@@ -100,14 +94,12 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test that the script gets registered.
-	 *
-	 * @return void
 	 */
 	public function test_registers_script(): void {
 
 		$assets = new Shurloc_Mesh_Product_Table_Assets(
-			'https://example.com/plugin/',
-			'1.2.3'
+			asset_url: 'https://example.com/plugin/',
+			asset_version: '1.2.3',
 		);
 
 		$assets->register_assets();

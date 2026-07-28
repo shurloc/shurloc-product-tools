@@ -16,13 +16,11 @@ final class ShurlocAutoloaderTest extends TestCase {
 
 	/**
 	 * Autoloader should load classes from fixture directories.
-	 *
-	 * @return void
 	 */
 	public function test_loads_classes_from_recursive_directories(): void {
 
 		$autoloader = new Shurloc_Autoloader(
-			__DIR__ . '/../fixtures/autoload'
+			__DIR__ . '/../fixtures/autoload',
 		);
 
 		$autoloader->register();
@@ -43,13 +41,11 @@ final class ShurlocAutoloaderTest extends TestCase {
 
 	/**
 	 * Autoloader should load interfaces.
-	 *
-	 * @return void
 	 */
 	public function test_loads_interfaces_without_interface_suffix_in_filename(): void {
 
 		$autoloader = new Shurloc_Autoloader(
-			__DIR__ . '/../fixtures/autoload'
+			__DIR__ . '/../fixtures/autoload',
 		);
 
 		$autoloader->register();
@@ -63,13 +59,11 @@ final class ShurlocAutoloaderTest extends TestCase {
 
 	/**
 	 * Autoloader should load traits.
-	 *
-	 * @return void
 	 */
 	public function test_loads_traits_without_trait_suffix_in_filename(): void {
 
 		$autoloader = new Shurloc_Autoloader(
-			__DIR__ . '/../fixtures/autoload'
+			__DIR__ . '/../fixtures/autoload',
 		);
 
 		$autoloader->register();
@@ -91,8 +85,6 @@ final class ShurlocAutoloaderTest extends TestCase {
 
 	/**
 	 * Interface files should autoload.
-	 *
-	 * @return void
 	 */
 	public function test_autoloader_loads_interfaces(): void {
 

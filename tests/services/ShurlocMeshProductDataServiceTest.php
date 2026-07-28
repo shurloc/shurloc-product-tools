@@ -38,8 +38,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -48,39 +46,39 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 		$this->result = new Shurloc_Mesh_Product_Result();
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White ($12.99)',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
+			variation: '110/80 White ($12.99)',
+			price: 12.99,
+			product_id: 1,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 
 		$catalog_service = new Shurloc_Product_Catalog_Service_Double(
-			array( $entry )
+			variation_entries: array( $entry ),
 		);
 
 		$this->analyzer = new Shurloc_Mesh_Product_Analyzer_Double(
-			$this->result
+			result: $this->result,
 		);
 
 		$this->service = new Shurloc_Mesh_Product_Data_Service(
-			$catalog_service,
-			$this->analyzer
+			catalog_service: $catalog_service,
+			mesh_analyzer: $this->analyzer,
 		);
 	}
 
 
 	/**
 	 * Analyze product returns mesh product result.
-	 *
-	 * @return void
 	 */
 	public function test_analyze_product_returns_analysis_result(): void {
 
-		$product = new WC_Product( 1 );
+		$product = new WC_Product(
+			id: 1,
+		);
 
 		$result = $this->service->analyze_product(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -92,36 +90,37 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Mesh product detection returns true when analyzer identifies mesh.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_true_for_mesh_product(): void {
 
 		$this->result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White ($12.99)',
-				12.99,
-				1,
-				'Test Mesh Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White ($12.99)',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Mesh Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White ($12.99)',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White ($12.99)',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
-		$product = new WC_Product( 1 );
+		$product = new WC_Product(
+			id: 1,
+		);
 
 		$this->assertTrue(
 			$this->service->is_mesh_product(
-				$product
+				product: $product
 			)
 		);
 	}
@@ -129,16 +128,16 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Mesh product detection returns false when analyzer finds no mesh.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_false_for_non_mesh_product(): void {
 
-		$product = new WC_Product( 1 );
+		$product = new WC_Product(
+			id: 1,
+		);
 
 		$this->assertFalse(
 			$this->service->is_mesh_product(
-				$product
+				product: $product
 			)
 		);
 	}
@@ -146,17 +145,15 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Catalog variations are passed to the analyzer.
-	 *
-	 * @return void
 	 */
 	public function test_analyze_product_passes_catalog_variations_to_analyzer(): void {
 
 		$product = new WC_Product(
-			1
+			id: 1,
 		);
 
 		$this->service->analyze_product(
-			$product
+			product: $product,
 		);
 
 		$entries = $this->analyzer->get_entries();

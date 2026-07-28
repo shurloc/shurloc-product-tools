@@ -52,8 +52,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -62,27 +60,25 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 		$this->result = new Shurloc_Mesh_Product_Result();
 
 		$this->data_service = new Shurloc_Mesh_Product_Data_Service_Double(
-			$this->result
+			result: $this->result,
 		);
 
 		$this->table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
 
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer_Double(
-			'<table>Mesh Table</table>'
+			output: '<table>Mesh Table</table>',
 		);
 
 		$this->shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$this->data_service,
 			$this->table_data_factory,
-			$this->renderer
+			$this->renderer,
 		);
 	}
 
 
 	/**
 	 * Clean up test globals.
-	 *
-	 * @return void
 	 */
 	protected function tearDown(): void {
 
@@ -95,8 +91,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Registers the shortcode.
-	 *
-	 * @return void
 	 */
 	public function test_register_adds_shortcode(): void {
 
@@ -111,8 +105,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Returns an empty string when no product exists.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_empty_when_no_product_exists(): void {
 
@@ -127,8 +119,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Returns an empty string for non-mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_empty_for_non_mesh_product(): void {
 
@@ -143,31 +133,30 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Calls the renderer for mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_renderer_output(): void {
 
 		$GLOBALS['product'] = new WC_Product( 1 );
 
 		$this->result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White $12.99',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White $12.99',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White $12.99',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$html = $this->shortcode->render();
@@ -186,31 +175,30 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Passes table data to the renderer.
-	 *
-	 * @return void
 	 */
 	public function test_render_passes_table_data_to_renderer(): void {
 
 		$GLOBALS['product'] = new WC_Product( 1 );
 
 		$this->result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White $12.99',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White $12.99',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White $12.99',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$this->shortcode->render();

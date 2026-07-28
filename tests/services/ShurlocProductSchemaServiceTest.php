@@ -20,7 +20,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	public function test_mesh_products_generate_aggregate_offer(): void {
 
 		$schema = $this->create_service()->generate(
-			$this->create_mesh_product_entry()
+			product: $this->create_mesh_product_entry(),
 		);
 
 		$this->assertSame(
@@ -54,13 +54,14 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Non-mesh products should generate standard offers.
 	 */
 	public function test_non_mesh_products_generate_standard_offer(): void {
 
 		$schema = $this->create_service()->generate(
-			$this->create_non_mesh_product_entry()
+			product: $this->create_non_mesh_product_entry(),
 		);
 
 		$this->assertSame(
@@ -94,34 +95,35 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Products without pricing should not generate offers.
 	 */
 	public function test_products_without_price_do_not_generate_offers(): void {
 
 		$product = new Shurloc_Catalog_Product_Entry(
-			789,
-			'No Price Product',
-			'',
-			'https://example.com/product/no-price-product/',
-			'NO-PRICE-789',
-			null,
-			'Short description.',
-			'Product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+			product_id: 789,
+			product_name: 'No Price Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/no-price-product/',
+			sku: 'NO-PRICE-789',
+			image_url: null,
+			short_description: 'Short description.',
+			description: 'Product description.',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(),
 		);
 
 		$schema = $this->create_service()->generate(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -135,13 +137,14 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Product schema should preserve basic product information.
 	 */
 	public function test_product_schema_preserves_product_information(): void {
 
 		$schema = $this->create_service()->generate(
-			$this->create_mesh_product_entry()
+			product: $this->create_mesh_product_entry(),
 		);
 
 		$this->assertSame(
@@ -170,6 +173,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Service should delegate mesh analysis to mesh schema service.
 	 */
@@ -179,20 +183,26 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 
 		$mesh_result = new Shurloc_Mesh_Product_Result();
 
-		$mesh_schema_service = $this->createMock(
-			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service_Double(
+			result: $mesh_result,
 		);
 
-		$mesh_schema_service
-			->expects( $this->once() )
-			->method( 'analyze' )
-			->with( $product )
-			->willReturn( $mesh_result );
-
 		$schema = $this->create_service(
-			$mesh_schema_service
+			mesh_schema_service: $mesh_schema_service,
 		)->generate(
-			$product
+			product: $product,
+		);
+
+		$calls = $mesh_schema_service->get_calls();
+
+		$this->assertCount(
+			1,
+			$calls
+		);
+
+		$this->assertSame(
+			$product,
+			$calls[0]
 		);
 
 		$this->assertSame(
@@ -200,6 +210,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			$schema['@type']
 		);
 	}
+
 
 	/**
 	 * Service should enrich schema when mesh analysis returns a result.
@@ -210,19 +221,26 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 
 		$mesh_result = new Shurloc_Mesh_Product_Result();
 
-		$mesh_schema_service = $this->createMock(
-			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service_Double(
+			result: $mesh_result,
 		);
 
-		$mesh_schema_service
-			->expects( $this->once() )
-			->method( 'analyze' )
-			->willReturn( $mesh_result );
-
 		$schema = $this->create_service(
-			$mesh_schema_service
+			mesh_schema_service: $mesh_schema_service,
 		)->generate(
-			$product
+			product: $product,
+		);
+
+		$calls = $mesh_schema_service->get_calls();
+
+		$this->assertCount(
+			1,
+			$calls
+		);
+
+		$this->assertSame(
+			$product,
+			$calls[0]
 		);
 
 		$this->assertIsArray(
@@ -235,6 +253,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Service should generate schema when mesh analysis returns null.
 	 */
@@ -242,20 +261,26 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 
 		$product = $this->create_mesh_product_entry();
 
-		$mesh_schema_service = $this->createMock(
-			Shurloc_Mesh_Product_Schema_Service_Interface::class
+		$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service_Double(
+			result: null,
 		);
 
-		$mesh_schema_service
-			->expects( $this->once() )
-			->method( 'analyze' )
-			->with( $product )
-			->willReturn( null );
-
 		$schema = $this->create_service(
-			$mesh_schema_service
+			mesh_schema_service: $mesh_schema_service,
 		)->generate(
-			$product
+			product: $product,
+		);
+
+		$calls = $mesh_schema_service->get_calls();
+
+		$this->assertCount(
+			1,
+			$calls
+		);
+
+		$this->assertSame(
+			$product,
+			$calls[0]
 		);
 
 		$this->assertSame(
@@ -274,6 +299,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 		);
 	}
 
+
 	/**
 	 * Create product schema service.
 	 *
@@ -285,20 +311,19 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	): Shurloc_Product_Schema_Service {
 
 		if ( null === $mesh_schema_service ) {
-
 			$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
-				new Shurloc_Mesh_Product_Analyzer(
-					new Shurloc_Mesh_Parser()
+				analyzer: new Shurloc_Mesh_Product_Analyzer(
+					parser: new Shurloc_Mesh_Parser(),
 				),
-				new Shurloc_Product_Schema_Generator()
 			);
 		}
 
 		return new Shurloc_Product_Schema_Service(
-			new Shurloc_Product_Schema_Generator(),
-			$mesh_schema_service
+			generator: new Shurloc_Product_Schema_Generator(),
+			mesh_schema_service: $mesh_schema_service,
 		);
 	}
+
 
 	/**
 	 * Create mesh product fixture.
@@ -308,34 +333,35 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	private function create_mesh_product_entry(): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Mesh Product',
-			'',
-			'https://example.com/product/test-mesh-product/',
-			'TEST-MESH-123',
-			'https://example.com/image.jpg',
-			'Short product description.',
-			'This is the product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/test-mesh-product/',
+			sku: 'TEST-MESH-123',
+			image_url: 'https://example.com/image.jpg',
+			short_description: 'Short product description.',
+			description: 'This is the product description.',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow $20.00',
-					20.0,
-					123,
-					'Test Mesh Product',
-					''
+					variation: '110/80 Yellow $20.00',
+					price: 20.0,
+					product_id: 123,
+					product_name: 'Test Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 	}
+
 
 	/**
 	 * Create non-mesh product fixture.
@@ -345,24 +371,24 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 	private function create_non_mesh_product_entry(): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
-			456,
-			'Non Mesh Product',
-			'',
-			'https://example.com/product/non-mesh-product/',
-			'NON-MESH-456',
-			'https://example.com/non-mesh-image.jpg',
-			'Short description.',
-			'Product description.',
-			null,
-			15.0,
-			15.0,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+			product_id: 456,
+			product_name: 'Non Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/non-mesh-product/',
+			sku: 'NON-MESH-456',
+			image_url: 'https://example.com/non-mesh-image.jpg',
+			short_description: 'Short description.',
+			description: 'Product description.',
+			category: null,
+			price: 15.0,
+			regular_price: 15.0,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(),
 		);
 	}
 }

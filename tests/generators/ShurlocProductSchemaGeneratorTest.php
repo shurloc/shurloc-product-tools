@@ -15,14 +15,29 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
+	 * Schema generator.
+	 *
+	 * @var Shurloc_Product_Schema_Generator
+	 */
+	private Shurloc_Product_Schema_Generator $generator;
+
+	/**
+	 * Set up test environment.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->generator = new Shurloc_Product_Schema_Generator();
+	}
+
+	/**
 	 * A mesh product should generate an aggregate offer with multiple variations.
 	 */
 	public function test_generates_product_schema_with_aggregate_offer(): void {
 
-		$result = $this->create_mesh_result();
-
 		$schema = $this->generate_schema(
-			$result
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -41,88 +56,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		);
 
 		$this->assertSame(
-			'https://example.com/product/test-mesh-product/#product',
-			$schema['@id']
-		);
-
-		$this->assertSame(
-			'https://example.com/product/test-mesh-product/',
-			$schema['url']
-		);
-
-		$this->assertSame(
-			'TEST-MESH-123',
-			$schema['sku']
-		);
-
-		$this->assertSame(
-			'https://example.com/image.jpg',
-			$schema['image']
-		);
-
-		$this->assertSame(
-			'This is the long product description.',
-			$schema['description']
-		);
-
-		$this->assertSame(
-			'Brand',
-			$schema['brand']['@type']
-		);
-
-		$this->assertSame(
-			'Test Brand',
-			$schema['brand']['name']
-		);
-
-		$this->assertSame(
-			'Organization',
-			$schema['manufacturer']['@type']
-		);
-
-		$this->assertSame(
-			'Shur-loc',
-			$schema['manufacturer']['name']
-		);
-
-		$this->assertSame(
-			'AggregateRating',
-			$schema['aggregateRating']['@type']
-		);
-
-		$this->assertSame(
-			'5',
-			$schema['aggregateRating']['ratingValue']
-		);
-
-		$this->assertSame(
-			'12',
-			$schema['aggregateRating']['reviewCount']
-		);
-
-		$this->assertCount(
-			1,
-			$schema['review']
-		);
-
-		$this->assertSame(
-			'Review',
-			$schema['review'][0]['@type']
-		);
-
-		$this->assertSame(
 			'AggregateOffer',
 			$schema['offers']['@type']
-		);
-
-		$this->assertSame(
-			'20.00',
-			$schema['offers']['lowPrice']
-		);
-
-		$this->assertSame(
-			'25.00',
-			$schema['offers']['highPrice']
 		);
 
 		$this->assertSame(
@@ -137,7 +72,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_brand(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -157,7 +92,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_manufacturer(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$this->assertSame(
@@ -176,34 +111,21 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_product_schema_includes_aggregate_rating_when_present(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Rated Product',
-			'',
-			'https://example.com/product/rated-product/',
-			'RATED-123',
-			null,
-			'Short product description.',
-			'Long product description.',
-			null,
-			25.0,
-			25.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			array(
+		$product = $this->create_product(
+			product_name: 'Rated Product',
+			product_url: 'https://example.com/product/rated-product/',
+			sku: 'RATED-123',
+			description: 'Long product description.',
+			aggregate_rating: array(
 				'@type'       => 'AggregateRating',
 				'ratingValue' => '4.8',
 				'reviewCount' => 12,
 			),
-			array(),
-			array()
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayHasKey(
@@ -232,24 +154,11 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_product_schema_includes_reviews_when_present(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Reviewed Product',
-			'',
-			'https://example.com/product/reviewed-product/',
-			'REVIEW-123',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			25.0,
-			25.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(
+		$product = $this->create_product(
+			product_name: 'Reviewed Product',
+			product_url: 'https://example.com/product/reviewed-product/',
+			sku: 'REVIEW-123',
+			reviews: array(
 				array(
 					'@type'        => 'Review',
 					'author'       => array(
@@ -263,12 +172,11 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 					'reviewBody'   => 'Excellent product quality.',
 				),
 			),
-			array()
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayHasKey(
@@ -302,30 +210,15 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_product_schema_excludes_rating_and_reviews_when_missing(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Unreviewed Product',
-			'',
-			'https://example.com/product/unreviewed-product/',
-			'UNREVIEWED-123',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			25.0,
-			25.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_name: 'Unreviewed Product',
+			product_url: 'https://example.com/product/unreviewed-product/',
+			sku: 'UNREVIEWED-123',
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -345,7 +238,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_aggregate_offer_contains_price_range(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result(),
 		);
 
 		$offers = $schema['offers'];
@@ -381,30 +274,18 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_empty_result_does_not_generate_offers(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Empty Product',
-			'',
-			'https://example.com/product/empty-product/',
-			'EMPTY-123',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_name: 'Empty Product',
+			product_url: 'https://example.com/product/empty-product/',
+			sku: 'EMPTY-123',
+			price: null,
+			regular_price: null,
+			brand: null,
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -416,32 +297,21 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Non-mesh products should generate a simple offer.
 	 */
-	public function test_non_mesh_product_generates_simple_offer(): void {
+	public function test_non_mesh_product_generates_offer_with_product_metadata(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			456,
-			'Non Mesh Product',
-			'',
-			'https://example.com/product/non-mesh-product/',
-			'NON-MESH-456',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			'https://example.com/non-mesh-image.jpg',
-			50.0,
-			50.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 456,
+			product_name: 'Non Mesh Product',
+			product_url: 'https://example.com/product/non-mesh-product/',
+			sku: 'NON-MESH-456',
+			image_url: 'https://example.com/non-mesh-image.jpg',
+			price: 50.0,
+			regular_price: 50.0,
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -468,32 +338,20 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Products without variations should still generate an offer.
 	 */
-	public function test_product_without_variations_can_generate_offer(): void {
+	public function test_product_without_variations_uses_current_price(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			789,
-			'Simple Product',
-			'',
-			'https://example.com/product/simple-product/',
-			'SIMPLE-789',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			15.0,
-			15.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 789,
+			product_name: 'Simple Product',
+			product_url: 'https://example.com/product/simple-product/',
+			sku: 'SIMPLE-789',
+			price: 15.0,
+			regular_price: 15.0,
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -504,35 +362,18 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Product schema should not include empty image values.
-	 *
-	 * @return void
 	 */
 	public function test_empty_image_is_not_added_to_schema(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'No Image Product',
-			'',
-			'https://example.com/product/no-image/',
-			'NO-IMAGE-123',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			25.0,
-			25.0,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_name: 'No Image Product',
+			product_url: 'https://example.com/product/no-image/',
+			sku: 'NO-IMAGE-123',
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -544,32 +385,21 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	/**
 	 * Sale price should be used for simple product offers.
 	 */
-	public function test_sale_price_is_used_for_offer_price(): void {
+	public function test_sale_product_uses_current_sale_price(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			100,
-			'Sale Product',
-			'',
-			'https://example.com/product/sale-product/',
-			'SALE-100',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			10.0,
-			20.0,
-			10.0,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 100,
+			product_name: 'Sale Product',
+			product_url: 'https://example.com/product/sale-product/',
+			sku: 'SALE-100',
+			price: 10.0,
+			regular_price: 20.0,
+			sale_price: 10.0,
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -588,30 +418,17 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_offer_preserves_product_availability(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			101,
-			'Availability Product',
-			'',
-			'https://example.com/product/availability-product/',
-			'AVAILABLE-101',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			25.0,
-			25.0,
-			null,
-			'https://schema.org/OutOfStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 101,
+			product_name: 'Availability Product',
+			product_url: 'https://example.com/product/availability-product/',
+			sku: 'AVAILABLE-101',
+			availability: 'https://schema.org/OutOfStock',
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -622,35 +439,22 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Products with a current price should use that price for offers.
-	 *
-	 * @return void
 	 */
-	public function test_current_price_is_used_for_offer_price(): void {
+	public function test_current_price_takes_precedence_over_regular_price(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			789,
-			'Current Price Product',
-			'',
-			'https://example.com/product/current-price/',
-			'CURRENT-789',
-			null,
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			30.0,
-			40.0,
-			30.0,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 789,
+			product_name: 'Current Price Product',
+			product_url: 'https://example.com/product/current-price/',
+			sku: 'CURRENT-789',
+			price: 30.0,
+			regular_price: 40.0,
+			sale_price: 30.0,
 		);
 
-		$schema = ( new Shurloc_Product_Schema_Generator() )->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result()
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -661,41 +465,22 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Simple product schema includes SKU and description.
-	 *
-	 * @return void
 	 */
 	public function test_simple_product_schema_includes_sku_and_description(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Product',
-			'https://example.com/edit',
-			'https://example.com/product/test-product/',
-			'TEST-123',
-			null,
-			'This is a short description.',
-			'This is a test product description.',
-			'Screen Printing',
-			25.00,
-			30.00,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			edit_url: 'https://example.com/edit',
+			short_description: 'This is a short description.',
+			description: 'This is a test product description.',
+			category: 'Screen Printing',
+			regular_price: 30.0,
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
 		);
 
-		$result = new Shurloc_Mesh_Product_Result(
-			array()
-		);
-
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			$product,
-			$result
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -711,41 +496,26 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Empty SKU and description are omitted from schema.
-	 *
-	 * @return void
 	 */
 	public function test_empty_sku_and_description_are_not_added_to_schema(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			456,
-			'Empty Product',
-			'https://example.com/edit',
-			'https://example.com/product/empty-product/',
-			'',
-			null,
-			'',
-			'',
-			'Screen Printing',
-			25.00,
-			null,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+		$product = $this->create_product(
+			product_id: 456,
+			product_name: 'Empty Product',
+			edit_url: 'https://example.com/edit',
+			product_url: 'https://example.com/product/empty-product/',
+			sku: '',
+			short_description: '',
+			description: '',
+			category: 'Screen Printing',
+			regular_price: null,
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
 		);
 
-		$result = new Shurloc_Mesh_Product_Result(
-			array()
-		);
-
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			$product,
-			$result
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertArrayNotHasKey(
@@ -761,47 +531,34 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Variable product schema includes description.
-	 *
-	 * @return void
 	 */
 	public function test_variable_product_schema_includes_description(): void {
 
-		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Variable Mesh Product',
-			'https://shurloc.test/wp-admin/post.php?post=123',
-			'https://shurloc.test/product/variable-mesh-product/',
-			'VAR-123',
-			null,
-			'Short description.',
-			'This is a variable product description.',
-			'Screen Printing',
-			25.00,
-			30.00,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+		$product = $this->create_product(
+			product_name: 'Variable Mesh Product',
+			edit_url: 'https://shurloc.test/wp-admin/post.php?post=123',
+			product_url: 'https://shurloc.test/product/variable-mesh-product/',
+			sku: 'VAR-123',
+			short_description: 'Short description.',
+			description: 'This is a variable product description.',
+			category: 'Screen Printing',
+			regular_price: 30.0,
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow',
-					25.00,
-					123,
-					'Variable Mesh Product',
-					'https://shurloc.test/wp-admin/post.php?post=123'
+					variation: '110/80 Yellow',
+					price: 25.0,
+					product_id: 123,
+					product_name: 'Variable Mesh Product',
+					edit_url: 'https://shurloc.test/wp-admin/post.php?post=123',
 				),
-			)
+			),
 		);
 
-		$generator = new Shurloc_Product_Schema_Generator();
-
-		$schema = $generator->generate(
-			$product,
-			new Shurloc_Mesh_Product_Result(
-				array()
-			)
+		$schema = $this->generator->generate(
+			product: $product,
+			result: new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertSame(
@@ -821,26 +578,26 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$result->add_mesh_variation(
 			$this->create_variation(
-				'110/80 Yellow $20.00',
-				20.0
+				variation: '110/80 Yellow $20.00',
+				price: 20.0,
 			),
 			$this->create_spec(
-				110,
-				80,
-				'Yellow'
-			)
+				mesh_count: 110,
+				thread_diameter: 80,
+				color: 'Yellow',
+			),
 		);
 
 		$result->add_mesh_variation(
 			$this->create_variation(
-				'160/64 White $25.00',
-				25.0
+				variation: '160/64 White $25.00',
+				price: 25.0,
 			),
 			$this->create_spec(
-				160,
-				64,
-				'White'
-			)
+				mesh_count: 160,
+				thread_diameter: 64,
+				color: 'White',
+			),
 		);
 
 		return $result;
@@ -853,12 +610,12 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 * @return array<string,mixed>
 	 */
 	private function generate_schema(
-		Shurloc_Mesh_Product_Result $result
+		Shurloc_Mesh_Product_Result $result,
 	): array {
 
-		return ( new Shurloc_Product_Schema_Generator() )->generate(
-			$this->create_product_entry(),
-			$result
+		return $this->generator->generate(
+			product: $this->create_product_entry(),
+			result: $result,
 		);
 	}
 
@@ -869,30 +626,21 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	private function create_product_entry(): Shurloc_Catalog_Product_Entry {
 
-		return new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Mesh Product',
-			'',
-			'https://example.com/product/test-mesh-product/',
-			'TEST-MESH-123',
-			'https://example.com/image.jpg',
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			'Test Brand',
-			'Shur-loc',
-			array(
+		return $this->create_product(
+			product_name: 'Test Mesh Product',
+			product_url: 'https://example.com/product/test-mesh-product/',
+			sku: 'TEST-MESH-123',
+			image_url: 'https://example.com/image.jpg',
+			price: null,
+			regular_price: null,
+			aggregate_rating: array(
 				'@type'       => 'AggregateRating',
 				'ratingValue' => '5',
 				'reviewCount' => '12',
 				'bestRating'  => '5',
 				'worstRating' => '1',
 			),
-			array(
+			reviews: array(
 				array(
 					'@type'        => 'Review',
 					'reviewRating' => array(
@@ -907,7 +655,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 					'reviewBody'   => 'Excellent product quality.',
 				),
 			),
-			array()
 		);
 	}
 
@@ -920,27 +667,27 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	private function create_variation(
 		string $variation,
-		float $price
+		float $price,
 	): Shurloc_Catalog_Variation_Entry {
 
 		return new Shurloc_Catalog_Variation_Entry(
-			$variation,
-			$price,
-			123,
-			'Test Mesh Product',
-			''
+			variation: $variation,
+			price: $price,
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 	}
 
 	/**
 	 * Create mesh specification fixture.
 	 *
-	 * @param int    $mesh_count       Mesh count.
-	 * @param int    $thread_diameter  Thread diameter.
-	 * @param string $color            Color.
-	 * @param string $modifier         Optional modifier.
-	 * @param string $pack_size        Optional pack size.
-	 * @param string $price_text       Price text.
+	 * @param int         $mesh_count       Mesh count.
+	 * @param int         $thread_diameter  Thread diameter.
+	 * @param string      $color            Color.
+	 * @param string|null $modifier         Optional modifier.
+	 * @param string|null $pack_size        Optional pack size.
+	 * @param string      $price_text       Price text.
 	 * @return Shurloc_Mesh_Specification
 	 */
 	private function create_spec(
@@ -949,19 +696,85 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 		string $color,
 		?string $modifier = null,
 		?string $pack_size = null,
-		string $price_text = '$20.00'
+		string $price_text = '$20.00',
 	): Shurloc_Mesh_Specification {
 
 		return new Shurloc_Mesh_Specification(
-			$mesh_count . '/' . $thread_diameter . ' ' . $color . ' ' . $price_text,
-			$mesh_count,
-			$thread_diameter,
-			$modifier,
-			$color,
-			$pack_size,
-			$price_text,
-			true,
-			array()
+			raw: $mesh_count . '/' . $thread_diameter . ' ' . $color . ' ' . $price_text,
+			mesh_count: $mesh_count,
+			thread_diameter: $thread_diameter,
+			modifier: $modifier,
+			color: $color,
+			pack_size: $pack_size,
+			price_text: $price_text,
+			recognized: true,
+			unknown_tokens: array(),
+		);
+	}
+
+	/**
+	 * Create a product fixture.
+	 *
+	 * @param int                               $product_id Product ID.
+	 * @param string                            $product_name Product name.
+	 * @param string                            $edit_url Product edit URL.
+	 * @param string                            $product_url Product URL.
+	 * @param string                            $sku Product SKU.
+	 * @param string|null                       $image_url Product image URL.
+	 * @param string                            $short_description Short description.
+	 * @param string                            $description Description.
+	 * @param string|null                       $category Product category.
+	 * @param float|null                        $price Current price.
+	 * @param float|null                        $regular_price Regular price.
+	 * @param float|null                        $sale_price Sale price.
+	 * @param string                            $availability Availability.
+	 * @param string|null                       $brand Brand.
+	 * @param string                            $manufacturer Manufacturer.
+	 * @param array<string,mixed>|null          $aggregate_rating Aggregate rating.
+	 * @param array<int,array<string,mixed>>    $reviews Reviews.
+	 * @param Shurloc_Catalog_Variation_Entry[] $variations Variations.
+	 * @return Shurloc_Catalog_Product_Entry
+	 */
+	private function create_product(
+		int $product_id = 123,
+		string $product_name = 'Test Product',
+		string $edit_url = '',
+		string $product_url = 'https://example.com/product/test-product/',
+		string $sku = 'TEST-123',
+		?string $image_url = null,
+		string $short_description = 'Short product description.',
+		string $description = 'This is the long product description.',
+		?string $category = null,
+		?float $price = 25.0,
+		?float $regular_price = 25.0,
+		?float $sale_price = null,
+		string $availability = 'https://schema.org/InStock',
+		?string $brand = 'Test Brand',
+		string $manufacturer = 'Shur-loc',
+		?array $aggregate_rating = null,
+		array $reviews = array(),
+		array $variations = array(),
+	): Shurloc_Catalog_Product_Entry {
+
+		return new Shurloc_Catalog_Product_Entry(
+			product_id: $product_id,
+			product_name: $product_name,
+			edit_url: $edit_url,
+			product_url: $product_url,
+			sku: $sku,
+			image_url: $image_url,
+			short_description: $short_description,
+			description: $description,
+			category: $category,
+			price: $price,
+			regular_price: $regular_price,
+			sale_price: $sale_price,
+			availability: $availability,
+			brand: $brand,
+			manufacturer: $manufacturer,
+			aggregate_rating: $aggregate_rating,
+			reviews: $reviews,
+			variations: $variations,
 		);
 	}
 }

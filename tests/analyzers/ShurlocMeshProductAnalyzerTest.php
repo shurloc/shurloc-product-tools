@@ -15,35 +15,42 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
-	 * A product with recognized mesh variations should be identified as mesh.
+	 * Mesh product analyzer.
 	 *
-	 * @return void
+	 * @var Shurloc_Mesh_Product_Analyzer
+	 */
+	private Shurloc_Mesh_Product_Analyzer $analyzer;
+
+	/**
+	 * Set up tests.
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$this->analyzer = new Shurloc_Mesh_Product_Analyzer(
+			parser: new Shurloc_Mesh_Parser(),
+		);
+	}
+
+	/**
+	 * A product with recognized mesh variations should be identified as mesh.
 	 */
 	public function test_recognized_mesh_variations_make_product_a_mesh_product(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 Yellow $20.00',
-				20.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '110/80 Yellow $20.00',
+				price: 20.00,
 			),
-			new Shurloc_Catalog_Variation_Entry(
-				'160/64 White $25.00',
-				25.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '160/64 White $25.00',
+				price: 25.00,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -69,27 +76,18 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Zero-price unrecognized variations should be ignored.
-	 *
-	 * @return void
 	 */
 	public function test_zero_price_unrecognized_variations_are_ignored(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'Thin Thread',
-				0.0,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: 'Thin Thread',
+				price: 0.0,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertFalse(
@@ -110,27 +108,18 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Null-price unrecognized variations should be ignored.
-	 *
-	 * @return void
 	 */
 	public function test_null_price_unrecognized_variations_are_ignored(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'Thin Thread',
-				null,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: 'Thin Thread',
+				price: null,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertCount(
@@ -142,27 +131,18 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Paid unrecognized variations should be reported.
-	 *
-	 * @return void
 	 */
 	public function test_paid_unrecognized_variations_are_reported(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'Premium Orange',
-				35.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: 'Premium Orange',
+				price: 35.00,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertFalse(
@@ -178,25 +158,16 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Recognized variations should retain parsed specification data.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_variations_include_parsed_specifications(): void {
 
-		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 Yellow $20.00',
-			20.00,
-			123,
-			'Test Mesh Product',
-			''
+		$entry = $this->create_variation_entry(
+			variation: '110/80 Yellow $20.00',
+			price: 20.00,
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			array( $entry )
+		$result = $this->analyzer->analyze(
+			array( $entry ),
 		);
 
 		$spec = $result->mesh_variations[0]['spec'];
@@ -235,27 +206,18 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Recognized but invalid mesh specifications are still mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_invalid_mesh_specifications_are_mesh_products(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'350/30 Orange $35.00',
-				35.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '350/30 Orange $35.00',
+				price: 35.00,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$spec = $result->mesh_variations[0]['spec'];
@@ -282,41 +244,26 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Mixed variations should separate mesh, ignored, and unrecognized entries.
-	 *
-	 * @return void
 	 */
 	public function test_mixed_variations_are_classified_correctly(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 Yellow $20.00',
-				20.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '110/80 Yellow $20.00',
+				price: 20.00,
 			),
-			new Shurloc_Catalog_Variation_Entry(
-				'Thin Thread',
-				null,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: 'Thin Thread',
+				price: null,
 			),
-			new Shurloc_Catalog_Variation_Entry(
-				'Premium Orange',
-				35.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: 'Premium Orange',
+				price: 35.00,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -342,17 +289,11 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Empty variation lists should return an empty result.
-	 *
-	 * @return void
 	 */
 	public function test_empty_variation_list_returns_empty_result(): void {
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			array()
+		$result = $this->analyzer->analyze(
+			array(),
 		);
 
 		$this->assertFalse(
@@ -378,34 +319,22 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Duplicate mesh variations should remain separate entries.
-	 *
-	 * @return void
 	 */
 	public function test_duplicate_mesh_variations_are_preserved(): void {
 
 		$entries = array(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 Yellow $20.00',
-				20.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '110/80 Yellow $20.00',
+				price: 20.00,
 			),
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 Yellow $25.00',
-				25.00,
-				123,
-				'Test Mesh Product',
-				''
+			$this->create_variation_entry(
+				variation: '110/80 Yellow $25.00',
+				price: 25.00,
 			),
 		);
 
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
-		);
-
-		$result = $analyzer->analyze(
-			$entries
+		$result = $this->analyzer->analyze(
+			$entries,
 		);
 
 		$this->assertTrue(
@@ -425,6 +354,27 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 		$this->assertSame(
 			25.00,
 			$result->mesh_variations[1]['entry']->price
+		);
+	}
+
+	/**
+	 * Create a catalog variation entry for analyzer tests.
+	 *
+	 * @param string     $variation Variation attribute value.
+	 * @param float|null $price     Variation price.
+	 * @return Shurloc_Catalog_Variation_Entry
+	 */
+	private function create_variation_entry(
+		string $variation,
+		?float $price,
+	): Shurloc_Catalog_Variation_Entry {
+
+		return new Shurloc_Catalog_Variation_Entry(
+			variation: $variation,
+			price: $price,
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 	}
 }

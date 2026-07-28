@@ -16,15 +16,13 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mesh products should return mesh analysis results.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_products_return_mesh_result(): void {
 
 		$service = $this->create_service();
 
 		$result = $service->analyze(
-			$this->create_mesh_product_entry()
+			product: $this->create_mesh_product_entry(),
 		);
 
 		$this->assertNotNull(
@@ -44,15 +42,13 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Non-mesh products should return null.
-	 *
-	 * @return void
 	 */
 	public function test_non_mesh_products_return_null(): void {
 
 		$service = $this->create_service();
 
 		$result = $service->analyze(
-			$this->create_non_mesh_product_entry()
+			product: $this->create_non_mesh_product_entry(),
 		);
 
 		$this->assertNull(
@@ -62,18 +58,16 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mesh analysis should preserve variation data.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_analysis_preserves_variation_data(): void {
 
 		$service = $this->create_service();
 
 		$result = $service->analyze(
-			$this->create_mesh_product_entry(
-				'160/64 White $25.00',
-				25.0
-			)
+			product: $this->create_mesh_product_entry(
+				variation: '160/64 White $25.00',
+				price: 25.0,
+			),
 		);
 
 		$this->assertNotNull(
@@ -115,51 +109,49 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Multiple mesh variations should all be preserved.
-	 *
-	 * @return void
 	 */
 	public function test_multiple_mesh_variations_are_preserved(): void {
 
 		$service = $this->create_service();
 
 		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Multiple Mesh Product',
-			'',
-			'https://example.com/product/multiple-mesh-product/',
-			'MULTI-MESH-123',
-			'https://example.com/image.jpg',
-			'',
-			'',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 123,
+			product_name: 'Multiple Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/multiple-mesh-product/',
+			sku: 'MULTI-MESH-123',
+			image_url: 'https://example.com/image.jpg',
+			short_description: '',
+			description: '',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow $20.00',
-					20.0,
-					123,
-					'Multiple Mesh Product',
-					''
+					variation: '110/80 Yellow $20.00',
+					price: 20.0,
+					product_id: 123,
+					product_name: 'Multiple Mesh Product',
+					edit_url: '',
 				),
 				new Shurloc_Catalog_Variation_Entry(
-					'160/64 White $25.00',
-					25.0,
-					123,
-					'Multiple Mesh Product',
-					''
+					variation: '160/64 White $25.00',
+					price: 25.0,
+					product_id: 123,
+					product_name: 'Multiple Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 
 		$result = $service->analyze(
-			$product
+			product: $product,
 		);
 
 		$this->assertNotNull(
@@ -174,36 +166,34 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Products without variations should return null.
-	 *
-	 * @return void
 	 */
 	public function test_products_without_variations_return_null(): void {
 
 		$service = $this->create_service();
 
 		$product = new Shurloc_Catalog_Product_Entry(
-			999,
-			'Empty Product',
-			'',
-			'https://example.com/product/empty-product/',
-			'EMPTY-999',
-			null,
-			'',
-			'',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array()
+			product_id: 999,
+			product_name: 'Empty Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/empty-product/',
+			sku: 'EMPTY-999',
+			image_url: null,
+			short_description: '',
+			description: '',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(),
 		);
 
 		$result = $service->analyze(
-			$product
+			product: $product,
 		);
 
 		$this->assertNull(
@@ -214,51 +204,49 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Mixed variations should preserve only recognized mesh variations.
-	 *
-	 * @return void
 	 */
 	public function test_mixed_variations_preserve_only_mesh_variations(): void {
 
 		$service = $this->create_service();
 
 		$product = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Mixed Mesh Product',
-			'',
-			'https://example.com/product/mixed-mesh-product/',
-			'MIXED-123',
-			null,
-			'',
-			'',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 123,
+			product_name: 'Mixed Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/mixed-mesh-product/',
+			sku: 'MIXED-123',
+			image_url: null,
+			short_description: '',
+			description: '',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow $20.00',
-					20.0,
-					123,
-					'Mixed Mesh Product',
-					''
+					variation: '110/80 Yellow $20.00',
+					price: 20.0,
+					product_id: 123,
+					product_name: 'Mixed Mesh Product',
+					edit_url: '',
 				),
 				new Shurloc_Catalog_Variation_Entry(
-					'Thin Thread',
-					null,
-					123,
-					'Mixed Mesh Product',
-					''
+					variation: 'Thin Thread',
+					price: null,
+					product_id: 123,
+					product_name: 'Mixed Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 
 		$result = $service->analyze(
-			$product
+			product: $product,
 		);
 
 		$this->assertNotNull(
@@ -273,18 +261,16 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Invalid mesh specifications should still return mesh results.
-	 *
-	 * @return void
 	 */
 	public function test_invalid_mesh_specifications_are_preserved(): void {
 
 		$service = $this->create_service();
 
 		$result = $service->analyze(
-			$this->create_mesh_product_entry(
-				'350/30 Orange $35.00',
-				35.0
-			)
+			product: $this->create_mesh_product_entry(
+				variation: '350/30 Orange $35.00',
+				price: 35.0,
+			),
 		);
 
 		$this->assertNotNull(
@@ -303,44 +289,42 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 
 	/**
 	 * Unrecognized variations should return null.
-	 *
-	 * @return void
 	 */
 	public function test_unrecognized_variations_return_null(): void {
 
 		$service = $this->create_service();
 
 		$product = new Shurloc_Catalog_Product_Entry(
-			789,
-			'Invalid Mesh Product',
-			'',
-			'https://example.com/product/invalid-mesh-product/',
-			'INVALID-MESH-789',
-			null,
-			'',
-			'',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 789,
+			product_name: 'Invalid Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/invalid-mesh-product/',
+			sku: 'INVALID-MESH-789',
+			image_url: null,
+			short_description: '',
+			description: '',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'Standard Product Option',
-					10.0,
-					789,
-					'Invalid Mesh Product',
-					''
+					variation: 'Standard Product Option',
+					price: 10.0,
+					product_id: 789,
+					product_name: 'Invalid Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 
 		$result = $service->analyze(
-			$product
+			product: $product,
 		);
 
 		$this->assertNull(
@@ -356,10 +340,9 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 	private function create_service(): Shurloc_Mesh_Product_Schema_Service {
 
 		return new Shurloc_Mesh_Product_Schema_Service(
-			new Shurloc_Mesh_Product_Analyzer(
-				new Shurloc_Mesh_Parser()
+			analyzer: new Shurloc_Mesh_Product_Analyzer(
+				parser: new Shurloc_Mesh_Parser(),
 			),
-			new Shurloc_Product_Schema_Generator()
 		);
 	}
 
@@ -372,36 +355,36 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 	 */
 	private function create_mesh_product_entry(
 		string $variation = '110/80 Yellow $20.00',
-		float $price = 20.0
+		float $price = 20.0,
 	): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Mesh Product',
-			'',
-			'https://example.com/product/test-mesh-product/',
-			'TEST-MESH-123',
-			'https://example.com/image.jpg',
-			'',
-			'',
-			null,
-			20.0,
-			20.0,
-			null,
-			'https://schema.org/InStock',
-			'Shur-loc®',
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/test-mesh-product/',
+			sku: 'TEST-MESH-123',
+			image_url: 'https://example.com/image.jpg',
+			short_description: '',
+			description: '',
+			category: null,
+			price: 20.0,
+			regular_price: 20.0,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: 'Shur-loc®',
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					$variation,
-					$price,
-					123,
-					'Test Mesh Product',
-					''
+					variation: $variation,
+					price: $price,
+					product_id: 123,
+					product_name: 'Test Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 	}
 
@@ -413,32 +396,32 @@ final class ShurlocMeshProductSchemaServiceTest extends TestCase {
 	private function create_non_mesh_product_entry(): Shurloc_Catalog_Product_Entry {
 
 		return new Shurloc_Catalog_Product_Entry(
-			456,
-			'Non Mesh Product',
-			'',
-			'https://example.com/product/non-mesh-product/',
-			'NON-MESH-456',
-			'https://example.com/non-mesh-image.jpg',
-			'',
-			'',
-			null,
-			15.0,
-			15.0,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 456,
+			product_name: 'Non Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/non-mesh-product/',
+			sku: 'NON-MESH-456',
+			image_url: 'https://example.com/non-mesh-image.jpg',
+			short_description: '',
+			description: '',
+			category: null,
+			price: 15.0,
+			regular_price: 15.0,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'Thin Thread',
-					null,
-					456,
-					'Non Mesh Product',
-					''
+					variation: 'Thin Thread',
+					price: null,
+					product_id: 456,
+					product_name: 'Non Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 	}
 }
