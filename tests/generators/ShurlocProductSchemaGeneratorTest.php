@@ -706,7 +706,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result( array() )
+			result: new Shurloc_Mesh_Product_Result()
 		);
 
 		$this->assertSame(
@@ -750,7 +750,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result( array() )
+			result: new Shurloc_Mesh_Product_Result()
 		);
 
 		$this->assertArrayNotHasKey(
@@ -802,7 +802,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$schema = $this->generator->generate(
 			product: $product,
-			result: new Shurloc_Mesh_Product_Result( array() )
+			result: new Shurloc_Mesh_Product_Result()
 		);
 
 		$this->assertSame(
