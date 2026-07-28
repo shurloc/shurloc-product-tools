@@ -23,7 +23,7 @@ class ShurlocMeshParserTest extends TestCase {
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			'110/80 Yellow $23.75'
+			text: '110/80 Yellow $23.75',
 		);
 
 		$this->assertSame(
@@ -41,17 +41,17 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'standard_mesh'
+		'standard_mesh',
 	)]
 	public function test_parses_standard_mesh(
 		string $input,
-		Shurloc_Mesh_Specification $expected
+		Shurloc_Mesh_Specification $expected,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$actual = $parser->parse(
-			$input
+			text: $input,
 		);
 
 		$this->assertTrue(
@@ -69,16 +69,16 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'recognized_mesh'
+		'recognized_mesh',
 	)]
 	public function test_recognizes_mesh_specifications(
-		string $variation
+		string $variation,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			$variation
+			text: $variation,
 		);
 
 		$this->assertTrue(
@@ -94,16 +94,16 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'unrecognized_variations'
+		'unrecognized_variations',
 	)]
 	public function test_rejects_non_mesh_specifications(
-		string $variation
+		string $variation,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			$variation
+			text: $variation,
 		);
 
 		$this->assertFalse(
@@ -120,17 +120,17 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'prices'
+		'prices',
 	)]
 	public function test_extracts_prices(
 		string $variation,
-		string $expected_price
+		string $expected_price,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			$variation
+			text: $variation,
 		);
 
 		$this->assertSame(
@@ -143,22 +143,22 @@ class ShurlocMeshParserTest extends TestCase {
 	/**
 	 * Verify that colors are extracted correctly.
 	 *
-	 * @param string $variation     The raw variation string.
+	 * @param string $variation      The raw variation string.
 	 * @param string $expected_color The expected extracted color text.
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'colors'
+		'colors',
 	)]
 	public function test_extracts_colors(
 		string $variation,
-		string $expected_color
+		string $expected_color,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			$variation
+			text: $variation,
 		);
 
 		$this->assertSame(
@@ -176,7 +176,7 @@ class ShurlocMeshParserTest extends TestCase {
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			'350/30 Orange $35.00'
+			text: '350/30 Orange $35.00',
 		);
 
 		$this->assertTrue(
@@ -206,16 +206,16 @@ class ShurlocMeshParserTest extends TestCase {
 	 */
 	#[DataProviderExternal(
 		MeshParserDataProvider::class,
-		'suffix_variations'
+		'suffix_variations',
 	)]
 	public function test_recognizes_mesh_suffix_variations(
-		string $variation
+		string $variation,
 	): void {
 
 		$parser = new Shurloc_Mesh_Parser();
 
 		$spec = $parser->parse(
-			$variation
+			text: $variation,
 		);
 
 		$this->assertTrue(
