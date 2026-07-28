@@ -211,39 +211,39 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 	public function test_mesh_product_outputs_aggregate_offer_schema(): void {
 
 		$catalog_entry = new Shurloc_Catalog_Product_Entry(
-			123,
-			'Test Mesh Product',
-			'',
-			'https://example.com/product/test-mesh-product/',
-			'TEST-MESH-123',
-			'https://example.com/image.jpg',
-			'Short product description.',
-			'This is the long product description.',
-			null,
-			null,
-			null,
-			null,
-			'https://schema.org/InStock',
-			null,
-			'Shur-loc®',
-			null,
-			array(),
-			array(
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
+			product_url: 'https://example.com/product/test-mesh-product/',
+			sku: 'TEST-MESH-123',
+			image_url: 'https://example.com/image.jpg',
+			short_description: 'Short product description.',
+			description: 'This is the long product description.',
+			category: null,
+			price: null,
+			regular_price: null,
+			sale_price: null,
+			availability: 'https://schema.org/InStock',
+			brand: null,
+			manufacturer: 'Shur-loc®',
+			aggregate_rating: null,
+			reviews: array(),
+			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow $20.00',
-					20.0,
-					123,
-					'Test Mesh Product',
-					''
+					variation: '110/80 Yellow $20.00',
+					price: 20.0,
+					product_id: 123,
+					product_name: 'Test Mesh Product',
+					edit_url: '',
 				),
 				new Shurloc_Catalog_Variation_Entry(
-					'160/64 White $25.00',
-					25.0,
-					123,
-					'Test Mesh Product',
-					''
+					variation: '160/64 White $25.00',
+					price: 25.0,
+					product_id: 123,
+					product_name: 'Test Mesh Product',
+					edit_url: '',
 				),
-			)
+			),
 		);
 
 		$schema = array(
