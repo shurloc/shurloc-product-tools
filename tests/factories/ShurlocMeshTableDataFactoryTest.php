@@ -44,7 +44,7 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				price: 12.99,
 				product_id: 1,
 				product_name: 'Test Product',
-				edit_url: ''
+				edit_url: '',
 			),
 			new Shurloc_Mesh_Specification(
 				raw: '110/80 White',
@@ -54,12 +54,12 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				color: 'White',
 				pack_size: '10 Pack',
 				price_text: '$12.99',
-				recognized: true
+				recognized: true,
 			)
 		);
 
 		$data = $this->factory->create(
-			$result
+			$result,
 		);
 
 		$this->assertInstanceOf(
@@ -128,7 +128,7 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				price: 12.99,
 				product_id: 1,
 				product_name: 'Test Product',
-				edit_url: ''
+				edit_url: '',
 			),
 			new Shurloc_Mesh_Specification(
 				raw: '110/80 White',
@@ -138,7 +138,7 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				color: 'White',
 				pack_size: null,
 				price_text: '$12.99',
-				recognized: true
+				recognized: true,
 			)
 		);
 
@@ -148,7 +148,7 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				price: 15.99,
 				product_id: 1,
 				product_name: 'Test Product',
-				edit_url: ''
+				edit_url: '',
 			),
 			new Shurloc_Mesh_Specification(
 				raw: '160/64 Yellow',
@@ -158,12 +158,12 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 				color: 'Yellow',
 				pack_size: null,
 				price_text: '$15.99',
-				recognized: true
+				recognized: true,
 			)
 		);
 
 		$data = $this->factory->create(
-			$result
+			$result,
 		);
 
 		$this->assertTrue(
@@ -229,7 +229,7 @@ final class ShurlocMeshTableDataFactoryTest extends TestCase {
 	public function test_empty_result_creates_empty_table_data(): void {
 
 		$data = $this->factory->create(
-			new Shurloc_Mesh_Product_Result()
+			new Shurloc_Mesh_Product_Result(),
 		);
 
 		$this->assertFalse(
