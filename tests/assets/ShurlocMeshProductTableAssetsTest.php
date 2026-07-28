@@ -16,8 +16,6 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test setup.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -31,8 +29,6 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Registers frontend enqueue hook.
-	 *
-	 * @return void
 	 */
 	public function test_registers_register_assets_hook(): void {
 
@@ -56,8 +52,6 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test that the stylesheet gets registered.
-	 *
-	 * @return void
 	 */
 	public function test_registers_stylesheet(): void {
 
@@ -100,8 +94,6 @@ final class ShurlocMeshProductTableAssetsTest extends TestCase {
 
 	/**
 	 * Test that the script gets registered.
-	 *
-	 * @return void
 	 */
 	public function test_registers_script(): void {
 
