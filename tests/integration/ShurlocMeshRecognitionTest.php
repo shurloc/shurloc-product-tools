@@ -25,12 +25,11 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 		$catalog = MeshCatalogDataProvider::load_catalog();
 
 		$analyzer = new Shurloc_Catalog_Analyzer(
-			new Shurloc_Mesh_Parser()
+			parser: new Shurloc_Mesh_Parser(),
 		);
 
 		$report = $analyzer->analyze( $catalog );
 
-		// Sanity checks.
 		$this->assertNotEmpty(
 			$catalog,
 			'Catalog fixture appears to be empty.'
@@ -105,8 +104,5 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 			$array['invalid_specifications'],
 			'The serialized report should include every invalid specification.'
 		);
-
-		// TODO:
-		// Export $report as JSON for inspection during parser development.
 	}
 }
