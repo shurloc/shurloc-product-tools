@@ -670,25 +670,25 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 		$result->add_mesh_variation(
 			$this->create_variation(
-				'110/80 Yellow $20.00',
-				20.0
+				variation: '110/80 Yellow $20.00',
+				price: 20.0,
 			),
 			$this->create_spec(
-				110,
-				80,
-				'Yellow'
+				mesh_count: 110,
+				thread_diameter: 80,
+				color: 'Yellow',
 			)
 		);
 
 		$result->add_mesh_variation(
 			$this->create_variation(
-				'160/64 White $25.00',
-				25.0
+				variation: '160/64 White $25.00',
+				price: 25.0,
 			),
 			$this->create_spec(
-				160,
-				64,
-				'White'
+				mesh_count: 160,
+				thread_diameter: 64,
+				color: 'White',
 			)
 		);
 
