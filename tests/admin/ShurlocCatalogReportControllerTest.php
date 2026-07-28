@@ -11,9 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests catalog report admin controller.
- *
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
  */
 final class ShurlocCatalogReportControllerTest extends TestCase {
 
