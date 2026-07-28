@@ -20,7 +20,6 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 	/**
 	 * Test catalog report generation from fixture data.
 	 *
-	 * @return void
 	 * @throws JsonException    If the fixture JSON is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
@@ -66,7 +65,6 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 	 *
 	 * Ensures the fixture pipeline is working before analysis.
 	 *
-	 * @return void
 	 * @throws JsonException    If the fixture JSON is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
@@ -87,7 +85,6 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 	/**
 	 * Test report recognizes known mesh specification.
 	 *
-	 * @return void
 	 * @throws JsonException    If the fixture JSON is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
@@ -121,7 +118,6 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 	/**
 	 * Test report identifies unknown catalog variations.
 	 *
-	 * @return void
 	 * @throws JsonException    If the fixture JSON is invalid.
 	 * @throws RuntimeException If the fixture cannot be read.
 	 */
