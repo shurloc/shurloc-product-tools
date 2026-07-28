@@ -23,8 +23,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -364,8 +362,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Product schema should not include empty image values.
-	 *
-	 * @return void
 	 */
 	public function test_empty_image_is_not_added_to_schema(): void {
 
@@ -443,8 +439,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Products with a current price should use that price for offers.
-	 *
-	 * @return void
 	 */
 	public function test_current_price_takes_precedence_over_regular_price(): void {
 
@@ -471,8 +465,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Simple product schema includes SKU and description.
-	 *
-	 * @return void
 	 */
 	public function test_simple_product_schema_includes_sku_and_description(): void {
 
@@ -504,8 +496,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Empty SKU and description are omitted from schema.
-	 *
-	 * @return void
 	 */
 	public function test_empty_sku_and_description_are_not_added_to_schema(): void {
 
@@ -541,8 +531,6 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 
 	/**
 	 * Variable product schema includes description.
-	 *
-	 * @return void
 	 */
 	public function test_variable_product_schema_includes_description(): void {
 
