@@ -16,8 +16,6 @@ final class ShurlocMeshTableDataTest extends TestCase {
 
 	/**
 	 * Empty table data contains no rows.
-	 *
-	 * @return void
 	 */
 	public function test_empty_table_data_has_no_rows(): void {
 
@@ -44,8 +42,6 @@ final class ShurlocMeshTableDataTest extends TestCase {
 
 	/**
 	 * Table data returns supplied rows.
-	 *
-	 * @return void
 	 */
 	public function test_table_data_returns_rows(): void {
 
@@ -86,8 +82,6 @@ final class ShurlocMeshTableDataTest extends TestCase {
 
 	/**
 	 * Multiple rows are preserved in order.
-	 *
-	 * @return void
 	 */
 	public function test_multiple_rows_are_preserved_in_order(): void {
 
@@ -140,8 +134,6 @@ final class ShurlocMeshTableDataTest extends TestCase {
 
 	/**
 	 * Row count matches supplied row collection.
-	 *
-	 * @return void
 	 */
 	public function test_count_returns_number_of_rows(): void {
 
