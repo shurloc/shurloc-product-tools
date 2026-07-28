@@ -23,8 +23,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -40,8 +38,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Controller should register admin hooks.
-	 *
-	 * @return void
 	 */
 	public function test_controller_registers_admin_hooks(): void {
 
@@ -60,8 +56,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Admin init callback should be callable.
-	 *
-	 * @return void
 	 */
 	public function test_admin_init_callback_is_registered(): void {
 
@@ -74,8 +68,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 	/**
 	 * Admin menu callback should be callable.
-	 *
-	 * @return void
 	 */
 	public function test_admin_menu_callback_is_registered(): void {
 
