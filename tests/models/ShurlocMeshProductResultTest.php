@@ -16,8 +16,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Recognized mesh variations are stored and returned.
-	 *
-	 * @return void
 	 */
 	public function test_get_mesh_variations_returns_recognized_variations(): void {
 
@@ -67,8 +65,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Ignored variations are stored and returned.
-	 *
-	 * @return void
 	 */
 	public function test_get_ignored_variations_returns_ignored_entries(): void {
 
@@ -101,8 +97,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Unrecognized variations are stored and returned.
-	 *
-	 * @return void
 	 */
 	public function test_get_unrecognized_variations_returns_entries(): void {
 
@@ -135,8 +129,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Empty result returns empty arrays.
-	 *
-	 * @return void
 	 */
 	public function test_empty_result_returns_empty_arrays(): void {
 
@@ -160,8 +152,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Result correctly identifies mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_true_when_mesh_variations_exist(): void {
 
@@ -198,8 +188,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Empty result is not a mesh product.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_false_when_no_mesh_variations_exist(): void {
 
@@ -212,8 +200,6 @@ final class ShurlocMeshProductResultTest extends TestCase {
 
 	/**
 	 * Mesh variation count returns correct value.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_variation_count_returns_number_of_mesh_variations(): void {
 
