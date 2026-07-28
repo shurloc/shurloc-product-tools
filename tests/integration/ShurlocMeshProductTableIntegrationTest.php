@@ -34,13 +34,13 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_product_renders_table_output(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '110/80 White',
 					'price' => '12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
@@ -83,13 +83,13 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		$GLOBALS['shurloc_test_scripts'] = array();
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '110/80 White',
 					'price' => '12.99',
 				),
-			)
+			),
 		);
 
 		$this->render_mesh_table(
@@ -142,7 +142,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_product_renders_multiple_variation_rows(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '110/80 White',
@@ -153,7 +153,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 					'value' => '160/64 Yellow',
 					'price' => '14.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
@@ -199,7 +199,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	 * @return WC_Product Product test double.
 	 */
 	private function create_mesh_product(
-		array $variations
+		array $variations,
 	): WC_Product {
 
 		$children = array();
@@ -207,7 +207,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		foreach ( $variations as $variation_data ) {
 
 			$variation = new WC_Product(
-				$variation_data['id']
+				$variation_data['id'],
 			);
 
 			$variation->set_variation_attributes(
@@ -217,7 +217,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			);
 
 			$variation->set_price(
-				$variation_data['price']
+				$variation_data['price'],
 			);
 
 			$children[] = $variation_data['id'];
@@ -250,18 +250,18 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	 * @return string Rendered HTML.
 	 */
 	private function render_mesh_table(
-		WC_Product $product
+		WC_Product $product,
 	): string {
 
 		$catalog_service = new Shurloc_Product_Catalog_Service();
 
 		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser()
+			new Shurloc_Mesh_Parser(),
 		);
 
 		$data_service = new Shurloc_Mesh_Product_Data_Service(
 			$catalog_service,
-			$analyzer
+			$analyzer,
 		);
 
 		$table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
@@ -271,7 +271,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		$shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
 			$data_service,
 			$table_data_factory,
-			$renderer
+			$renderer,
 		);
 
 		return $shortcode->render();
@@ -283,17 +283,17 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_table_hides_modifier_column_when_no_modifiers_exist(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '110/80 White',
 					'price' => '12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			$product,
 		);
 
 		$this->assertStringNotContainsString(
@@ -308,17 +308,17 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_table_hides_pack_size_column_when_no_pack_sizes_exist(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '110/80 White',
 					'price' => '12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			$product,
 		);
 
 		$this->assertStringNotContainsString(
@@ -333,17 +333,17 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_table_shows_optional_columns_when_data_exists(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '10 Pack - 110/80 HD White',
 					'price' => '12.99',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			$product,
 		);
 
 		$this->assertStringContainsString(
@@ -364,17 +364,17 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	public function test_mesh_product_renders_variation_without_color(): void {
 
 		$product = $this->create_mesh_product(
-			array(
+			variations: array(
 				array(
 					'id'    => 101,
 					'value' => '120/48 (S)',
 					'price' => '24.10',
 				),
-			)
+			),
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			$product,
 		);
 
 		$this->assertStringContainsString(
