@@ -20,29 +20,30 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_get_mesh_variations_returns_recognized_variations(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
+			variation: '110/80 White $12.99',
+			price: 12.99,
+			product_id: 1,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 
 		$spec = new Shurloc_Mesh_Specification(
-			'110/80 White $12.99',
-			110,
-			80,
-			null,
-			'White',
-			null,
-			'$12.99',
-			true
+			raw: '110/80 White $12.99',
+			mesh_count: 110,
+			thread_diameter: 80,
+			modifier: null,
+			color: 'White',
+			pack_size: null,
+			price_text: '$12.99',
+			recognized: true,
+			unknown_tokens: array(),
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$result->add_mesh_variation(
-			$entry,
-			$spec
+			entry: $entry,
+			spec: $spec,
 		);
 
 		$variations = $result->get_mesh_variations();
@@ -69,17 +70,17 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_get_ignored_variations_returns_ignored_entries(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'Thin Thread',
-			0.0,
-			1,
-			'Test Mesh Product',
-			''
+			variation: 'Thin Thread',
+			price: 0.0,
+			product_id: 1,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$result->add_ignored_variation(
-			$entry
+			entry: $entry,
 		);
 
 		$variations = $result->get_ignored_variations();
@@ -101,17 +102,17 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_get_unrecognized_variations_returns_entries(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'Something Unknown',
-			10.00,
-			1,
-			'Test Mesh Product',
-			''
+			variation: 'Something Unknown',
+			price: 10.00,
+			product_id: 1,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$result->add_unrecognized_variation(
-			$entry
+			entry: $entry,
 		);
 
 		$variations = $result->get_unrecognized_variations();
@@ -156,29 +157,30 @@ final class ShurlocMeshProductResultTest extends TestCase {
 	public function test_is_mesh_product_returns_true_when_mesh_variations_exist(): void {
 
 		$entry = new Shurloc_Catalog_Variation_Entry(
-			'110/80 White $12.99',
-			12.99,
-			1,
-			'Test Mesh Product',
-			''
+			variation: '110/80 White $12.99',
+			price: 12.99,
+			product_id: 1,
+			product_name: 'Test Mesh Product',
+			edit_url: '',
 		);
 
 		$spec = new Shurloc_Mesh_Specification(
-			'110/80 White $12.99',
-			110,
-			80,
-			null,
-			'White',
-			null,
-			'$12.99',
-			true
+			raw: '110/80 White $12.99',
+			mesh_count: 110,
+			thread_diameter: 80,
+			modifier: null,
+			color: 'White',
+			pack_size: null,
+			price_text: '$12.99',
+			recognized: true,
+			unknown_tokens: array(),
 		);
 
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$result->add_mesh_variation(
-			$entry,
-			$spec
+			entry: $entry,
+			spec: $spec,
 		);
 
 		$this->assertTrue(
@@ -206,43 +208,45 @@ final class ShurlocMeshProductResultTest extends TestCase {
 		$result = new Shurloc_Mesh_Product_Result();
 
 		$result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'110/80 White $12.99',
-				12.99,
-				1,
-				'Test Mesh Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '110/80 White $12.99',
+				price: 12.99,
+				product_id: 1,
+				product_name: 'Test Mesh Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'110/80 White $12.99',
-				110,
-				80,
-				null,
-				'White',
-				null,
-				'$12.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '110/80 White $12.99',
+				mesh_count: 110,
+				thread_diameter: 80,
+				modifier: null,
+				color: 'White',
+				pack_size: null,
+				price_text: '$12.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$result->add_mesh_variation(
-			new Shurloc_Catalog_Variation_Entry(
-				'160/64 Yellow $14.99',
-				14.99,
-				1,
-				'Test Mesh Product',
-				''
+			entry: new Shurloc_Catalog_Variation_Entry(
+				variation: '160/64 Yellow $14.99',
+				price: 14.99,
+				product_id: 1,
+				product_name: 'Test Mesh Product',
+				edit_url: '',
 			),
-			new Shurloc_Mesh_Specification(
-				'160/64 Yellow $14.99',
-				160,
-				64,
-				null,
-				'Yellow',
-				null,
-				'$14.99',
-				true
-			)
+			spec: new Shurloc_Mesh_Specification(
+				raw: '160/64 Yellow $14.99',
+				mesh_count: 160,
+				thread_diameter: 64,
+				modifier: null,
+				color: 'Yellow',
+				pack_size: null,
+				price_text: '$14.99',
+				recognized: true,
+				unknown_tokens: array(),
+			),
 		);
 
 		$this->assertSame(
