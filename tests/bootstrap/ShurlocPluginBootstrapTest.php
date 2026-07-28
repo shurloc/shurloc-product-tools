@@ -110,14 +110,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 	}
 
 	/**
-	 * Load plugin file.
-	 */
-	private function load_plugin(): void {
-
-		require_once dirname( __DIR__, 2 ) . '/shurloc-product-tools.php';
-	}
-
-	/**
 	 * Bootstrap should initialize the autoloader.
 	 *
 	 * @return void
@@ -131,5 +123,13 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 				Shurloc_Autoloader::class
 			)
 		);
+	}
+
+	/**
+	 * Load plugin file.
+	 */
+	private function load_plugin(): void {
+
+		require_once dirname( __DIR__, 2 ) . '/shurloc-product-tools.php';
 	}
 }
