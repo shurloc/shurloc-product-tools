@@ -52,8 +52,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -81,8 +79,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Clean up test globals.
-	 *
-	 * @return void
 	 */
 	protected function tearDown(): void {
 
@@ -95,8 +91,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Registers the shortcode.
-	 *
-	 * @return void
 	 */
 	public function test_register_adds_shortcode(): void {
 
@@ -111,8 +105,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Returns an empty string when no product exists.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_empty_when_no_product_exists(): void {
 
@@ -127,8 +119,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Returns an empty string for non-mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_empty_for_non_mesh_product(): void {
 
@@ -143,8 +133,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Calls the renderer for mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_render_returns_renderer_output(): void {
 
@@ -186,8 +174,6 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 	/**
 	 * Passes table data to the renderer.
-	 *
-	 * @return void
 	 */
 	public function test_render_passes_table_data_to_renderer(): void {
 
