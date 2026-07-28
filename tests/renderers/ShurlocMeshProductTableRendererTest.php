@@ -31,8 +31,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Set up renderer.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -78,8 +76,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Renders recognized mesh variations.
-	 *
-	 * @return void
 	 */
 	public function test_renders_mesh_variations(): void {
 
@@ -140,8 +136,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Hides modifier column when no modifiers exist.
-	 *
-	 * @return void
 	 */
 	public function test_hides_modifier_column_when_no_modifiers_exist(): void {
 
@@ -172,8 +166,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Hides pack size column when no pack sizes exist.
-	 *
-	 * @return void
 	 */
 	public function test_hides_pack_size_column_when_no_pack_sizes_exist(): void {
 
@@ -204,8 +196,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Shows modifier column when modifiers exist.
-	 *
-	 * @return void
 	 */
 	public function test_shows_modifier_column_when_modifier_exists(): void {
 
@@ -241,8 +231,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Shows pack size column when pack sizes exist.
-	 *
-	 * @return void
 	 */
 	public function test_shows_pack_size_column_when_pack_size_exists(): void {
 
@@ -278,8 +266,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Maintains expected column order.
-	 *
-	 * @return void
 	 */
 	public function test_renders_columns_in_expected_order(): void {
 
@@ -359,8 +345,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 
 	/**
 	 * Renders row without color.
-	 *
-	 * @return void
 	 */
 	public function test_renders_row_without_color(): void {
 
