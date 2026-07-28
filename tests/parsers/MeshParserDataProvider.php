@@ -204,7 +204,7 @@ final class MeshParserDataProvider {
 		?string $pack_size = null,
 		?string $price_text = null,
 		bool $recognized = false,
-		array $unknown_tokens = array()
+		array $unknown_tokens = array(),
 	): Shurloc_Mesh_Specification {
 
 		return new Shurloc_Mesh_Specification(
@@ -216,7 +216,7 @@ final class MeshParserDataProvider {
 			$pack_size,
 			$price_text,
 			$recognized,
-			$unknown_tokens
+			$unknown_tokens,
 		);
 	}
 
