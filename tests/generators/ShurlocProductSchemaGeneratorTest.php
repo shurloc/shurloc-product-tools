@@ -772,11 +772,11 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			reviews: array(),
 			variations: array(
 				new Shurloc_Catalog_Variation_Entry(
-					'110/80 Yellow',
-					25.00,
-					123,
-					'Variable Mesh Product',
-					'https://shurloc.test/wp-admin/post.php?post=123'
+					variation: '110/80 Yellow',
+					price: 25.00,
+					product_id: 123,
+					product_name: 'Variable Mesh Product',
+					edit_url: 'https://shurloc.test/wp-admin/post.php?post=123'
 				),
 			),
 		);
@@ -906,11 +906,11 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	): Shurloc_Catalog_Variation_Entry {
 
 		return new Shurloc_Catalog_Variation_Entry(
-			$variation,
-			$price,
-			123,
-			'Test Mesh Product',
-			''
+			variation: $variation,
+			price: $price,
+			product_id: 123,
+			product_name: 'Test Mesh Product',
+			edit_url: ''
 		);
 	}
 
