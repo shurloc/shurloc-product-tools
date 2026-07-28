@@ -19,10 +19,8 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	 */
 	public function test_generates_product_schema_with_aggregate_offer(): void {
 
-		$result = $this->create_mesh_result();
-
 		$schema = $this->generate_schema(
-			$result
+			result: $this->create_mesh_result()
 		);
 
 		$this->assertSame(
@@ -137,7 +135,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_brand(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result()
 		);
 
 		$this->assertSame(
@@ -157,7 +155,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_product_schema_includes_manufacturer(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result()
 		);
 
 		$this->assertSame(
@@ -345,7 +343,7 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 	public function test_aggregate_offer_contains_price_range(): void {
 
 		$schema = $this->generate_schema(
-			$this->create_mesh_result()
+			result: $this->create_mesh_result()
 		);
 
 		$offers = $schema['offers'];
