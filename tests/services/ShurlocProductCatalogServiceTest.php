@@ -47,39 +47,39 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 123 );
 
 		$product->set_name(
-			'Test Product'
+			name: 'Test Product',
 		);
 
 		$product->set_sku(
-			'TEST-123'
+			sku: 'TEST-123',
 		);
 
 		$product->set_short_description(
-			'Test short description.'
+			description: 'Test short description.',
 		);
 
 		$product->set_description(
-			'Test full description.'
+			description: 'Test full description.',
 		);
 
 		$product->set_category(
-			'Screen Printing'
+			category: 'Screen Printing',
 		);
 
 		$product->set_price(
-			'25.00'
+			price: '25.00',
 		);
 
 		$product->set_regular_price(
-			'30.00'
+			price: '30.00',
 		);
 
 		$product->set_sale_price(
-			'25.00'
+			price: '25.00',
 		);
 
 		$product->set_stock_status(
-			'instock'
+			status: 'instock',
 		);
 
 		wp_set_object_terms(
@@ -89,7 +89,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertInstanceOf(
@@ -156,11 +156,11 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 456 );
 
 		$product->set_name(
-			'Manufacturer Test'
+			name: 'Manufacturer Test',
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -177,7 +177,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 789 );
 
 		$product->set_name(
-			'Branded Product'
+			name: 'Branded Product',
 		);
 
 		wp_set_object_terms(
@@ -187,7 +187,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -204,11 +204,11 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 999 );
 
 		$product->set_name(
-			'No Brand Product'
+			name: 'No Brand Product',
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -225,11 +225,11 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 1000 );
 
 		$product->set_name(
-			'No Review Product'
+			name: 'No Review Product',
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertNull(
@@ -250,11 +250,11 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 111 );
 
 		$product->set_stock_status(
-			'outofstock'
+			status: 'outofstock',
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -271,7 +271,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 222 );
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertNull(
@@ -295,31 +295,31 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 200 );
 
 		$product->set_name(
-			'Variable Product'
+			name: 'Variable Product',
 		);
 
 		$product->set_type(
-			'variable'
+			type: 'variable',
 		);
 
 		$product->set_children(
-			array(
+			children: array(
 				201,
-			)
+			),
 		);
 
 		$variation = new WC_Product_Variation( 201 );
 
 		$variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '110/80 Yellow',
-			)
+			),
 		);
 
 		$GLOBALS['shurloc_test_products'][201] = $variation;
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertCount(
@@ -336,19 +336,19 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 400 );
 
 		$product->set_name(
-			'HTML Product'
+			name: 'HTML Product',
 		);
 
 		$product->set_short_description(
-			'<p>Short <strong>description</strong></p>'
+			description: '<p>Short <strong>description</strong></p>',
 		);
 
 		$product->set_description(
-			'<div>Full <em>description</em></div>'
+			description: '<div>Full <em>description</em></div>',
 		);
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -370,35 +370,35 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 500 );
 
 		$product->set_name(
-			'Mesh Product'
+			name: 'Mesh Product',
 		);
 
 		$product->set_type(
-			'variable'
+			type: 'variable',
 		);
 
 		$product->set_children(
-			array(
+			children: array(
 				501,
-			)
+			),
 		);
 
 		$variation = new WC_Product_Variation( 501 );
 
 		$variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '160/64 White',
-			)
+			),
 		);
 
 		$variation->set_price(
-			'25.00'
+			price: '25.00',
 		);
 
 		$GLOBALS['shurloc_test_products'][501] = $variation;
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -420,31 +420,31 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 300 );
 
 		$product->set_name(
-			'Mesh Product'
+			name: 'Mesh Product',
 		);
 
 		$product->set_type(
-			'variable'
+			type: 'variable',
 		);
 
 		$product->set_children(
-			array(
+			children: array(
 				301,
-			)
+			),
 		);
 
 		$variation = new WC_Product_Variation( 301 );
 
 		$variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '160/64 White',
-			)
+			),
 		);
 
 		$GLOBALS['shurloc_test_products'][301] = $variation;
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -461,13 +461,13 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 400 );
 
 		$product->set_type(
-			'variable'
+			type: 'variable',
 		);
 
 		$product->set_children(
-			array(
+			children: array(
 				401,
-			)
+			),
 		);
 
 		$variation = new WC_Product_Variation( 401 );
@@ -475,7 +475,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$GLOBALS['shurloc_test_products'][401] = $variation;
 
 		$entry = $this->service->get_product_entry(
-			$product
+			product: $product,
 		);
 
 		$this->assertCount(
@@ -492,43 +492,43 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		$product = new WC_Product( 600 );
 
 		$product->set_name(
-			'Variation Order Product'
+			name: 'Variation Order Product',
 		);
 
 		$product->set_type(
-			'variable'
+			type: 'variable',
 		);
 
 		$product->set_children(
-			array(
+			children: array(
 				601,
 				602,
 				603,
-			)
+			),
 		);
 
 		$first_variation = new WC_Product_Variation( 601 );
 
 		$first_variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '230/40 Yellow $30.00',
-			)
+			),
 		);
 
 		$second_variation = new WC_Product_Variation( 602 );
 
 		$second_variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '110/80 White $20.00',
-			)
+			),
 		);
 
 		$third_variation = new WC_Product_Variation( 603 );
 
 		$third_variation->set_variation_attributes(
-			array(
+			attributes: array(
 				'attribute_select-mesh-count' => '156/64 Yellow $25.00',
-			)
+			),
 		);
 
 		$GLOBALS['shurloc_test_products'][601] = $first_variation;
