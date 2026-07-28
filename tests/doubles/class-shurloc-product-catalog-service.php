@@ -47,18 +47,28 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	private array $variation_entry_calls = array();
 
 	/**
+	 * Whether get_product_entry() should return null.
+	 *
+	 * @var bool
+	 */
+	private bool $return_null_product_entry;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Catalog_Variation_Entry[]  $variation_entries Variation entries.
-	 * @param Shurloc_Catalog_Product_Entry|null $product_entry     Product entry to return.
+	 * @param Shurloc_Catalog_Variation_Entry[]  $variation_entries        Variation entries.
+	 * @param Shurloc_Catalog_Product_Entry|null $product_entry            Product entry to return.
+	 * @param bool                               $return_null_product_entry Whether to return null.
 	 */
 	public function __construct(
 		array $variation_entries = array(),
 		?Shurloc_Catalog_Product_Entry $product_entry = null,
+		bool $return_null_product_entry = false,
 	) {
 
-		$this->variation_entries = $variation_entries;
-		$this->product_entry     = $product_entry;
+		$this->variation_entries         = $variation_entries;
+		$this->product_entry             = $product_entry;
+		$this->return_null_product_entry = $return_null_product_entry;
 	}
 
 	/**
@@ -68,13 +78,17 @@ final class Shurloc_Product_Catalog_Service_Double implements Shurloc_Product_Ca
 	 * a catalog entry from the WooCommerce product.
 	 *
 	 * @param WC_Product $product WooCommerce product.
-	 * @return Shurloc_Catalog_Product_Entry Product entry.
+	 * @return Shurloc_Catalog_Product_Entry|null Product entry.
 	 */
 	public function get_product_entry(
 		WC_Product $product,
-	): Shurloc_Catalog_Product_Entry {
+	): ?Shurloc_Catalog_Product_Entry {
 
 		$this->product_entry_calls[] = $product;
+
+		if ( $this->return_null_product_entry ) {
+			return null;
+		}
 
 		if ( null !== $this->product_entry ) {
 			return $this->product_entry;
