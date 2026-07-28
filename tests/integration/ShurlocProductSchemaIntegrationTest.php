@@ -258,41 +258,48 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 			),
 		);
 
-		$catalog_service = $this->createMock(
-			Shurloc_Product_Catalog_Service_Interface::class
+		$catalog_service = new Shurloc_Product_Catalog_Service_Double(
+			product_entry: $catalog_entry,
 		);
 
-		$catalog_service
-		->expects( $this->once() )
-		->method( 'get_product_entry' )
-		->willReturn( $catalog_entry );
-
-		$schema_service = $this->createMock(
-			Shurloc_Product_Schema_Service_Interface::class
+		$schema_service = new Shurloc_Product_Schema_Service_Double(
+			schema: $schema,
 		);
 
-		$schema_service
-		->expects( $this->once() )
-		->method( 'generate' )
-		->with( $catalog_entry )
-		->willReturn( $schema );
-
-		$renderer = $this->createMock(
-			Shurloc_Product_Schema_Renderer_Interface::class
-		);
-
-		$renderer
-		->expects( $this->once() )
-		->method( 'render' )
-		->with( $schema );
+		$renderer = new Shurloc_Product_Schema_Renderer_Double();
 
 		$integration = new Shurloc_Product_Schema_Integration(
-			$catalog_service,
-			$schema_service,
-			$renderer
+			catalog_service: $catalog_service,
+			schema_service: $schema_service,
+			renderer: $renderer,
 		);
 
 		$integration->render_product_schema();
+
+		$this->assertCount(
+			1,
+			$catalog_service->get_product_entry_calls()
+		);
+
+		$this->assertCount(
+			1,
+			$schema_service->get_calls()
+		);
+
+		$this->assertSame(
+			$catalog_entry,
+			$schema_service->get_calls()[0]
+		);
+
+		$this->assertCount(
+			1,
+			$renderer->get_calls()
+		);
+
+		$this->assertSame(
+			$schema,
+			$renderer->get_calls()[0]
+		);
 	}
 
 	/**
