@@ -27,7 +27,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		parent::tearDown();
 	}
 
-
 	/**
 	 * Mesh products render a specification table.
 	 */
@@ -44,7 +43,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			product: $product,
 		);
 
 		$this->assertStringContainsString(
@@ -73,7 +72,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Rendering the shortcode enqueues its frontend assets.
 	 */
@@ -93,7 +91,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$this->render_mesh_table(
-			$product
+			product: $product,
 		);
 
 		$this->assertArrayHasKey(
@@ -107,7 +105,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 	}
 
-
 	/**
 	 * Mesh products without variations return empty output.
 	 */
@@ -116,17 +113,17 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		$product = new WC_Product( 1 );
 
 		$product->set_name(
-			'Empty Mesh Product'
+			name: 'Empty Mesh Product'
 		);
 
 		$product->set_type(
-			'variable'
+			type: 'variable'
 		);
 
 		$GLOBALS['product'] = $product;
 
 		$html = $this->render_mesh_table(
-			$product
+			product: $product,
 		);
 
 		$this->assertSame(
@@ -157,7 +154,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product
+			product: $product,
 		);
 
 		$this->assertStringContainsString(
@@ -191,92 +188,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 	}
 
-
-	/**
-	 * Create a mesh product test double.
-	 *
-	 * @param array<int,array{id:int,value:string,price:string}> $variations Variation data.
-	 * @return WC_Product Product test double.
-	 */
-	private function create_mesh_product(
-		array $variations,
-	): WC_Product {
-
-		$children = array();
-
-		foreach ( $variations as $variation_data ) {
-
-			$variation = new WC_Product(
-				$variation_data['id'],
-			);
-
-			$variation->set_variation_attributes(
-				array(
-					'attribute_select-mesh-count' => $variation_data['value'],
-				)
-			);
-
-			$variation->set_price(
-				$variation_data['price'],
-			);
-
-			$children[] = $variation_data['id'];
-		}
-
-		$product = new WC_Product( 1 );
-
-		$product->set_name(
-			'Test Mesh Product'
-		);
-
-		$product->set_type(
-			'variable'
-		);
-
-		$product->set_children(
-			$children
-		);
-
-		$GLOBALS['product'] = $product;
-
-		return $product;
-	}
-
-
-	/**
-	 * Render mesh table shortcode output.
-	 *
-	 * @param WC_Product $product Product to render.
-	 * @return string Rendered HTML.
-	 */
-	private function render_mesh_table(
-		WC_Product $product,
-	): string {
-
-		$catalog_service = new Shurloc_Product_Catalog_Service();
-
-		$analyzer = new Shurloc_Mesh_Product_Analyzer(
-			new Shurloc_Mesh_Parser(),
-		);
-
-		$data_service = new Shurloc_Mesh_Product_Data_Service(
-			$catalog_service,
-			$analyzer,
-		);
-
-		$table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
-
-		$renderer = new Shurloc_Mesh_Product_Table_Renderer();
-
-		$shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
-			$data_service,
-			$table_data_factory,
-			$renderer,
-		);
-
-		return $shortcode->render();
-	}
-
 	/**
 	 * Mesh table hides modifier column when no modifiers exist.
 	 */
@@ -293,7 +204,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product,
+			product: $product,
 		);
 
 		$this->assertStringNotContainsString(
@@ -318,7 +229,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product,
+			product: $product,
 		);
 
 		$this->assertStringNotContainsString(
@@ -343,7 +254,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product,
+			product: $product,
 		);
 
 		$this->assertStringContainsString(
@@ -356,7 +267,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$html
 		);
 	}
-
 
 	/**
 	 * Mesh products can render variations without a color.
@@ -374,7 +284,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		);
 
 		$html = $this->render_mesh_table(
-			$product,
+			product: $product,
 		);
 
 		$this->assertStringContainsString(
@@ -401,5 +311,89 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			'$24.10',
 			$html
 		);
+	}
+
+	/**
+	 * Create a mesh product test double.
+	 *
+	 * @param array<int,array{id:int,value:string,price:string}> $variations Variation data.
+	 * @return WC_Product Product test double.
+	 */
+	private function create_mesh_product(
+		array $variations,
+	): WC_Product {
+
+		$children = array();
+
+		foreach ( $variations as $variation_data ) {
+
+			$variation = new WC_Product(
+				id: $variation_data['id'],
+			);
+
+			$variation->set_variation_attributes(
+				array(
+					'attribute_select-mesh-count' => $variation_data['value'],
+				)
+			);
+
+			$variation->set_price(
+				price: $variation_data['price'],
+			);
+
+			$children[] = $variation_data['id'];
+		}
+
+		$product = new WC_Product( id: 1 );
+
+		$product->set_name(
+			name: 'Test Mesh Product'
+		);
+
+		$product->set_type(
+			type: 'variable'
+		);
+
+		$product->set_children(
+			children: $children
+		);
+
+		$GLOBALS['product'] = $product;
+
+		return $product;
+	}
+
+	/**
+	 * Render mesh table shortcode output.
+	 *
+	 * @param WC_Product $product Product to render.
+	 * @return string Rendered HTML.
+	 */
+	private function render_mesh_table(
+		WC_Product $product,
+	): string {
+
+		$catalog_service = new Shurloc_Product_Catalog_Service();
+
+		$analyzer = new Shurloc_Mesh_Product_Analyzer(
+			parser: new Shurloc_Mesh_Parser(),
+		);
+
+		$data_service = new Shurloc_Mesh_Product_Data_Service(
+			catalog_service: $catalog_service,
+			mesh_analyzer: $analyzer,
+		);
+
+		$table_data_factory = new Shurloc_Mesh_Table_Data_Factory();
+
+		$renderer = new Shurloc_Mesh_Product_Table_Renderer();
+
+		$shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
+			data_service: $data_service,
+			table_data_factory: $table_data_factory,
+			renderer: $renderer,
+		);
+
+		return $shortcode->render();
 	}
 }
