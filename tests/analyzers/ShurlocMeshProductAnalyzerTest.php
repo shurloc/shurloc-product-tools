@@ -23,8 +23,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Set up tests.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -37,8 +35,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * A product with recognized mesh variations should be identified as mesh.
-	 *
-	 * @return void
 	 */
 	public function test_recognized_mesh_variations_make_product_a_mesh_product(): void {
 
@@ -80,8 +76,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Zero-price unrecognized variations should be ignored.
-	 *
-	 * @return void
 	 */
 	public function test_zero_price_unrecognized_variations_are_ignored(): void {
 
@@ -114,8 +108,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Null-price unrecognized variations should be ignored.
-	 *
-	 * @return void
 	 */
 	public function test_null_price_unrecognized_variations_are_ignored(): void {
 
@@ -139,8 +131,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Paid unrecognized variations should be reported.
-	 *
-	 * @return void
 	 */
 	public function test_paid_unrecognized_variations_are_reported(): void {
 
@@ -168,8 +158,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Recognized variations should retain parsed specification data.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_variations_include_parsed_specifications(): void {
 
@@ -218,8 +206,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Recognized but invalid mesh specifications are still mesh products.
-	 *
-	 * @return void
 	 */
 	public function test_invalid_mesh_specifications_are_mesh_products(): void {
 
@@ -258,8 +244,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Mixed variations should separate mesh, ignored, and unrecognized entries.
-	 *
-	 * @return void
 	 */
 	public function test_mixed_variations_are_classified_correctly(): void {
 
@@ -305,8 +289,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Empty variation lists should return an empty result.
-	 *
-	 * @return void
 	 */
 	public function test_empty_variation_list_returns_empty_result(): void {
 
@@ -337,8 +319,6 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 
 	/**
 	 * Duplicate mesh variations should remain separate entries.
-	 *
-	 * @return void
 	 */
 	public function test_duplicate_mesh_variations_are_preserved(): void {
 
