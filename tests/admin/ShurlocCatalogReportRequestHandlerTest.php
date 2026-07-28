@@ -47,7 +47,7 @@ final class ShurlocCatalogReportRequestHandlerTest extends TestCase {
 		$this->actions = new Shurloc_Catalog_Report_Actions_Double();
 
 		$this->handler = new Shurloc_Catalog_Report_Request_Handler(
-			actions: $this->actions
+			actions: $this->actions,
 		);
 
 		add_action(
