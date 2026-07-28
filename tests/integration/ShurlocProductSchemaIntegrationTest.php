@@ -16,8 +16,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Integration should generate and render product schema.
-	 *
-	 * @return void
 	 */
 	public function test_renders_generated_product_schema(): void {
 
@@ -68,8 +66,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Integration should not render schema outside product pages.
-	 *
-	 * @return void
 	 */
 	public function test_does_not_render_when_not_product_page(): void {
 
@@ -112,8 +108,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Integration should not render when catalog entry is unavailable.
-	 *
-	 * @return void
 	 */
 	public function test_does_not_render_when_catalog_entry_is_null(): void {
 
@@ -153,8 +147,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Integration should not render when schema generation fails.
-	 *
-	 * @return void
 	 */
 	public function test_does_not_render_when_schema_is_null(): void {
 
@@ -198,8 +190,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh products should render aggregate offer schema.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_product_outputs_aggregate_offer_schema(): void {
 
@@ -290,8 +280,6 @@ final class ShurlocProductSchemaIntegrationTest extends TestCase {
 
 	/**
 	 * Non-mesh products should render standard offer schema.
-	 *
-	 * @return void
 	 */
 	public function test_non_mesh_product_outputs_standard_offer_schema(): void {
 
