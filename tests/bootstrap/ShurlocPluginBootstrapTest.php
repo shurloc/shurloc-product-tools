@@ -26,8 +26,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
 	 * Set up bootstrap test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -42,8 +40,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
 	 * Bootstrap function should exist.
-	 *
-	 * @return void
 	 */
 	public function test_bootstrap_function_exists(): void {
 
@@ -58,8 +54,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
 	 * Bootstrap should register plugin services without errors.
-	 *
-	 * @return void
 	 */
 	public function test_bootstrap_runs_successfully(): void {
 
@@ -93,8 +87,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
 	 * Bootstrap should register init hook.
-	 *
-	 * @return void
 	 */
 	public function test_bootstrap_registers_init_hook(): void {
 
@@ -119,8 +111,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
 	 * Load plugin file.
-	 *
-	 * @return void
 	 */
 	private function load_plugin(): void {
 
