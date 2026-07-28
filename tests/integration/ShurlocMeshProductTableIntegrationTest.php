@@ -16,8 +16,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Clean up global state.
-	 *
-	 * @return void
 	 */
 	protected function tearDown(): void {
 
@@ -32,8 +30,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh products render a specification table.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_product_renders_table_output(): void {
 
@@ -80,8 +76,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Rendering the shortcode enqueues its frontend assets.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_product_enqueues_assets(): void {
 
@@ -116,8 +110,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh products without variations return empty output.
-	 *
-	 * @return void
 	 */
 	public function test_product_without_mesh_variations_returns_empty_output(): void {
 
@@ -146,8 +138,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh products render multiple variation rows.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_product_renders_multiple_variation_rows(): void {
 
@@ -289,8 +279,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh table hides modifier column when no modifiers exist.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_table_hides_modifier_column_when_no_modifiers_exist(): void {
 
@@ -316,8 +304,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh table hides pack size column when no pack sizes exist.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_table_hides_pack_size_column_when_no_pack_sizes_exist(): void {
 
@@ -343,8 +329,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh table shows optional columns when data exists.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_table_shows_optional_columns_when_data_exists(): void {
 
@@ -376,8 +360,6 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 	/**
 	 * Mesh products can render variations without a color.
-	 *
-	 * @return void
 	 */
 	public function test_mesh_product_renders_variation_without_color(): void {
 
