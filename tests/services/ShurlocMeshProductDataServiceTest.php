@@ -38,8 +38,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Set up test environment.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -72,8 +70,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Analyze product returns mesh product result.
-	 *
-	 * @return void
 	 */
 	public function test_analyze_product_returns_analysis_result(): void {
 
@@ -92,8 +88,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Mesh product detection returns true when analyzer identifies mesh.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_true_for_mesh_product(): void {
 
@@ -129,8 +123,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Mesh product detection returns false when analyzer finds no mesh.
-	 *
-	 * @return void
 	 */
 	public function test_is_mesh_product_returns_false_for_non_mesh_product(): void {
 
@@ -146,8 +138,6 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 
 	/**
 	 * Catalog variations are passed to the analyzer.
-	 *
-	 * @return void
 	 */
 	public function test_analyze_product_passes_catalog_variations_to_analyzer(): void {
 
