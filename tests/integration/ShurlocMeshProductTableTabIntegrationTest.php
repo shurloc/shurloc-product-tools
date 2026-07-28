@@ -30,8 +30,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Set up test.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -48,8 +46,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Register adds the WooCommerce filter.
-	 *
-	 * @return void
 	 */
 	public function test_register_adds_product_tab_filter(): void {
 
@@ -68,8 +64,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Register tab returns original tabs when no product exists.
-	 *
-	 * @return void
 	 */
 	public function test_register_tab_without_product_returns_tabs(): void {
 
@@ -90,8 +84,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Register tab skips when shortcode returns empty output.
-	 *
-	 * @return void
 	 */
 	public function test_register_tab_skips_when_shortcode_returns_empty(): void {
 
@@ -114,8 +106,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Register tab adds the mesh specification tab.
-	 *
-	 * @return void
 	 */
 	public function test_register_tab_adds_mesh_tab(): void {
 
@@ -156,8 +146,6 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 
 	/**
 	 * Render tab outputs shortcode HTML.
-	 *
-	 * @return void
 	 */
 	public function test_render_tab_outputs_shortcode_html(): void {
 
