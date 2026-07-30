@@ -269,6 +269,23 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 		$result = $this->analysis_service->analyze();
 
 		$invalid_specifications = $result->get_invalid_specifications();
+
+		usort(
+			$invalid_specifications,
+			static function ( array $left, array $right ): int {
+
+				$product_comparison = $left['product_id'] <=> $right['product_id'];
+
+				if ( 0 !== $product_comparison ) {
+					return $product_comparison;
+				}
+
+				return strnatcasecmp(
+					$left['variation'],
+					$right['variation']
+				);
+			}
+		);
 		?>
 
 	<h2>Invalid Mesh Products</h2>
