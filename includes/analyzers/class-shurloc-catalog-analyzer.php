@@ -19,18 +19,18 @@ final class Shurloc_Catalog_Analyzer {
 	 *
 	 * @var Shurloc_Mesh_Parser
 	 */
-	private Shurloc_Mesh_Parser $parser;
+	private Shurloc_Mesh_Parser $mesh_parser;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Mesh_Parser $parser Mesh parser.
+	 * @param Shurloc_Mesh_Parser $mesh_parser Mesh parser.
 	 */
 	public function __construct(
-		Shurloc_Mesh_Parser $parser
+		Shurloc_Mesh_Parser $mesh_parser
 	) {
 
-		$this->parser = $parser;
+		$this->mesh_parser = $mesh_parser;
 	}
 
 	/**
@@ -53,7 +53,7 @@ final class Shurloc_Catalog_Analyzer {
 
 		foreach ( $entries as $entry ) {
 
-			$spec = $this->parser->parse(
+			$spec = $this->mesh_parser->parse(
 				$entry->variation
 			);
 

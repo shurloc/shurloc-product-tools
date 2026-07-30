@@ -32,7 +32,7 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 		parent::setUp();
 
 		$this->analyzer = new Shurloc_Catalog_Analyzer(
-			parser: new Shurloc_Mesh_Parser(),
+			mesh_parser: new Shurloc_Mesh_Parser(),
 		);
 	}
 

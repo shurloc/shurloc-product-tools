@@ -31,8 +31,6 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 
 	/**
 	 * Set up each test.
-	 *
-	 * @return void
 	 */
 	protected function setUp(): void {
 
@@ -76,8 +74,6 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 
 	/**
 	 * Reset test globals.
-	 *
-	 * @return void
 	 */
 	protected function tearDown(): void {
 
@@ -90,8 +86,6 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 
 	/**
 	 * It collects and naturally sorts catalog variation entries.
-	 *
-	 * @return void
 	 */
 	public function test_it_collects_and_sorts_catalog_variation_entries(): void {
 
@@ -131,8 +125,6 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 
 	/**
 	 * It returns only the naturally sorted variation values.
-	 *
-	 * @return void
 	 */
 	public function test_it_returns_catalog_variation_values(): void {
 
@@ -152,6 +144,25 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 
 
 	/**
+	 * It returns a catalog report when analyzing the catalog.
+	 *
+	 * This test also ensures that the service method's declared return type
+	 * agrees with the object returned by the catalog analyzer.
+	 */
+	public function test_it_returns_a_catalog_report(): void {
+
+		$service = $this->create_service();
+
+		$report = $service->analyze();
+
+		$this->assertInstanceOf(
+			Shurloc_Catalog_Report::class,
+			$report
+		);
+	}
+
+
+	/**
 	 * Create the service under test.
 	 *
 	 * @param Shurloc_Product_Catalog_Service_Interface|null $catalog_service Catalog service override.
@@ -165,8 +176,8 @@ final class ShurlocCatalogAnalysisServiceTest extends TestCase {
 			catalog_service: $catalog_service ?? new Shurloc_Product_Catalog_Service_Double(
 				variation_entries: $this->variation_entries,
 			),
-			analyzer: new Shurloc_Catalog_Analyzer(
-				parser: new Shurloc_Mesh_Parser(),
+			catalog_analyzer: new Shurloc_Catalog_Analyzer(
+				mesh_parser: new Shurloc_Mesh_Parser(),
 			),
 		);
 	}

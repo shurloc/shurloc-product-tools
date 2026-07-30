@@ -36,6 +36,13 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	private Shurloc_Product_Catalog_Service $catalog_service;
 
 	/**
+	 * Catalog analysis service.
+	 *
+	 * @var Shurloc_Catalog_Analysis_Service
+	 */
+	private Shurloc_Catalog_Analysis_Service $analysis_service;
+
+	/**
 	 * Request handler.
 	 *
 	 * @var Shurloc_Catalog_Report_Request_Handler
@@ -45,13 +52,16 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Product_Catalog_Service $catalog_service Product catalog service.
+	 * @param Shurloc_Product_Catalog_Service  $catalog_service  Product catalog service.
+	 * @param Shurloc_Catalog_Analysis_Service $analysis_service Catalog analysis service.
 	 */
 	public function __construct(
-		Shurloc_Product_Catalog_Service $catalog_service
+		Shurloc_Product_Catalog_Service $catalog_service,
+		Shurloc_Catalog_Analysis_Service $analysis_service
 	) {
 
-		$this->catalog_service = $catalog_service;
+		$this->catalog_service  = $catalog_service;
+		$this->analysis_service = $analysis_service;
 
 		$this->request_handler = new Shurloc_Catalog_Report_Request_Handler(
 			actions: $this,
@@ -255,22 +265,136 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	 * @return void
 	 */
 	private function render_invalid_mesh_products_tab(): void {
+
+		$result = $this->analysis_service->analyze();
+
+		$invalid_specifications = $result->get_invalid_specifications();
 		?>
 
-		<h2>Invalid Mesh Products</h2>
+	<h2>Invalid Mesh Products</h2>
 
-		<p>
-			Review product variations that could not be recognized as valid
-			mesh specifications.
-		</p>
+	<p>
+		Review purchasable product variations that were recognized as mesh
+		specifications but did not parse into valid specifications.
+	</p>
 
-		<div class="notice notice-info inline">
+		<?php if ( empty( $invalid_specifications ) ) : ?>
+
+		<div class="notice notice-success inline">
 
 			<p>
-				The invalid mesh products report is under development.
+				No invalid mesh product variations were found.
 			</p>
 
 		</div>
+
+	<?php else : ?>
+
+		<div class="notice notice-warning inline">
+
+			<p>
+				<?php
+				$invalid_count = count( $invalid_specifications );
+
+				echo esc_html(
+					sprintf(
+						/* translators: %d: Number of invalid paid product variations. */
+						_n(
+							'%d invalid paid variation was found.',
+							'%d invalid paid variations were found.',
+							$invalid_count,
+							'shurloc-product-tools'
+						),
+						$invalid_count
+					)
+				);
+				?>
+			</p>
+
+		</div>
+
+		<table class="widefat fixed striped">
+
+			<thead>
+
+				<tr>
+					<th scope="col">Product</th>
+					<th scope="col">Variation</th>
+					<th scope="col">Price</th>
+					<th scope="col">Action</th>
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<?php foreach ( $invalid_specifications as $entry ) : ?>
+
+					<tr>
+
+						<td>
+							<strong>
+								<?php echo esc_html( $entry['product_name'] ); ?>
+							</strong>
+
+							<br>
+
+							<span>
+								Product ID:
+								<?php echo esc_html( (string) $entry['product_id'] ); ?>
+							</span>
+						</td>
+
+						<td>
+							<code>
+								<?php echo esc_html( $entry['variation'] ); ?>
+							</code>
+						</td>
+
+						<td>
+							<?php if ( null !== $entry['price'] ) : ?>
+
+								<?php
+								echo wp_kses_post(
+									wc_price( $entry['price'] )
+								);
+								?>
+
+							<?php else : ?>
+
+								&mdash;
+
+							<?php endif; ?>
+						</td>
+
+						<td>
+
+							<?php if ( ! empty( $entry['edit_url'] ) ) : ?>
+
+								<a
+									href="<?php echo esc_url( $entry['edit_url'] ); ?>"
+									class="button button-secondary"
+								>
+									Edit Product
+								</a>
+
+							<?php else : ?>
+
+								&mdash;
+
+							<?php endif; ?>
+
+						</td>
+
+					</tr>
+
+				<?php endforeach; ?>
+
+			</tbody>
+
+		</table>
+
+	<?php endif; ?>
 
 		<?php
 	}

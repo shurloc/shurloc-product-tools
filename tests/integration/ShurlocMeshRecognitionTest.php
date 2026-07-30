@@ -25,7 +25,7 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 		$catalog = MeshCatalogDataProvider::load_catalog();
 
 		$analyzer = new Shurloc_Catalog_Analyzer(
-			parser: new Shurloc_Mesh_Parser(),
+			mesh_parser: new Shurloc_Mesh_Parser(),
 		);
 
 		$report = $analyzer->analyze( $catalog );

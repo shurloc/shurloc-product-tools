@@ -33,7 +33,7 @@ final class Shurloc_Catalog_Report {
 	 *
 	 * These variation names were not identified as mesh specifications.
 	 *
-	 * @var string[]
+	 * @var array<int, array<string, mixed>>
 	 */
 	public array $unrecognized_variations = array();
 
@@ -117,6 +117,36 @@ final class Shurloc_Catalog_Report {
 				'spec'      => $spec,
 			)
 		);
+	}
+
+	/**
+	 * Return the recognized mesh specifications.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function get_recognized_specifications(): array {
+
+		return $this->recognized_specifications;
+	}
+
+	/**
+	 * Return the unrecognized variation names.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function get_unrecognized_variations(): array {
+
+		return $this->unrecognized_variations;
+	}
+
+	/**
+	 * Return the invalid mesh specifications.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function get_invalid_specifications(): array {
+
+		return $this->invalid_specifications;
 	}
 
 	/**

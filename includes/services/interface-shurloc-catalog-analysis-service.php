@@ -29,7 +29,7 @@ interface Shurloc_Catalog_Analysis_Service_Interface {
 	/**
 	 * Analyze the WooCommerce catalog.
 	 *
-	 * @return Shurloc_Catalog_Analysis_Result
+	 * @return Shurloc_Catalog_Report
 	 */
-	public function analyze(): Shurloc_Mesh_Product_Result;
+	public function analyze(): Shurloc_Catalog_Report;
 }

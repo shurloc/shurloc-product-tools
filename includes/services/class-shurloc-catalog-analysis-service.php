@@ -24,22 +24,22 @@ final class Shurloc_Catalog_Analysis_Service implements Shurloc_Catalog_Analysis
 	 *
 	 * @var Shurloc_Catalog_Analyzer
 	 */
-	private Shurloc_Catalog_Analyzer $analyzer;
+	private Shurloc_Catalog_Analyzer $catalog_analyzer;
 
 
 	/**
 	 * Constructor.
 	 *
 	 * @param Shurloc_Product_Catalog_Service_Interface $catalog_service Product catalog service.
-	 * @param Shurloc_Catalog_Analyzer                  $analyzer        Catalog analyzer.
+	 * @param Shurloc_Catalog_Analyzer                  $catalog_analyzer        Catalog analyzer.
 	 */
 	public function __construct(
 		Shurloc_Product_Catalog_Service_Interface $catalog_service,
-		Shurloc_Catalog_Analyzer $analyzer
+		Shurloc_Catalog_Analyzer $catalog_analyzer
 	) {
 
-		$this->catalog_service = $catalog_service;
-		$this->analyzer        = $analyzer;
+		$this->catalog_service  = $catalog_service;
+		$this->catalog_analyzer = $catalog_analyzer;
 	}
 
 
@@ -117,13 +117,13 @@ final class Shurloc_Catalog_Analysis_Service implements Shurloc_Catalog_Analysis
 
 
 	/**
-	 * Analyze the WooCommerce catalog.
+	 * Analyze the WooCommerce product catalog.
 	 *
-	 * @return Shurloc_Mesh_Product_Result
+	 * @return Shurloc_Catalog_Report Catalog analysis report.
 	 */
-	public function analyze(): Shurloc_Mesh_Product_Result {
+	public function analyze(): Shurloc_Catalog_Report {
 
-		return $this->analyzer->analyze(
+		return $this->catalog_analyzer->analyze(
 			entries: $this->get_variation_entries(),
 		);
 	}
