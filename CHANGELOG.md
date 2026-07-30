@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.0.0] - 2026-07-30
+
+### Added
+
+- Added catalog analysis service for scanning WooCommerce mesh product variations.
+- Added catalog report model for collecting recognized, unrecognized, and invalid mesh specifications.
+- Added **Invalid Mesh Products** admin page for reviewing invalid mesh variations.
+- Added direct links from invalid mesh variations to the corresponding WooCommerce product editor.
+- Added validation error reporting for invalid mesh specifications.
+- Added PHPUnit coverage for:
+  - Catalog analysis service
+  - Catalog analyzer
+  - Catalog report
+  - Invalid mesh products controller
+
+### Changed
+
+- Updated the catalog analyzer to produce a structured catalog report.
+- Improved invalid mesh reporting with sortable product listings.
+- Improved validation diagnostics by exposing parser validation errors through the mesh specification model.
+
+### Internal Improvements
+
+- Introduced catalog analysis interfaces to improve separation between analysis and presentation.
+- Expanded catalog analysis infrastructure to support future reporting features.
+- Improved controller integration with the catalog reporting pipeline.
+- Refined report models and supporting test doubles.
+
+### Testing
+
+- Added PHPUnit coverage for catalog analysis and reporting.
+- Added integration tests for the Invalid Mesh Products admin page.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [0.14.0] - 2026-07-28
 
 ### Changed
