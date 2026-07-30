@@ -15,6 +15,20 @@ declare( strict_types=1 );
 final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_Actions_Interface {
 
 	/**
+	 * Catalog report tab slug.
+	 *
+	 * @var string
+	 */
+	private const TAB_CATALOG_REPORT = 'catalog-report';
+
+	/**
+	 * Invalid mesh products tab slug.
+	 *
+	 * @var string
+	 */
+	private const TAB_INVALID_MESH_PRODUCTS = 'invalid-mesh-products';
+
+	/**
 	 * Product catalog service.
 	 *
 	 * @var Shurloc_Product_Catalog_Service
@@ -40,7 +54,7 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 		$this->catalog_service = $catalog_service;
 
 		$this->request_handler = new Shurloc_Catalog_Report_Request_Handler(
-			$this
+			actions: $this,
 		);
 	}
 
@@ -93,6 +107,8 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	 * @return void
 	 */
 	public function render_page(): void {
+
+		$active_tab = $this->get_active_tab();
 		?>
 
 		<div class="wrap">
@@ -103,56 +119,192 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 				Utilities for exporting and analyzing the WooCommerce product catalog.
 			</p>
 
-			<hr>
+			<?php $this->render_tabs( active_tab: $active_tab ); ?>
 
-			<h2>Export Catalog Variations</h2>
+			<?php
+			switch ( $active_tab ) {
 
-			<p>
-				Export WooCommerce variation names as a JSON file for parser
-				development and testing.
-			</p>
+				case self::TAB_INVALID_MESH_PRODUCTS:
+					$this->render_invalid_mesh_products_tab();
+					break;
 
-			<form method="post">
-
-				<?php wp_nonce_field( 'shurloc_export_variations' ); ?>
-
-				<input
-					type="hidden"
-					name="shurloc_action"
-					value="export_variations"
-				/>
-
-				<?php submit_button( 'Export Variations', 'primary', 'submit', false ); ?>
-
-			</form>
-
-			<hr>
-
-			<h2>Generate Catalog Report</h2>
-
-			<p>
-				Analyze the WooCommerce catalog using the mesh parser and download
-				a JSON report containing recognized, unrecognized, and invalid
-				specifications.
-			</p>
-
-			<form method="post">
-
-				<?php wp_nonce_field( 'shurloc_generate_catalog_report' ); ?>
-
-				<input
-					type="hidden"
-					name="shurloc_action"
-					value="generate_catalog_report"
-				/>
-
-				<?php submit_button( 'Generate Catalog Report', 'secondary', 'submit', false ); ?>
-
-			</form>
+				case self::TAB_CATALOG_REPORT:
+				default:
+					$this->render_catalog_report_tab();
+					break;
+			}
+			?>
 
 		</div>
 
 		<?php
+	}
+
+	/**
+	 * Render the admin navigation tabs.
+	 *
+	 * @param string $active_tab Active tab slug.
+	 * @return void
+	 */
+	private function render_tabs(
+		string $active_tab
+	): void {
+
+		$tabs = array(
+			self::TAB_CATALOG_REPORT        => 'Catalog Report',
+			self::TAB_INVALID_MESH_PRODUCTS => 'Invalid Mesh Products',
+		);
+		?>
+
+		<nav class="nav-tab-wrapper">
+
+			<?php foreach ( $tabs as $tab_slug => $tab_label ) : ?>
+
+				<?php
+				$tab_url = add_query_arg(
+					array(
+						'page' => 'shurloc-product-tools',
+						'tab'  => $tab_slug,
+					),
+					admin_url( 'tools.php' )
+				);
+
+				$tab_classes = array(
+					'nav-tab',
+				);
+
+				if ( $active_tab === $tab_slug ) {
+					$tab_classes[] = 'nav-tab-active';
+				}
+				?>
+
+				<a
+					href="<?php echo esc_url( $tab_url ); ?>"
+					class="<?php echo esc_attr( implode( ' ', $tab_classes ) ); ?>"
+				>
+					<?php echo esc_html( $tab_label ); ?>
+				</a>
+
+			<?php endforeach; ?>
+
+		</nav>
+
+		<?php
+	}
+
+	/**
+	 * Render the catalog report tab.
+	 *
+	 * @return void
+	 */
+	private function render_catalog_report_tab(): void {
+		?>
+
+		<h2>Export Catalog Variations</h2>
+
+		<p>
+			Export WooCommerce variation names as a JSON file for parser
+			development and testing.
+		</p>
+
+		<form method="post">
+
+			<?php wp_nonce_field( 'shurloc_export_variations' ); ?>
+
+			<input
+				type="hidden"
+				name="shurloc_action"
+				value="export_variations"
+			/>
+
+			<?php submit_button( 'Export Variations', 'primary', 'submit', false ); ?>
+
+		</form>
+
+		<hr>
+
+		<h2>Generate Catalog Report</h2>
+
+		<p>
+			Analyze the WooCommerce catalog using the mesh parser and download
+			a JSON report containing recognized, unrecognized, and invalid
+			specifications.
+		</p>
+
+		<form method="post">
+
+			<?php wp_nonce_field( 'shurloc_generate_catalog_report' ); ?>
+
+			<input
+				type="hidden"
+				name="shurloc_action"
+				value="generate_catalog_report"
+			/>
+
+			<?php submit_button( 'Generate Catalog Report', 'secondary', 'submit', false ); ?>
+
+		</form>
+
+		<?php
+	}
+
+
+	/**
+	 * Render the invalid mesh products tab.
+	 *
+	 * @return void
+	 */
+	private function render_invalid_mesh_products_tab(): void {
+		?>
+
+		<h2>Invalid Mesh Products</h2>
+
+		<p>
+			Review product variations that could not be recognized as valid
+			mesh specifications.
+		</p>
+
+		<div class="notice notice-info inline">
+
+			<p>
+				The invalid mesh products report is under development.
+			</p>
+
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Get the active admin tab.
+	 *
+	 * @return string
+	 */
+	private function get_active_tab(): string {
+
+		$active_tab = self::TAB_CATALOG_REPORT;
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['tab'] ) ) {
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$requested_tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
+
+			if (
+				in_array(
+					$requested_tab,
+					array(
+						self::TAB_CATALOG_REPORT,
+						self::TAB_INVALID_MESH_PRODUCTS,
+					),
+					true
+				)
+			) {
+				$active_tab = $requested_tab;
+			}
+		}
+
+		return $active_tab;
 	}
 
 	/**
@@ -165,8 +317,8 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 		$this->verify_permissions();
 
 		$this->download_json(
-			'shurloc-variations.json',
-			$this->get_catalog_variations()
+			filename: 'shurloc-variations.json',
+			data: $this->get_catalog_variations(),
 		);
 	}
 
@@ -182,16 +334,16 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 		$parser = new Shurloc_Mesh_Parser();
 
 		$analyzer = new Shurloc_Catalog_Analyzer(
-			$parser
+			parser: $parser,
 		);
 
 		$report = $analyzer->analyze(
-			$this->get_catalog_entries()
+			entries: $this->get_catalog_entries(),
 		);
 
 		$this->download_json(
-			'catalog-report.json',
-			$report->to_array()
+			filename: 'catalog-report.json',
+			data: $report->to_array(),
 		);
 	}
 
@@ -227,7 +379,7 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
-			)
+			),
 		);
 
 		foreach ( $product_ids as $product_id ) {
@@ -241,8 +393,8 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 			$entries = array_merge(
 				$entries,
 				$this->catalog_service->get_product_variation_entries(
-					$product
-				)
+					product: $product,
+				),
 			);
 		}
 
