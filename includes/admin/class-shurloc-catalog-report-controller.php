@@ -338,7 +338,6 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 					<th scope="col">Product</th>
 					<th scope="col">Variation</th>
 					<th scope="col">Invalid Because</th>
-					<th scope="col">Price</th>
 					<th scope="col">Action</th>
 				</tr>
 
@@ -396,27 +395,13 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 						</td>
 
 						<td>
-							<?php if ( null !== $entry['price'] ) : ?>
-
-								<?php
-								echo wp_kses_post(
-									wc_price( $entry['price'] )
-								);
-								?>
-
-							<?php else : ?>
-
-								&mdash;
-
-							<?php endif; ?>
-						</td>
-
-						<td>
 
 							<?php if ( ! empty( $entry['edit_url'] ) ) : ?>
 
 								<a
 									href="<?php echo esc_url( $entry['edit_url'] ); ?>"
+									target="_blank"
+									rel="noopener noreferrer"
 									class="button button-secondary"
 								>
 									Edit Product
