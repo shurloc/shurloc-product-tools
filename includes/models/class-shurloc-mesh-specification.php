@@ -274,6 +274,77 @@ final class Shurloc_Mesh_Specification {
 
 
 	/**
+	 * Get validation errors for the mesh specification.
+	 *
+	 * @return string[] Validation error messages.
+	 */
+	public function get_validation_errors(): array {
+
+		$errors = array();
+
+		if ( ! $this->recognized ) {
+			$errors[] = 'The variation was not recognized as a mesh specification.';
+		}
+
+		if ( null === $this->mesh_count ) {
+			$errors[] = 'Mesh count is missing.';
+		}
+
+		if ( null === $this->thread_diameter ) {
+			$errors[] = 'Thread diameter is missing.';
+		}
+
+		if ( null === $this->color ) {
+			$errors[] = 'Mesh color is missing.';
+		}
+
+		if ( null === $this->price_text ) {
+			$errors[] = 'Price is missing.';
+		}
+
+		if ( ! empty( $this->unknown_tokens ) ) {
+
+			$unknown_tokens = array_map(
+				static function ( string $token ): string {
+
+					$visible_token = preg_replace_callback(
+						'/[\x{0009}-\x{000D}\x{0020}\x{00A0}\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}]/u',
+						static function ( array $matches ): string {
+
+							return match ( $matches[0] ) {
+								' '        => '[SPACE]',
+								"\t"       => '[TAB]',
+								"\n"       => '[LF]',
+								"\r"       => '[CR]',
+								"\xC2\xA0" => '[NBSP]',
+								default    => sprintf(
+									'[U+%04X]',
+									mb_ord( $matches[0], 'UTF-8' )
+								),
+							};
+						},
+						$token
+					);
+
+					return sprintf(
+						'"%s"',
+						$visible_token ?? $token
+					);
+				},
+				$this->unknown_tokens
+			);
+
+			$errors[] = sprintf(
+				'Unknown token(s): %s.',
+				implode( ', ', $unknown_tokens )
+			);
+		}
+
+		return $errors;
+	}
+
+
+	/**
 	 * Compare two specifications.
 	 *
 	 * @param Shurloc_Mesh_Specification $other The spec to compare against this object.

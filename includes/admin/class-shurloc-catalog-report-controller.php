@@ -320,6 +320,7 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 				<tr>
 					<th scope="col">Product</th>
 					<th scope="col">Variation</th>
+					<th scope="col">Invalid Because</th>
 					<th scope="col">Price</th>
 					<th scope="col">Action</th>
 				</tr>
@@ -349,6 +350,32 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 							<code>
 								<?php echo esc_html( $entry['variation'] ); ?>
 							</code>
+						</td>
+
+						<td>
+							<?php
+							$validation_errors = $entry['spec']->get_validation_errors();
+							?>
+
+							<?php if ( ! empty( $validation_errors ) ) : ?>
+
+								<ul style="margin: 0;">
+
+									<?php foreach ( $validation_errors as $validation_error ) : ?>
+
+										<li>
+											<?php echo esc_html( $validation_error ); ?>
+										</li>
+
+									<?php endforeach; ?>
+
+								</ul>
+
+							<?php else : ?>
+
+								&mdash;
+
+							<?php endif; ?>
 						</td>
 
 						<td>
