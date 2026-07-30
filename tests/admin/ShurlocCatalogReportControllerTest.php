@@ -31,8 +31,18 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 		$GLOBALS['shurloc_test_actions']         = array();
 		$GLOBALS['shurloc_test_action_metadata'] = array();
 
+		$catalog_service = new Shurloc_Product_Catalog_Service();
+
+		$analysis_service = new Shurloc_Catalog_Analysis_Service(
+			catalog_service: new $catalog_service(),
+			catalog_analyzer: new Shurloc_Catalog_Analyzer(
+				mesh_parser: new Shurloc_Mesh_Parser(),
+			),
+		);
+
 		$this->controller = new Shurloc_Catalog_Report_Controller(
-			catalog_service: new Shurloc_Product_Catalog_Service(),
+			catalog_service: $catalog_service,
+			analysis_service: $analysis_service,
 		);
 	}
 

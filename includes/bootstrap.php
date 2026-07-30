@@ -65,8 +65,20 @@ function shurloc_product_tools_bootstrap(): void {
 
 	$woocommerce_schema_integration = new Shurloc_WooCommerce_Schema_Integration();
 
+	$mesh_parser = new Shurloc_Mesh_Parser();
+
+	$catalog_analyzer = new Shurloc_Catalog_Analyzer(
+		mesh_parser: $mesh_parser
+	);
+
+	$analysis_service = new Shurloc_Catalog_Analysis_Service(
+		catalog_service: $catalog_service,
+		catalog_analyzer: $catalog_analyzer,
+	);
+
 	$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
-		$catalog_service
+		catalog_service: $catalog_service,
+		analysis_service: $analysis_service,
 	);
 
 	$request_handler = new Shurloc_Catalog_Report_Request_Handler(
