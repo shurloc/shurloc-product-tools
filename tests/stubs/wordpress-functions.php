@@ -50,6 +50,13 @@ $GLOBALS['shurloc_test_terms'] = array();
 $GLOBALS['shurloc_test_comments'] = array();
 
 /**
+ * Product IDs returned by get_posts().
+ *
+ * @var int[]
+ */
+$GLOBALS['shurloc_test_product_ids'] = array();
+
+/**
  * Registered WooCommerce test products.
  *
  * @var array<int,WC_Product>
@@ -1071,5 +1078,23 @@ if ( ! function_exists( 'wp_enqueue_script' ) ) {
 			'ver'       => $ver,
 			'in_footer' => $in_footer,
 		);
+	}
+}
+
+if ( ! function_exists( 'get_posts' ) ) {
+
+	/**
+	 * Test replacement for get_posts().
+	 *
+	 * @param array<string, mixed> $args Query arguments.
+	 * @return int[]
+	 */
+	function get_posts(
+		array $args = array()
+	): array {
+
+		unset( $args );
+
+		return $GLOBALS['shurloc_test_product_ids'];
 	}
 }
