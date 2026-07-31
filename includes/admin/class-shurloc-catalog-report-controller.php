@@ -29,6 +29,13 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	private const TAB_INVALID_MESH_PRODUCTS = 'invalid-mesh-products';
 
 	/**
+	 * Unrecognized mesh products tab slug.
+	 *
+	 * @var string
+	 */
+	private const TAB_UNRECOGNIZED_MESH_PRODUCTS = 'unrecognized-mesh-products';
+
+	/**
 	 * Product catalog service.
 	 *
 	 * @var Shurloc_Product_Catalog_Service
@@ -138,6 +145,10 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 					$this->render_invalid_mesh_products_tab();
 					break;
 
+				case self::TAB_UNRECOGNIZED_MESH_PRODUCTS:
+					$this->render_unrecognized_mesh_products_tab();
+					break;
+
 				case self::TAB_CATALOG_REPORT:
 				default:
 					$this->render_catalog_report_tab();
@@ -161,8 +172,9 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	): void {
 
 		$tabs = array(
-			self::TAB_CATALOG_REPORT        => 'Catalog Report',
-			self::TAB_INVALID_MESH_PRODUCTS => 'Invalid Mesh Products',
+			self::TAB_CATALOG_REPORT             => 'Catalog Report',
+			self::TAB_INVALID_MESH_PRODUCTS      => 'Invalid Mesh Products',
+			self::TAB_UNRECOGNIZED_MESH_PRODUCTS => 'Unrecognized Mesh Products',
 		);
 		?>
 
@@ -429,6 +441,168 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 	}
 
 	/**
+	 * Render the unrecognized mesh products tab.
+	 *
+	 * @return void
+	 */
+	private function render_unrecognized_mesh_products_tab(): void {
+
+		$result = $this->analysis_service->analyze();
+
+		$unrecognized_variations = $result->get_unrecognized_variations();
+
+		usort(
+			$unrecognized_variations,
+			static function ( array $left, array $right ): int {
+
+				$product_comparison =
+				$left['product_id'] <=> $right['product_id'];
+
+				if ( 0 !== $product_comparison ) {
+					return $product_comparison;
+				}
+
+				return strnatcasecmp(
+					$left['variation'],
+					$right['variation']
+				);
+			}
+		);
+		?>
+
+	<h2>Unrecognized Mesh Products</h2>
+
+	<p>
+		Review purchasable product variations that were not recognized as
+		mesh specifications.
+	</p>
+
+		<?php if ( empty( $unrecognized_variations ) ) : ?>
+
+		<div class="notice notice-success inline">
+
+			<p>
+				No unrecognized mesh product variations were found.
+			</p>
+
+		</div>
+
+	<?php else : ?>
+
+		<div class="notice notice-warning inline">
+
+			<p>
+				<?php
+				$unrecognized_count = count(
+					$unrecognized_variations
+				);
+
+				echo esc_html(
+					sprintf(
+						/* translators: %d: Number of unrecognized paid product variations. */
+						_n(
+							'%d unrecognized paid variation was found.',
+							'%d unrecognized paid variations were found.',
+							$unrecognized_count,
+							'shurloc-product-tools'
+						),
+						$unrecognized_count
+					)
+				);
+				?>
+			</p>
+
+		</div>
+
+		<table class="widefat fixed striped">
+
+			<thead>
+
+				<tr>
+					<th scope="col">Product</th>
+					<th scope="col">Variation</th>
+					<th scope="col">Price</th>
+					<th scope="col">Action</th>
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<?php foreach ( $unrecognized_variations as $entry ) : ?>
+
+					<tr>
+
+						<td>
+							<strong>
+								<?php echo esc_html( $entry['product_name'] ); ?>
+							</strong>
+
+							<br>
+
+							<span>
+								Product ID:
+								<?php echo esc_html( (string) $entry['product_id'] ); ?>
+							</span>
+						</td>
+
+						<td>
+							<code>
+								<?php echo esc_html( $entry['variation'] ); ?>
+							</code>
+						</td>
+
+						<td>
+							<?php if ( null !== $entry['price'] ) : ?>
+
+								<?php
+								echo wp_kses_post(
+									wc_price( $entry['price'] )
+								);
+								?>
+
+							<?php else : ?>
+
+								&mdash;
+
+							<?php endif; ?>
+						</td>
+
+						<td>
+
+							<?php if ( ! empty( $entry['edit_url'] ) ) : ?>
+
+								<a
+									href="<?php echo esc_url( $entry['edit_url'] ); ?>"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="button button-secondary"
+								>
+									Edit Product
+								</a>
+
+							<?php else : ?>
+
+								&mdash;
+
+							<?php endif; ?>
+
+						</td>
+
+					</tr>
+
+				<?php endforeach; ?>
+
+			</tbody>
+
+		</table>
+
+	<?php endif; ?>
+
+		<?php
+	}
+
+	/**
 	 * Get the active admin tab.
 	 *
 	 * @return string
@@ -449,6 +623,7 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 					array(
 						self::TAB_CATALOG_REPORT,
 						self::TAB_INVALID_MESH_PRODUCTS,
+						self::TAB_UNRECOGNIZED_MESH_PRODUCTS,
 					),
 					true
 				)
