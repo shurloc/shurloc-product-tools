@@ -88,7 +88,7 @@ final class Shurloc_Product_Schema_Generator {
 			'name'             => $product->product_name,
 			'url'              => $product->product_url,
 			'mainEntityOfPage' => array(
-				'@id' => $product->product_url,
+				'@id' => trailingslashit( $product->product_url ) . '#webpage',
 			),
 		);
 
