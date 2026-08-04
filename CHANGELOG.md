@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Add a schema Organization reference for manufacturer and seller properties.
+
+## [1.0.2] - 2026-08-04
+
+### Changed
+
 - Reverted the change from 1.0.1.
 
 ## [1.0.1] - 2026-08-03
