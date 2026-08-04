@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.1.0] - 2026-08-04
+
+### Added
+
+- Added **Unrecognized Mesh Products** admin page for reviewing purchasable product variations that are not recognized as mesh specifications.
+- Added parser diagnostics for displaying unknown tokens associated with invalid mesh specifications.
+- Added visual formatting for invisible whitespace characters in parser diagnostics to simplify troubleshooting.
+- Added direct links from unrecognized mesh product variations to the corresponding WooCommerce product editor.
+- Added PHPUnit coverage for:
+  - Catalog analyzer classification
+  - Catalog report metadata preservation
+  - Unrecognized variation reporting
+
+### Changed
+
+- Improved catalog reporting by separating invalid mesh specifications from unrecognized product variations.
+- Updated admin reports to sort entries by product ID for easier review.
+- Improved parser diagnostics with human-readable representations of whitespace and unknown tokens.
+
+### Internal Improvements
+
+- Expanded catalog report APIs with accessor methods for report collections.
+- Improved catalog analysis metadata propagation throughout the reporting pipeline.
+- Refined catalog analyzer tests to verify classification, metadata preservation, and report generation.
+
+### Testing
+
+- Expanded PHPUnit coverage for catalog analysis and reporting.
+- Added regression tests for report metadata, variation classification, and catalog analysis behavior.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [1.0.3] - 2026-08-04
 
 ### Changed
