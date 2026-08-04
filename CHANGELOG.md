@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-08-04
+
+### Changed
+
+- Reverted the change from 1.0.1.
+
 ## [1.0.1] - 2026-08-03
 
 ### Changed
