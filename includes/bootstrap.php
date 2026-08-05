@@ -85,6 +85,8 @@ function shurloc_product_tools_bootstrap(): void {
 		$catalog_report_controller
 	);
 
+	$breadcrumb_separator = new Shurloc_Breadcrumb_Separator();
+
 	/*
 	 * Mesh table presentation pipeline.
 	 */
@@ -134,6 +136,8 @@ function shurloc_product_tools_bootstrap(): void {
 	$mesh_table_assets->register();
 
 	$mesh_table_tab->register();
+
+	$breadcrumb_separator->register();
 }
 
 add_action(
