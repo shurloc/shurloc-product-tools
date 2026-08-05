@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2026-08-04
+
+### Added
+
+- Replace "/" in WooCommerce breadcrumbs with SVG arrow
+
 ## [1.1.0] - 2026-08-04
 
 ### Added
