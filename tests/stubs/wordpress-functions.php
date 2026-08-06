@@ -1220,17 +1220,17 @@ if ( ! function_exists( 'get_option' ) ) {
 	 * Retrieve a test option.
 	 *
 	 * @param string $option  Option name.
-	 * @param mixed  $default Default value.
+	 * @param mixed  $default_value Default value.
 	 *
 	 * @return mixed
 	 */
 	function get_option(
 		string $option,
-		$default = false
+		$default_value = false
 	) {
 
 		return $GLOBALS['shurloc_test_options'][ $option ]
-			?? $default;
+			?? $default_value;
 	}
 }
 
