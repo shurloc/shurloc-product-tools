@@ -703,26 +703,24 @@ if ( ! function_exists( 'add_shortcode' ) ) {
 if ( ! function_exists( 'wc_get_product' ) ) {
 
 	/**
-	 * Retrieve a WooCommerce product test double.
+	 * Retrieve a registered WooCommerce product test double.
 	 *
-	 * Returns a registered test product when available. Otherwise creates
-	 * a default WooCommerce product double.
+	 * Returns a previously registered product test double. Returns false when
+	 * the requested product has not been registered, matching WooCommerce's
+	 * behavior when a product cannot be found.
 	 *
 	 * @param int $product_id Product ID.
-	 * @return WC_Product|null Product double.
+	 * @return WC_Product|false Registered product test double or false.
 	 */
 	function wc_get_product(
 		int $product_id
-	): ?WC_Product {
+	): WC_Product|false {
 
 		if ( isset( $GLOBALS['shurloc_test_products'][ $product_id ] ) ) {
-
 			return $GLOBALS['shurloc_test_products'][ $product_id ];
 		}
 
-		return new WC_Product(
-			$product_id
-		);
+		return false;
 	}
 }
 
