@@ -158,6 +158,13 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private bool $visible = true;
 
 		/**
+		 * Upsell product IDs.
+		 *
+		 * @var int[]
+		 */
+		private array $upsell_ids = array();
+
+		/**
 		 * Constructor.
 		 *
 		 * @param int $id Product ID.
@@ -598,6 +605,30 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function is_visible(): bool {
 
 			return $this->visible;
+		}
+
+		/**
+		 * Set upsell product IDs.
+		 *
+		 * @param int[] $upsell_ids Upsell product IDs.
+		 *
+		 * @return void
+		 */
+		public function set_upsell_ids(
+			array $upsell_ids
+		): void {
+
+			$this->upsell_ids = $upsell_ids;
+		}
+
+		/**
+		 * Get upsell product IDs.
+		 *
+		 * @return int[] Upsell product IDs.
+		 */
+		public function get_upsell_ids(): array {
+
+			return $this->upsell_ids;
 		}
 	}
 }

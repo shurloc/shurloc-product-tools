@@ -7,6 +7,14 @@
 
 declare( strict_types=1 );
 
+/*
+ * Define the WordPress cache-duration constant when WordPress is not loaded.
+ */
+if ( ! defined( 'MINUTE_IN_SECONDS' ) ) {
+	define( 'MINUTE_IN_SECONDS', 60 );
+}
+
+
 /**
  * Test product state.
  *
@@ -111,6 +119,42 @@ $GLOBALS['shurloc_test_registered_styles'] = array();
  * @var array<string<int,string>>
  */
 $GLOBALS['shurloc_test_registered_scripts'] = array();
+
+/**
+ * Test transients.
+ *
+ * @var array<string,mixed>
+ */
+$GLOBALS['shurloc_test_transients'] = array();
+
+/**
+ * Test options.
+ *
+ * @var array<string,mixed>
+ */
+$GLOBALS['shurloc_test_options'] = array();
+
+/**
+ * Product post types keyed by object ID.
+ *
+ * @var array<int,string>
+ */
+$GLOBALS['shurloc_test_post_types'] = array();
+
+/**
+ * Test autosave IDs.
+ *
+ * @var int[]
+ */
+$GLOBALS['shurloc_test_autosaves'] = array();
+
+/**
+ * Test revision IDs.
+ *
+ * @var int[]
+ */
+$GLOBALS['shurloc_test_revisions'] = array();
+
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -1091,8 +1135,190 @@ if ( ! function_exists( 'get_posts' ) ) {
 		array $args = array()
 	): array {
 
-		unset( $args );
+		$product_ids = $GLOBALS['shurloc_test_product_ids'];
 
-		return $GLOBALS['shurloc_test_product_ids'];
+		if (
+			isset( $args['post__not_in'] ) &&
+			is_array( $args['post__not_in'] )
+		) {
+			$product_ids = array_values(
+				array_diff(
+					$product_ids,
+					array_map(
+						'intval',
+						$args['post__not_in']
+					)
+				)
+			);
+		}
+
+		if (
+			isset( $args['posts_per_page'] ) &&
+			is_int( $args['posts_per_page'] ) &&
+			0 < $args['posts_per_page']
+		) {
+			$product_ids = array_slice(
+				$product_ids,
+				0,
+				$args['posts_per_page']
+			);
+		}
+
+		return array_map(
+			'intval',
+			$product_ids
+		);
+	}
+}
+
+if ( ! function_exists( 'get_transient' ) ) {
+
+	/**
+	 * Retrieve a test transient.
+	 *
+	 * @param string $key Transient key.
+	 *
+	 * @return mixed
+	 */
+	function get_transient(
+		string $key
+	) {
+
+		return $GLOBALS['shurloc_test_transients'][ $key ]
+			?? false;
+	}
+}
+
+if ( ! function_exists( 'set_transient' ) ) {
+
+	/**
+	 * Store a test transient.
+	 *
+	 * @param string $key        Transient key.
+	 * @param mixed  $value      Transient value.
+	 * @param int    $expiration Expiration in seconds.
+	 *
+	 * @return bool
+	 */
+	function set_transient(
+		string $key,
+		$value,
+		int $expiration = 0
+	): bool {
+
+		unset( $expiration );
+
+		$GLOBALS['shurloc_test_transients'][ $key ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'get_option' ) ) {
+
+	/**
+	 * Retrieve a test option.
+	 *
+	 * @param string $option  Option name.
+	 * @param mixed  $default Default value.
+	 *
+	 * @return mixed
+	 */
+	function get_option(
+		string $option,
+		$default = false
+	) {
+
+		return $GLOBALS['shurloc_test_options'][ $option ]
+			?? $default;
+	}
+}
+
+if ( ! function_exists( 'update_option' ) ) {
+
+	/**
+	 * Update a test option.
+	 *
+	 * @param string $option   Option name.
+	 * @param mixed  $value    Option value.
+	 * @param bool   $autoload Whether to autoload the option.
+	 *
+	 * @return bool
+	 */
+	function update_option(
+		string $option,
+		$value,
+		bool $autoload = true
+	): bool {
+
+		unset( $autoload );
+
+		$GLOBALS['shurloc_test_options'][ $option ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_is_post_autosave' ) ) {
+
+	/**
+	 * Determine whether a post is an autosave.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return int|false
+	 */
+	function wp_is_post_autosave(
+		int $post_id
+	) {
+
+		return in_array(
+			$post_id,
+			$GLOBALS['shurloc_test_autosaves'],
+			true
+		)
+			? $post_id
+			: false;
+	}
+}
+
+if ( ! function_exists( 'wp_is_post_revision' ) ) {
+
+	/**
+	 * Determine whether a post is a revision.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return int|false
+	 */
+	function wp_is_post_revision(
+		int $post_id
+	) {
+
+		return in_array(
+			$post_id,
+			$GLOBALS['shurloc_test_revisions'],
+			true
+		)
+			? $post_id
+			: false;
+	}
+}
+
+if ( ! function_exists( 'get_post_type' ) ) {
+
+	/**
+	 * Retrieve a test post type.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return string|false
+	 */
+	function get_post_type(
+		int $post_id
+	) {
+
+		return $GLOBALS['shurloc_test_post_types'][ $post_id ]
+			?? false;
 	}
 }

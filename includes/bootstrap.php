@@ -143,6 +143,12 @@ function shurloc_product_tools_bootstrap(): void {
 
 	$breadcrumb_separator = new Shurloc_Breadcrumb_Separator();
 	$breadcrumb_separator->register();
+
+	$recommendation_eligibility = new Shurloc_Product_Recommendation_Eligibility_Service();
+	$related_products           = new Shurloc_Related_Products(
+		$recommendation_eligibility
+	);
+	$related_products->register();
 }
 
 add_action(
