@@ -637,7 +637,7 @@ final class Shurloc_Catalog_Report_Controller implements
 		$parser = new Shurloc_Mesh_Parser();
 
 		$analyzer = new Shurloc_Catalog_Analyzer(
-			parser: $parser,
+			mesh_parser: $parser,
 		);
 
 		$report = $analyzer->analyze(

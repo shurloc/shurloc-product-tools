@@ -437,6 +437,71 @@ final class ShurlocCatalogAnalyzerTest extends TestCase {
 
 
 	/**
+	 * Verify constructor signature.
+	 *
+	 * @return void
+	 */
+	public function test_constructor_signature(): void {
+
+		$reflection = new ReflectionMethod(
+			Shurloc_Catalog_Analyzer::class,
+			'__construct'
+		);
+
+		$parameters = $reflection->getParameters();
+
+		self::assertSame(
+			array(
+				'mesh_parser' => Shurloc_Mesh_Parser::class,
+			),
+			array_reduce(
+				$parameters,
+				static function (
+					array $signature,
+					ReflectionParameter $parameter
+				): array {
+
+					$type = $parameter->getType();
+
+					$signature[ $parameter->getName() ] =
+					$type instanceof ReflectionNamedType
+						? $type->getName()
+						: '';
+
+					return $signature;
+				},
+				array()
+			)
+		);
+	}
+
+
+	/**
+	 * Verify that analyze preserves its named parameter.
+	 *
+	 * @return void
+	 */
+	public function test_analyze_uses_entries_parameter_name(): void {
+
+		$reflection = new ReflectionMethod(
+			Shurloc_Catalog_Analyzer::class,
+			'analyze'
+		);
+
+		$parameters = $reflection->getParameters();
+
+		self::assertNotEmpty(
+			$parameters
+		);
+
+		self::assertSame(
+			'entries',
+			$parameters[0]->getName()
+		);
+	}
+
+
+	/**
 	 * Create a catalog variation entry fixture.
 	 *
 	 * @param string     $variation    Variation value.
