@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.3.0] - 2026-08-07
+
+### Added
+
+- Added **Related Products** service for prioritizing products that share tags with the current product while preserving WooCommerce fallback behavior.
+- Added **Dynamic Cross-Sells** service for supplementing manually assigned cross-sells with products from categories represented in the shopping cart.
+- Added shared **Product Recommendation Eligibility** service for consistent validation of recommended products.
+- Added PHPUnit coverage for:
+  - Product recommendation eligibility
+  - Related products
+  - Dynamic cross-sells
+
+### Changed
+
+- Moved product breadcrumb generation from standalone code snippets into the plugin.
+- Moved breadcrumb schema generation from standalone code snippets into the plugin.
+- Moved breadcrumb separator styling and JavaScript into versioned plugin assets.
+- Improved recommendation logic to consistently exclude unpublished, hidden, out-of-stock, duplicate, and manually excluded products.
+- Replaced per-product related product cache invalidation with generation-based cache invalidation for improved consistency.
+
+### Internal Improvements
+
+- Refactored recommendation logic to use a shared eligibility service across related products and dynamic cross-sells.
+- Centralized breadcrumb rendering and schema generation into dedicated frontend classes.
+- Improved asset loading by replacing inline CSS and JavaScript with static plugin assets.
+- Expanded the shared PHPUnit test doubles to better emulate WordPress and WooCommerce behavior.
+
+### Testing
+
+- Added regression tests covering recommendation ordering, exclusions, limits, cache invalidation, and fallback behavior.
+- Expanded PHPUnit test infrastructure with reusable WordPress and WooCommerce test doubles.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [1.2.0] - 2026-08-04
 
 ### Added
