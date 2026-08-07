@@ -99,7 +99,7 @@ final class Shurloc_Admin_Menu {
 		}
 
 		$this->register_product_menu();
-		$this->remove_duplicate_parent_submenu();
+		$this->rename_parent_submenu();
 	}
 
 	/**
@@ -174,20 +174,38 @@ final class Shurloc_Admin_Menu {
 	}
 
 	/**
-	 * Remove WordPress's automatically generated duplicate parent submenu.
+	 * Rename WordPress's automatically generated parent submenu.
 	 *
-	 * WordPress automatically inserts the parent page as the first submenu
-	 * item when a top-level menu has child pages. The ShurLoc Tools overview
-	 * does not need a duplicate submenu entry.
+	 * WordPress automatically inserts the top-level parent page as the first
+	 * submenu item when child pages are registered. Keep that submenu so the
+	 * top-level ShurLoc Tools menu continues to open the overview page, but
+	 * rename it to "Overview" for clarity.
 	 *
 	 * @return void
 	 */
-	private function remove_duplicate_parent_submenu(): void {
+	private function rename_parent_submenu(): void {
 
-		remove_submenu_page(
-			self::PARENT_MENU_SLUG,
-			self::PARENT_MENU_SLUG
-		);
+		global $submenu;
+
+		if (
+			! isset( $submenu[ self::PARENT_MENU_SLUG ] ) ||
+			! is_array( $submenu[ self::PARENT_MENU_SLUG ] )
+		) {
+			return;
+		}
+
+		foreach ( $submenu[ self::PARENT_MENU_SLUG ] as &$submenu_item ) {
+
+			if (
+				isset( $submenu_item[2] ) &&
+				self::PARENT_MENU_SLUG === $submenu_item[2]
+			) {
+				$submenu_item[0] = 'Overview';
+				break;
+			}
+		}
+
+		unset( $submenu_item );
 	}
 
 	/**
