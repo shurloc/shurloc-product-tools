@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.3.1] - 2026-08-07
+
+### Added
+
+- Added **ShurLoc Tools** top-level admin menu with a dedicated **Products** submenu.
+- Added `Shurloc_Admin_Menu` class to centralize admin menu registration.
+- Added PHPUnit coverage for the ShurLoc admin menu and menu registration.
+
+### Changed
+
+- Moved Product Tools from the WordPress **Tools** menu to the **ShurLoc Tools** menu.
+- Updated Product Tools admin links to use `admin.php` instead of `tools.php`.
+- Decoupled admin menu registration from the catalog report controller.
+
+### Internal Improvements
+
+- Introduced `Shurloc_Admin_Page_Interface` to separate page rendering from menu registration.
+- Refactored the catalog report controller to focus solely on request handling and page rendering.
+- Expanded the shared test infrastructure with reusable admin menu and WordPress function test doubles.
+
+### Testing
+
+- Added regression tests covering admin menu registration, submenu ordering, parent menu reuse, and overview page rendering.
+- Verified all PHPUnit and PHPCS checks pass.
+
 ## [1.3.0] - 2026-08-07
 
 ### Added
