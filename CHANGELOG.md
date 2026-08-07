@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] - 2026-08-07
+
+### Changed
+
+- Rename the parent menu subitem instead of getting rid of it so the overview shows up.
+
 ## [1.3.1] - 2026-08-07
 
 ### Added
