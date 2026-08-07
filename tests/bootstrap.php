@@ -63,3 +63,4 @@ require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-schema-s
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-schema-renderer.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-schema-service.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wp-post.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-cart.php';

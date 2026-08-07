@@ -144,6 +144,27 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private int $review_count = 0;
 
 		/**
+		 * Product status.
+		 *
+		 * @var string
+		 */
+		private string $status = 'publish';
+
+		/**
+		 * Whether the product is visible.
+		 *
+		 * @var bool
+		 */
+		private bool $visible = true;
+
+		/**
+		 * Upsell product IDs.
+		 *
+		 * @var int[]
+		 */
+		private array $upsell_ids = array();
+
+		/**
 		 * Constructor.
 		 *
 		 * @param int $id Product ID.
@@ -536,6 +557,78 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_review_count(): int {
 
 			return $this->review_count;
+		}
+
+		/**
+		 * Set product status.
+		 *
+		 * @param string $status Product status.
+		 *
+		 * @return void
+		 */
+		public function set_status(
+			string $status
+		): void {
+
+			$this->status = $status;
+		}
+
+		/**
+		 * Get product status.
+		 *
+		 * @return string Product status.
+		 */
+		public function get_status(): string {
+
+			return $this->status;
+		}
+
+		/**
+		 * Set product visibility.
+		 *
+		 * @param bool $visible Whether the product is visible.
+		 *
+		 * @return void
+		 */
+		public function set_visible(
+			bool $visible
+		): void {
+
+			$this->visible = $visible;
+		}
+
+		/**
+		 * Determine whether the product is visible.
+		 *
+		 * @return bool Whether the product is visible.
+		 */
+		public function is_visible(): bool {
+
+			return $this->visible;
+		}
+
+		/**
+		 * Set upsell product IDs.
+		 *
+		 * @param int[] $upsell_ids Upsell product IDs.
+		 *
+		 * @return void
+		 */
+		public function set_upsell_ids(
+			array $upsell_ids
+		): void {
+
+			$this->upsell_ids = $upsell_ids;
+		}
+
+		/**
+		 * Get upsell product IDs.
+		 *
+		 * @return int[] Upsell product IDs.
+		 */
+		public function get_upsell_ids(): array {
+
+			return $this->upsell_ids;
 		}
 	}
 }

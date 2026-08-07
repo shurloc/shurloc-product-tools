@@ -95,14 +95,16 @@ final class ShurlocProductSchemaGeneratorTest extends TestCase {
 			result: $this->create_mesh_result(),
 		);
 
-		$this->assertSame(
-			'Organization',
-			$schema['manufacturer']['@type']
+		$this->assertArrayHasKey(
+			'manufacturer',
+			$schema
 		);
 
 		$this->assertSame(
-			'Shur-loc',
-			$schema['manufacturer']['name']
+			array(
+				'@id' => 'https://shurloc.com/#organization',
+			),
+			$schema['manufacturer']
 		);
 	}
 

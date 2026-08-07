@@ -5,7 +5,7 @@
  * @package ShurLocProductTools
  */
 
-declare( strict_types=1 );
+declare(strict_types=1);
 
 /**
  * WordPress post test double.
@@ -23,5 +23,12 @@ if ( ! class_exists( 'WP_Post' ) ) {
 		 * @var string
 		 */
 		public string $post_content = '';
+
+		/**
+		 * Post type.
+		 *
+		 * @var string
+		 */
+		public string $post_type = 'post';
 	}
 }

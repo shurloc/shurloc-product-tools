@@ -85,8 +85,6 @@ function shurloc_product_tools_bootstrap(): void {
 		$catalog_report_controller
 	);
 
-	$breadcrumb_separator = new Shurloc_Breadcrumb_Separator();
-
 	/*
 	 * Mesh table presentation pipeline.
 	 */
@@ -137,7 +135,26 @@ function shurloc_product_tools_bootstrap(): void {
 
 	$mesh_table_tab->register();
 
+	$product_breadcrumbs = new Shurloc_Product_Breadcrumbs();
+	$product_breadcrumbs->register();
+
+	$breadcrumb_schema = new Shurloc_Breadcrumb_Schema();
+	$breadcrumb_schema->register();
+
+	$breadcrumb_separator = new Shurloc_Breadcrumb_Separator();
 	$breadcrumb_separator->register();
+
+	$recommendation_eligibility = new Shurloc_Product_Recommendation_Eligibility_Service();
+
+	$related_products = new Shurloc_Related_Products(
+		$recommendation_eligibility
+	);
+	$related_products->register();
+
+	$dynamic_cross_sells = new Shurloc_Dynamic_Cross_Sells(
+		$recommendation_eligibility
+	);
+	$dynamic_cross_sells->register();
 }
 
 add_action(
