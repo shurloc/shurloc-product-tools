@@ -1,0 +1,326 @@
+<?php
+/**
+ * Tests for the ShurLoc admin menu.
+ *
+ * @package ShurLocProductTools
+ */
+
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Tests the ShurLoc admin menu registration.
+ */
+final class ShurlocAdminMenuTest extends TestCase {
+
+	/**
+	 * Catalog report controller test double.
+	 *
+	 * @var Shurloc_Catalog_Report_Controller_Double
+	 */
+	private Shurloc_Catalog_Report_Controller_Double $catalog_report_controller;
+
+	/**
+	 * Admin menu under test.
+	 *
+	 * @var Shurloc_Admin_Menu
+	 */
+	private Shurloc_Admin_Menu $admin_menu;
+
+	/**
+	 * Set up test environment before each test.
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+
+		parent::setUp();
+
+		$GLOBALS['menu']                          = array();
+		$GLOBALS['submenu']                       = array();
+		$GLOBALS['shurloc_test_actions']          = array();
+		$GLOBALS['shurloc_test_action_metadata']  = array();
+		$GLOBALS['shurloc_test_menu_pages']       = array();
+		$GLOBALS['shurloc_test_submenu_pages']    = array();
+		$GLOBALS['shurloc_test_removed_submenus'] = array();
+
+		$this->catalog_report_controller =
+		new Shurloc_Catalog_Report_Controller_Double();
+
+		$this->admin_menu = new Shurloc_Admin_Menu(
+			$this->catalog_report_controller
+		);
+	}
+
+	/**
+	 * Clear test state after each test.
+	 *
+	 * @return void
+	 */
+	protected function tearDown(): void {
+
+		$GLOBALS['menu']                          = array();
+		$GLOBALS['submenu']                       = array();
+		$GLOBALS['shurloc_test_actions']          = array();
+		$GLOBALS['shurloc_test_action_metadata']  = array();
+		$GLOBALS['shurloc_test_menu_pages']       = array();
+		$GLOBALS['shurloc_test_submenu_pages']    = array();
+		$GLOBALS['shurloc_test_removed_submenus'] = array();
+
+		parent::tearDown();
+	}
+
+	/**
+	 * Verify that the admin menu hook is registered.
+	 *
+	 * @return void
+	 */
+	public function test_register_adds_admin_menu_action(): void {
+
+		$this->admin_menu->register();
+
+		self::assertArrayHasKey(
+			'admin_menu',
+			$GLOBALS['shurloc_test_actions']
+		);
+
+		self::assertContains(
+			array(
+				$this->admin_menu,
+				'register_menu',
+			),
+			$GLOBALS['shurloc_test_actions']['admin_menu']
+		);
+	}
+
+	/**
+	 * Verify that the admin menu hook uses priority 20.
+	 *
+	 * @return void
+	 */
+	public function test_register_uses_expected_admin_menu_priority(): void {
+
+		$this->admin_menu->register();
+
+		self::assertSame(
+			20,
+			$GLOBALS['shurloc_test_action_metadata']
+				['admin_menu'][0]['priority']
+		);
+	}
+
+	/**
+	 * Verify that the parent ShurLoc Tools menu is registered.
+	 *
+	 * @return void
+	 */
+	public function test_register_menu_adds_parent_menu(): void {
+
+		$this->admin_menu->register_menu();
+
+		self::assertCount(
+			1,
+			$GLOBALS['shurloc_test_menu_pages']
+		);
+
+		$menu = $GLOBALS['shurloc_test_menu_pages'][0];
+
+		self::assertSame(
+			'ShurLoc Tools',
+			$menu['page_title']
+		);
+
+		self::assertSame(
+			'ShurLoc Tools',
+			$menu['menu_title']
+		);
+
+		self::assertSame(
+			'manage_options',
+			$menu['capability']
+		);
+
+		self::assertSame(
+			'shurloc-tools',
+			$menu['menu_slug']
+		);
+
+		self::assertSame(
+			'dashicons-admin-tools',
+			$menu['icon_url']
+		);
+
+		self::assertSame(
+			56,
+			$menu['position']
+		);
+	}
+
+	/**
+	 * Verify that the Products submenu is registered.
+	 *
+	 * @return void
+	 */
+	public function test_register_menu_adds_products_submenu(): void {
+
+		$this->admin_menu->register_menu();
+
+		self::assertCount(
+			1,
+			$GLOBALS['shurloc_test_submenu_pages']
+		);
+
+		$submenu = $GLOBALS['shurloc_test_submenu_pages'][0];
+
+		self::assertSame(
+			'shurloc-tools',
+			$submenu['parent_slug']
+		);
+
+		self::assertSame(
+			'ShurLoc Product Tools',
+			$submenu['page_title']
+		);
+
+		self::assertSame(
+			'Products',
+			$submenu['menu_title']
+		);
+
+		self::assertSame(
+			'manage_options',
+			$submenu['capability']
+		);
+
+		self::assertSame(
+			'shurloc-product-tools',
+			$submenu['menu_slug']
+		);
+
+		self::assertSame(
+			10,
+			$submenu['position']
+		);
+	}
+
+	/**
+	 * Verify that the Products submenu delegates rendering to the catalog
+	 * report controller.
+	 *
+	 * @return void
+	 */
+	public function test_products_submenu_uses_catalog_report_renderer(): void {
+
+		$this->admin_menu->register_menu();
+
+		$submenu = $GLOBALS['shurloc_test_submenu_pages'][0];
+
+		self::assertSame(
+			array(
+				$this->catalog_report_controller,
+				'render_page',
+			),
+			$submenu['callback']
+		);
+	}
+
+	/**
+	 * Verify that the parent menu is not registered twice when another
+	 * ShurLoc plugin has already registered it.
+	 *
+	 * @return void
+	 */
+	public function test_existing_parent_menu_is_not_registered_again(): void {
+
+		$GLOBALS['menu'][] = array(
+			'ShurLoc Tools',
+			'manage_options',
+			'shurloc-tools',
+		);
+
+		$this->admin_menu->register_menu();
+
+		self::assertCount(
+			0,
+			$GLOBALS['shurloc_test_menu_pages']
+		);
+
+		self::assertCount(
+			1,
+			$GLOBALS['shurloc_test_submenu_pages']
+		);
+	}
+
+	/**
+	 * Verify that a different existing menu does not prevent registration of
+	 * the ShurLoc Tools parent.
+	 *
+	 * @return void
+	 */
+	public function test_unrelated_existing_menu_does_not_prevent_parent_registration(): void {
+
+		$GLOBALS['menu'][] = array(
+			'Tools',
+			'manage_options',
+			'tools.php',
+		);
+
+		$this->admin_menu->register_menu();
+
+		self::assertCount(
+			1,
+			$GLOBALS['shurloc_test_menu_pages']
+		);
+	}
+
+	/**
+	 * Verify that the automatically generated duplicate parent submenu is
+	 * removed.
+	 *
+	 * @return void
+	 */
+	public function test_duplicate_parent_submenu_is_removed(): void {
+
+		$this->admin_menu->register_menu();
+
+		self::assertContains(
+			array(
+				'parent_slug' => 'shurloc-tools',
+				'menu_slug'   => 'shurloc-tools',
+			),
+			$GLOBALS['shurloc_test_removed_submenus']
+		);
+	}
+
+	/**
+	 * Verify that rendering the overview page links to Product Tools.
+	 *
+	 * @return void
+	 */
+	public function test_overview_page_links_to_product_tools(): void {
+
+		ob_start();
+
+		$this->admin_menu->render_overview_page();
+
+		$output = ob_get_clean();
+
+		self::assertIsString( $output );
+
+		self::assertStringContainsString(
+			'ShurLoc Tools',
+			$output
+		);
+
+		self::assertStringContainsString(
+			'Products',
+			$output
+		);
+
+		self::assertStringContainsString(
+			'page=shurloc-product-tools',
+			$output
+		);
+	}
+}

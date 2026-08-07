@@ -16,6 +16,10 @@ if ( ! defined( 'MINUTE_IN_SECONDS' ) ) {
 
 
 /**
+ * Globals for testing.
+ */
+
+/**
  * Test product state.
  *
  * @var bool
@@ -155,6 +159,31 @@ $GLOBALS['shurloc_test_autosaves'] = array();
  */
 $GLOBALS['shurloc_test_revisions'] = array();
 
+/**
+ * Registered top-level admin menu pages.
+ *
+ * @var array<int,array<string,mixed>>
+ */
+$GLOBALS['shurloc_test_menu_pages'] = array();
+
+/**
+ * Registered admin submenu pages.
+ *
+ * @var array<int,array<string,mixed>>
+ */
+$GLOBALS['shurloc_test_submenu_pages'] = array();
+
+/**
+ * Removed admin submenu pages.
+ *
+ * @var array<int,array<string,string>>
+ */
+$GLOBALS['shurloc_test_removed_submenus'] = array();
+
+
+/**
+ * Function doubles.
+ */
 
 if ( ! function_exists( 'wp_json_encode' ) ) {
 
@@ -1320,5 +1349,171 @@ if ( ! function_exists( 'get_post_type' ) ) {
 
 		return $GLOBALS['shurloc_test_post_types'][ $post_id ]
 			?? false;
+	}
+}
+
+if ( ! function_exists( 'add_menu_page' ) ) {
+
+	/**
+	 * Test replacement for add_menu_page().
+	 *
+	 * @param string         $page_title Page title.
+	 * @param string         $menu_title Menu title.
+	 * @param string         $capability Required capability.
+	 * @param string         $menu_slug  Menu slug.
+	 * @param callable|null  $callback   Page callback.
+	 * @param string         $icon_url   Menu icon.
+	 * @param int|float|null $position  Menu position.
+	 *
+	 * @return string
+	 */
+	function add_menu_page(
+		string $page_title,
+		string $menu_title,
+		string $capability,
+		string $menu_slug,
+		?callable $callback = null,
+		string $icon_url = '',
+		$position = null
+	): string {
+
+		$GLOBALS['shurloc_test_menu_pages'][] = array(
+			'page_title' => $page_title,
+			'menu_title' => $menu_title,
+			'capability' => $capability,
+			'menu_slug'  => $menu_slug,
+			'callback'   => $callback,
+			'icon_url'   => $icon_url,
+			'position'   => $position,
+		);
+
+		return 'toplevel_page_' . $menu_slug;
+	}
+}
+
+if ( ! function_exists( 'add_submenu_page' ) ) {
+
+	/**
+	 * Test replacement for add_submenu_page().
+	 *
+	 * @param string         $parent_slug Parent menu slug.
+	 * @param string         $page_title  Page title.
+	 * @param string         $menu_title  Menu title.
+	 * @param string         $capability  Required capability.
+	 * @param string         $menu_slug   Menu slug.
+	 * @param callable|null  $callback    Page callback.
+	 * @param int|float|null $position   Submenu position.
+	 *
+	 * @return string
+	 */
+	function add_submenu_page(
+		string $parent_slug,
+		string $page_title,
+		string $menu_title,
+		string $capability,
+		string $menu_slug,
+		?callable $callback = null,
+		$position = null
+	): string {
+
+		$GLOBALS['shurloc_test_submenu_pages'][] = array(
+			'parent_slug' => $parent_slug,
+			'page_title'  => $page_title,
+			'menu_title'  => $menu_title,
+			'capability'  => $capability,
+			'menu_slug'   => $menu_slug,
+			'callback'    => $callback,
+			'position'    => $position,
+		);
+
+		return $parent_slug . '_page_' . $menu_slug;
+	}
+}
+
+if ( ! function_exists( 'remove_submenu_page' ) ) {
+
+	/**
+	 * Test replacement for remove_submenu_page().
+	 *
+	 * @param string $menu_slug    Parent menu slug.
+	 * @param string $submenu_slug Submenu slug.
+	 *
+	 * @return array<int,mixed>|false
+	 */
+	function remove_submenu_page(
+		string $menu_slug,
+		string $submenu_slug
+	) {
+
+		$GLOBALS['shurloc_test_removed_submenus'][] = array(
+			'parent_slug' => $menu_slug,
+			'menu_slug'   => $submenu_slug,
+		);
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'esc_url' ) ) {
+
+	/**
+	 * Escape a URL.
+	 *
+	 * Test replacement for esc_url().
+	 *
+	 * @param string $url URL.
+	 * @return string
+	 */
+	function esc_url(
+		string $url
+	): string {
+
+		return $url;
+	}
+}
+
+if ( ! function_exists( 'add_query_arg' ) ) {
+
+	/**
+	 * Add query arguments to a URL.
+	 *
+	 * Test replacement for add_query_arg().
+	 *
+	 * @param array<string, scalar> $args Query arguments.
+	 * @param string                $url  Base URL.
+	 * @return string
+	 */
+	function add_query_arg(
+		array $args,
+		string $url
+	): string {
+
+		if ( empty( $args ) ) {
+			return $url;
+		}
+
+		$separator = str_contains( $url, '?' )
+			? '&'
+			: '?';
+
+		return $url . $separator . http_build_query( $args );
+	}
+}
+
+if ( ! function_exists( 'admin_url' ) ) {
+
+	/**
+	 * Get an admin URL.
+	 *
+	 * Test replacement for admin_url().
+	 *
+	 * @param string $path Admin path.
+	 * @return string
+	 */
+	function admin_url(
+		string $path = ''
+	): string {
+
+		return 'https://example.com/wp-admin/' . ltrim( $path, '/' );
 	}
 }

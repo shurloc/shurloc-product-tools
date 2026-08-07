@@ -57,11 +57,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 			'admin_init',
 			$GLOBALS['shurloc_test_actions']
 		);
-
-		$this->assertArrayHasKey(
-			'admin_menu',
-			$GLOBALS['shurloc_test_actions']
-		);
 	}
 
 	/**
@@ -73,18 +68,6 @@ final class ShurlocCatalogReportControllerTest extends TestCase {
 
 		$this->assertIsCallable(
 			$GLOBALS['shurloc_test_actions']['admin_init'][0]
-		);
-	}
-
-	/**
-	 * Admin menu callback should be callable.
-	 */
-	public function test_admin_menu_callback_is_registered(): void {
-
-		$this->controller->register();
-
-		$this->assertIsCallable(
-			$GLOBALS['shurloc_test_actions']['admin_menu'][0]
 		);
 	}
 }

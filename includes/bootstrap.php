@@ -80,6 +80,12 @@ function shurloc_product_tools_bootstrap(): void {
 		catalog_service: $catalog_service,
 		analysis_service: $analysis_service,
 	);
+	$catalog_report_controller->register();
+
+	$admin_menu = new Shurloc_Admin_Menu(
+		product_page: $catalog_report_controller,
+	);
+	$admin_menu->register();
 
 	$request_handler = new Shurloc_Catalog_Report_Request_Handler(
 		$catalog_report_controller

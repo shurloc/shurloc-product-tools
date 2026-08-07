@@ -12,7 +12,9 @@ declare( strict_types=1 );
 /**
  * Catalog report admin controller.
  */
-final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_Actions_Interface {
+final class Shurloc_Catalog_Report_Controller implements
+	Shurloc_Catalog_Report_Actions_Interface,
+	Shurloc_Admin_Page_Interface {
 
 	/**
 	 * Catalog report tab slug.
@@ -89,33 +91,6 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 				'handle_request',
 			)
 		);
-
-		add_action(
-			'admin_menu',
-			array(
-				$this,
-				'register_menu',
-			)
-		);
-	}
-
-	/**
-	 * Register the Shur-Loc Product Tools page.
-	 *
-	 * @return void
-	 */
-	public function register_menu(): void {
-
-		add_management_page(
-			'Shur-Loc Product Tools',
-			'Shur-Loc Product Tools',
-			'manage_options',
-			'shurloc-product-tools',
-			array(
-				$this,
-				'render_page',
-			)
-		);
 	}
 
 	/**
@@ -188,7 +163,7 @@ final class Shurloc_Catalog_Report_Controller implements Shurloc_Catalog_Report_
 						'page' => 'shurloc-product-tools',
 						'tab'  => $tab_slug,
 					),
-					admin_url( 'tools.php' )
+					admin_url( 'admin.php' )
 				);
 
 				$tab_classes = array(

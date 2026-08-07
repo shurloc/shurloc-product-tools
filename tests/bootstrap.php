@@ -62,5 +62,6 @@ require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-tab
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-schema-service.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-schema-renderer.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-schema-service.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-catalog-report-controller.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wp-post.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-cart.php';
