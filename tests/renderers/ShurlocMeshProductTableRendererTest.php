@@ -21,13 +21,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 	 */
 	private Shurloc_Mesh_Product_Table_Renderer $renderer;
 
-	/**
-	 * Table data factory.
-	 *
-	 * @var Shurloc_Mesh_Table_Data_Factory
-	 */
-	private Shurloc_Mesh_Table_Data_Factory $factory;
-
 
 	/**
 	 * Set up renderer.
@@ -37,8 +30,6 @@ final class ShurlocMeshProductTableRendererTest extends TestCase {
 		parent::setUp();
 
 		$this->renderer = new Shurloc_Mesh_Product_Table_Renderer();
-
-		$this->factory = new Shurloc_Mesh_Table_Data_Factory();
 	}
 
 
