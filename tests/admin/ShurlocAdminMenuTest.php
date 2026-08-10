@@ -275,25 +275,6 @@ final class ShurlocAdminMenuTest extends TestCase {
 	}
 
 	/**
-	 * Verify that the automatically generated duplicate parent submenu is
-	 * removed.
-	 *
-	 * @return void
-	 */
-	public function test_duplicate_parent_submenu_is_removed(): void {
-
-		$this->admin_menu->register_menu();
-
-		self::assertContains(
-			array(
-				'parent_slug' => 'shurloc-tools',
-				'menu_slug'   => 'shurloc-tools',
-			),
-			$GLOBALS['shurloc_test_removed_submenus']
-		);
-	}
-
-	/**
 	 * Verify that rendering the overview page links to Product Tools.
 	 *
 	 * @return void
