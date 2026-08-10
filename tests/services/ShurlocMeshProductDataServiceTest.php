@@ -74,7 +74,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 	public function test_analyze_product_returns_analysis_result(): void {
 
 		$product = new WC_Product(
-			id: 1,
+			1,
 		);
 
 		$result = $this->service->analyze_product(
@@ -115,7 +115,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 		);
 
 		$product = new WC_Product(
-			id: 1,
+			1,
 		);
 
 		$this->assertTrue(
@@ -132,7 +132,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 	public function test_is_mesh_product_returns_false_for_non_mesh_product(): void {
 
 		$product = new WC_Product(
-			id: 1,
+			1,
 		);
 
 		$this->assertFalse(
@@ -149,7 +149,7 @@ final class ShurlocMeshProductDataServiceTest extends TestCase {
 	public function test_analyze_product_passes_catalog_variations_to_analyzer(): void {
 
 		$product = new WC_Product(
-			id: 1,
+			1,
 		);
 
 		$this->service->analyze_product(

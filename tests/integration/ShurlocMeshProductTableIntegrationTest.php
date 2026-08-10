@@ -328,7 +328,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 		foreach ( $variations as $variation_data ) {
 
 			$variation = new WC_Product(
-				id: $variation_data['id'],
+				$variation_data['id'],
 			);
 
 			$variation->set_variation_attributes(
@@ -344,7 +344,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$children[] = $variation_data['id'];
 		}
 
-		$product = new WC_Product( id: 1 );
+		$product = new WC_Product( 1 );
 
 		$product->set_name(
 			name: 'Test Mesh Product'

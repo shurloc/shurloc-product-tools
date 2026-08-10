@@ -87,7 +87,7 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 	 */
 	public function test_register_tab_skips_when_shortcode_returns_empty(): void {
 
-		$GLOBALS['product'] = new WC_Product( id: 123 );
+		$GLOBALS['product'] = new WC_Product( 123 );
 
 		$this->shortcode->html = '';
 
@@ -109,7 +109,7 @@ final class ShurlocMeshProductTableTabIntegrationTest extends TestCase {
 	 */
 	public function test_register_tab_adds_mesh_tab(): void {
 
-		$GLOBALS['product'] = new WC_Product( id: 123 );
+		$GLOBALS['product'] = new WC_Product( 123 );
 
 		$this->shortcode->html = '<table>Mesh</table>';
 
