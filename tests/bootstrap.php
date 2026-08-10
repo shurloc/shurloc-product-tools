@@ -52,7 +52,9 @@ require_once dirname( __DIR__ ) . '/includes/admin/interface-shurloc-catalog-rep
  * Load WordPress test doubles.
  */
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-test-wc-product.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-product-variation.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-test-wc-product-variation.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-catalog-report-actions.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-product-catalog-service.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-mesh-product-analyzer.php';

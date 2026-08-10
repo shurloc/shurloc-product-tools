@@ -99,7 +99,7 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 *
 		 * @var string
 		 */
-		private string $type = 'simple';
+		protected string $type = 'simple';
 
 		/**
 		 * Child product IDs.
@@ -148,7 +148,7 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 *
 		 * @var bool
 		 */
-		private bool $visible = true;
+		protected bool $visible = true;
 
 		/**
 		 * Upsell product IDs.
@@ -389,19 +389,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
-		 * Set product type.
-		 *
-		 * @param string $type Product type.
-		 * @return void
-		 */
-		public function set_type(
-			string $type
-		): void {
-
-			$this->type = $type;
-		}
-
-		/**
 		 * Determine product type.
 		 *
 		 * @param string $type Requested type.
@@ -551,20 +538,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_status(): string {
 
 			return $this->status;
-		}
-
-		/**
-		 * Set product visibility.
-		 *
-		 * @param bool $visible Whether the product is visible.
-		 *
-		 * @return void
-		 */
-		public function set_visible(
-			bool $visible
-		): void {
-
-			$this->visible = $visible;
 		}
 
 		/**
