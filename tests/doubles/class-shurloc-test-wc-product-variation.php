@@ -15,7 +15,7 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product_Variation' ) ) {
 	/**
 	 * Extended WooCommerce product variation test double.
 	 */
-	class Shurloc_Test_WC_Product_Variation extends Shurloc_Test_WC_Product {
+	class Shurloc_Test_WC_Product_Variation extends WC_Product_Variation {
 
 		/**
 		 * Variation attributes.
@@ -23,6 +23,13 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product_Variation' ) ) {
 		 * @var array<string,string>
 		 */
 		private array $test_variation_attributes = array();
+
+		/**
+		 * Product type.
+		 *
+		 * @var string
+		 */
+		private string $test_type = 'simple';
 
 		/**
 		 * Set variation attributes.
@@ -45,6 +52,34 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product_Variation' ) ) {
 		public function get_variation_attributes(): array {
 
 			return $this->test_variation_attributes;
+		}
+
+		/**
+		 * Set product type.
+		 *
+		 * Test-only helper used to control the value returned by is_type().
+		 *
+		 * @param string $type Product type.
+		 * @return void
+		 */
+		public function set_type(
+			string $type
+		): void {
+
+			$this->test_type = $type;
+		}
+
+		/**
+		 * Determine whether the product matches a product type.
+		 *
+		 * @param mixed $type Requested product type.
+		 * @return bool Whether the product matches the requested type.
+		 */
+		public function is_type(
+			mixed $type
+		): bool {
+
+			return $this->test_type === $type;
 		}
 	}
 }
