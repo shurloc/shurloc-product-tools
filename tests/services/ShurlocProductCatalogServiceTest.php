@@ -44,7 +44,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_simple_product_creates_catalog_entry(): void {
 
-		$product = new WC_Product( 123 );
+		$product = new Shurloc_Test_WC_Product( 123 );
 
 		$product->set_name(
 			name: 'Test Product',
@@ -292,7 +292,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_variable_product_returns_variations(): void {
 
-		$product = new WC_Product( 200 );
+		$product = new Shurloc_Test_WC_Product( 200 );
 
 		$product->set_name(
 			name: 'Variable Product',
@@ -308,7 +308,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$variation = new WC_Product_Variation( 201 );
+		$variation = new Shurloc_Test_WC_Product_Variation( 201 );
 
 		$variation->set_variation_attributes(
 			attributes: array(
@@ -367,7 +367,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_mesh_variation_data_survives_catalog_conversion(): void {
 
-		$product = new WC_Product( 500 );
+		$product = new Shurloc_Test_WC_Product( 500 );
 
 		$product->set_name(
 			name: 'Mesh Product',
@@ -383,7 +383,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$variation = new WC_Product_Variation( 501 );
+		$variation = new Shurloc_Test_WC_Product_Variation( 501 );
 
 		$variation->set_variation_attributes(
 			attributes: array(
@@ -417,7 +417,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_mesh_variation_attribute_value_is_preserved(): void {
 
-		$product = new WC_Product( 300 );
+		$product = new Shurloc_Test_WC_Product( 300 );
 
 		$product->set_name(
 			name: 'Mesh Product',
@@ -433,7 +433,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$variation = new WC_Product_Variation( 301 );
+		$variation = new Shurloc_Test_WC_Product_Variation( 301 );
 
 		$variation->set_variation_attributes(
 			attributes: array(
@@ -458,7 +458,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_variations_without_attributes_are_ignored(): void {
 
-		$product = new WC_Product( 400 );
+		$product = new Shurloc_Test_WC_Product( 400 );
 
 		$product->set_type(
 			type: 'variable',
@@ -489,7 +489,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 	 */
 	public function test_preserves_product_variation_order(): void {
 
-		$product = new WC_Product( 600 );
+		$product = new Shurloc_Test_WC_Product( 600 );
 
 		$product->set_name(
 			name: 'Variation Order Product',
@@ -507,7 +507,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$first_variation = new WC_Product_Variation( 601 );
+		$first_variation = new Shurloc_Test_WC_Product_Variation( 601 );
 
 		$first_variation->set_variation_attributes(
 			attributes: array(
@@ -515,7 +515,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$second_variation = new WC_Product_Variation( 602 );
+		$second_variation = new Shurloc_Test_WC_Product_Variation( 602 );
 
 		$second_variation->set_variation_attributes(
 			attributes: array(
@@ -523,7 +523,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			),
 		);
 
-		$third_variation = new WC_Product_Variation( 603 );
+		$third_variation = new Shurloc_Test_WC_Product_Variation( 603 );
 
 		$third_variation->set_variation_attributes(
 			attributes: array(

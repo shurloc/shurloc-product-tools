@@ -38,6 +38,13 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product' ) ) {
 		private array $test_children = array();
 
 		/**
+		 * Product category.
+		 *
+		 * @var string
+		 */
+		private string $test_category = '';
+
+		/**
 		 * Set product visibility.
 		 *
 		 * Test-only helper used to control the value returned by is_visible().
@@ -111,6 +118,29 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product' ) ) {
 		public function get_children(): array {
 
 			return $this->test_children;
+		}
+
+		/**
+		 * Set product category.
+		 *
+		 * @param string $category Product category.
+		 * @return void
+		 */
+		public function set_category(
+			string $category
+		): void {
+
+			$this->test_category = $category;
+		}
+
+		/**
+		 * Get product category.
+		 *
+		 * @return string Product category.
+		 */
+		public function get_category(): string {
+
+			return $this->test_category;
 		}
 	}
 }

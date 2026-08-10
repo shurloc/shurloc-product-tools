@@ -251,19 +251,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
-		 * Set product category.
-		 *
-		 * @param string $category Product category.
-		 * @return void
-		 */
-		public function set_category(
-			string $category
-		): void {
-
-			$this->category = $category;
-		}
-
-		/**
 		 * Get product category.
 		 *
 		 * @return string Product category.
