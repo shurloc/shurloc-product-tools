@@ -18,20 +18,11 @@ use PHPUnit\Framework\TestCase;
 final class ShurlocPluginBootstrapTest extends TestCase {
 
 	/**
-	 * Registered WordPress actions.
-	 *
-	 * @var array<string,array<int,array<string,mixed>>>
-	 */
-	private array $actions = array();
-
-	/**
 	 * Set up bootstrap test environment.
 	 */
 	protected function setUp(): void {
 
 		parent::setUp();
-
-		$this->actions = array();
 
 		$GLOBALS['shurloc_test_actions'] = array();
 
