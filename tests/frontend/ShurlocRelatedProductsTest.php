@@ -219,7 +219,7 @@ final class ShurlocRelatedProductsTest extends TestCase {
 
 		new WC_Product( 100 );
 
-		$hidden = new WC_Product( 201 );
+		$hidden = new Shurloc_Test_WC_Product( 201 );
 		$hidden->set_visible( false );
 
 		$out_of_stock = new WC_Product( 202 );
