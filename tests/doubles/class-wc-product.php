@@ -109,13 +109,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		private array $children = array();
 
 		/**
-		 * Variation attributes.
-		 *
-		 * @var array<string,string>
-		 */
-		private array $variation_attributes = array();
-
-		/**
 		 * Product image ID.
 		 *
 		 * @var int
@@ -442,29 +435,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_children(): array {
 
 			return $this->children;
-		}
-
-		/**
-		 * Set variation attributes.
-		 *
-		 * @param array<string,string> $attributes Variation attributes.
-		 * @return void
-		 */
-		public function set_variation_attributes(
-			array $attributes
-		): void {
-
-			$this->variation_attributes = $attributes;
-		}
-
-		/**
-		 * Get variation attributes.
-		 *
-		 * @return array<string,string>
-		 */
-		public function get_variation_attributes(): array {
-
-			return $this->variation_attributes;
 		}
 
 		/**
