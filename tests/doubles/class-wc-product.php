@@ -10,7 +10,7 @@ declare( strict_types=1 );
 /**
  * Registered WooCommerce products for tests.
  *
- * @var array<int,WC_Product>
+ * @var array<int,WC_Product> $GLOBALS['shurloc_test_products']
  */
 $GLOBALS['shurloc_test_products'] = array();
 
