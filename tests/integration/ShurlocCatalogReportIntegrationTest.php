@@ -50,6 +50,7 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 			entries: $entries,
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Catalog_Report::class,
 			$report
@@ -57,16 +58,19 @@ final class ShurlocCatalogReportIntegrationTest extends TestCase {
 
 		$data = $report->to_array();
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertArrayHasKey(
 			'recognized_specifications',
 			$data
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertArrayHasKey(
 			'unrecognized_variations',
 			$data
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertArrayHasKey(
 			'invalid_specifications',
 			$data
