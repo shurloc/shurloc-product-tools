@@ -207,14 +207,14 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		/**
 		 * Set short description.
 		 *
-		 * @param string $description Short description.
+		 * @param string $short_description Short description.
 		 * @return void
 		 */
 		public function set_short_description(
-			string $description
+			string $short_description
 		): void {
 
-			$this->short_description = $description;
+			$this->short_description = $short_description;
 		}
 
 		/**

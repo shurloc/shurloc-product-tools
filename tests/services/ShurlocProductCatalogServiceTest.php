@@ -55,7 +55,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		);
 
 		$product->set_short_description(
-			description: 'Test short description.',
+			short_description: 'Test short description.',
 		);
 
 		$product->set_description(
@@ -340,7 +340,7 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 		);
 
 		$product->set_short_description(
-			description: '<p>Short <strong>description</strong></p>',
+			short_description: '<p>Short <strong>description</strong></p>',
 		);
 
 		$product->set_description(
