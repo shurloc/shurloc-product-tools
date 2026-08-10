@@ -110,7 +110,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 	 */
 	public function test_product_without_mesh_variations_returns_empty_output(): void {
 
-		$product = new WC_Product( 1 );
+		$product = new Shurloc_Test_WC_Product( 1 );
 
 		$product->set_name(
 			name: 'Empty Mesh Product'
@@ -327,7 +327,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 		foreach ( $variations as $variation_data ) {
 
-			$variation = new WC_Product_Variation(
+			$variation = new Shurloc_Test_WC_Product_Variation(
 				$variation_data['id'],
 			);
 
@@ -344,7 +344,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 			$children[] = $variation_data['id'];
 		}
 
-		$product = new WC_Product( 1 );
+		$product = new Shurloc_Test_WC_Product( 1 );
 
 		$product->set_name(
 			name: 'Test Mesh Product'

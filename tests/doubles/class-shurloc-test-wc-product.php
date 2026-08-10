@@ -31,6 +31,13 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product' ) ) {
 		private string $test_type = 'simple';
 
 		/**
+		 * Child product IDs.
+		 *
+		 * @var int[]
+		 */
+		private array $test_children = array();
+
+		/**
 		 * Set product visibility.
 		 *
 		 * Test-only helper used to control the value returned by is_visible().
@@ -81,6 +88,29 @@ if ( ! class_exists( 'Shurloc_Test_WC_Product' ) ) {
 		): bool {
 
 			return $this->test_type === $type;
+		}
+
+		/**
+		 * Set child product IDs.
+		 *
+		 * @param int[] $children Child IDs.
+		 * @return void
+		 */
+		public function set_children(
+			array $children
+		): void {
+
+			$this->test_children = $children;
+		}
+
+		/**
+		 * Get child product IDs.
+		 *
+		 * @return int[] Child IDs.
+		 */
+		public function get_children(): array {
+
+			return $this->test_children;
 		}
 	}
 }
