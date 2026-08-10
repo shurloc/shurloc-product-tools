@@ -327,7 +327,7 @@ final class ShurlocMeshProductTableIntegrationTest extends TestCase {
 
 		foreach ( $variations as $variation_data ) {
 
-			$variation = new WC_Product(
+			$variation = new WC_Product_Variation(
 				$variation_data['id'],
 			);
 

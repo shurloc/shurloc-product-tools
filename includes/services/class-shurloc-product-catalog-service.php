@@ -97,7 +97,7 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 
 			$variation = wc_get_product( $variation_id );
 
-			if ( ! $variation ) {
+			if ( ! $variation instanceof WC_Product_Variation ) {
 				continue;
 			}
 
