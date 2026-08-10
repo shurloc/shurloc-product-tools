@@ -542,7 +542,7 @@ if ( ! function_exists( 'wp_get_attachment_image_url' ) ) {
 	 *
 	 * @param int    $attachment_id Attachment ID.
 	 * @param string $size Image size.
-	 * @return string|false
+	 * @return false
 	 */
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
 	function wp_get_attachment_image_url(
@@ -1436,7 +1436,7 @@ if ( ! function_exists( 'remove_submenu_page' ) ) {
 	 * @param string $menu_slug    Parent menu slug.
 	 * @param string $submenu_slug Submenu slug.
 	 *
-	 * @return array<int,mixed>|false
+	 * @return false
 	 */
 	function remove_submenu_page(
 		string $menu_slug,
