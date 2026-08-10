@@ -271,7 +271,7 @@ if ( ! function_exists( 'has_filter' ) ) {
 	 *
 	 * @param string        $hook     Hook name.
 	 * @param callable|null $callback Optional callback.
-	 * @return int|false Priority if found, true if callbacks exist and no callback
+	 * @return int|bool Priority if found, true if callbacks exist and no callback
 	 *                   was specified, otherwise false.
 	 */
 	function has_filter(
@@ -372,7 +372,7 @@ if ( ! function_exists( 'has_action' ) ) {
 	 *
 	 * @param string   $hook Hook name.
 	 * @param callable $callback Optional callback.
-	 * @return int|false Priority or false.
+	 * @return int|bool Priority or bool.
 	 */
 	function has_action(
 		string $hook,
