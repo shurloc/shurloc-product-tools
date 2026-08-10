@@ -99,7 +99,7 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 *
 		 * @var string
 		 */
-		protected string $type = 'simple';
+		private string $type = 'simple';
 
 		/**
 		 * Child product IDs.
@@ -148,7 +148,7 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 *
 		 * @var bool
 		 */
-		protected bool $visible = true;
+		private bool $visible = true;
 
 		/**
 		 * Upsell product IDs.
@@ -399,19 +399,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		): bool {
 
 			return $this->type === $type;
-		}
-
-		/**
-		 * Set child product IDs.
-		 *
-		 * @param int[] $children Child IDs.
-		 * @return void
-		 */
-		public function set_children(
-			array $children
-		): void {
-
-			$this->children = $children;
 		}
 
 		/**
