@@ -625,13 +625,17 @@ if ( ! function_exists( 'sanitize_key' ) ) {
 		string $key
 	): string {
 
-		return strtolower(
-			preg_replace(
-				'/[^a-z0-9_\-]/',
-				'',
-				$key
-			)
+		$str = preg_replace(
+			'/[^a-z0-9_\-]/',
+			'',
+			$key
 		);
+
+		if ( is_null( $str ) ) {
+			return '';
+		}
+
+		return strtolower( $str );
 	}
 }
 
