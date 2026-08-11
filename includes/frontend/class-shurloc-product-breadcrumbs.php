@@ -152,8 +152,7 @@ final class Shurloc_Product_Breadcrumbs {
 		foreach ( $crumbs as $crumb ) {
 
 			if (
-				! isset( $crumb[1] ) ||
-				! is_string( $crumb[1] )
+				! isset( $crumb[1] )
 			) {
 				continue;
 			}
@@ -193,10 +192,6 @@ final class Shurloc_Product_Breadcrumbs {
 
 		foreach ( $terms as $term ) {
 
-			if ( ! $term instanceof WP_Term ) {
-				continue;
-			}
-
 			if ( 'product_cat' !== $term->taxonomy ) {
 				continue;
 			}
@@ -225,10 +220,6 @@ final class Shurloc_Product_Breadcrumbs {
 		$best_count = -1;
 
 		foreach ( $terms as $term ) {
-
-			if ( ! $term instanceof WP_Term ) {
-				continue;
-			}
 
 			if ( 'product_cat' !== $term->taxonomy ) {
 				continue;
@@ -281,7 +272,7 @@ final class Shurloc_Product_Breadcrumbs {
 		if ( function_exists( 'wc_get_page_permalink' ) ) {
 			$shop_url = wc_get_page_permalink( 'shop' );
 
-			if ( is_string( $shop_url ) && '' !== $shop_url ) {
+			if ( '' !== $shop_url ) {
 				return $shop_url;
 			}
 		}
