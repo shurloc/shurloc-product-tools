@@ -474,9 +474,9 @@ if ( ! function_exists( 'wp_set_object_terms' ) ) {
 	/**
 	 * Set object terms.
 	 *
-	 * @param int          $object_id Object ID.
-	 * @param string|array $terms Terms.
-	 * @param string       $taxonomy Taxonomy.
+	 * @param int                      $object_id Object ID.
+	 * @param string|array<string|int> $terms Terms.
+	 * @param string                   $taxonomy Taxonomy.
 	 * @return bool
 	 */
 	function wp_set_object_terms(
@@ -519,9 +519,9 @@ if ( ! function_exists( 'wp_get_post_terms' ) ) {
 	/**
 	 * Get post terms.
 	 *
-	 * @param int    $post_id Post ID.
-	 * @param string $taxonomy Taxonomy.
-	 * @param array  $args Arguments.
+	 * @param int                  $post_id Post ID.
+	 * @param string               $taxonomy Taxonomy.
+	 * @param array<string,mixed>  $args Arguments.
 	 * @return array<int,string>
 	 */
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
