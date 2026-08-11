@@ -28,6 +28,11 @@ $shurloc_autoloader = new Shurloc_Autoloader(
 $shurloc_autoloader->register();
 
 /*
+ * Load dependencies from shurloc-tools.
+ */
+require_once dirname( __DIR__, 2 ) . '/shurloc-tools/includes/interfaces/interface-shurloc-admin-page.php';
+
+/*
  * Load test utilities.
  */
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';

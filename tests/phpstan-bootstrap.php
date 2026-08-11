@@ -31,3 +31,9 @@ if ( ! defined( 'SHURLOC_PRODUCT_TOOLS_URL' ) ) {
 		'https://example.com/wp-content/plugins/shurloc-product-tools/'
 	);
 }
+
+/**
+ * Load dependencies from shurloc-tools.
+ */
+
+require_once dirname( __DIR__, 2 ) . '/shurloc-tools/includes/interfaces/interface-shurloc-admin-page.php';
