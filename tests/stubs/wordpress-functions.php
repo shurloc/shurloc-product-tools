@@ -144,11 +144,12 @@ if ( ! function_exists( 'wp_json_encode' ) ) {
 	/**
 	 * WordPress JSON encode test stub.
 	 *
-	 * @param mixed $value Value to encode.
-	 * @param int   $flags JSON encode flags.
-	 * @param int   $depth Maximum depth.
+	 * @param mixed       $value Value to encode.
+	 * @param int         $flags JSON encode flags.
+	 * @param int<1, max> $depth Maximum depth.
 	 * @return string|false
 	 */
+	// phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint, Squiz.Commenting.FunctionComment.Missing
 	function wp_json_encode(
 		$value,
 		int $flags = 0,
