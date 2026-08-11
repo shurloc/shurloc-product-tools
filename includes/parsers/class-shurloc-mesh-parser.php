@@ -101,17 +101,29 @@ class Shurloc_Mesh_Parser {
 			$text
 		);
 
+		if ( is_null( $text ) ) {
+			return '';
+		}
+
 		$text = preg_replace(
 			'/Thin\s+Thread/i',
 			'(S)',
 			$text
 		);
 
+		if ( is_null( $text ) ) {
+			return '';
+		}
+
 		$text = preg_replace(
 			'/\s*\/\s*/i',
 			'/',
 			$text
 		);
+
+		if ( is_null( $text ) ) {
+			return '';
+		}
 
 		return $text;
 	}
