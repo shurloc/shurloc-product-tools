@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4] - 2026-08-11
+
+### Changed
+
+- Controller no longer creates its own top-level menu, it creates a submenu anchored on shurloc-tools top-level menu.
+- Added dependency on shurloc-tools plugin.
+
 ## [1.3.3] - 2026-08-11
 
 ### Testing
