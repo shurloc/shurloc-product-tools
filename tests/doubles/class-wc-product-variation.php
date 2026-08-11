@@ -37,10 +37,13 @@ if ( ! class_exists( 'WC_Product_Variation' ) ) {
 		/**
 		 * Get variation attributes.
 		 *
-		 * @return array<string,string>
+		 * @param mixed $with_prefix Prependattribute_ or not.
+		 * @return array<string|int,mixed>
 		 */
-		public function get_variation_attributes(): array {
-
+		public function get_variation_attributes(
+			mixed $with_prefix = true
+		): array {
+			unset( $with_prefix );
 			return $this->variation_attributes;
 		}
 	}

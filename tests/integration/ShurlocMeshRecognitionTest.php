@@ -35,6 +35,7 @@ final class ShurlocMeshRecognitionTest extends TestCase {
 			'Catalog fixture appears to be empty.'
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Catalog_Report::class,
 			$report,

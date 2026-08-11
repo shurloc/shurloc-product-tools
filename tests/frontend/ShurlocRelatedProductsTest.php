@@ -219,7 +219,7 @@ final class ShurlocRelatedProductsTest extends TestCase {
 
 		new WC_Product( 100 );
 
-		$hidden = new WC_Product( 201 );
+		$hidden = new Shurloc_Test_WC_Product( 201 );
 		$hidden->set_visible( false );
 
 		$out_of_stock = new WC_Product( 202 );
@@ -650,7 +650,11 @@ final class ShurlocRelatedProductsTest extends TestCase {
 	 */
 	public function test_product_save_invalidates_cache(): void {
 
-		$post            = new WP_Post();
+		$post            = new WP_Post(
+			(object) array(
+				'ID' => 123,
+			)
+		);
 		$post->post_type = 'product';
 
 		$this->related_products->invalidate_cache_after_product_save(
@@ -673,7 +677,11 @@ final class ShurlocRelatedProductsTest extends TestCase {
 	 */
 	public function test_non_product_save_does_not_invalidate_cache(): void {
 
-		$post            = new WP_Post();
+		$post            = new WP_Post(
+			(object) array(
+				'ID' => 123,
+			)
+		);
 		$post->post_type = 'post';
 
 		$this->related_products->invalidate_cache_after_product_save(
@@ -695,7 +703,11 @@ final class ShurlocRelatedProductsTest extends TestCase {
 	 */
 	public function test_product_autosave_does_not_invalidate_cache(): void {
 
-		$post            = new WP_Post();
+		$post            = new WP_Post(
+			(object) array(
+				'ID' => 123,
+			)
+		);
 		$post->post_type = 'product';
 
 		$GLOBALS['shurloc_test_autosaves'][] = 100;
@@ -719,7 +731,11 @@ final class ShurlocRelatedProductsTest extends TestCase {
 	 */
 	public function test_product_revision_does_not_invalidate_cache(): void {
 
-		$post            = new WP_Post();
+		$post            = new WP_Post(
+			(object) array(
+				'ID' => 123,
+			)
+		);
 		$post->post_type = 'product';
 
 		$GLOBALS['shurloc_test_revisions'][] = 100;

@@ -223,7 +223,7 @@ final class MeshParserDataProvider {
 	/**
 	 * Price extraction test cases.
 	 *
-	 * @return array<string,array{string,string}>
+	 * @return array<array{string,string}>
 	 */
 	public static function prices(): array {
 
@@ -246,7 +246,7 @@ final class MeshParserDataProvider {
 	/**
 	 * Color extraction test cases.
 	 *
-	 * @return array<string,array{string,string}>
+	 * @return array<array{string,string}>
 	 */
 	public static function colors(): array {
 

@@ -143,9 +143,7 @@ final class Shurloc_Breadcrumb_Schema {
 		$last_crumb = end( $normalized_crumbs );
 		reset( $normalized_crumbs );
 
-		$last_name = is_array( $last_crumb ) && isset( $last_crumb[0] )
-			? (string) $last_crumb[0]
-			: '';
+		$last_name = (string) $last_crumb[0];
 
 		if ( $last_name !== $product_name ) {
 			$normalized_crumbs[] = array(
@@ -159,13 +157,9 @@ final class Shurloc_Breadcrumb_Schema {
 
 		foreach ( $normalized_crumbs as $key => $crumb ) {
 
-			$name = isset( $crumb[0] )
-				? trim( (string) $crumb[0] )
-				: '';
+			$name = trim( (string) $crumb[0] );
 
-			$url = isset( $crumb[1] )
-				? (string) $crumb[1]
-				: '';
+			$url = (string) $crumb[1];
 
 			if ( '' === $name ) {
 				continue;
@@ -277,10 +271,6 @@ final class Shurloc_Breadcrumb_Schema {
 		}
 
 		$url = strtok( $data['url'], '#' );
-
-		if ( false === $url || '' === $url ) {
-			return null;
-		}
 
 		return trailingslashit( $url );
 	}

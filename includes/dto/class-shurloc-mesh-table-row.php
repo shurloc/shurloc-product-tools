@@ -17,16 +17,16 @@ final class Shurloc_Mesh_Table_Row {
 	/**
 	 * Mesh count.
 	 *
-	 * @var int
+	 * @var int|null
 	 */
-	private int $mesh_count;
+	private ?int $mesh_count;
 
 	/**
 	 * Thread diameter.
 	 *
-	 * @var int
+	 * @var int|null
 	 */
-	private int $thread_diameter;
+	private ?int $thread_diameter;
 
 	/**
 	 * Mesh color.
@@ -69,8 +69,8 @@ final class Shurloc_Mesh_Table_Row {
 	/**
 	 * Constructor.
 	 *
-	 * @param int         $mesh_count      Mesh count.
-	 * @param int         $thread_diameter Thread diameter.
+	 * @param int|null    $mesh_count      Mesh count.
+	 * @param int|null    $thread_diameter Thread diameter.
 	 * @param string|null $color           Mesh color.
 	 * @param string|null $modifier        Mesh modifier.
 	 * @param string|null $pack_size       Pack size.
@@ -78,8 +78,8 @@ final class Shurloc_Mesh_Table_Row {
 	 * @param string      $variation_value Variation selection value.
 	 */
 	public function __construct(
-		int $mesh_count,
-		int $thread_diameter,
+		?int $mesh_count,
+		?int $thread_diameter,
 		?string $color,
 		?string $modifier,
 		?string $pack_size,
@@ -99,9 +99,9 @@ final class Shurloc_Mesh_Table_Row {
 	/**
 	 * Get mesh count.
 	 *
-	 * @return int Mesh count.
+	 * @return int|null Mesh count.
 	 */
-	public function get_mesh_count(): int {
+	public function get_mesh_count(): int|null {
 
 		return $this->mesh_count;
 	}
@@ -109,9 +109,9 @@ final class Shurloc_Mesh_Table_Row {
 	/**
 	 * Get thread diameter.
 	 *
-	 * @return int Thread diameter.
+	 * @return ?int Thread diameter.
 	 */
-	public function get_thread_diameter(): int {
+	public function get_thread_diameter(): ?int {
 
 		return $this->thread_diameter;
 	}

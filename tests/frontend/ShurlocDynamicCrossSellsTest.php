@@ -206,7 +206,7 @@ final class ShurlocDynamicCrossSellsTest extends TestCase {
 
 		$parent_product = new WC_Product( 100 );
 
-		$variation = new WC_Product( 150 );
+		$variation = new Shurloc_Test_WC_Product_Variation( 150 );
 		$variation->set_type( 'variation' );
 
 		new WC_Product( 201 );
@@ -510,7 +510,7 @@ final class ShurlocDynamicCrossSellsTest extends TestCase {
 
 		$cart_product = new WC_Product( 100 );
 
-		$hidden = new WC_Product( 201 );
+		$hidden = new Shurloc_Test_WC_Product( 201 );
 		$hidden->set_visible( false );
 
 		$draft = new WC_Product( 202 );
@@ -548,7 +548,7 @@ final class ShurlocDynamicCrossSellsTest extends TestCase {
 
 		$cart_product = new WC_Product( 100 );
 
-		$hidden = new WC_Product( 301 );
+		$hidden = new Shurloc_Test_WC_Product( 301 );
 		$hidden->set_visible( false );
 
 		$draft = new WC_Product( 302 );
@@ -844,7 +844,7 @@ final class ShurlocDynamicCrossSellsTest extends TestCase {
 		array $items
 	): WC_Cart {
 
-		$cart = new WC_Cart();
+		$cart = new Shurloc_Test_WC_Cart();
 		$cart->set_cart( $items );
 
 		return $cart;

@@ -21,162 +21,116 @@ if ( ! defined( 'MINUTE_IN_SECONDS' ) ) {
 
 /**
  * Test product state.
- *
- * @var bool
  */
 $GLOBALS['shurloc_test_is_product'] = true;
 
 /**
  * Registered test filters.
- *
- * @var array<string,array<int,callable>>
  */
 $GLOBALS['shurloc_test_filters'] = array();
 
 /**
  * Registered test actions.
- *
- * @var array<string,array<int,callable>>
  */
 $GLOBALS['shurloc_test_actions'] = array();
 
 /**
  * Registered test action metadata.
- *
- * @var array<string,array<int,array<string,int>>>
  */
 $GLOBALS['shurloc_test_action_metadata'] = array();
 
 /**
  * Stored taxonomy terms.
- *
- * @var array<int,array<string,array<int,string>>>
  */
 $GLOBALS['shurloc_test_terms'] = array();
 
 /**
  * Stored product comments.
- *
- * @var array<int,array<int,object>>
  */
 $GLOBALS['shurloc_test_comments'] = array();
 
 /**
  * Product IDs returned by get_posts().
- *
- * @var int[]
  */
 $GLOBALS['shurloc_test_product_ids'] = array();
 
 /**
  * Registered WooCommerce test products.
- *
- * @var array<int,WC_Product>
  */
 $GLOBALS['shurloc_test_products'] = array();
 
 /**
  * Stored shortcode registrations.
- *
- * @var array<string,callable>
  */
 $GLOBALS['wp_shortcodes'] = array();
 
 /**
  * Stored product.
- *
- * @var string|null
  */
 $GLOBALS['product'] = null;
 
 /**
  * Enqueued styles.
- *
- * @var array<string,array<string,mixed>>
  */
 $GLOBALS['shurloc_test_enqueued_styles'] = array();
 
 /**
  * Enqueued scripts.
- *
- * @var array<string,array<string,mixed>>
  */
 $GLOBALS['shurloc_test_enqueued_scripts'] = array();
 
 /**
  * Recorded nonce verification checks.
- *
- * @var array<int,string>
  */
 $GLOBALS['shurloc_test_nonce_checks'] = array();
 
 /**
  * Registered styles.
- *
- * @var array<string<int,string>>
  */
 $GLOBALS['shurloc_test_registered_styles'] = array();
 
 /**
  * Registered scripts.
- *
- * @var array<string<int,string>>
  */
 $GLOBALS['shurloc_test_registered_scripts'] = array();
 
 /**
  * Test transients.
- *
- * @var array<string,mixed>
  */
 $GLOBALS['shurloc_test_transients'] = array();
 
 /**
  * Test options.
- *
- * @var array<string,mixed>
  */
 $GLOBALS['shurloc_test_options'] = array();
 
 /**
  * Product post types keyed by object ID.
- *
- * @var array<int,string>
  */
 $GLOBALS['shurloc_test_post_types'] = array();
 
 /**
  * Test autosave IDs.
- *
- * @var int[]
  */
 $GLOBALS['shurloc_test_autosaves'] = array();
 
 /**
  * Test revision IDs.
- *
- * @var int[]
  */
 $GLOBALS['shurloc_test_revisions'] = array();
 
 /**
  * Registered top-level admin menu pages.
- *
- * @var array<int,array<string,mixed>>
  */
 $GLOBALS['shurloc_test_menu_pages'] = array();
 
 /**
  * Registered admin submenu pages.
- *
- * @var array<int,array<string,mixed>>
  */
 $GLOBALS['shurloc_test_submenu_pages'] = array();
 
 /**
  * Removed admin submenu pages.
- *
- * @var array<int,array<string,string>>
  */
 $GLOBALS['shurloc_test_removed_submenus'] = array();
 
@@ -190,11 +144,12 @@ if ( ! function_exists( 'wp_json_encode' ) ) {
 	/**
 	 * WordPress JSON encode test stub.
 	 *
-	 * @param mixed $value Value to encode.
-	 * @param int   $flags JSON encode flags.
-	 * @param int   $depth Maximum depth.
+	 * @param mixed       $value Value to encode.
+	 * @param int         $flags JSON encode flags.
+	 * @param int<1, max> $depth Maximum depth.
 	 * @return string|false
 	 */
+	// phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint, Squiz.Commenting.FunctionComment.Missing
 	function wp_json_encode(
 		$value,
 		int $flags = 0,
@@ -273,7 +228,7 @@ if ( ! function_exists( 'has_filter' ) ) {
 	 *
 	 * @param string        $hook     Hook name.
 	 * @param callable|null $callback Optional callback.
-	 * @return int|false Priority if found, true if callbacks exist and no callback
+	 * @return int|bool Priority if found, true if callbacks exist and no callback
 	 *                   was specified, otherwise false.
 	 */
 	function has_filter(
@@ -374,7 +329,7 @@ if ( ! function_exists( 'has_action' ) ) {
 	 *
 	 * @param string   $hook Hook name.
 	 * @param callable $callback Optional callback.
-	 * @return int|false Priority or false.
+	 * @return int|bool Priority or bool.
 	 */
 	function has_action(
 		string $hook,
@@ -476,9 +431,9 @@ if ( ! function_exists( 'wp_set_object_terms' ) ) {
 	/**
 	 * Set object terms.
 	 *
-	 * @param int          $object_id Object ID.
-	 * @param string|array $terms Terms.
-	 * @param string       $taxonomy Taxonomy.
+	 * @param int                      $object_id Object ID.
+	 * @param string|array<string|int> $terms Terms.
+	 * @param string                   $taxonomy Taxonomy.
 	 * @return bool
 	 */
 	function wp_set_object_terms(
@@ -521,9 +476,9 @@ if ( ! function_exists( 'wp_get_post_terms' ) ) {
 	/**
 	 * Get post terms.
 	 *
-	 * @param int    $post_id Post ID.
-	 * @param string $taxonomy Taxonomy.
-	 * @param array  $args Arguments.
+	 * @param int                  $post_id Post ID.
+	 * @param string               $taxonomy Taxonomy.
+	 * @param array<string,mixed>  $args Arguments.
 	 * @return array<int,string>
 	 */
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
@@ -544,7 +499,7 @@ if ( ! function_exists( 'wp_get_attachment_image_url' ) ) {
 	 *
 	 * @param int    $attachment_id Attachment ID.
 	 * @param string $size Image size.
-	 * @return string|false
+	 * @return false
 	 */
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Squiz.Commenting.FunctionComment.Missing
 	function wp_get_attachment_image_url(
@@ -670,13 +625,17 @@ if ( ! function_exists( 'sanitize_key' ) ) {
 		string $key
 	): string {
 
-		return strtolower(
-			preg_replace(
-				'/[^a-z0-9_\-]/',
-				'',
-				$key
-			)
+		$str = preg_replace(
+			'/[^a-z0-9_\-]/',
+			'',
+			$key
 		);
+
+		if ( is_null( $str ) ) {
+			return '';
+		}
+
+		return strtolower( $str );
 	}
 }
 
@@ -1438,7 +1397,7 @@ if ( ! function_exists( 'remove_submenu_page' ) ) {
 	 * @param string $menu_slug    Parent menu slug.
 	 * @param string $submenu_slug Submenu slug.
 	 *
-	 * @return array<int,mixed>|false
+	 * @return false
 	 */
 	function remove_submenu_page(
 		string $menu_slug,

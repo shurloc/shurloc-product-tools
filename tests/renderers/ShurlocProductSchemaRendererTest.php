@@ -50,6 +50,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		$output = ob_get_clean();
 
+		$this->assertIsString( $output );
+
 		$this->assertStringContainsString(
 			'<script type="application/ld+json">',
 			$output
@@ -95,6 +97,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 
 		$output = ob_get_clean();
 
+		$this->assertIsString( $output );
+
 		$this->assertStringContainsString(
 			'Test \\"Special\\" Product',
 			$output
@@ -119,6 +123,8 @@ final class ShurlocProductSchemaRendererTest extends TestCase {
 		);
 
 		$output = ob_get_clean();
+
+		$this->assertIsString( $output );
 
 		$this->assertStringContainsString(
 			'https://example.com/product/test/',

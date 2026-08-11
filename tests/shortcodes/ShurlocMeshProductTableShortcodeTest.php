@@ -205,6 +205,7 @@ final class ShurlocMeshProductTableShortcodeTest extends TestCase {
 
 		$rendered_data = $this->renderer->get_calls()[0];
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Mesh_Table_Data::class,
 			$rendered_data

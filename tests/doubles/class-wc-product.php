@@ -10,7 +10,7 @@ declare( strict_types=1 );
 /**
  * Registered WooCommerce products for tests.
  *
- * @var array<int,WC_Product>
+ * @var array<int,WC_Product> $GLOBALS['shurloc_test_products']
  */
 $GLOBALS['shurloc_test_products'] = array();
 
@@ -107,13 +107,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 * @var int[]
 		 */
 		private array $children = array();
-
-		/**
-		 * Variation attributes.
-		 *
-		 * @var array<string,string>
-		 */
-		private array $variation_attributes = array();
 
 		/**
 		 * Product image ID.
@@ -214,14 +207,14 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		/**
 		 * Set short description.
 		 *
-		 * @param string $description Short description.
+		 * @param string $short_description Short description.
 		 * @return void
 		 */
 		public function set_short_description(
-			string $description
+			string $short_description
 		): void {
 
-			$this->short_description = $description;
+			$this->short_description = $short_description;
 		}
 
 		/**
@@ -255,19 +248,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_description(): string {
 
 			return $this->description;
-		}
-
-		/**
-		 * Set product category.
-		 *
-		 * @param string $category Product category.
-		 * @return void
-		 */
-		public function set_category(
-			string $category
-		): void {
-
-			$this->category = $category;
 		}
 
 		/**
@@ -396,19 +376,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
-		 * Set product type.
-		 *
-		 * @param string $type Product type.
-		 * @return void
-		 */
-		public function set_type(
-			string $type
-		): void {
-
-			$this->type = $type;
-		}
-
-		/**
 		 * Determine product type.
 		 *
 		 * @param string $type Requested type.
@@ -422,19 +389,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		}
 
 		/**
-		 * Set child product IDs.
-		 *
-		 * @param int[] $children Child IDs.
-		 * @return void
-		 */
-		public function set_children(
-			array $children
-		): void {
-
-			$this->children = $children;
-		}
-
-		/**
 		 * Get child product IDs.
 		 *
 		 * @return int[] Child IDs.
@@ -442,29 +396,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_children(): array {
 
 			return $this->children;
-		}
-
-		/**
-		 * Set variation attributes.
-		 *
-		 * @param array<string,string> $attributes Variation attributes.
-		 * @return void
-		 */
-		public function set_variation_attributes(
-			array $attributes
-		): void {
-
-			$this->variation_attributes = $attributes;
-		}
-
-		/**
-		 * Get variation attributes.
-		 *
-		 * @return array<string,string>
-		 */
-		public function get_variation_attributes(): array {
-
-			return $this->variation_attributes;
 		}
 
 		/**
@@ -581,20 +512,6 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		public function get_status(): string {
 
 			return $this->status;
-		}
-
-		/**
-		 * Set product visibility.
-		 *
-		 * @param bool $visible Whether the product is visible.
-		 *
-		 * @return void
-		 */
-		public function set_visible(
-			bool $visible
-		): void {
-
-			$this->visible = $visible;
 		}
 
 		/**

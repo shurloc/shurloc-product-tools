@@ -739,8 +739,8 @@ final class Shurloc_Catalog_Report_Controller implements
 	/**
 	 * Download data as JSON.
 	 *
-	 * @param string $filename Download filename.
-	 * @param array  $data     Data to encode as JSON.
+	 * @param string              $filename Download filename.
+	 * @param array<string,mixed> $data     Data to encode as JSON.
 	 * @return void
 	 */
 	private function download_json(

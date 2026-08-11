@@ -177,6 +177,7 @@ final class ShurlocMeshProductAnalyzerTest extends TestCase {
 			$result->mesh_variations[0]['entry']
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Mesh_Specification::class,
 			$spec

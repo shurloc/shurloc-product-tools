@@ -18,11 +18,11 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 	 * Collect a product catalog entry.
 	 *
 	 * @param WC_Product $product WooCommerce product.
-	 * @return Shurloc_Catalog_Product_Entry|null
+	 * @return Shurloc_Catalog_Product_Entry
 	 */
 	public function get_product_entry(
 		WC_Product $product
-	): ?Shurloc_Catalog_Product_Entry {
+	): Shurloc_Catalog_Product_Entry {
 
 		$variations = $this->get_product_variation_entries(
 			$product
@@ -97,7 +97,7 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 
 			$variation = wc_get_product( $variation_id );
 
-			if ( ! $variation ) {
+			if ( ! $variation instanceof WC_Product_Variation ) {
 				continue;
 			}
 
@@ -227,14 +227,23 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 
 		$schema_reviews = array();
 
+		if ( 'integer' === gettype( $reviews ) ) {
+			$reviews_tmp[] = $reviews;
+			$reviews       = $reviews_tmp;
+		}
+
 		foreach ( $reviews as $review ) {
+
+			if ( ! $review instanceof WP_Comment ) {
+				continue;
+			}
 
 			$schema_reviews[] = array(
 				'@type'         => 'Review',
 				'reviewRating'  => array(
 					'@type'       => 'Rating',
 					'ratingValue' => get_comment_meta(
-						$review->comment_ID,
+						(int) $review->comment_ID,
 						'rating',
 						true
 					),
@@ -268,7 +277,7 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 		}
 
 		$image_url = wp_get_attachment_image_url(
-			$image_id,
+			(int) $image_id,
 			'full'
 		);
 

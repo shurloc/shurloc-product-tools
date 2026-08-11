@@ -48,6 +48,7 @@ final class ShurlocCatalogAnalyzerTest extends TestCase {
 			entries: array(),
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Catalog_Report::class,
 			$report

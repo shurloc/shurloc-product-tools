@@ -225,8 +225,7 @@ final class Shurloc_Dynamic_Cross_Sells {
 			);
 
 			if (
-				is_wp_error( $product_category_ids ) ||
-				! is_array( $product_category_ids )
+				is_wp_error( $product_category_ids )
 			) {
 				continue;
 			}
@@ -289,7 +288,7 @@ final class Shurloc_Dynamic_Cross_Sells {
 			)
 		);
 
-		if ( ! is_array( $candidate_ids ) ) {
+		if ( 0 === count( $candidate_ids ) ) {
 			return array();
 		}
 

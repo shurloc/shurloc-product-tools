@@ -243,6 +243,7 @@ final class ShurlocProductSchemaServiceTest extends TestCase {
 			$calls[0]
 		);
 
+		// @phpstan-ignore method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertIsArray(
 			$schema
 		);

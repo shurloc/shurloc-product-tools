@@ -90,7 +90,7 @@ final class Shurloc_Mesh_Product_Table_Shortcode implements Shurloc_Mesh_Product
 			$product
 		);
 
-		if ( null === $result || ! $result->is_mesh_product() ) {
+		if ( ! $result->is_mesh_product() ) {
 			return '';
 		}
 

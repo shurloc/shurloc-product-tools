@@ -141,7 +141,7 @@ final class ShurlocProductRecommendationEligibilityServiceTest extends TestCase 
 	 */
 	public function test_hidden_product_is_rejected(): void {
 
-		$product = new WC_Product( 101 );
+		$product = new Shurloc_Test_WC_Product( 101 );
 		$product->set_visible( false );
 
 		self::assertFalse(
@@ -217,7 +217,7 @@ final class ShurlocProductRecommendationEligibilityServiceTest extends TestCase 
 		self::assertTrue(
 			$this->service->is_selected(
 				20,
-				array( 10, '20', 30 )
+				array( 10, 20, 30 )
 			)
 		);
 	}
@@ -327,7 +327,7 @@ final class ShurlocProductRecommendationEligibilityServiceTest extends TestCase 
 		$draft = new WC_Product( 102 );
 		$draft->set_status( 'draft' );
 
-		$hidden = new WC_Product( 103 );
+		$hidden = new Shurloc_Test_WC_Product( 103 );
 		$hidden->set_visible( false );
 
 		$out_of_stock = new WC_Product( 104 );
