@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.3] - 2026-08-11
+
+### Testing
+
+- Added PHPStan at level 8 and corrected all of the errors.
+
 ## [1.3.2] - 2026-08-07
 
 ### Changed
