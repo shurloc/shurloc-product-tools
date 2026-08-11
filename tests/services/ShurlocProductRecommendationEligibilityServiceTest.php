@@ -217,7 +217,7 @@ final class ShurlocProductRecommendationEligibilityServiceTest extends TestCase 
 		self::assertTrue(
 			$this->service->is_selected(
 				20,
-				array( 10, '20', 30 )
+				array( 10, 20, 30 )
 			)
 		);
 	}
