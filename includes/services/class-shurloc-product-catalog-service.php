@@ -18,11 +18,11 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 	 * Collect a product catalog entry.
 	 *
 	 * @param WC_Product $product WooCommerce product.
-	 * @return Shurloc_Catalog_Product_Entry|null
+	 * @return Shurloc_Catalog_Product_Entry
 	 */
 	public function get_product_entry(
 		WC_Product $product
-	): ?Shurloc_Catalog_Product_Entry {
+	): Shurloc_Catalog_Product_Entry {
 
 		$variations = $this->get_product_variation_entries(
 			$product
