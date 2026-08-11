@@ -227,7 +227,16 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 
 		$schema_reviews = array();
 
+		if ( 'integer' === gettype( $reviews ) ) {
+			$reviews_tmp[] = $reviews;
+			$reviews       = $reviews_tmp;
+		}
+
 		foreach ( $reviews as $review ) {
+
+			if ( ! $review instanceof WP_Comment ) {
+				continue;
+			}
 
 			$schema_reviews[] = array(
 				'@type'         => 'Review',
