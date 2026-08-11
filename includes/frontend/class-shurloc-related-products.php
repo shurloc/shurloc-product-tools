@@ -408,7 +408,7 @@ final class Shurloc_Related_Products {
 			)
 		);
 
-		if ( ! is_array( $candidate_ids ) ) {
+		if ( 0 === count( $candidate_ids ) ) {
 			return array();
 		}
 
