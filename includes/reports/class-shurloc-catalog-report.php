@@ -21,10 +21,7 @@ final class Shurloc_Catalog_Report {
 	 * Each entry contains the original variation name and its parsed
 	 * specification.
 	 *
-	 * @var array<int, array{
-	 *     variation: string,
-	 *     spec: Shurloc_Mesh_Specification
-	 * }>
+	 * @var array<int, array<string, mixed>>
 	 */
 	public array $recognized_specifications = array();
 
@@ -46,10 +43,7 @@ final class Shurloc_Catalog_Report {
 	 * Each entry contains the original variation name and its parsed
 	 * specification.
 	 *
-	 * @var array<int, array{
-	 *     variation: string,
-	 *     spec: Shurloc_Mesh_Specification
-	 * }>
+	 * @var array<int, array<string,mixed>>
 	 */
 	public array $invalid_specifications = array();
 
