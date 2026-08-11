@@ -234,7 +234,7 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 				'reviewRating'  => array(
 					'@type'       => 'Rating',
 					'ratingValue' => get_comment_meta(
-						$review->comment_ID,
+						(int) $review->comment_ID,
 						'rating',
 						true
 					),
@@ -268,7 +268,7 @@ final class Shurloc_Product_Catalog_Service implements Shurloc_Product_Catalog_S
 		}
 
 		$image_url = wp_get_attachment_image_url(
-			$image_id,
+			(int) $image_id,
 			'full'
 		);
 
