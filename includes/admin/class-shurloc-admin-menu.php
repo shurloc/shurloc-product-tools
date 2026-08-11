@@ -35,17 +35,17 @@ final class Shurloc_Admin_Menu {
 	/**
 	 * Product page.
 	 *
-	 * @var Shurloc_Catalog_Report_Controller
+	 * @var Shurloc_Admin_Page_Interface
 	 */
-	private Shurloc_Catalog_Report_Controller $product_page;
+	private Shurloc_Admin_Page_Interface $product_page;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Shurloc_Catalog_Report_Controller $product_page Product page.
+	 * @param Shurloc_Admin_Page_Interface $product_page Product page.
 	 */
 	public function __construct(
-		Shurloc_Catalog_Report_Controller $product_page
+		Shurloc_Admin_Page_Interface $product_page
 	) {
 		$this->product_page = $product_page;
 	}
