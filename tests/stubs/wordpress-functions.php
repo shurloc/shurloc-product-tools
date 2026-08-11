@@ -26,155 +26,111 @@ $GLOBALS['shurloc_test_is_product'] = true;
 
 /**
  * Registered test filters.
- *
- * @var array<string,array<int,callable>> $GLOBALS['shurloc_test_filters']
  */
 $GLOBALS['shurloc_test_filters'] = array();
 
 /**
  * Registered test actions.
- *
- * @var array<string,array<int,callable>> $GLOBALS['shurloc_test_actions']
  */
 $GLOBALS['shurloc_test_actions'] = array();
 
 /**
  * Registered test action metadata.
- *
- * @var array<string,array<int,array<string,int>>> $GLOBALS['shurloc_test_action_metadata']
  */
 $GLOBALS['shurloc_test_action_metadata'] = array();
 
 /**
  * Stored taxonomy terms.
- *
- * @var array<int,array<string,array<int,string>>> $GLOBALS['shurloc_test_terms'] = array();
  */
 $GLOBALS['shurloc_test_terms'] = array();
 
 /**
  * Stored product comments.
- *
- * @var array<int,array<int,object>> $GLOBALS['shurloc_test_comments']
  */
 $GLOBALS['shurloc_test_comments'] = array();
 
 /**
  * Product IDs returned by get_posts().
- *
- * @var int[] $GLOBALS['shurloc_test_product_ids']
  */
 $GLOBALS['shurloc_test_product_ids'] = array();
 
 /**
  * Registered WooCommerce test products.
- *
- * @var array<int,WC_Product> $GLOBALS['shurloc_test_products']
  */
 $GLOBALS['shurloc_test_products'] = array();
 
 /**
  * Stored shortcode registrations.
- *
- * @var array<string,callable> $GLOBALS['wp_shortcodes']
  */
 $GLOBALS['wp_shortcodes'] = array();
 
 /**
  * Stored product.
- *
- * @var string|null $GLOBALS['product']
  */
 $GLOBALS['product'] = null;
 
 /**
  * Enqueued styles.
- *
- * @var array<string,array<string,mixed>> $GLOBALS['shurloc_test_enqueued_styles']
  */
 $GLOBALS['shurloc_test_enqueued_styles'] = array();
 
 /**
  * Enqueued scripts.
- *
- * @var array<string,array<string,mixed>> $GLOBALS['shurloc_test_enqueued_scripts']
  */
 $GLOBALS['shurloc_test_enqueued_scripts'] = array();
 
 /**
  * Recorded nonce verification checks.
- *
- * @var array<int,string> $GLOBALS['shurloc_test_nonce_checks']
  */
 $GLOBALS['shurloc_test_nonce_checks'] = array();
 
 /**
  * Registered styles.
- *
- * @var array<string,array<int,string>> $GLOBALS['shurloc_test_registered_styles']
  */
 $GLOBALS['shurloc_test_registered_styles'] = array();
 
 /**
  * Registered scripts.
- *
- * @var array<string,array<int,string>> $GLOBALS['shurloc_test_registered_scripts']
  */
 $GLOBALS['shurloc_test_registered_scripts'] = array();
 
 /**
  * Test transients.
- *
- * @var array<string,mixed> $GLOBALS['shurloc_test_transients']
  */
 $GLOBALS['shurloc_test_transients'] = array();
 
 /**
  * Test options.
- *
- * @var array<string,mixed> $GLOBALS['shurloc_test_options']
  */
 $GLOBALS['shurloc_test_options'] = array();
 
 /**
  * Product post types keyed by object ID.
- *
- * @var array<int,string> $GLOBALS['shurloc_test_post_types']
  */
 $GLOBALS['shurloc_test_post_types'] = array();
 
 /**
  * Test autosave IDs.
- *
- * @var int[] $GLOBALS['shurloc_test_autosaves']
  */
 $GLOBALS['shurloc_test_autosaves'] = array();
 
 /**
  * Test revision IDs.
- *
- * @var int[] $GLOBALS['shurloc_test_revisions']
  */
 $GLOBALS['shurloc_test_revisions'] = array();
 
 /**
  * Registered top-level admin menu pages.
- *
- * @var array<int,array<string,mixed>> $GLOBALS['shurloc_test_menu_pages']
  */
 $GLOBALS['shurloc_test_menu_pages'] = array();
 
 /**
  * Registered admin submenu pages.
- *
- * @var array<int,array<string,mixed>> $GLOBALS['shurloc_test_submenu_pages']
  */
 $GLOBALS['shurloc_test_submenu_pages'] = array();
 
 /**
  * Removed admin submenu pages.
- *
- * @var array<int,array<string,string>> $GLOBALS['shurloc_test_removed_submenus']
  */
 $GLOBALS['shurloc_test_removed_submenus'] = array();
 
