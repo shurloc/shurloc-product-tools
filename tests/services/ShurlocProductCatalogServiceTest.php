@@ -92,7 +92,6 @@ final class ShurlocProductCatalogServiceTest extends TestCase {
 			product: $product,
 		);
 
-		// @phpstan-ignore  method.alreadyNarrowedType (Runtime assertion intentionally verifies the PHPDoc contract.)
 		$this->assertInstanceOf(
 			Shurloc_Catalog_Product_Entry::class,
 			$entry
