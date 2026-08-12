@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.5] - 2026-08-12
+
+### Changed
+
+- Extracted Shurloc_Admin_Page_Interface into shurloc-tools plugin.
+- Changed plugin menu position and loading priority to 20 from 10.
+
+### Internal Improvements
+
+- Excluded PHPStan files from build.
+- Added line ending default to VS Code workspace settings.
+
 ## [1.3.4] - 2026-08-11
 
 ### Changed
