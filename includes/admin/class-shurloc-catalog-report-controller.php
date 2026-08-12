@@ -9,6 +9,8 @@
 
 declare( strict_types=1 );
 
+use Shurloc\Tools\Shurloc_Admin_Page_Interface;
+
 /**
  * Catalog report admin controller.
  */
