@@ -3,7 +3,7 @@
  * Plugin Name:       Shur-Loc Product Tools
  * Plugin URI:        https://shurloc.com/
  * Description:       Custom WooCommerce enhancements and product tools for the Shur-Loc website.
- * Version:           1.3.5
+ * Version:           1.3.6
  * Requires at least: 7.0
  * Requires PHP:      8.4
  * Requires Plugins:  woocommerce, wordpress-seo, shurloc-tools
