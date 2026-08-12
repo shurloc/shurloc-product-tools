@@ -165,5 +165,6 @@ function shurloc_product_tools_bootstrap(): void {
 
 add_action(
 	'plugins_loaded',
-	'shurloc_product_tools_bootstrap'
+	'shurloc_product_tools_bootstrap',
+	20
 );
