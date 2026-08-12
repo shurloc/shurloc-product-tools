@@ -7,6 +7,8 @@
 
 declare( strict_types=1 );
 
+use Shurloc\Tools\Shurloc_Admin_Page_Interface;
+
 /**
  * Registers Product Tools admin UI.
  */

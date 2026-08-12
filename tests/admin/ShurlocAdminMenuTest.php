@@ -152,7 +152,7 @@ final class ShurlocAdminMenuTest extends TestCase {
 		);
 
 		self::assertSame(
-			10,
+			20,
 			$submenu['position']
 		);
 	}
