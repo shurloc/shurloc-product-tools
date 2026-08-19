@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Shurloc\Tools\Shurloc_Admin_Page_Interface;
+
 /**
  * Bootstrap the plugin.
  */
@@ -33,16 +35,31 @@ function shurloc_product_tools_bootstrap(): void {
 	 * Build application services.
 	 */
 
+	$mesh_parser = new Shurloc_Mesh_Parser();
+
 	$catalog_service = new Shurloc_Product_Catalog_Service();
 
 	$mesh_analyzer = new Shurloc_Mesh_Product_Analyzer(
-		new Shurloc_Mesh_Parser()
+		parser: $mesh_parser,
 	);
 
 	$mesh_data_service = new Shurloc_Mesh_Product_Data_Service(
 		$catalog_service,
 		$mesh_analyzer
 	);
+
+	$catalog_analyzer = new Shurloc_Catalog_Analyzer(
+		mesh_parser: $mesh_parser
+	);
+
+	$analysis_service = new Shurloc_Catalog_Analysis_Service(
+		catalog_service: $catalog_service,
+		catalog_analyzer: $catalog_analyzer,
+	);
+
+	/**
+	 * Schema integrations.
+	 */
 
 	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
 		$mesh_analyzer
@@ -62,34 +79,31 @@ function shurloc_product_tools_bootstrap(): void {
 		$product_schema_service,
 		$schema_renderer
 	);
+	$product_schema_integration->register();
 
 	$woocommerce_schema_integration = new Shurloc_WooCommerce_Schema_Integration();
+	$woocommerce_schema_integration->register();
 
-	$mesh_parser = new Shurloc_Mesh_Parser();
+	/**
+	 * Admin UI and integration.
+	 */
 
-	$catalog_analyzer = new Shurloc_Catalog_Analyzer(
-		mesh_parser: $mesh_parser
-	);
+	if ( interface_exists( Shurloc_Admin_Page_Interface::class ) ) {
+		$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
+			catalog_service: $catalog_service,
+			analysis_service: $analysis_service,
+		);
+		$catalog_report_controller->register();
 
-	$analysis_service = new Shurloc_Catalog_Analysis_Service(
-		catalog_service: $catalog_service,
-		catalog_analyzer: $catalog_analyzer,
-	);
+		$admin_menu = new Shurloc_Admin_Menu(
+			product_page: $catalog_report_controller,
+		);
+		$admin_menu->register();
 
-	$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
-		catalog_service: $catalog_service,
-		analysis_service: $analysis_service,
-	);
-	$catalog_report_controller->register();
-
-	$admin_menu = new Shurloc_Admin_Menu(
-		product_page: $catalog_report_controller,
-	);
-	$admin_menu->register();
-
-	$request_handler = new Shurloc_Catalog_Report_Request_Handler(
-		$catalog_report_controller
-	);
+		$request_handler = new Shurloc_Catalog_Report_Request_Handler(
+			$catalog_report_controller
+		);
+	}
 
 	/*
 	 * Mesh table presentation pipeline.
@@ -104,42 +118,22 @@ function shurloc_product_tools_bootstrap(): void {
 		$mesh_table_data_factory,
 		$mesh_table_renderer
 	);
+	$mesh_table_shortcode->register();
 
 	$mesh_table_assets = new Shurloc_Mesh_Product_Table_Assets(
 		SHURLOC_PRODUCT_TOOLS_URL,
 		SHURLOC_PRODUCT_TOOLS_VERSION
 	);
+	$mesh_table_assets->register();
 
 	$mesh_table_tab = new Shurloc_Mesh_Product_Table_Tab(
 		$mesh_table_shortcode
 	);
-
-	/*
-	 * Register frontend integrations.
-	 */
-
-	$product_schema_integration->register();
-
-	add_action(
-		'init',
-		function () use ( $woocommerce_schema_integration ): void {
-
-			if ( class_exists( 'WooCommerce' ) ) {
-
-				$woocommerce_schema_integration->register();
-
-			}
-		},
-		20
-	);
-
-	$catalog_report_controller->register();
-
-	$mesh_table_shortcode->register();
-
-	$mesh_table_assets->register();
-
 	$mesh_table_tab->register();
+
+	/**
+	 * Frontend integrations.
+	 */
 
 	$product_breadcrumbs = new Shurloc_Product_Breadcrumbs();
 	$product_breadcrumbs->register();

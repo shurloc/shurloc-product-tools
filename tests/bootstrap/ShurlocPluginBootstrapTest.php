@@ -77,30 +77,6 @@ final class ShurlocPluginBootstrapTest extends TestCase {
 	}
 
 	/**
-	 * Bootstrap should register init hook.
-	 */
-	public function test_bootstrap_registers_init_hook(): void {
-
-		$this->load_plugin();
-
-		shurloc_product_tools_bootstrap();
-
-		$this->assertArrayHasKey(
-			'init',
-			$GLOBALS['shurloc_test_actions']
-		);
-
-		$this->assertIsCallable(
-			$GLOBALS['shurloc_test_actions']['init'][0]
-		);
-
-		$this->assertSame(
-			20,
-			$GLOBALS['shurloc_test_action_metadata']['init'][0]['priority']
-		);
-	}
-
-	/**
 	 * Bootstrap should initialize the autoloader.
 	 *
 	 * @return void
