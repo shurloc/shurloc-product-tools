@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.7] - 2026-08-19
+
+### Internal Improvements
+
+- Cleaned up plugin bootstrap.
+- Guard against missing Shurloc_Admin_Page_Interface.
+
 ## [1.3.6] - 2026-08-12
 
 ### Changed
