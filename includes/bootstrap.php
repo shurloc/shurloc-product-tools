@@ -88,6 +88,10 @@ function shurloc_product_tools_bootstrap(): void {
 	 * Admin UI and integration.
 	 */
 
+	/**
+	 * Intelephense false positive.
+	 *
+	 * @disregard P1009 Undefined type 'Shurloc\Tools\Shurloc_Admin_Page_Interface'. */
 	if ( interface_exists( Shurloc_Admin_Page_Interface::class ) ) {
 		$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
 			catalog_service: $catalog_service,
