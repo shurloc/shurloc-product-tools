@@ -26,7 +26,7 @@ function shurloc_product_tools_bootstrap(): void {
 	require_once SHURLOC_PRODUCT_TOOLS_PATH . 'includes/class-shurloc-autoloader.php';
 
 	$autoloader = new Shurloc_Autoloader(
-		__DIR__
+		base_directory:__DIR__,
 	);
 
 	$autoloader->register();
@@ -44,12 +44,12 @@ function shurloc_product_tools_bootstrap(): void {
 	);
 
 	$mesh_data_service = new Shurloc_Mesh_Product_Data_Service(
-		$catalog_service,
-		$mesh_analyzer
+		catalog_service: $catalog_service,
+		mesh_analyzer: $mesh_analyzer,
 	);
 
 	$catalog_analyzer = new Shurloc_Catalog_Analyzer(
-		mesh_parser: $mesh_parser
+		mesh_parser: $mesh_parser,
 	);
 
 	$analysis_service = new Shurloc_Catalog_Analysis_Service(
@@ -62,22 +62,22 @@ function shurloc_product_tools_bootstrap(): void {
 	 */
 
 	$mesh_schema_service = new Shurloc_Mesh_Product_Schema_Service(
-		$mesh_analyzer
+		analyzer: $mesh_analyzer,
 	);
 
 	$schema_generator = new Shurloc_Product_Schema_Generator();
 
 	$product_schema_service = new Shurloc_Product_Schema_Service(
-		$schema_generator,
-		$mesh_schema_service
+		generator: $schema_generator,
+		mesh_schema_service: $mesh_schema_service,
 	);
 
 	$schema_renderer = new Shurloc_Product_Schema_Renderer();
 
 	$product_schema_integration = new Shurloc_Product_Schema_Integration(
-		$catalog_service,
-		$product_schema_service,
-		$schema_renderer
+		catalog_service: $catalog_service,
+		schema_service: $product_schema_service,
+		renderer: $schema_renderer,
 	);
 	$product_schema_integration->register();
 
@@ -101,7 +101,7 @@ function shurloc_product_tools_bootstrap(): void {
 		$admin_menu->register();
 
 		$request_handler = new Shurloc_Catalog_Report_Request_Handler(
-			$catalog_report_controller
+			actions: $catalog_report_controller,
 		);
 	}
 
@@ -114,20 +114,20 @@ function shurloc_product_tools_bootstrap(): void {
 	$mesh_table_renderer = new Shurloc_Mesh_Product_Table_Renderer();
 
 	$mesh_table_shortcode = new Shurloc_Mesh_Product_Table_Shortcode(
-		$mesh_data_service,
-		$mesh_table_data_factory,
-		$mesh_table_renderer
+		data_service: $mesh_data_service,
+		table_data_factory: $mesh_table_data_factory,
+		renderer: $mesh_table_renderer,
 	);
 	$mesh_table_shortcode->register();
 
 	$mesh_table_assets = new Shurloc_Mesh_Product_Table_Assets(
-		SHURLOC_PRODUCT_TOOLS_URL,
-		SHURLOC_PRODUCT_TOOLS_VERSION
+		asset_url: SHURLOC_PRODUCT_TOOLS_URL,
+		asset_version: SHURLOC_PRODUCT_TOOLS_VERSION,
 	);
 	$mesh_table_assets->register();
 
 	$mesh_table_tab = new Shurloc_Mesh_Product_Table_Tab(
-		$mesh_table_shortcode
+		shortcode: $mesh_table_shortcode,
 	);
 	$mesh_table_tab->register();
 
@@ -147,12 +147,12 @@ function shurloc_product_tools_bootstrap(): void {
 	$recommendation_eligibility = new Shurloc_Product_Recommendation_Eligibility_Service();
 
 	$related_products = new Shurloc_Related_Products(
-		$recommendation_eligibility
+		eligibility: $recommendation_eligibility,
 	);
 	$related_products->register();
 
 	$dynamic_cross_sells = new Shurloc_Dynamic_Cross_Sells(
-		$recommendation_eligibility
+		eligibility: $recommendation_eligibility,
 	);
 	$dynamic_cross_sells->register();
 }
