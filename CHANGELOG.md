@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.8] - 2026-08-21
+
+### Internal Improvements
+
+- Added WooCommerce stubus to the VS Code workspace configuration.
+- Fixed branding (Shur-loc instead of Shur-Loc) in all files.
+- Changed the @package name from ShurLocProductTools to ShurlocProductTools.
+
 ## [1.3.7] - 2026-08-19
 
 ### Internal Improvements
