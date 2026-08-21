@@ -2,7 +2,7 @@
 /**
  * Tests for catalog report request handling.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

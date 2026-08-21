@@ -5,7 +5,7 @@
  * Provides analyzed mesh product data for frontend displays,
  * structured data generation, and other integrations.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

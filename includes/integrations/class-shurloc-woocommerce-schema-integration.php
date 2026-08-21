@@ -2,7 +2,7 @@
 /**
  * Removes WooCommerce Product schema.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

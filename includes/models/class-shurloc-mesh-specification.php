@@ -4,7 +4,7 @@
  *
  * Represents a parsed mesh specification from a WooCommerce variation.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

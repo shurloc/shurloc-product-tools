@@ -2,7 +2,7 @@
 /**
  * Mesh product table shortcode interface.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

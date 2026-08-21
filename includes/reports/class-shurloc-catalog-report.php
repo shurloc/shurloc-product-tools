@@ -5,7 +5,7 @@
  * Stores the results of analyzing a collection of WooCommerce variation
  * names.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

@@ -4,7 +4,7 @@
  *
  * Coordinates product schema generation and mesh product enrichment.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

@@ -2,7 +2,7 @@
 /**
  * Tests for the catalog analysis service.
  *
- * @package ShurLocProductTools\Tests
+ * @package ShurlocProductTools\Tests
  */
 
 declare( strict_types=1 );

@@ -5,7 +5,7 @@
  * Provides a controllable implementation of the product catalog service
  * interface for unit testing services that depend on catalog data retrieval.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

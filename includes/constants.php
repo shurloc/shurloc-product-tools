@@ -4,7 +4,7 @@
  *
  * Defines global constants used throughout the plugin.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

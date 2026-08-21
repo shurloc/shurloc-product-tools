@@ -4,7 +4,7 @@
  *
  * Provides test-only controls for WooCommerce product state.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

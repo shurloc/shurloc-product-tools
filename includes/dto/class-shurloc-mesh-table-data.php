@@ -4,7 +4,7 @@
  *
  * Represents presentation-ready mesh table data.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

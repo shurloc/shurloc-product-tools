@@ -4,7 +4,7 @@
  *
  * Renders generated product schema as Schema.org JSON-LD.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

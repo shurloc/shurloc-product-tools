@@ -2,7 +2,7 @@
 /**
  * Integration tests for mesh recognition.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

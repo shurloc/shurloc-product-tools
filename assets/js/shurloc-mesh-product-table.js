@@ -4,7 +4,7 @@
  * Synchronizes mesh specification table rows with the WooCommerce
  * select-mesh-count variation dropdown.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 (function () {

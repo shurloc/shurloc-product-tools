@@ -4,7 +4,7 @@
  *
  * Registers the Mesh Specifications product tab.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

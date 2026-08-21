@@ -2,7 +2,7 @@
 /**
  * Catalog report controller test double.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare(strict_types=1);

@@ -2,7 +2,7 @@
 /**
  * Tests for Shurloc_Product_Catalog_Service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

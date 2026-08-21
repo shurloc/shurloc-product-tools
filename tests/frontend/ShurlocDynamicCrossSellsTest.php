@@ -2,7 +2,7 @@
 /**
  * Tests for dynamic cart cross-sells.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare(strict_types=1);

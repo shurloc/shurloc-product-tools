@@ -4,7 +4,7 @@
  *
  * Converts WooCommerce products into catalog entries.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

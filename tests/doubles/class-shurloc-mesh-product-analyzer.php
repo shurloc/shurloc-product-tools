@@ -5,7 +5,7 @@
  * Provides a controllable implementation of the mesh product analyzer
  * interface for unit testing services that depend on mesh analysis.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

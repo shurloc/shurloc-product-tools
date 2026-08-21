@@ -4,7 +4,7 @@
  *
  * Defines the contract for analyzing mesh products for schema enrichment.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

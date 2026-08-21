@@ -2,7 +2,7 @@
 /**
  * Test data for the mesh parser.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

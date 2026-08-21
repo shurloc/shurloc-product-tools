@@ -4,7 +4,7 @@
  *
  * Converts mesh product analysis results into presentation-ready table data.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

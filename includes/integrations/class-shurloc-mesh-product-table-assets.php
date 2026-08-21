@@ -4,7 +4,7 @@
  *
  * Registers frontend assets for the mesh product table.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

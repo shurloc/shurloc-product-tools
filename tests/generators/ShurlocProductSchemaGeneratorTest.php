@@ -2,7 +2,7 @@
 /**
  * Tests for Shurloc_Product_Schema_Generator.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

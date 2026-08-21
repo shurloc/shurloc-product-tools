@@ -11,7 +11,7 @@
  * Author URI:        https://shurloc.com/
  * Text Domain:       shurloc-product-tools
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

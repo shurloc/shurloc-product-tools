@@ -4,7 +4,7 @@
  *
  * Provides controlled mesh product analysis results for tests.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

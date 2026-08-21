@@ -2,7 +2,7 @@
 /**
  * Autoloader test trait fixture.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

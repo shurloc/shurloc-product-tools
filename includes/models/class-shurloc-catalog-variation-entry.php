@@ -4,7 +4,7 @@
  *
  * Represents a single WooCommerce product variation.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

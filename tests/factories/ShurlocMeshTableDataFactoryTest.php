@@ -2,7 +2,7 @@
 /**
  * Tests for mesh table data factory.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

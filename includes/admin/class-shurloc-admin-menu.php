@@ -2,7 +2,7 @@
 /**
  * Product Tools admin menu.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

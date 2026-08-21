@@ -4,7 +4,7 @@
  *
  * Provides admin tools for exporting and analyzing the WooCommerce catalog.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

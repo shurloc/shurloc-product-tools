@@ -2,7 +2,7 @@
 /**
  * Tests for mesh product data service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

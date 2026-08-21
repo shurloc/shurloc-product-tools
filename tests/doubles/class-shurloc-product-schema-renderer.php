@@ -5,7 +5,7 @@
  * Provides a controllable implementation of the product schema renderer
  * interface for testing consumers that render product schema data.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );
