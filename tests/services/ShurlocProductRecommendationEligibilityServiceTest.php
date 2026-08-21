@@ -2,7 +2,7 @@
 /**
  * Tests for the product recommendation eligibility service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare(strict_types=1);

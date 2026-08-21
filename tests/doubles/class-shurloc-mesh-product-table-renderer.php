@@ -2,7 +2,7 @@
 /**
  * Mesh product table renderer double.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

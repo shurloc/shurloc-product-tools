@@ -2,7 +2,7 @@
 /**
  * Catalog analysis service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

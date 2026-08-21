@@ -4,7 +4,7 @@
  *
  * Coordinates mesh product analysis.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

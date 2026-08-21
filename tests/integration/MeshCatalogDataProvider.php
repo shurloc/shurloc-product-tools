@@ -5,7 +5,7 @@
  * Loads variation names exported from WooCommerce and converts them into
  * catalog variation entries for analyzer tests.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

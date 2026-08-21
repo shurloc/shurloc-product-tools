@@ -4,7 +4,7 @@
  *
  * Analyzes a collection of WooCommerce variation names using the mesh parser.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

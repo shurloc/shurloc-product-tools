@@ -2,9 +2,9 @@
 /**
  * Plugin bootstrap.
  *
- * Loads and initializes the Shur-Loc Product Tools plugin.
+ * Loads and initializes the Shur-loc Product Tools plugin.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

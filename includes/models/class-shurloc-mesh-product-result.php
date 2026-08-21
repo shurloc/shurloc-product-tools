@@ -5,7 +5,7 @@
  * Represents the result of analyzing a WooCommerce product for mesh
  * variations.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

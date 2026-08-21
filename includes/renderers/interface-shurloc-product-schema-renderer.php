@@ -4,7 +4,7 @@
  *
  * Defines the contract for rendering schema output.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

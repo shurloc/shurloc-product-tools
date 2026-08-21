@@ -4,7 +4,7 @@
  *
  * Handles admin form submissions for catalog tools.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

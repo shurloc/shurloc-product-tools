@@ -2,7 +2,7 @@
 /**
  * Tests for the mesh product table WooCommerce tab.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

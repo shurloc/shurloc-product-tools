@@ -4,7 +4,7 @@
  *
  * Provides admin tools for exporting and analyzing the WooCommerce catalog.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );
@@ -107,7 +107,7 @@ final class Shurloc_Catalog_Report_Controller implements
 
 		<div class="wrap">
 
-			<h1>Shur-Loc Product Tools</h1>
+			<h1>Shur-loc Product Tools</h1>
 
 			<p>
 				Utilities for exporting and analyzing the WooCommerce product catalog.

@@ -2,7 +2,7 @@
 /**
  * Tests mesh product table shortcode integration.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

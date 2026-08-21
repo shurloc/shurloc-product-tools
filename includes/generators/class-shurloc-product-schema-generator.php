@@ -5,7 +5,7 @@
  * Generates Schema.org Product structured data from product catalog data
  * and mesh product analysis results.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

@@ -4,7 +4,7 @@
  *
  * Defines the contract for generating product schema data.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

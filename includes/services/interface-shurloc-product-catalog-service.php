@@ -4,7 +4,7 @@
  *
  * Defines catalog product and variation retrieval behavior.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

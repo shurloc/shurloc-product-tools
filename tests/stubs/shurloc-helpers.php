@@ -2,7 +2,7 @@
 /**
  * Shurloc helper functions.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

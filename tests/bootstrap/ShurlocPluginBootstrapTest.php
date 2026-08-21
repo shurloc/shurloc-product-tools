@@ -2,7 +2,7 @@
 /**
  * Tests for plugin bootstrap.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

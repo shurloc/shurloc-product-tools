@@ -4,7 +4,7 @@
  *
  * Defines mesh product analysis behavior.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

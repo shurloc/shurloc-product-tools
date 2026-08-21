@@ -5,7 +5,7 @@
  * Provides a controllable implementation of the product schema service
  * interface for testing consumers that generate product schema data.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

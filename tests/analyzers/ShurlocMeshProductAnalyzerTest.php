@@ -2,7 +2,7 @@
 /**
  * Tests for Shurloc_Mesh_Product_Analyzer.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

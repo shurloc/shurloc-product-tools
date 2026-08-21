@@ -4,7 +4,7 @@
  *
  * Defines actions that can be triggered by catalog report requests.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

@@ -2,7 +2,7 @@
 /**
  * Tests for mesh table data DTO.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

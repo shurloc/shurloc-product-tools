@@ -5,7 +5,7 @@
  * Analyzes WooCommerce product variation entries to determine whether a
  * product contains mesh specifications.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

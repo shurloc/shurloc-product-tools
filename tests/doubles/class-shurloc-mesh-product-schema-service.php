@@ -2,7 +2,7 @@
 /**
  * Test double for mesh product schema service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

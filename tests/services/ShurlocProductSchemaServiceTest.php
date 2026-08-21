@@ -2,7 +2,7 @@
 /**
  * Tests for product schema service.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

@@ -2,7 +2,7 @@
 /**
  * Tests for the related products customization.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare(strict_types=1);

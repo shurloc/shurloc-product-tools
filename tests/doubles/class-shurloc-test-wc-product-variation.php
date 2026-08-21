@@ -5,7 +5,7 @@
  * Adds helper methods used only by tests that are not part of the real
  * WooCommerce WC_Product_Variation API.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

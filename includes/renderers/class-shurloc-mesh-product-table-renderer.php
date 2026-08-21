@@ -4,7 +4,7 @@
  *
  * Renders a customer-facing HTML table of recognized mesh variations.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );

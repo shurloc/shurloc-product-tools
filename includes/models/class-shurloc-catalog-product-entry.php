@@ -6,7 +6,7 @@
  * Contains the product-level information required for catalog analysis
  * and structured data generation.
  *
- * @package ShurLocProductTools
+ * @package ShurlocProductTools
  */
 
 declare( strict_types=1 );
