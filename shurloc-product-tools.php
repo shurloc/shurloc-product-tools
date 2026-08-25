@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Shur-loc Product Tools
- * Plugin URI:        https://shurloc.com/
+ * Plugin URI:        https://github.com/shurloc/shurloc-product-tools
  * Description:       Custom WooCommerce enhancements and product tools for the Shur-loc website.
  * Version:           1.3.8
  * Requires at least: 7.0
