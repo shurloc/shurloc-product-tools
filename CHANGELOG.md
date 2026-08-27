@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.4.0] - 2026-08-27
+
+### Added
+
+- Added primary product category management for WooCommerce products.
+- Added a dedicated Primary Category selector to the product edit screen.
+- Added a No Category option for clearing the primary category.
+- Added hierarchical product category display in the primary category selector.
+- Added visual highlighting of the primary category in the standard product category list.
+- Added SelectWoo support for the primary category selector.
+- Added compatibility with Yoast SEO primary category metadata.
+- Added automated test coverage for primary category management, admin UI behavior, Yoast integration, and plugin bootstrap registration.
+
+### Changed
+
+- Replaced Yoast SEO's primary product category selection interface with the Shur-loc Product Tools primary category selector.
+- Centralized primary product category validation and persistence in a dedicated service.
+- Added dedicated admin JavaScript and CSS for primary category selection and highlighting.
+
+### Testing
+
+- Added PHPUnit coverage for primary category storage, validation, clearing, and retrieval.
+- Added PHPUnit coverage for metabox rendering, saving, permissions, nonce handling, and asset loading.
+- Added PHPUnit coverage for Yoast primary category integration.
+- Added bootstrap coverage for primary category services and integrations.
+- Verified primary category selection, clearing, persistence, highlighting, and Yoast integration on staging.
+- Verified PHPUnit, PHPCS, and PHPStan checks pass.
+
 ## [1.3.8] - 2026-08-21
 
 ### Internal Improvements
