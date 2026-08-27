@@ -159,6 +159,11 @@ $GLOBALS['shurloc_test_current_screen'] = null;
  */
 $GLOBALS['shurloc_test_nonce_valid'] = true;
 
+/**
+ * Registered test filter metadata.
+ */
+$GLOBALS['shurloc_test_filter_metadata'] = array();
+
 
 /**
  * Function doubles.
@@ -225,9 +230,9 @@ if ( ! function_exists( 'add_filter' ) ) {
 	/**
 	 * Register test filter.
 	 *
-	 * @param string   $hook Hook name.
-	 * @param callable $callback Callback.
-	 * @param int      $priority Priority.
+	 * @param string   $hook          Hook name.
+	 * @param callable $callback      Callback.
+	 * @param int      $priority      Priority.
 	 * @param int      $accepted_args Accepted arguments.
 	 * @return true
 	 */
@@ -239,7 +244,18 @@ if ( ! function_exists( 'add_filter' ) ) {
 		int $accepted_args = 1
 	): bool {
 
-		$GLOBALS['shurloc_test_filters'][ $hook ][] = $callback;
+		if ( ! isset( $GLOBALS['shurloc_test_filter_metadata'] ) ) {
+			$GLOBALS['shurloc_test_filter_metadata'] = array();
+		}
+
+		$GLOBALS['shurloc_test_filters'][ $hook ][] =
+			$callback;
+
+		$GLOBALS['shurloc_test_filter_metadata'][ $hook ][] =
+			array(
+				'priority'      => $priority,
+				'accepted_args' => $accepted_args,
+			);
 
 		return true;
 	}
