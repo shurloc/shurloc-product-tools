@@ -1629,16 +1629,16 @@ if ( ! function_exists( 'update_post_meta' ) ) {
 	 * @param int    $post_id Post ID.
 	 * @param string $key     Metadata key.
 	 * @param mixed  $value   Metadata value.
-	 * @return int|bool
+	 * @return bool
 	 */
 	function update_post_meta(
 		int $post_id,
 		string $key,
 		$value
-	): int|bool {
+	): bool {
 
 		$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ] =
-			$value;
+		$value;
 
 		return true;
 	}
