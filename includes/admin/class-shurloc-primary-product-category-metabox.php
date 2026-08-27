@@ -323,7 +323,7 @@ final class Shurloc_Primary_Product_Category_Metabox {
 		wp_enqueue_style(
 			'shurloc-primary-product-category',
 			SHURLOC_PRODUCT_TOOLS_URL .
-			'assets/css/primary-product-category.css',
+			'assets/css/shurloc-primary-product-category.css',
 			array(),
 			SHURLOC_PRODUCT_TOOLS_VERSION
 		);
@@ -331,7 +331,7 @@ final class Shurloc_Primary_Product_Category_Metabox {
 		wp_enqueue_script(
 			'shurloc-primary-product-category',
 			SHURLOC_PRODUCT_TOOLS_URL .
-			'assets/js/primary-product-category.js',
+			'assets/js/shurloc-primary-product-category.js',
 			array(
 				'jquery',
 				'selectWoo',
