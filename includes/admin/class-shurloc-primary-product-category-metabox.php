@@ -182,10 +182,13 @@ final class Shurloc_Primary_Product_Category_Metabox {
 				class="shurloc-primary-product-category"
 				style="width:100%;"
 			>
-				<option value="">
+				<option
+					value="0"
+					<?php selected( $selected, 0 ); ?>
+				>
 					<?php
 					echo esc_html__(
-						'— None (unset primary category) —',
+						'No Category',
 						'shurloc-product-tools'
 					);
 					?>
@@ -265,18 +268,14 @@ final class Shurloc_Primary_Product_Category_Metabox {
 			)
 		);
 
-		if ( '' === $value ) {
+		$term_id = absint( $value );
+
+		if ( 0 === $term_id ) {
 
 			$this->service->clear_primary_category(
 				product_id: $post_id,
 			);
 
-			return;
-		}
-
-		$term_id = absint( $value );
-
-		if ( 0 >= $term_id ) {
 			return;
 		}
 

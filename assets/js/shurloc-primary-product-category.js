@@ -21,7 +21,10 @@
 	function initializeSelectWoo() {
 		const $select = $( SELECTOR );
 
-		if ( ! $select.length || typeof $.fn.selectWoo !== 'function' ) {
+		if (
+			! $select.length ||
+			typeof $.fn.selectWoo !== 'function'
+		) {
 			return;
 		}
 
@@ -31,8 +34,6 @@
 
 		$select.selectWoo( {
 			width: '100%',
-			allowClear: true,
-			placeholder: 'Select a primary category',
 		} );
 	}
 
@@ -70,7 +71,12 @@
 			return;
 		}
 
-		$( '#product_cat-' + termId )
+		$(
+			'#product_catchecklist input[type="checkbox"][value="' +
+			termId +
+			'"]'
+		)
+			.closest( 'li' )
 			.addClass( HIGHLIGHT_CLASS );
 	}
 
@@ -83,6 +89,12 @@
 		$( document ).on(
 			'change',
 			SELECTOR,
+			updateCategoryHighlight
+		);
+
+		$( document ).on(
+			'change',
+			'#product_catchecklist input[type="checkbox"]',
 			updateCategoryHighlight
 		);
 	}
