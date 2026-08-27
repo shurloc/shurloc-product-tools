@@ -134,6 +134,36 @@ $GLOBALS['shurloc_test_submenu_pages'] = array();
  */
 $GLOBALS['shurloc_test_removed_submenus'] = array();
 
+/**
+ * Stored test post metadata.
+ */
+$GLOBALS['shurloc_test_post_meta'] = array();
+
+/**
+ * Test taxonomy terms indexed by taxonomy and term ID.
+ */
+$GLOBALS['shurloc_test_terms'] = array();
+
+/**
+ * Test taxonomy term assignments indexed by post ID.
+ */
+$GLOBALS['shurloc_test_post_terms'] = array();
+
+/**
+ * Current test WordPress screen.
+ */
+$GLOBALS['shurloc_test_current_screen'] = null;
+
+/**
+ * Whether test nonce verification succeeds.
+ */
+$GLOBALS['shurloc_test_nonce_valid'] = true;
+
+/**
+ * Registered test filter metadata.
+ */
+$GLOBALS['shurloc_test_filter_metadata'] = array();
+
 
 /**
  * Function doubles.
@@ -200,9 +230,9 @@ if ( ! function_exists( 'add_filter' ) ) {
 	/**
 	 * Register test filter.
 	 *
-	 * @param string   $hook Hook name.
-	 * @param callable $callback Callback.
-	 * @param int      $priority Priority.
+	 * @param string   $hook          Hook name.
+	 * @param callable $callback      Callback.
+	 * @param int      $priority      Priority.
 	 * @param int      $accepted_args Accepted arguments.
 	 * @return true
 	 */
@@ -214,7 +244,18 @@ if ( ! function_exists( 'add_filter' ) ) {
 		int $accepted_args = 1
 	): bool {
 
-		$GLOBALS['shurloc_test_filters'][ $hook ][] = $callback;
+		if ( ! isset( $GLOBALS['shurloc_test_filter_metadata'] ) ) {
+			$GLOBALS['shurloc_test_filter_metadata'] = array();
+		}
+
+		$GLOBALS['shurloc_test_filters'][ $hook ][] =
+			$callback;
+
+		$GLOBALS['shurloc_test_filter_metadata'][ $hook ][] =
+			array(
+				'priority'      => $priority,
+				'accepted_args' => $accepted_args,
+			);
 
 		return true;
 	}
@@ -816,7 +857,7 @@ if ( ! function_exists( 'wp_enqueue_style' ) ) {
 	 *
 	 * @param string            $handle Stylesheet handle.
 	 * @param string|false      $src    Stylesheet source.
-	 * @param array<int,string> $deps  Dependencies.
+	 * @param array<int,string> $deps   Dependencies.
 	 * @param string|false      $ver    Version.
 	 * @param string            $media  Media type.
 	 * @return void
@@ -833,11 +874,23 @@ if ( ! function_exists( 'wp_enqueue_style' ) ) {
 			$GLOBALS['shurloc_test_styles'] = array();
 		}
 
+		if ( ! isset( $GLOBALS['shurloc_test_enqueued_styles'] ) ) {
+			$GLOBALS['shurloc_test_enqueued_styles'] = array();
+		}
+
 		$GLOBALS['shurloc_test_styles'][ $handle ] = array(
 			'src'   => $src,
 			'deps'  => $deps,
 			'ver'   => $ver,
 			'media' => $media,
+		);
+
+		$GLOBALS['shurloc_test_enqueued_styles'][] = array(
+			'handle' => $handle,
+			'src'    => $src,
+			'deps'   => $deps,
+			'ver'    => $ver,
+			'media'  => $media,
 		);
 	}
 }
@@ -1102,7 +1155,19 @@ if ( ! function_exists( 'wp_enqueue_script' ) ) {
 			$GLOBALS['shurloc_test_scripts'] = array();
 		}
 
+		if ( ! isset( $GLOBALS['shurloc_test_enqueued_scripts'] ) ) {
+			$GLOBALS['shurloc_test_enqueued_scripts'] = array();
+		}
+
 		$GLOBALS['shurloc_test_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
+		);
+
+		$GLOBALS['shurloc_test_enqueued_scripts'][] = array(
+			'handle'    => $handle,
 			'src'       => $src,
 			'deps'      => $deps,
 			'ver'       => $ver,
@@ -1474,5 +1539,388 @@ if ( ! function_exists( 'admin_url' ) ) {
 	): string {
 
 		return 'https://example.com/wp-admin/' . ltrim( $path, '/' );
+	}
+}
+
+if ( ! function_exists( 'get_term' ) ) {
+
+	/**
+	 * Retrieve a test taxonomy term.
+	 *
+	 * Test replacement for get_term().
+	 *
+	 * @param int    $term_id  Term ID.
+	 * @param string $taxonomy Taxonomy name.
+	 * @return object|null
+	 */
+	function get_term(
+		int $term_id,
+		string $taxonomy = ''
+	): object|null {
+
+		if (
+			'' === $taxonomy ||
+			! isset(
+				$GLOBALS['shurloc_test_terms'][ $taxonomy ][ $term_id ]
+			)
+		) {
+			return null;
+		}
+
+		$term =
+			$GLOBALS['shurloc_test_terms'][ $taxonomy ][ $term_id ];
+
+		return is_object( $term )
+			? $term
+			: null;
+	}
+}
+
+if ( ! function_exists( 'is_wp_error' ) ) {
+
+	/**
+	 * Determine whether a test value is a WordPress error.
+	 *
+	 * Test replacement for is_wp_error().
+	 *
+	 * @param mixed $thing Value to inspect.
+	 * @return bool
+	 */
+	function is_wp_error(
+		$thing
+	): bool {
+
+		return $thing instanceof WP_Error;
+	}
+}
+
+if ( ! function_exists( 'has_term' ) ) {
+
+	/**
+	 * Determine whether a post has a test taxonomy term.
+	 *
+	 * Test replacement for has_term().
+	 *
+	 * @param int|string $term     Term ID or slug.
+	 * @param string     $taxonomy Taxonomy name.
+	 * @param int        $post_id  Post ID.
+	 * @return bool
+	 */
+	function has_term(
+		int|string $term,
+		string $taxonomy,
+		int $post_id
+	): bool {
+
+		unset( $taxonomy );
+
+		$term_id = (int) $term;
+
+		return in_array(
+			$term_id,
+			$GLOBALS['shurloc_test_post_terms'][ $post_id ]
+				?? array(),
+			true
+		);
+	}
+}
+
+if ( ! function_exists( 'get_post_meta' ) ) {
+
+	/**
+	 * Retrieve test post metadata.
+	 *
+	 * Test replacement for get_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @param bool   $single  Whether to return a single value.
+	 * @return mixed
+	 */
+	function get_post_meta(
+		int $post_id,
+		string $key = '',
+		bool $single = false
+	) {
+
+		if ( '' === $key ) {
+			return $GLOBALS['shurloc_test_post_meta'][ $post_id ]
+				?? array();
+		}
+
+		if (
+			! array_key_exists(
+				$key,
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+					?? array()
+			)
+		) {
+			return $single
+				? ''
+				: array();
+		}
+
+		$value =
+			$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ];
+
+		return $single
+			? $value
+			: array( $value );
+	}
+}
+
+if ( ! function_exists( 'update_post_meta' ) ) {
+
+	/**
+	 * Update test post metadata.
+	 *
+	 * Test replacement for update_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @param mixed  $value   Metadata value.
+	 * @return bool
+	 */
+	function update_post_meta(
+		int $post_id,
+		string $key,
+		$value
+	): bool {
+
+		$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ] =
+		$value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'delete_post_meta' ) ) {
+
+	/**
+	 * Delete test post metadata.
+	 *
+	 * Test replacement for delete_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @return bool
+	 */
+	function delete_post_meta(
+		int $post_id,
+		string $key
+	): bool {
+
+		if (
+			! array_key_exists(
+				$key,
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+					?? array()
+			)
+		) {
+			return false;
+		}
+
+		unset(
+			$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ]
+		);
+
+		if (
+			empty(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			)
+		) {
+			unset(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			);
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'sanitize_text_field' ) ) {
+
+	/**
+	 * Sanitize a test text field.
+	 *
+	 * Test replacement for sanitize_text_field().
+	 *
+	 * @param string $value Text value.
+	 * @return string
+	 */
+	function sanitize_text_field(
+		string $value
+	): string {
+
+		return trim(
+			wp_strip_all_tags( $value )
+		);
+	}
+}
+
+if ( ! function_exists( 'get_current_screen' ) ) {
+
+	/**
+	 * Get the current test admin screen.
+	 *
+	 * Test replacement for get_current_screen().
+	 *
+	 * @return WP_Screen|null
+	 */
+	function get_current_screen(): ?WP_Screen {
+
+		$screen = $GLOBALS['shurloc_test_current_screen']
+			?? null;
+
+		return $screen instanceof WP_Screen
+			? $screen
+			: null;
+	}
+}
+
+if ( ! function_exists( 'get_terms' ) ) {
+
+	/**
+	 * Retrieve test taxonomy terms.
+	 *
+	 * Test replacement for get_terms().
+	 *
+	 * @param array<string,mixed> $args Term query arguments.
+	 * @return array<int,object>
+	 */
+	function get_terms(
+		array $args = array()
+	): array {
+
+		$taxonomy = isset( $args['taxonomy'] )
+			? (string) $args['taxonomy']
+			: '';
+
+		if (
+			'' === $taxonomy ||
+			! isset(
+				$GLOBALS['shurloc_test_terms'][ $taxonomy ]
+			)
+		) {
+			return array();
+		}
+
+		return array_values(
+			$GLOBALS['shurloc_test_terms'][ $taxonomy ]
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_verify_nonce' ) ) {
+
+	/**
+	 * Verify a test nonce.
+	 *
+	 * Test replacement for wp_verify_nonce().
+	 *
+	 * @param string     $nonce  Nonce value.
+	 * @param int|string $action Nonce action.
+	 * @return int|false
+	 */
+	function wp_verify_nonce(
+		string $nonce,
+		$action = -1
+	): int|false {
+
+		unset(
+			$nonce,
+			$action
+		);
+
+		return $GLOBALS['shurloc_test_nonce_valid']
+			? 1
+			: false;
+	}
+}
+
+/**
+ * Recorded test nonce fields.
+ */
+$GLOBALS['shurloc_test_nonce_fields'] = array();
+
+if ( ! function_exists( 'wp_nonce_field' ) ) {
+
+	/**
+	 * Record a test WordPress nonce field.
+	 *
+	 * Test replacement for wp_nonce_field().
+	 *
+	 * @param int|string $action  Nonce action.
+	 * @param string     $name    Nonce field name.
+	 * @param bool       $referer Whether to include the referer field.
+	 * @param bool       $display Whether to display the field.
+	 * @return string
+	 */
+	function wp_nonce_field(
+		$action = -1,
+		string $name = '_wpnonce',
+		bool $referer = true,
+		bool $display = true
+	): string {
+
+		$GLOBALS['shurloc_test_nonce_fields'][] = array(
+			'action'  => $action,
+			'name'    => $name,
+			'referer' => $referer,
+			'display' => $display,
+		);
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'absint' ) ) {
+
+	/**
+	 * Convert a value to a non-negative integer.
+	 *
+	 * Test replacement for absint().
+	 *
+	 * @param mixed $value Value.
+	 * @return int
+	 */
+	function absint(
+		$value
+	): int {
+
+		return abs(
+			(int) $value
+		);
+	}
+}
+
+if ( ! function_exists( 'selected' ) ) {
+
+	/**
+	 * Render a selected HTML attribute.
+	 *
+	 * Test replacement for selected().
+	 *
+	 * @param mixed $selected Selected value.
+	 * @param mixed $current  Current value.
+	 * @param bool  $display  Whether to echo the result.
+	 * @return string
+	 */
+	function selected(
+		$selected,
+		$current = true,
+		bool $display = true
+	): string {
+
+		$result = $selected === $current
+			? ' selected="selected"'
+			: '';
+
+		if ( $display ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed test-only HTML attribute.
+			echo $result;
+		}
+
+		return $result;
 	}
 }

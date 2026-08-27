@@ -85,13 +85,27 @@ function shurloc_product_tools_bootstrap(): void {
 	$woocommerce_schema_integration->register();
 
 	/**
+	 * Primary product category.
+	 */
+
+	$primary_product_category_service =
+		new Shurloc_Primary_Product_Category_Service();
+
+	$primary_product_category_metabox =
+		new Shurloc_Primary_Product_Category_Metabox(
+			service: $primary_product_category_service,
+		);
+	$primary_product_category_metabox->register();
+
+	$yoast_primary_category_integration =
+		new Shurloc_Yoast_Primary_Category_Integration();
+	$yoast_primary_category_integration->register();
+
+	/**
 	 * Admin UI and integration.
 	 */
 
-	/**
-	 * Intelephense false positive.
-	 *
-	 * @disregard P1009 Undefined type 'Shurloc\Tools\Shurloc_Admin_Page_Interface'. */
+	/* @disregard P1009 Undefined type 'Shurloc\Tools\Shurloc_Admin_Page_Interface'. */
 	if ( interface_exists( Shurloc_Admin_Page_Interface::class ) ) {
 		$catalog_report_controller = new Shurloc_Catalog_Report_Controller(
 			catalog_service: $catalog_service,
