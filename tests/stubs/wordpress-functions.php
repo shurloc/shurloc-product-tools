@@ -149,6 +149,16 @@ $GLOBALS['shurloc_test_terms'] = array();
  */
 $GLOBALS['shurloc_test_post_terms'] = array();
 
+/**
+ * Current test WordPress screen.
+ */
+$GLOBALS['shurloc_test_current_screen'] = null;
+
+/**
+ * Whether test nonce verification succeeds.
+ */
+$GLOBALS['shurloc_test_nonce_valid'] = true;
+
 
 /**
  * Function doubles.
@@ -831,7 +841,7 @@ if ( ! function_exists( 'wp_enqueue_style' ) ) {
 	 *
 	 * @param string            $handle Stylesheet handle.
 	 * @param string|false      $src    Stylesheet source.
-	 * @param array<int,string> $deps  Dependencies.
+	 * @param array<int,string> $deps   Dependencies.
 	 * @param string|false      $ver    Version.
 	 * @param string            $media  Media type.
 	 * @return void
@@ -848,11 +858,23 @@ if ( ! function_exists( 'wp_enqueue_style' ) ) {
 			$GLOBALS['shurloc_test_styles'] = array();
 		}
 
+		if ( ! isset( $GLOBALS['shurloc_test_enqueued_styles'] ) ) {
+			$GLOBALS['shurloc_test_enqueued_styles'] = array();
+		}
+
 		$GLOBALS['shurloc_test_styles'][ $handle ] = array(
 			'src'   => $src,
 			'deps'  => $deps,
 			'ver'   => $ver,
 			'media' => $media,
+		);
+
+		$GLOBALS['shurloc_test_enqueued_styles'][] = array(
+			'handle' => $handle,
+			'src'    => $src,
+			'deps'   => $deps,
+			'ver'    => $ver,
+			'media'  => $media,
 		);
 	}
 }
@@ -1117,7 +1139,19 @@ if ( ! function_exists( 'wp_enqueue_script' ) ) {
 			$GLOBALS['shurloc_test_scripts'] = array();
 		}
 
+		if ( ! isset( $GLOBALS['shurloc_test_enqueued_scripts'] ) ) {
+			$GLOBALS['shurloc_test_enqueued_scripts'] = array();
+		}
+
 		$GLOBALS['shurloc_test_scripts'][ $handle ] = array(
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
+		);
+
+		$GLOBALS['shurloc_test_enqueued_scripts'][] = array(
+			'handle'    => $handle,
 			'src'       => $src,
 			'deps'      => $deps,
 			'ver'       => $ver,
@@ -1685,5 +1719,192 @@ if ( ! function_exists( 'delete_post_meta' ) ) {
 		}
 
 		return true;
+	}
+}
+
+if ( ! function_exists( 'sanitize_text_field' ) ) {
+
+	/**
+	 * Sanitize a test text field.
+	 *
+	 * Test replacement for sanitize_text_field().
+	 *
+	 * @param string $value Text value.
+	 * @return string
+	 */
+	function sanitize_text_field(
+		string $value
+	): string {
+
+		return trim(
+			wp_strip_all_tags( $value )
+		);
+	}
+}
+
+if ( ! function_exists( 'get_current_screen' ) ) {
+
+	/**
+	 * Get the current test admin screen.
+	 *
+	 * Test replacement for get_current_screen().
+	 *
+	 * @return WP_Screen|null
+	 */
+	function get_current_screen(): ?WP_Screen {
+
+		$screen = $GLOBALS['shurloc_test_current_screen']
+			?? null;
+
+		return $screen instanceof WP_Screen
+			? $screen
+			: null;
+	}
+}
+
+if ( ! function_exists( 'get_terms' ) ) {
+
+	/**
+	 * Retrieve test taxonomy terms.
+	 *
+	 * Test replacement for get_terms().
+	 *
+	 * @param array<string,mixed> $args Term query arguments.
+	 * @return array<int,object>
+	 */
+	function get_terms(
+		array $args = array()
+	): array {
+
+		$taxonomy = isset( $args['taxonomy'] )
+			? (string) $args['taxonomy']
+			: '';
+
+		if (
+			'' === $taxonomy ||
+			! isset(
+				$GLOBALS['shurloc_test_terms'][ $taxonomy ]
+			)
+		) {
+			return array();
+		}
+
+		return array_values(
+			$GLOBALS['shurloc_test_terms'][ $taxonomy ]
+		);
+	}
+}
+
+if ( ! function_exists( 'wp_verify_nonce' ) ) {
+
+	/**
+	 * Verify a test nonce.
+	 *
+	 * Test replacement for wp_verify_nonce().
+	 *
+	 * @param string     $nonce  Nonce value.
+	 * @param int|string $action Nonce action.
+	 * @return int|false
+	 */
+	function wp_verify_nonce(
+		string $nonce,
+		$action = -1
+	): int|false {
+
+		unset(
+			$nonce,
+			$action
+		);
+
+		return $GLOBALS['shurloc_test_nonce_valid']
+			? 1
+			: false;
+	}
+}
+
+/**
+ * Recorded test nonce fields.
+ */
+$GLOBALS['shurloc_test_nonce_fields'] = array();
+
+if ( ! function_exists( 'wp_nonce_field' ) ) {
+
+	/**
+	 * Record a test WordPress nonce field.
+	 *
+	 * Test replacement for wp_nonce_field().
+	 *
+	 * @param int|string $action  Nonce action.
+	 * @param string     $name    Nonce field name.
+	 * @param bool       $referer Whether to include the referer field.
+	 * @param bool       $display Whether to display the field.
+	 * @return string
+	 */
+	function wp_nonce_field(
+		$action = -1,
+		string $name = '_wpnonce',
+		bool $referer = true,
+		bool $display = true
+	): string {
+
+		$GLOBALS['shurloc_test_nonce_fields'][] = array(
+			'action'  => $action,
+			'name'    => $name,
+			'referer' => $referer,
+			'display' => $display,
+		);
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'absint' ) ) {
+
+	/**
+	 * Convert a value to a non-negative integer.
+	 *
+	 * Test replacement for absint().
+	 *
+	 * @param mixed $value Value.
+	 * @return int
+	 */
+	function absint(
+		$value
+	): int {
+
+		return abs(
+			(int) $value
+		);
+	}
+}
+
+if ( ! function_exists( 'selected' ) ) {
+
+	/**
+	 * Render a selected HTML attribute.
+	 *
+	 * Test replacement for selected().
+	 *
+	 * @param mixed $selected Selected value.
+	 * @param mixed $current  Current value.
+	 * @param bool  $display  Whether to echo the result.
+	 * @return string
+	 */
+	function selected(
+		$selected,
+		$current = true,
+		bool $display = true
+	): string {
+
+		$result = $selected === $current
+			? ' selected="selected"'
+			: '';
+
+		if ( $display ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed test-only HTML attribute.
+			echo $result;
+		}
+
+		return $result;
 	}
 }

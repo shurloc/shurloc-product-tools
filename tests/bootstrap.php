@@ -43,6 +43,11 @@ require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.ph
  */
 require_once dirname( __DIR__ ) . '/tests/stubs/wordpress-functions.php';
 
+/**
+ * Load constants.
+ */
+require_once dirname( __DIR__ ) . '/includes/constants.php';
+
 /*
  * Load helper functions.
  */
@@ -73,3 +78,4 @@ require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-catalog-report-c
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wp-post.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-wc-cart.php';
 require_once dirname( __DIR__ ) . '/tests/doubles/class-shurloc-test-wc-cart.php';
+require_once dirname( __DIR__ ) . '/tests/doubles/class-wp-screen.php';
