@@ -134,6 +134,21 @@ $GLOBALS['shurloc_test_submenu_pages'] = array();
  */
 $GLOBALS['shurloc_test_removed_submenus'] = array();
 
+/**
+ * Stored test post metadata.
+ */
+$GLOBALS['shurloc_test_post_meta'] = array();
+
+/**
+ * Test taxonomy terms indexed by taxonomy and term ID.
+ */
+$GLOBALS['shurloc_test_terms'] = array();
+
+/**
+ * Test taxonomy term assignments indexed by post ID.
+ */
+$GLOBALS['shurloc_test_post_terms'] = array();
+
 
 /**
  * Function doubles.
@@ -1474,5 +1489,201 @@ if ( ! function_exists( 'admin_url' ) ) {
 	): string {
 
 		return 'https://example.com/wp-admin/' . ltrim( $path, '/' );
+	}
+}
+
+if ( ! function_exists( 'get_term' ) ) {
+
+	/**
+	 * Retrieve a test taxonomy term.
+	 *
+	 * Test replacement for get_term().
+	 *
+	 * @param int    $term_id  Term ID.
+	 * @param string $taxonomy Taxonomy name.
+	 * @return object|null
+	 */
+	function get_term(
+		int $term_id,
+		string $taxonomy = ''
+	): object|null {
+
+		if (
+			'' === $taxonomy ||
+			! isset(
+				$GLOBALS['shurloc_test_terms'][ $taxonomy ][ $term_id ]
+			)
+		) {
+			return null;
+		}
+
+		$term =
+			$GLOBALS['shurloc_test_terms'][ $taxonomy ][ $term_id ];
+
+		return is_object( $term )
+			? $term
+			: null;
+	}
+}
+
+if ( ! function_exists( 'is_wp_error' ) ) {
+
+	/**
+	 * Determine whether a test value is a WordPress error.
+	 *
+	 * Test replacement for is_wp_error().
+	 *
+	 * @param mixed $thing Value to inspect.
+	 * @return bool
+	 */
+	function is_wp_error(
+		$thing
+	): bool {
+
+		return $thing instanceof WP_Error;
+	}
+}
+
+if ( ! function_exists( 'has_term' ) ) {
+
+	/**
+	 * Determine whether a post has a test taxonomy term.
+	 *
+	 * Test replacement for has_term().
+	 *
+	 * @param int|string $term     Term ID or slug.
+	 * @param string     $taxonomy Taxonomy name.
+	 * @param int        $post_id  Post ID.
+	 * @return bool
+	 */
+	function has_term(
+		int|string $term,
+		string $taxonomy,
+		int $post_id
+	): bool {
+
+		unset( $taxonomy );
+
+		$term_id = (int) $term;
+
+		return in_array(
+			$term_id,
+			$GLOBALS['shurloc_test_post_terms'][ $post_id ]
+				?? array(),
+			true
+		);
+	}
+}
+
+if ( ! function_exists( 'get_post_meta' ) ) {
+
+	/**
+	 * Retrieve test post metadata.
+	 *
+	 * Test replacement for get_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @param bool   $single  Whether to return a single value.
+	 * @return mixed
+	 */
+	function get_post_meta(
+		int $post_id,
+		string $key = '',
+		bool $single = false
+	) {
+
+		if ( '' === $key ) {
+			return $GLOBALS['shurloc_test_post_meta'][ $post_id ]
+				?? array();
+		}
+
+		if (
+			! array_key_exists(
+				$key,
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+					?? array()
+			)
+		) {
+			return $single
+				? ''
+				: array();
+		}
+
+		$value =
+			$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ];
+
+		return $single
+			? $value
+			: array( $value );
+	}
+}
+
+if ( ! function_exists( 'update_post_meta' ) ) {
+
+	/**
+	 * Update test post metadata.
+	 *
+	 * Test replacement for update_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @param mixed  $value   Metadata value.
+	 * @return int|bool
+	 */
+	function update_post_meta(
+		int $post_id,
+		string $key,
+		$value
+	): int|bool {
+
+		$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ] =
+			$value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'delete_post_meta' ) ) {
+
+	/**
+	 * Delete test post metadata.
+	 *
+	 * Test replacement for delete_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @return bool
+	 */
+	function delete_post_meta(
+		int $post_id,
+		string $key
+	): bool {
+
+		if (
+			! array_key_exists(
+				$key,
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+					?? array()
+			)
+		) {
+			return false;
+		}
+
+		unset(
+			$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ]
+		);
+
+		if (
+			empty(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			)
+		) {
+			unset(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			);
+		}
+
+		return true;
 	}
 }
