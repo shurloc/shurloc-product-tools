@@ -173,6 +173,9 @@ function shurloc_product_tools_bootstrap(): void {
 		eligibility: $recommendation_eligibility,
 	);
 	$dynamic_cross_sells->register();
+
+	$product_tag_pagination = new Shurloc_Product_Tag_Pagination_Integration();
+	$product_tag_pagination->register();
 }
 
 add_action(
