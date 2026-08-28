@@ -2114,3 +2114,51 @@ if ( ! function_exists( 'wp_create_nonce' ) ) {
 		return 'test-nonce-' . (string) $action;
 	}
 }
+
+if ( ! function_exists( 'submit_button' ) ) {
+
+	/**
+	 * Render a test submit button.
+	 *
+	 * @param string $text             Button text.
+	 * @param string $type             Button type.
+	 * @param string $name             Button name.
+	 * @param bool   $wrap             Whether to wrap the button.
+	 * @param array  $other_attributes Additional attributes.
+	 * @return void
+	 */
+	function submit_button(
+		string $text = 'Save Changes',
+		string $type = 'primary large',
+		string $name = 'submit',
+		bool $wrap = true,
+		array $other_attributes = array()
+	): void {
+
+		if ( $wrap ) {
+			echo '<p class="submit">';
+		}
+
+		?>
+		<input
+			type="submit"
+			name="<?php echo esc_attr( $name ); ?>"
+			class="button <?php echo esc_attr( $type ); ?>"
+			value="<?php echo esc_attr( $text ); ?>"
+			<?php
+			foreach ( $other_attributes as $attribute => $value ) {
+				printf(
+					' %s="%s"',
+					esc_attr( (string) $attribute ),
+					esc_attr( (string) $value )
+				);
+			}
+			?>
+		/>
+		<?php
+
+		if ( $wrap ) {
+			echo '</p>';
+		}
+	}
+}
