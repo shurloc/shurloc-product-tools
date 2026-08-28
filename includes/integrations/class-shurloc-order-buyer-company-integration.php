@@ -11,8 +11,6 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-use WC_Order;
-
 /**
  * Adds billing company information to admin order buyer names.
  */
