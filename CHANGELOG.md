@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.6.0] - 2026-08-28
+
+### Added
+
+- Added a Migrations tab to the Product Tools admin page.
+- Added a Yoast product metadata cleanup migration for clearing legacy Yoast product metadata and existing primary product category assignments.
+- Added migration locking to prevent concurrent cleanup runs.
+- Added migration status reporting, last-run information, and confirmation controls.
+
+### Changed
+
+- Refactored the Product Tools admin page so page and tab routing are handled separately from catalog report functionality.
+
 ## [1.5.0] - 2026-08-27
 
 ### Added
