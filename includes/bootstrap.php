@@ -113,14 +113,25 @@ function shurloc_product_tools_bootstrap(): void {
 		);
 		$catalog_report_controller->register();
 
+		$yoast_product_meta_cleanup_migration =
+			new Shurloc_Yoast_Product_Meta_Cleanup_Migration();
+
+		$product_migrations_controller =
+			new Shurloc_Product_Migrations_Controller(
+				cleanup_migration: $yoast_product_meta_cleanup_migration,
+			);
+		$product_migrations_controller->register();
+
+		$admin_page_controller =
+			new Shurloc_Admin_Page_Controller(
+				catalog_report_controller: $catalog_report_controller,
+				migrations_controller: $product_migrations_controller,
+			);
+
 		$admin_menu = new Shurloc_Admin_Menu(
-			product_page: $catalog_report_controller,
+			product_page: $admin_page_controller,
 		);
 		$admin_menu->register();
-
-		$request_handler = new Shurloc_Catalog_Report_Request_Handler(
-			actions: $catalog_report_controller,
-		);
 	}
 
 	/*

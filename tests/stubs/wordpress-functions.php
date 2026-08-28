@@ -169,6 +169,11 @@ $GLOBALS['shurloc_test_filter_metadata'] = array();
  */
 $GLOBALS['shurloc_test_is_product_tag'] = false;
 
+/**
+ * Stored test post metadata.
+ */
+$GLOBALS['shurloc_test_post_meta'] = array();
+
 
 /**
  * Function doubles.
@@ -1942,5 +1947,218 @@ if ( ! function_exists( 'is_product_tag' ) ) {
 	function is_product_tag(): bool {
 
 		return $GLOBALS['shurloc_test_is_product_tag'];
+	}
+}
+
+if ( ! function_exists( 'metadata_exists' ) ) {
+
+	/**
+	 * Determine whether test metadata exists.
+	 *
+	 * Test replacement for metadata_exists().
+	 *
+	 * @param string $meta_type Metadata type.
+	 * @param int    $object_id Object ID.
+	 * @param string $meta_key  Metadata key.
+	 * @return bool
+	 */
+	function metadata_exists(
+		string $meta_type,
+		int $object_id,
+		string $meta_key
+	): bool {
+
+		if ( 'post' !== $meta_type ) {
+			return false;
+		}
+
+		return array_key_exists(
+			$meta_key,
+			$GLOBALS['shurloc_test_post_meta'][ $object_id ]
+				?? array()
+		);
+	}
+}
+
+if ( ! function_exists( 'add_option' ) ) {
+
+	/**
+	 * Add a test WordPress option.
+	 *
+	 * Test replacement for add_option(). Returns false when the option
+	 * already exists.
+	 *
+	 * @param string $option     Option name.
+	 * @param mixed  $value      Option value.
+	 * @param string $deprecated Deprecated argument.
+	 * @param bool   $autoload   Whether to autoload the option.
+	 * @return bool
+	 */
+	function add_option(
+		string $option,
+		$value = '',
+		string $deprecated = '',
+		bool $autoload = true
+	): bool {
+
+		unset(
+			$deprecated,
+			$autoload
+		);
+
+		if (
+			array_key_exists(
+				$option,
+				$GLOBALS['shurloc_test_options']
+			)
+		) {
+			return false;
+		}
+
+		$GLOBALS['shurloc_test_options'][ $option ] =
+			$value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'delete_option' ) ) {
+
+	/**
+	 * Delete a test WordPress option.
+	 *
+	 * Test replacement for delete_option().
+	 *
+	 * @param string $option Option name.
+	 * @return bool
+	 */
+	function delete_option(
+		string $option
+	): bool {
+
+		if (
+			! array_key_exists(
+				$option,
+				$GLOBALS['shurloc_test_options']
+			)
+		) {
+			return false;
+		}
+
+		unset(
+			$GLOBALS['shurloc_test_options'][ $option ]
+		);
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'delete_post_meta' ) ) {
+
+	/**
+	 * Delete test post metadata.
+	 *
+	 * Test replacement for delete_post_meta().
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Metadata key.
+	 * @return bool
+	 */
+	function delete_post_meta(
+		int $post_id,
+		string $key
+	): bool {
+
+		if (
+			! array_key_exists(
+				$key,
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+					?? array()
+			)
+		) {
+			return false;
+		}
+
+		unset(
+			$GLOBALS['shurloc_test_post_meta'][ $post_id ][ $key ]
+		);
+
+		if (
+			empty(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			)
+		) {
+			unset(
+				$GLOBALS['shurloc_test_post_meta'][ $post_id ]
+			);
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_create_nonce' ) ) {
+
+	/**
+	 * Create a test nonce.
+	 *
+	 * Test replacement for wp_create_nonce().
+	 *
+	 * @param int|string $action Nonce action.
+	 * @return string
+	 */
+	function wp_create_nonce(
+		$action = -1
+	): string {
+
+		return 'test-nonce-' . (string) $action;
+	}
+}
+
+if ( ! function_exists( 'submit_button' ) ) {
+
+	/**
+	 * Render a test submit button.
+	 *
+	 * @param string                              $text             Button text.
+	 * @param string                              $type             Button type.
+	 * @param string                              $name             Button name.
+	 * @param bool                                $wrap             Whether to wrap the button.
+	 * @param array<string,string|int|float|bool> $other_attributes Additional attributes.
+	 * @return void
+	 */
+	function submit_button(
+		string $text = 'Save Changes',
+		string $type = 'primary large',
+		string $name = 'submit',
+		bool $wrap = true,
+		array $other_attributes = array()
+	): void {
+
+		if ( $wrap ) {
+			echo '<p class="submit">';
+		}
+
+		?>
+		<input
+			type="submit"
+			name="<?php echo esc_attr( $name ); ?>"
+			class="button <?php echo esc_attr( $type ); ?>"
+			value="<?php echo esc_attr( $text ); ?>"
+			<?php
+			foreach ( $other_attributes as $attribute => $value ) {
+				printf(
+					' %s="%s"',
+					esc_attr( (string) $attribute ),
+					esc_attr( (string) $value )
+				);
+			}
+			?>
+		/>
+		<?php
+
+		if ( $wrap ) {
+			echo '</p>';
+		}
 	}
 }
