@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.0] - 2026-08-27
+
+### Added
+
+- Added product tag archive pagination to display up to 96 products per page.
+- Added billing company names to buyer names in the WooCommerce admin order list.
+- Added PHPUnit coverage for product tag pagination and order buyer company display.
+
+### Internal Improvements
+
+- Moved product tag pagination behavior into a dedicated integration class.
+- Moved WooCommerce admin buyer company behavior into a dedicated integration class.
+- Added WooCommerce order test doubles to support order-related integration testing.
+
+### Testing
+
+- Added coverage for product tag and non-product-tag archive pagination.
+- Added coverage for billing company display, empty company values, and company name formatting.
+- Verified PHPUnit, PHPCS, and PHPStan checks pass.
+
 ## [1.4.0] - 2026-08-27
 
 ### Added
@@ -402,6 +422,7 @@
 ## [0.11.1] - 2026-07-21
 
 ### Changed
+
 - Refactored `Shurloc_Mesh_Specification` into an immutable domain model using private readonly properties.
 - Updated mesh analyzers, schema generators, renderers, services, and test fixtures to use constructor-based specification creation.
 - Improved encapsulation by removing direct property mutation of mesh specification objects.
@@ -733,12 +754,14 @@ The autoloader automatically discovers these files during plugin startup.
 ## [0.4.0] - 2026-07-09
 
 ### Added
+
 - Mesh recognition support
 - Catalog fixture loader for exported WooCommerce variations
 - Catalog analyzer for classifying recognized, unrecognized, and invalid mesh specifications
 - Integration tests using a real catalog snapshot
 
 ### Changed
+
 - Refactored parser into reusable extraction methods
 - Added recognition state to parsed mesh specifications
 - Improved parser normalization and validation
@@ -747,12 +770,14 @@ The autoloader automatically discovers these files during plugin startup.
 ## [0.3.0] - 2026-07-08
 
 ### Added
+
 - Mesh specification parser
 - Mesh specification model
 - Unit testing infrastructure with PHPUnit
 - Parser data provider for reusable test cases
 
 ### Changed
+
 - Refactored parser into helper methods for normalization and token extraction
 - Added parser normalization for whitespace, modifiers, and Thin Thread variants
 - Expanded parser support for pack sizes, modifiers, colors, and price formats
@@ -760,6 +785,7 @@ The autoloader automatically discovers these files during plugin startup.
 ## [0.2.0] - 2026-07-07
 
 ### Added
+
 - Mesh specification model
 - Mesh parser framework
 - PHPUnit test infrastructure
@@ -767,6 +793,7 @@ The autoloader automatically discovers these files during plugin startup.
 - Composer scripts for linting and testing
 
 ### Changed
+
 - Upgraded project to PHP 8.4
 - Added PHPCS and PHPUnit project configuration
 - Improved project structure for future parser development
@@ -774,6 +801,7 @@ The autoloader automatically discovers these files during plugin startup.
 ## [0.1.0] - 2026-07-06
 
 ### Added
+
 - Initial plugin skeleton
 - Bootstrap architecture
 - Project structure
