@@ -36,7 +36,7 @@ require_once dirname( __DIR__, 2 ) . '/shurloc-tools/includes/interfaces/interfa
  * Load test utilities.
  */
 require_once dirname( __DIR__ ) . '/tests/parsers/MeshParserDataProvider.php';
-require_once dirname( __DIR__ ) . '/tests/integration/MeshCatalogDataProvider.php';
+require_once dirname( __DIR__ ) . '/tests/integrations/MeshCatalogDataProvider.php';
 
 /*
  * Load WordPress function stubs.
