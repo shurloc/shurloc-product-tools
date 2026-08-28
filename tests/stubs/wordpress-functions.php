@@ -2120,11 +2120,11 @@ if ( ! function_exists( 'submit_button' ) ) {
 	/**
 	 * Render a test submit button.
 	 *
-	 * @param string $text             Button text.
-	 * @param string $type             Button type.
-	 * @param string $name             Button name.
-	 * @param bool   $wrap             Whether to wrap the button.
-	 * @param array  $other_attributes Additional attributes.
+	 * @param string                              $text             Button text.
+	 * @param string                              $type             Button type.
+	 * @param string                              $name             Button name.
+	 * @param bool                                $wrap             Whether to wrap the button.
+	 * @param array<string,string|int|float|bool> $other_attributes Additional attributes.
 	 * @return void
 	 */
 	function submit_button(
