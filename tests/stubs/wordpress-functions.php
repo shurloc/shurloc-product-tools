@@ -2096,3 +2096,21 @@ if ( ! function_exists( 'delete_post_meta' ) ) {
 		return true;
 	}
 }
+
+if ( ! function_exists( 'wp_create_nonce' ) ) {
+
+	/**
+	 * Create a test nonce.
+	 *
+	 * Test replacement for wp_create_nonce().
+	 *
+	 * @param int|string $action Nonce action.
+	 * @return string
+	 */
+	function wp_create_nonce(
+		$action = -1
+	): string {
+
+		return 'test-nonce-' . (string) $action;
+	}
+}
