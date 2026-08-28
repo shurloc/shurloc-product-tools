@@ -11,8 +11,6 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-use Exception;
-
 /**
  * Clears legacy Yoast product metadata.
  */
