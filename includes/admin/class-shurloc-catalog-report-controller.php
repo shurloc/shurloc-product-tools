@@ -9,35 +9,11 @@
 
 declare( strict_types=1 );
 
-use Shurloc\Tools\Shurloc_Admin_Page_Interface;
-
 /**
  * Catalog report admin controller.
  */
 final class Shurloc_Catalog_Report_Controller implements
-	Shurloc_Catalog_Report_Actions_Interface,
-	Shurloc_Admin_Page_Interface {
-
-	/**
-	 * Catalog report tab slug.
-	 *
-	 * @var string
-	 */
-	private const TAB_CATALOG_REPORT = 'catalog-report';
-
-	/**
-	 * Invalid mesh products tab slug.
-	 *
-	 * @var string
-	 */
-	private const TAB_INVALID_MESH_PRODUCTS = 'invalid-mesh-products';
-
-	/**
-	 * Unrecognized mesh products tab slug.
-	 *
-	 * @var string
-	 */
-	private const TAB_UNRECOGNIZED_MESH_PRODUCTS = 'unrecognized-mesh-products';
+	Shurloc_Catalog_Report_Actions_Interface {
 
 	/**
 	 * Product catalog service.
@@ -96,107 +72,11 @@ final class Shurloc_Catalog_Report_Controller implements
 	}
 
 	/**
-	 * Render the Product Tools page.
-	 *
-	 * @return void
-	 */
-	public function render_page(): void {
-
-		$active_tab = $this->get_active_tab();
-		?>
-
-		<div class="wrap">
-
-			<h1>Shur-loc Product Tools</h1>
-
-			<p>
-				Utilities for exporting and analyzing the WooCommerce product catalog.
-			</p>
-
-			<?php $this->render_tabs( active_tab: $active_tab ); ?>
-
-			<?php
-			switch ( $active_tab ) {
-
-				case self::TAB_INVALID_MESH_PRODUCTS:
-					$this->render_invalid_mesh_products_tab();
-					break;
-
-				case self::TAB_UNRECOGNIZED_MESH_PRODUCTS:
-					$this->render_unrecognized_mesh_products_tab();
-					break;
-
-				case self::TAB_CATALOG_REPORT:
-				default:
-					$this->render_catalog_report_tab();
-					break;
-			}
-			?>
-
-		</div>
-
-		<?php
-	}
-
-	/**
-	 * Render the admin navigation tabs.
-	 *
-	 * @param string $active_tab Active tab slug.
-	 * @return void
-	 */
-	private function render_tabs(
-		string $active_tab
-	): void {
-
-		$tabs = array(
-			self::TAB_CATALOG_REPORT             => 'Catalog Report',
-			self::TAB_INVALID_MESH_PRODUCTS      => 'Invalid Mesh Products',
-			self::TAB_UNRECOGNIZED_MESH_PRODUCTS => 'Unrecognized Mesh Products',
-		);
-		?>
-
-		<nav class="nav-tab-wrapper">
-
-			<?php foreach ( $tabs as $tab_slug => $tab_label ) : ?>
-
-				<?php
-				$tab_url = add_query_arg(
-					array(
-						'page' => 'shurloc-product-tools',
-						'tab'  => $tab_slug,
-					),
-					admin_url( 'admin.php' )
-				);
-
-				$tab_classes = array(
-					'nav-tab',
-				);
-
-				if ( $active_tab === $tab_slug ) {
-					$tab_classes[] = 'nav-tab-active';
-				}
-				?>
-
-				<a
-					href="<?php echo esc_url( $tab_url ); ?>"
-					class="<?php echo esc_attr( implode( ' ', $tab_classes ) ); ?>"
-				>
-					<?php echo esc_html( $tab_label ); ?>
-				</a>
-
-			<?php endforeach; ?>
-
-		</nav>
-
-		<?php
-	}
-
-	/**
 	 * Render the catalog report tab.
 	 *
 	 * @return void
 	 */
-	private function render_catalog_report_tab(): void {
+	public function render_catalog_report(): void {
 		?>
 
 		<h2>Export Catalog Variations</h2>
@@ -253,7 +133,7 @@ final class Shurloc_Catalog_Report_Controller implements
 	 *
 	 * @return void
 	 */
-	private function render_invalid_mesh_products_tab(): void {
+	public function render_invalid_mesh_products(): void {
 
 		$result = $this->analysis_service->analyze();
 
@@ -422,7 +302,7 @@ final class Shurloc_Catalog_Report_Controller implements
 	 *
 	 * @return void
 	 */
-	private function render_unrecognized_mesh_products_tab(): void {
+	public function render_unrecognized_mesh_products(): void {
 
 		$result = $this->analysis_service->analyze();
 
@@ -433,7 +313,7 @@ final class Shurloc_Catalog_Report_Controller implements
 			static function ( array $left, array $right ): int {
 
 				$product_comparison =
-				$left['product_id'] <=> $right['product_id'];
+					$left['product_id'] <=> $right['product_id'];
 
 				if ( 0 !== $product_comparison ) {
 					return $product_comparison;
@@ -577,39 +457,6 @@ final class Shurloc_Catalog_Report_Controller implements
 	<?php endif; ?>
 
 		<?php
-	}
-
-	/**
-	 * Get the active admin tab.
-	 *
-	 * @return string
-	 */
-	private function get_active_tab(): string {
-
-		$active_tab = self::TAB_CATALOG_REPORT;
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['tab'] ) ) {
-
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$requested_tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
-
-			if (
-				in_array(
-					$requested_tab,
-					array(
-						self::TAB_CATALOG_REPORT,
-						self::TAB_INVALID_MESH_PRODUCTS,
-						self::TAB_UNRECOGNIZED_MESH_PRODUCTS,
-					),
-					true
-				)
-			) {
-				$active_tab = $requested_tab;
-			}
-		}
-
-		return $active_tab;
 	}
 
 	/**
