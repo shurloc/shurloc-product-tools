@@ -164,6 +164,11 @@ $GLOBALS['shurloc_test_nonce_valid'] = true;
  */
 $GLOBALS['shurloc_test_filter_metadata'] = array();
 
+/**
+ * Whether the current test request is a product tag archive.
+ */
+$GLOBALS['shurloc_test_is_product_tag'] = false;
+
 
 /**
  * Function doubles.
@@ -1922,5 +1927,20 @@ if ( ! function_exists( 'selected' ) ) {
 		}
 
 		return $result;
+	}
+}
+
+if ( ! function_exists( 'is_product_tag' ) ) {
+
+	/**
+	 * Determine whether the current test request is a product tag archive.
+	 *
+	 * Test replacement for is_product_tag().
+	 *
+	 * @return bool
+	 */
+	function is_product_tag(): bool {
+
+		return $GLOBALS['shurloc_test_is_product_tag'];
 	}
 }
