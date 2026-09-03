@@ -27,7 +27,8 @@
   exception.
 - Always provide a source-to-destination diff after a migrated file is changed.
 - Omit PHPStan for the current migration passes.
-- Run PHPUnit only when migrating a test file.
+- Run PHPUnit when migrating a test file, test stub, or test double. Run the
+  complete PHPUnit suite when a stub or double changes.
 - If initial checks reveal an issue, report it rather than correcting it.
 - If a dependency must be migrated first, stop and report that dependency.
 - Before checks, ensure each migrated file has exactly one trailing newline.
@@ -131,6 +132,136 @@ Migrated test doubles and shared support include:
 - `assets/product/css/shurloc-mesh-product-table.css`.
 - `assets/product/js/shurloc-mesh-product-table.js`.
 
+## Session Update: 2026-09-03
+
+### Additional production migrations
+
+The following production files were migrated after the original status entry:
+
+- Services: `Product_Recommendation_Eligibility_Service` and
+  `Primary_Product_Category_Service`.
+- Product admin: `Product_Migrations_Controller`, `Admin_Page_Controller`,
+  and `Primary_Product_Category_Metabox`.
+- Migration: `Yoast_Product_Meta_Cleanup_Migration`.
+- Frontend: `Dynamic_Cross_Sells`, `Related_Products`,
+  `Product_Breadcrumbs`, `Breadcrumb_Separator`, and `Breadcrumb_Schema`.
+- Integrations: `WooCommerce_Schema_Integration`,
+  `Product_Tag_Pagination_Integration`, and
+  `Order_Buyer_Company_Integration`, and
+  `Yoast_Primary_Category_Integration`.
+
+### Additional assets
+
+- `assets/product/css/shurloc-product-migrations.css`.
+- `assets/product/js/shurloc-product-migrations.js`.
+- `assets/product/css/shurloc-primary-product-category.css`.
+- `assets/product/js/shurloc-primary-product-category.js`.
+- `assets/product/css/shurloc-breadcrumb-separator.css`.
+- `assets/product/js/shurloc-breadcrumb-separator.js`.
+
+### Additional tests and test support
+
+The following tests were migrated or created:
+
+- Admin: `ProductMigrationsControllerTest`, `AdminPageControllerTest`, and
+  `PrimaryProductCategoryMetaboxTest`.
+- Services: `ProductRecommendationEligibilityServiceTest` and
+  `PrimaryProductCategoryServiceTest`.
+- Migration: `YoastProductMetaCleanupMigrationTest`.
+- Frontend: `DynamicCrossSellsTest`, `RelatedProductsTest`,
+  `BreadcrumbSeparatorTest`, and `BreadcrumbSchemaTest`.
+- Integrations: `WooCommerceSchemaIntegrationTest`,
+  `ProductTagPaginationIntegrationTest`, and
+  `OrderBuyerCompanyIntegrationTest`, and
+  `YoastPrimaryCategoryIntegrationTest`.
+
+The following shared test support changes were made to support migrated
+Product behavior and tests:
+
+- `wordpress-functions.php` now supports registered filter callbacks, the
+  `MINUTE_IN_SECONDS` constant, breadcrumb query/title/URL helpers, and
+  `untrailingslashit()`.
+- The `WP_Post` double declares and initializes `post_type`.
+- The `WC_Order` double supports billing-company accessors.
+- A `WC_Breadcrumb` double was added and wired into `tests/bootstrap.php`.
+
+### Validation and resolved test issues
+
+- `DynamicCrossSellsTest` initially exposed that the Site Tools
+  `apply_filters()` stub did not execute registered callbacks. The compatible
+  callback behavior was added; the focused test then passed 22 tests and 22
+  assertions.
+- `RelatedProductsTest` initially exposed the missing
+  `MINUTE_IN_SECONDS` test constant. The test suite subsequently revealed
+  `WP_Post::$post_type` dynamic-property deprecations; the `WP_Post` double
+  and tests were updated to use a declared constructor-provided property.
+- `BreadcrumbSchemaTest` prompted the addition of a `WC_Breadcrumb` double
+  and WordPress breadcrumb helper stubs, then gained product-page
+  synchronization coverage.
+- `OrderBuyerCompanyIntegrationTest` prompted the addition of the billing
+  company methods to the existing `WC_Order` double.
+- All migrated and created files were checked for exactly one trailing
+  newline, PHP syntax where applicable, PHPCS, and `git diff --check`.
+- The most recent complete PHPUnit run passed: 654 tests and 1,337
+  assertions. PHPStan remains intentionally omitted.
+- `Yoast_Primary_Category_Integration` passed its production-file checks:
+  one trailing newline, PHP syntax, PHPCS, and `git diff --check`.
+- `YoastPrimaryCategoryIntegrationTest` passed its focused PHPUnit run with
+  5 tests and 8 assertions.
+- JavaScript syntax checks for breadcrumb separator assets could not run
+  because Node.js is unavailable on the command path.
+
+### Product bootstrap and remaining integration work
+
+The following work was completed after the preceding session update:
+
+- `Product_Schema_Integration` and its dedicated
+  `ProductSchemaIntegrationTest` were migrated.
+- The Product domain bootstrap was added at
+  `includes/product/class-bootstrap.php` as
+  `Shurloc\SiteTools\Product\Bootstrap`. It composes and registers the
+  migrated Product components.
+- `tests/product/BootstrapTest.php` was added to cover the Product domain
+  bootstrap.
+- The root Site Tools bootstrap now instantiates and registers the Product
+  bootstrap. The root bootstrap test was extended to verify the Product
+  domain registration.
+- Catalog integration fixtures were migrated as one explicitly approved review
+  unit: `catalog-variations.json`, its data README, and
+  `MeshCatalogDataProvider`.
+- `MeshCatalogDataProvider` was wired into `tests/bootstrap.php`.
+- The remaining catalog-focused integration tests were migrated:
+  `CatalogReportIntegrationTest`, `MeshRecognitionTest`, and
+  `MeshProductTableIntegrationTest`.
+- `MeshProductTableIntegrationTest` does not require migration of the legacy
+  `shurloc_reset_test_products()` helper stub. Its teardown directly resets
+  the global product registry with
+  `$GLOBALS['shurloc_test_products'] = array();`.
+- The mesh-table integration test was aligned with the shared Site Tools
+  script-enqueue stub, which records scripts in
+  `$GLOBALS['shurloc_test_enqueued_scripts']`.
+- Fully qualified global test-double references were replaced with imports in
+  `MeshProductTableIntegrationTest` (`Test_WC_Product` and
+  `Test_WC_Product_Variation`) and `BreadcrumbSchemaTest` (`WC_Breadcrumb`).
+  A scan of migrated Product production and test PHP files found no remaining
+  `new \ClassName` references.
+
+### Additional validation
+
+- The Product-domain bootstrap test passed its focused run with 3 tests and
+  13 assertions. The updated root bootstrap test passed its focused run with
+  1 test and 9 assertions.
+- After the catalog provider was wired into the shared test bootstrap, the
+  complete PHPUnit suite passed with 668 tests and 1,386 assertions.
+- Focused PHPUnit runs passed for `CatalogReportIntegrationTest` (4 tests, 9
+  assertions), `MeshRecognitionTest` (1 test, 12 assertions), and
+  `MeshProductTableIntegrationTest` (8 tests, 23 assertions).
+- After replacing fully qualified class references with imports, the two
+  affected test files passed together with 15 tests and 33 assertions.
+- Each file in this update was verified for one trailing newline, PHP syntax
+  where applicable, PHPCS, and `git diff --check`. PHPStan remains omitted by
+  instruction.
+
 ## Verification Performed
 
 - Migrated production files and support files were checked with PHP syntax,
@@ -172,11 +303,10 @@ Migrated test doubles and shared support include:
 
 ## Remaining Work
 
-Significant Product areas still pending migration include the Product admin
-controllers/pages/request handling, frontend integrations, product
-migrations, recommendation and primary-category services, their tests, the
-Product domain bootstrap, root bootstrap registration, and the final
-mechanical migration audit.
+The Product bootstrap, root-bootstrap registration, catalog fixtures, and the
+remaining catalog/mesh integration tests have now been migrated. Perform the
+final mechanical migration audit and the user-managed staging verification
+before release. The release process remains outside this assignment.
 
 This document records status only; it does not change the migration rules in
 `MIGRATION.md`.
